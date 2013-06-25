@@ -1,0 +1,174 @@
+# Spanish translation for duplicate-post
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the duplicate-post package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: youtube-channel-gallery\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-14 10:34+0100\n"
+"PO-Revision-Date: 2013-01-14 10:38+0100\n"
+"Last-Translator: Javier <javierpose@gmail.com>\n"
+"Language-Team: PoseLab <javierpose@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-06-23 21:48+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: vimeo-channel-gallery.php:45
+msgid "Vimeo Channel Gallery"
+msgstr "Galería de Canal de Vimeo"
+
+#: vimeo-channel-gallery.php:46
+msgid "Show a vimeo video and a gallery of thumbnails for a vimeo channel"
+msgstr "Muestra un vídeo y una galería de miniaturas de una canal de Vimeo "
+
+#: vimeo-channel-gallery.php:105
+msgid "Title:"
+msgstr "Título:"
+
+#: vimeo-channel-gallery.php:110
+msgid "Vimeo id:"
+msgstr "Id de Vimeo:"
+
+#: vimeo-channel-gallery.php:115
+msgid "Type of gallery:"
+msgstr "Tipo de galería:"
+
+#: vimeo-channel-gallery.php:117
+msgid "User"
+msgstr "Usuario"
+
+#: vimeo-channel-gallery.php:118
+msgid "Channel"
+msgstr "Canal"
+
+#: vimeo-channel-gallery.php:119
+msgid "Album"
+msgstr "Álbum"
+
+#: vimeo-channel-gallery.php:120
+msgid "Group"
+msgstr "Grupo"
+
+#: vimeo-channel-gallery.php:126
+msgid "Show link to channel:"
+msgstr "Mostrar enlace al canal:"
+
+#: vimeo-channel-gallery.php:130
+msgid "Number of videos to show:"
+msgstr "Número de vídeos a mostrar:"
+
+#: vimeo-channel-gallery.php:135
+msgid "Video width:"
+msgstr "Ancho del vídeo:"
+
+#: vimeo-channel-gallery.php:140
+msgid "Thumbnail width:"
+msgstr "Ancho de miniaturas:"
+
+#: vimeo-channel-gallery.php:145
+msgid "Thumbnail columns:"
+msgstr "Columnas de las miniaturas:"
+
+#: vimeo-channel-gallery.php:150
+msgid "Player color:"
+msgstr "Color del reproductor:"
+
+#: vimeo-channel-gallery.php:213
+#, php-format
+msgid "Something went wrong. Check if the id %1$d belongs to a %2$d and if it exist."
+msgstr "Ocurrió un error. Comprueba que el id %1$d corresponde a un %2$d y que existe."
+
+#: vimeo-channel-gallery.php:276
+msgid "Show more videos»"
+msgstr "Ver más vídeos»"
+
+#~ msgid "Vimeo user name:"
+#~ msgstr "Nombre de usuario de Vimeo:"
+#~ msgid "There is no video to show."
+#~ msgstr "No hay ningún vídeo para mostrar."
+#~ msgid "Theme:"
+#~ msgstr "Tema:"
+#~ msgid "Dark"
+#~ msgstr "Oscuro"
+#~ msgid "Light"
+#~ msgstr "Claro"
+#~ msgid "Light:"
+#~ msgstr "Claro"
+#~ msgid "No post to duplicate has been supplied!"
+#~ msgstr "No se facilitó ninguna entrada a copiar"
+#~ msgid "Post creation failed, could not find original post:"
+#~ msgstr ""
+#~ "Creación realizada sin éxito, no ha sido posible encontrar la entrada "
+#~ "original:"
+#~ msgid "No page to duplicate has been supplied!"
+#~ msgstr "No se facilitó ninguna página a copiar"
+#~ msgid "Make a duplicate from this post"
+#~ msgstr "Crea una copia de esta entrada"
+#~ msgid "Duplicate"
+#~ msgstr "Duplicar"
+#~ msgid "Make a duplicate from this page"
+#~ msgstr "Crea una copia de esta página"
+#~ msgid "Copy to a new draft"
+#~ msgstr "Copia en un borrador nuevo"
+#~ msgid "Duplicate Post Options"
+#~ msgstr "Opciones"
+#~ msgid "Duplicate Post"
+#~ msgstr "Duplicate Post"
+#~ msgid "Copy post/page date also"
+#~ msgstr "Copiar también fecha del post o la página"
+#~ msgid ""
+#~ "Normally, the new draft has publication date set to current time: check "
+#~ "the box to copy the original post/page date"
+#~ msgstr ""
+#~ "Normalmente se establece la fecha de publicación del nuevo borrador a la "
+#~ "fecha actual: compruebe la casilla para copiar la fecha original del post "
+#~ "o la página"
+#~ msgid "Do not copy these fields"
+#~ msgstr "No copiar estos campos"
+#~ msgid ""
+#~ "Comma-separated list of meta fields that must not be copied when cloning "
+#~ "a post/page"
+#~ msgstr ""
+#~ "Lista separada por comas de meta campos que no pueden ser copiados cuando "
+#~ "se clona una entrada/pagina."
+#~ msgid "Title prefix"
+#~ msgstr "Prefijo del titulo"
+#~ msgid ""
+#~ "Prefix to be added before the original title when cloning a post/page, e."
+#~ "g. \"Copy of\" (blank for no prefix)"
+#~ msgstr ""
+#~ "Prefijo a ser agregado antes del titulo original cuando se clona una "
+#~ "entrada/pagina, ej. \"Copia de\" (en blanco  para no agregar prefijo)"
+#~ msgid "Minimum level to copy posts"
+#~ msgstr "Nivel mínimo para copiar posts"
+#~ msgid ""
+#~ "Warning: users will be able to copy all posts, even those of higher level "
+#~ "users"
+#~ msgstr ""
+#~ "Atención: los usuarios podrán copiar todos los posts, incluso aquellos de "
+#~ "usuarios de nivel más alto"
+#~ msgid "Save Changes"
+#~ msgstr "Guardar los cambios"
+#~ msgid "Donate"
+#~ msgstr "Hacer una donación"
+#~ msgid "Translate"
+#~ msgstr "Traducir"
+#~ msgid "http://www.lopo.it/duplicate-post-plugin/"
+#~ msgstr "Copy text   \t http://www.lopo.it/duplicate-post-plugin/"
+#~ msgid "Creates a copy of a post."
+#~ msgstr "Crear una copia de las entradas."
+#~ msgid "Enrico Battocchi"
+#~ msgstr "Enrico Battocchi"
+#~ msgid "http://www.lopo.it"
+#~ msgstr "http://www.lopo.it"
+

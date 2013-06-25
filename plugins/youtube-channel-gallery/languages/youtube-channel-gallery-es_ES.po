@@ -1,0 +1,323 @@
+# Spanish translation for duplicate-post
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the duplicate-post package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: youtube-channel-gallery\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-08 16:50+0100\n"
+"PO-Revision-Date: 2013-01-08 16:51+0100\n"
+"Last-Translator: Javier <javierpose@gmail.com>\n"
+"Language-Team: PoseLab <javierpose@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-06-23 21:48+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: youtube-channel-gallery.php:48
+msgid "Youtube Channel Gallery"
+msgstr "Galería de Canal de Youtube"
+
+#: youtube-channel-gallery.php:49
+msgid "Show a youtube video and a gallery of thumbnails for a youtube channel"
+msgstr "Muestra un vídeo y una galería de miniaturas de una canal de Youtube "
+
+#: youtube-channel-gallery.php:155
+msgid "Title:"
+msgstr "Título:"
+
+#: youtube-channel-gallery.php:263
+#: youtube-channel-gallery.php:267
+#: youtube-channel-gallery.php:307
+msgid "YouTube user id:"
+msgstr "Id de usuario de Youtube:"
+
+#: youtube-channel-gallery.php:270
+msgid "YouTube playlist id:"
+msgstr "Id de lista de reproducción de YouTube:"
+
+#: youtube-channel-gallery.php:282
+msgid "Feed"
+msgstr "Feed"
+
+#: youtube-channel-gallery.php:283
+msgid "Player"
+msgstr "Reproductor"
+
+#: youtube-channel-gallery.php:284
+msgid "Thumbnails"
+msgstr "Miniaturas"
+
+#: youtube-channel-gallery.php:285
+msgid "Link"
+msgstr "Enlace"
+
+#: youtube-channel-gallery.php:298
+msgid "Video feed type:"
+msgstr "Tipo de feed de vídeo:"
+
+#: youtube-channel-gallery.php:300
+msgid "Uploaded by a user"
+msgstr "Subidos por el usuario"
+
+#: youtube-channel-gallery.php:302
+msgid "Playlist"
+msgstr "Lista de reproducción"
+
+#: youtube-channel-gallery.php:312
+msgid "Playlist order:"
+msgstr "Orden de lista de reproducción:"
+
+#: youtube-channel-gallery.php:314
+msgid "Ascending Order"
+msgstr "Ascendente"
+
+#: youtube-channel-gallery.php:315
+msgid "Descending Order"
+msgstr "Descendente"
+
+#: youtube-channel-gallery.php:331
+msgid "Video width:"
+msgstr "Ancho del vídeo:"
+
+#: youtube-channel-gallery.php:336
+#: youtube-channel-gallery.php:407
+msgid "Aspect ratio:"
+msgstr "Relación de aspecto:"
+
+#: youtube-channel-gallery.php:338
+#: youtube-channel-gallery.php:409
+msgid "Standard (4x3)"
+msgstr "Estándar (4x3)"
+
+#: youtube-channel-gallery.php:339
+#: youtube-channel-gallery.php:410
+msgid "Widescreen (16x9)"
+msgstr "Panorámico (16x9)"
+
+#: youtube-channel-gallery.php:344
+msgid "Theme:"
+msgstr "Tema:"
+
+#: youtube-channel-gallery.php:346
+msgid "Dark"
+msgstr "Oscuro"
+
+#: youtube-channel-gallery.php:347
+msgid "Light"
+msgstr "Claro"
+
+#: youtube-channel-gallery.php:352
+msgid "Progress bar color:"
+msgstr "Color de barra de progreso:"
+
+#: youtube-channel-gallery.php:354
+msgid "Red"
+msgstr "Rojo"
+
+#: youtube-channel-gallery.php:355
+msgid "White"
+msgstr "Blanco"
+
+#: youtube-channel-gallery.php:360
+msgid "Video quality:"
+msgstr "Calidad del vídeo:"
+
+#: youtube-channel-gallery.php:362
+msgid "default"
+msgstr "por defecto"
+
+#: youtube-channel-gallery.php:363
+msgid "highres"
+msgstr "alta resolución"
+
+#: youtube-channel-gallery.php:364
+msgid "hd1080"
+msgstr "hd1080"
+
+#: youtube-channel-gallery.php:365
+msgid "hd720"
+msgstr "hd720"
+
+#: youtube-channel-gallery.php:366
+msgid "large"
+msgstr "largo"
+
+#: youtube-channel-gallery.php:367
+msgid "medium"
+msgstr "mediano"
+
+#: youtube-channel-gallery.php:368
+msgid "small"
+msgstr "pequeño"
+
+#: youtube-channel-gallery.php:373
+msgid "Autoplay"
+msgstr "Autoplay"
+
+#: youtube-channel-gallery.php:378
+msgid "Show related videos"
+msgstr "Mostrar los vídeos relacionados"
+
+#: youtube-channel-gallery.php:383
+msgid "Show info (title, uploader)"
+msgstr "Mostrar información (título, cargador)"
+
+#: youtube-channel-gallery.php:396
+msgid "Number of videos to show:"
+msgstr "Número de vídeos a mostrar:"
+
+#: youtube-channel-gallery.php:401
+msgid "Thumbnail width:"
+msgstr "Ancho de miniaturas:"
+
+#: youtube-channel-gallery.php:415
+msgid "Thumbnail columns:"
+msgstr "Columnas de las miniaturas:"
+
+#: youtube-channel-gallery.php:422
+msgid "Show title or description"
+msgstr "Mostrar título y descripción"
+
+#: youtube-channel-gallery.php:429
+msgid "Show title"
+msgstr "Mostrar Título"
+
+#: youtube-channel-gallery.php:434
+msgid "Show description"
+msgstr "Mostrar descripción"
+
+#: youtube-channel-gallery.php:438
+msgid "Thumbnail alignment:"
+msgstr "Alineación de miniaturas:"
+
+#: youtube-channel-gallery.php:440
+msgid "Left"
+msgstr "Izquierda"
+
+#: youtube-channel-gallery.php:441
+msgid "Right"
+msgstr "Derecha"
+
+#: youtube-channel-gallery.php:442
+msgid "Top"
+msgstr "Arriba"
+
+#: youtube-channel-gallery.php:443
+msgid "Bottom"
+msgstr "Abajo"
+
+#: youtube-channel-gallery.php:448
+msgid "Description words number:"
+msgstr "Número de palabras en la descripción:"
+
+#: youtube-channel-gallery.php:469
+msgid "Link text:"
+msgstr "Texto del enlace"
+
+#: youtube-channel-gallery.php:475
+msgid "Show link to channel"
+msgstr "Mostrar enlace al canal"
+
+#: youtube-channel-gallery.php:480
+msgid "Open in a new window or tab"
+msgstr "Abri en una ventana nueva o pestaña"
+
+#: youtube-channel-gallery.php:564
+msgid "Show more videos»"
+msgstr "Ver más vídeos»"
+
+#: youtube-channel-gallery.php:598
+#: youtube-channel-gallery.php:603
+msgid "You must insert a valid YouTube user id."
+msgstr "Debes introducir un id válido de usuario de YouTube."
+
+#: youtube-channel-gallery.php:609
+msgid "You must insert a valid playlist id."
+msgstr "Debes introducir un id válido de lista de reproducción de YouTube."
+
+#: youtube-channel-gallery.php:819
+msgid "There is no video to show."
+msgstr "No hay ningún vídeo para mostrar."
+
+#~ msgid "User's favorites"
+#~ msgstr "Favoritos del usuario"
+#~ msgid "Light:"
+#~ msgstr "Claro"
+#~ msgid "No post to duplicate has been supplied!"
+#~ msgstr "No se facilitó ninguna entrada a copiar"
+#~ msgid "Post creation failed, could not find original post:"
+#~ msgstr ""
+#~ "Creación realizada sin éxito, no ha sido posible encontrar la entrada "
+#~ "original:"
+#~ msgid "No page to duplicate has been supplied!"
+#~ msgstr "No se facilitó ninguna página a copiar"
+#~ msgid "Make a duplicate from this post"
+#~ msgstr "Crea una copia de esta entrada"
+#~ msgid "Duplicate"
+#~ msgstr "Duplicar"
+#~ msgid "Make a duplicate from this page"
+#~ msgstr "Crea una copia de esta página"
+#~ msgid "Copy to a new draft"
+#~ msgstr "Copia en un borrador nuevo"
+#~ msgid "Duplicate Post Options"
+#~ msgstr "Opciones"
+#~ msgid "Duplicate Post"
+#~ msgstr "Duplicate Post"
+#~ msgid "Copy post/page date also"
+#~ msgstr "Copiar también fecha del post o la página"
+#~ msgid ""
+#~ "Normally, the new draft has publication date set to current time: check "
+#~ "the box to copy the original post/page date"
+#~ msgstr ""
+#~ "Normalmente se establece la fecha de publicación del nuevo borrador a la "
+#~ "fecha actual: compruebe la casilla para copiar la fecha original del post "
+#~ "o la página"
+#~ msgid "Do not copy these fields"
+#~ msgstr "No copiar estos campos"
+#~ msgid ""
+#~ "Comma-separated list of meta fields that must not be copied when cloning "
+#~ "a post/page"
+#~ msgstr ""
+#~ "Lista separada por comas de meta campos que no pueden ser copiados cuando "
+#~ "se clona una entrada/pagina."
+#~ msgid "Title prefix"
+#~ msgstr "Prefijo del titulo"
+#~ msgid ""
+#~ "Prefix to be added before the original title when cloning a post/page, e."
+#~ "g. \"Copy of\" (blank for no prefix)"
+#~ msgstr ""
+#~ "Prefijo a ser agregado antes del titulo original cuando se clona una "
+#~ "entrada/pagina, ej. \"Copia de\" (en blanco  para no agregar prefijo)"
+#~ msgid "Minimum level to copy posts"
+#~ msgstr "Nivel mínimo para copiar posts"
+#~ msgid ""
+#~ "Warning: users will be able to copy all posts, even those of higher level "
+#~ "users"
+#~ msgstr ""
+#~ "Atención: los usuarios podrán copiar todos los posts, incluso aquellos de "
+#~ "usuarios de nivel más alto"
+#~ msgid "Save Changes"
+#~ msgstr "Guardar los cambios"
+#~ msgid "Donate"
+#~ msgstr "Hacer una donación"
+#~ msgid "Translate"
+#~ msgstr "Traducir"
+#~ msgid "http://www.lopo.it/duplicate-post-plugin/"
+#~ msgstr "Copy text   \t http://www.lopo.it/duplicate-post-plugin/"
+#~ msgid "Creates a copy of a post."
+#~ msgstr "Crear una copia de las entradas."
+#~ msgid "Enrico Battocchi"
+#~ msgstr "Enrico Battocchi"
+#~ msgid "http://www.lopo.it"
+#~ msgstr "http://www.lopo.it"
+

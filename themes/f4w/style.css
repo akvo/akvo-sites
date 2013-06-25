@@ -1,0 +1,760 @@
+/*
+Theme Name:     Football 4 Water
+Description:    Child theme for Quadro
+Author:         Webgurus
+Template:       Quadro
+*/
+
+/*@import url("../Quadro/style-Blue.css");*/
+@import url("../Quadro/style.css");
+
+body{
+    font-family:Arial,Verdana,sans-serif;
+    color:#555555;
+}
+/* custom font */
+#bg{
+    position:relative;
+    margin-bottom:110px;
+    padding-bottom:150px;
+    width:980px;
+	background:transparent url(images/f4w_footerlogo.png) no-repeat bottom;
+}
+
+
+#container{
+    color:#555555;
+    font-size:13px;
+    line-height:21px;
+    float:left;
+    width:970px;
+}
+#container2{
+    width:970px;
+}
+#iDivCustomWrapper {
+
+}
+@font-face {
+    font-family: 'savantitalic';
+    src: url('fonts/characters_font_foundry_-_savant-italic-webfont.eot');
+    src: url('fonts/characters_font_foundry_-_savant-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/characters_font_foundry_-_savant-italic-webfont.woff') format('woff'),
+         url('fonts/characters_font_foundry_-_savant-italic-webfont.ttf') format('truetype'),
+         url('fonts/characters_font_foundry_-_savant-italic-webfont.svg#savantitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+.idTabs li a,
+#pages li a{
+  font-family: 'savantitalic';
+
+}
+h1,h2,.sidebar-box h2 {
+    font-family: 'savantitalic',sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color:#03abe3;
+}
+h1 a,h2 a,.sidebar-box h2 a{
+    font-family: 'savantitalic',sans-serif !important;
+}
+h2{
+    font-size:21px;
+    line-height:23px;
+    margin:0px 0px 10px 0px !important;
+}
+h5{
+font-size:12px;
+}
+.post-wrapper h2, .featured-content h2{
+    font-size: 16px !important;
+font-weight: normal !important;
+}
+a{
+cursor:url('images/cursor.gif'),auto;	
+}
+a:link, a:visited {
+text-decoration: none;
+color: #03abe3;
+}
+.thumbnail-div-slider{
+    width:468px;
+height:255px;
+float:left;
+overflow:hidden;
+}
+.cLiBlogPost{
+    width:315px;
+    margin:0 2px 2px 0;
+}
+
+.cDivBlogPostDate {
+ color:#0d5995;
+ font-weight:normal;
+ font-family:inherit;
+ padding-left:20px;
+}
+.cDivBlogPostImageTag {
+    height: 70px;
+width: 75px;
+margin: -5px 0 0 -3px;
+background: transparent no-repeat 0 0 url("images/blog_tag.png");
+}
+.cDivVideoPostImageTag {
+background: transparent no-repeat 0 0 url("images/video_tag.png");
+height: 70px;
+width: 75px;
+margin: -5px 0 0 -3px;
+position: absolute;
+}
+.cDivNewsPostImageTag {
+background: transparent no-repeat 0 0 url("images/news_tag.png");
+height: 70px;
+width: 75px;
+margin: -5px 0 0 -3px;
+position: absolute;
+}
+.cDivProjUpdateImageTag{
+    height: 70px;
+width: 75px;
+margin: -5px 0 0 -3px;
+	background: transparent no-repeat 0 0 url("images/project_tag.png");
+}
+h2.news a{
+   color:#03abe3;
+}
+h2.post a{
+   color:#f5783a;
+}
+h2.video a{
+   color:#333333;
+}
+h2.project_update a{
+   color:#47b75a;
+}
+.cDivBlogPostImageWrapper {
+ margin:20px;
+ border:0px;
+}
+.cDivNewsPostImageTag.entry {
+ margin-top:  156px;
+}
+.cDivNewsText h2{
+	margin-bottom:0px !important;
+		
+	}
+.cDivNewsText .cDivBlogPostDate,.cDivNewsText p{
+    padding-left:0;
+    margin-left:0;
+}
+/*header and menu*/
+#header{
+    width:980px;
+    margin-top:0px;
+    margin-bottom: 15px;
+    /*position: relative;*/
+}
+
+.header_right,.header-box{
+    float:right;
+}
+.logo{
+    width:448px;
+    height:75px;
+
+}
+.cAlogo{
+    width:448px;
+    height:75px;
+    margin:0 auto;
+    display:block;
+}
+
+#iDivCustomWrapper {
+    min-height: 100%;
+
+    position: absolute;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+#iDivPlant{
+   background: transparent url(images/plant.png) no-repeat 0% 0%;
+
+   position: relative;
+    width:1240px;
+    margin:0 auto;
+    height:400px;
+}
+
+#wrapper2 {
+	background: url(images/wrapperbg.png);
+    width:965px;
+    border:1px solid #FFF;
+/*	width: 918px !important;*/
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+    margin-top:20px;
+}
+
+#pages {
+	background: none;
+	margin: -15px 0px 0px -6px !important;
+	background: url(images/f4w_navigation_bg.png) no-repeat !important;
+    width:972px;
+    height:35px;
+}
+
+#pages li{
+    height: 30px;
+    margin:0;
+    text-align:left;
+    padding-top:3px;
+}
+
+#pages li .cDivDivider{
+    height: 20px;
+width: 1px;
+border-left: 1px solid white;
+display: inline;
+float: right;
+margin-top:-0px;
+margin-right:20px;
+}
+
+#pages li:hover{
+    background:none;
+}
+#pages li a,
+#pages li a:link,
+#pages li a:visited{
+    font-family: 'savantitalic';
+    font-size:15px;
+    padding: 3px 0px 0px 20px;
+    width:100%;
+
+}
+#pages li a:link,
+#pages li a:visited {
+	color: #ffffff;
+}
+ul.sub-menu{
+    margin-top:19px;
+    background:#ededed url(images/submenu_bg.png) repeat-x;
+    width:100%;
+display:none;
+z-index:3000;
+padding:0 !important;
+padding-right:0px !important;
+padding-top:10px !important;
+    
+}
+ul.sub-menu li a {
+display:inline-block !important;
+line-height:16px;
+padding-right:20px;
+background-color: #F3F3F3;
+color: #642d11 !important;
+vertical-align: middle;
+}
+.nav li ul li{
+    display:block !important;
+padding-left:0px !important;
+margin-bottom:10px !important;
+
+}
+.nav li ul li, .nav li ul li a{
+    background:none;
+    border:0;
+    text-align:left;
+    height:auto !important;
+    float:none !important;
+    color:#3f3d3d !important;
+	width:80% !important;
+}
+.nav li ul li a:hover{
+    color:#0e5a96 !important;
+
+}
+.nav li ul li:hover{
+    background-color:#fff;
+}
+.current_page_item a{
+    color:#fff;
+}
+#pages li ul li .cDivDivider{
+    display:none !important;
+    margin:0 !important;
+}
+
+#iDivSocialNw{
+width: 230px;
+float: right;
+margin-right: 0px;
+margin-top: -30px;
+}
+.widget_facebook_like{
+margin-top:5px;
+}
+.search_bg {
+	margin-top: 5px;
+}
+
+#s{
+    background-color:#FFF !important;
+    width:205px !important;
+}
+#search .input{
+    width:49px !important;
+    padding:2px !important;
+}
+
+/*************************************************/
+
+/**/
+#featured {
+	background-color: #FFFFFF;
+    margin-bottom:15px;
+    padding:20px;
+    width:922px;
+    -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+/*************************************************/
+/*home*/
+.cLiBlogPost{
+    background-color:#FFF;
+    -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+/*tabs*/
+#iDivTabType {
+	width: 120px;
+	height: 32px;
+	float: left;
+	text-align: center;
+	padding-top: 5px;
+	padding-right: 10px;
+}
+
+#iDivNewsBox {
+    -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+
+    width: 636px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+	background-color: #FFFFFF;
+}
+.pagination{
+    text-align:center;
+    width:624px;
+}
+.page .pagination{
+    width:100%;
+}
+.fullwidth .pagination{
+width:100%;
+}
+.pagination a{
+    margin-right:5px;
+}
+/*************************************************/
+
+#left-div {
+    width: 642px;
+float: left;
+padding: 0px 0px 0px 0px;
+margin-right:10px;
+}
+
+
+.search #sidebar-wrapper,
+.home #sidebar-wrapper,
+.page #sidebar-wrapper,
+.error404 #sidebar-wrapper,
+.single #sidebar-wrapper{
+margin-top: 0px;
+width:312px;
+}
+#sidebar{
+    width:312px;
+}
+#sidebar > div{
+    background-color: #FFF;
+    -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+    margin-bottom: 10px;
+    width: 272px;
+    padding:20px;
+
+}
+.post-wrapper{
+    background-color: #FFF;
+    margin-bottom:15px;
+    -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+.readmore,.cDivReadmore {
+background-image: url(images/read-more-Grey.gif);
+}
+.cLiBlogPost .cDivReadmore {
+margin-bottom:14px;
+}
+.readmore a,.cDivReadmore a{
+color:#4c4c4c;
+}
+
+
+#iDivTabType {
+width: 70px;
+height: 32px;
+float: left;
+text-align: left;
+padding-top: 5px;
+padding-right: 10px;
+}
+
+li.cLiBlogPost {
+position: relative;
+list-style: none;
+}
+.cDivBlogPostTitle {
+padding:0px 20px;
+}
+.cDivBlogPostTextContent{
+    margin:14px 20px;
+    font-size: 13px;
+height:68px;
+}
+/***footer ***/
+#footerContainer {
+    position: absolute;
+bottom: 0;
+width: 100%;
+border-top:0px;
+background-color: #000;
+background:#FFF;
+height:auto;
+}
+
+#footer {
+float: none;
+margin: 0 auto;
+padding-top:10px;
+width:980px;
+	color:#555;
+}
+#footer > div.widget_nav_menu{
+    float:left;
+}
+#footer div.memberwidget{
+	float:left;
+	width:70%;
+	margin-bottom:20px;
+}
+#footer div.memberwidget h2{
+	color:#555;	
+	font-family: Arial,Verdana,sans-serif;
+	font-size:12px;
+}
+#footer div.memberwidget img{
+	
+margin-right:9px;	
+}
+#footer > div#iDivPoweredBy{
+    float:right;
+	width:30%;
+	margin-top:5px;
+}
+#iDivPoweredBy #iDivPoweredByText{
+    margin-right:0px;
+    margin-top:5px;
+    font-style: italic;
+    float:right;
+	text-align:right;
+}
+#iDivPoweredBy #iDivPoweredByImage{
+    float:right;
+    margin-top:15px;
+	text-align:right;
+}
+#iDivPoweredBy #iDivPoweredByImage img{
+    border:0;
+}
+#footer ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+#footer ul li{
+    float:left;
+    margin-right:15px;
+}
+.widget_tweetblender .tb_tweet-info, .widget_tweetblender .tb_tweet-info a {
+font-size: 11px;
+color: #0e5a96;
+}
+
+#crumbs,#crumbs a, #crumbs span,.pagination a{
+    color:#FFF;
+}
+.chart, .akvodata{
+    margin: 0px;
+
+}
+.textwidget{
+    padding:0px !important;
+}
+.akvodata{
+    padding:10px 0px;
+    font-size:16px;
+}
+.akvodata label{
+    float:left;
+    color:#4a4a4a;
+}
+.akvodata span{
+    float:right;
+    color:#0d5995;
+}
+.akvodata span.left{
+    float:left;
+}
+.akvodata span.small{
+    font-size:12px;
+}
+.akvodata hr{
+background-color: #285555;
+height: 3px;
+border: 0;
+margin: 15px 0px;
+}
+.post-wrapper {
+    width:600px !important;
+}
+.no_sidebar {
+width: 930px !important;
+}
+/**bxslider**/
+/**
+ * BxSlider v4.0 - Fully loaded, responsive content slider
+ * http://bxslider.com
+ *
+ * Written by: Steven Wanderski, 2012
+ * http://stevenwanderski.com
+ * (while drinking Belgian ales and listening to jazz)
+ *
+ * CEO and founder of bxCreative, LTD
+ * http://bxcreative.com
+ */
+
+
+/** RESET AND LAYOUT
+===================================*/
+.bx-slider li{
+    padding: 0;
+}
+.bx-wrapper {
+	position: relative;
+	margin: 0 0 60px;
+	padding: 0;
+	*zoom: 1;
+}
+
+.bx-wrapper img {
+	width: 100%;
+	margin-top: -10px;
+    display: block;
+}
+
+/** THEME
+===================================*/
+
+.bx-wrapper .bx-viewport {
+	background: #fff;
+}
+
+.bx-wrapper .bx-pager,
+.bx-wrapper .bx-controls-auto {
+	position: absolute;
+	top: 10px;
+	right: 70px;
+}
+
+/* LOADER */
+
+.bx-wrapper .bx-loading {
+	min-height: 50px;
+	background: url(images/bx_loader.gif) center center no-repeat #fff;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+}
+
+/* PAGER */
+
+.bx-wrapper .bx-pager {
+	text-align: left;
+	font-size: .85em;
+	font-family: Arial;
+	font-weight: bold;
+	color: #666;
+	padding-top: 10px;
+
+	margin-right: 20px;
+}
+
+.bx-wrapper .bx-pager .bx-pager-item,
+.bx-wrapper .bx-controls-auto .bx-controls-auto-item {
+	display: inline-block;
+	*zoom: 1;
+	*display: inline;
+}
+
+.bx-wrapper .bx-pager.bx-default-pager a {
+	background: #FFF;
+opacity:0.5;
+filter:Alpha(opacity=50);
+	text-indent: -9999px;
+	display: block;
+	width: 10px;
+	height: 10px;
+	margin: 0 5px;
+	outline: 0;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.bx-wrapper .bx-pager.bx-default-pager a:hover,
+.bx-wrapper .bx-pager.bx-default-pager a.active {
+	background: #FFF;
+opacity:1;
+filter:Alpha(opacity=100);
+}
+
+/* DIRECTION CONTROLS (NEXT / PREV) */
+
+.bx-wrapper .bx-prev {
+z-index:500;
+	right: 50px;
+	background: url(images/controls.png) no-repeat 0 -32px;
+}
+
+.bx-wrapper .bx-next {
+z-index:500;
+	right: 10px;
+	background: url(images/controls.png) no-repeat -43px -32px;
+}
+
+.bx-wrapper .bx-prev:hover {
+	background-position: 0 0;
+}
+
+.bx-wrapper .bx-next:hover {
+	background-position: -43px 0;
+}
+
+.bx-wrapper .bx-controls-direction a {
+	position: absolute;
+	top: 10px;
+	outline: 0;
+	width: 32px;
+	height: 32px;
+	text-indent: -9999px;
+	z-index: 100;
+}
+
+.bx-wrapper .bx-controls-direction a.disabled {
+	display: none;
+}
+
+/* AUTO CONTROLS (START / STOP) */
+
+.bx-wrapper .bx-controls-auto {
+	text-align: center;
+}
+
+.bx-wrapper .bx-controls-auto .bx-start {
+	display: block;
+	text-indent: -9999px;
+	width: 10px;
+	height: 11px;
+	outline: 0;
+	background: url(images/controls.png) -86px -11px no-repeat;
+	margin: 0 3px;
+}
+
+.bx-wrapper .bx-controls-auto .bx-start:hover,
+.bx-wrapper .bx-controls-auto .bx-start.active {
+	background-position: -86px 0;
+}
+
+.bx-wrapper .bx-controls-auto .bx-stop {
+	display: block;
+	text-indent: -9999px;
+	width: 9px;
+	height: 11px;
+	outline: 0;
+	background: url(images/controls.png) -86px -44px no-repeat;
+	margin: 0 3px;
+}
+
+.bx-wrapper .bx-controls-auto .bx-stop:hover,
+.bx-wrapper .bx-controls-auto .bx-stop.active {
+	background-position: -86px -33px;
+}
+
+/* PAGER WITH AUTO-CONTROLS HYBRID LAYOUT */
+
+.bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-pager {
+	text-align: left;
+	width: 80%;
+}
+
+.bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-controls-auto {
+	right: 0;
+	width: 35px;
+}
+
+/* IMAGE CAPTIONS */
+
+.bx-wrapper .bx-caption {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: #666\9;
+	background: rgba(80, 80, 80, 0.75);
+	width: 100%;
+}
+
+.bx-wrapper .bx-caption span {
+	color: #fff;
+	font-family: Arial;
+	display: block;
+	font-size: .85em;
+	padding: 10px;
+}
+
+#iDivLogo {
+/*    width: 441px;
+    height: 283px;
+    background: transparent url(images/f4w_logo_big.png) top left no-repeat;
+    position: absolute;
+    top: 0px;
+    left: 245px;
+    z-index: -2;*/
+}

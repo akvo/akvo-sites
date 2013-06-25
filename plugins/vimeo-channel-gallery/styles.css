@@ -1,0 +1,60 @@
+.vmcplayerdiv{
+	background: #000;
+	display: inline-block;
+	margin-bottom: 10px;
+}
+.vmcplayer{
+	display: block;
+	padding: 0;
+}
+
+ul.vmgallery{
+	margin: 0; padding: 0;
+	list-style: none;
+	*zoom: 1;
+}
+ul.vmgallery:before,ul.vmgallery:after {
+    content: " ";
+    display: table;
+}
+ul.vmgallery:after {
+    clear: both;
+}
+
+ul.vmgallery li{
+	float:left;  
+	margin: 0 10px 10px 0;padding: 0
+}
+ul.vmgallery li a{
+	vertical-align: middle;
+	display: table-cell;
+	border:1px solid #999;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+
+/*play button*/
+ul.vmgallery li a .vmcplay{
+	height: 24px; width: 39px; 
+	margin: 0 auto;
+	border-radius: 3px;
+	display:none;
+}
+ul.vmgallery li a .vmcplay .vmtriangle{
+	width: 0; height: 0; 
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	margin: 6px 13px;
+	display: inline-block;
+}
+
+ul.vmgallery li a .vmcplay .vmtrwhite{
+	border-left: 12px solid #fff;
+}
+ul.vmgallery li a .vmcplay .vmtrgray{
+	border-left: 12px solid #C0C0C0;
+}
+ul.vmgallery li a:hover .vmcplay{
+	display:block;
+
