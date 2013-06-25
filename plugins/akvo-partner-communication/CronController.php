@@ -17,14 +17,10 @@ $oAPC = new AkvoPartnerCommunication();
 $iLimit = 100 + (int)date('z') + (int)date('G');
 var_dump($iLimit);
 $sUpdateUrl = "http://www.akvo.org/api/v1/project_update/?format=json&limit=".$iLimit."&project__partnerships__organisation=";
-//$sUpdateUrl = "http://www.akvo.org/api/v1/project_update/?format=json&distinct=true&project__partnerships__organisation=";
 echo $sUpdateUrl.'<br />';
 $aPartnerData = $oAPC->readURLsForCronJob($iOrganisationID);
 
-//$aSimplifiedArray = $aPartnerData[];
 shuffle($aPartnerData);
-//var_dump($aPartnerData); 
-//die();
 foreach ($aPartnerData as $oOrgId) {
     echo '<h1>'.$oOrgId->organisation_id.'</h1>';
     $iLimit = 1000 + (int)date('z') + (int)date('G');
@@ -57,9 +53,6 @@ foreach ($aPartnerData as $oOrgId) {
 	}
 	$aProjectUpdateKeys = array_keys($aProjectUpdates);
     $aUpdatedThisRun = array();
-	//$aProjectData = array_reverse($aProjectData, true);
-     
-//    die();
 	// Extract all keys (array_keys)
 	foreach ($aProjectData as $oProj) {
 
@@ -67,7 +60,7 @@ foreach ($aPartnerData as $oOrgId) {
 		$bSave = false;
 		$iPostToUpdate = null;
 		if (in_array($iAkvoUpdateId, $aProjectUpdateKeys)) {
-			// Do a Update if the update time is different
+			// Do a Update if the last update time is different
 
 			$oLastUpdatedInDb = new DateTime($aProjectUpdates[$iAkvoUpdateId]['last_updated']);
 			$oLastUpdatedInApi = new DateTime($oProj['time_last_updated']);
@@ -99,14 +92,13 @@ foreach ($aPartnerData as $oOrgId) {
 			);
 
 			if (is_null($iPostToUpdate)) {
-				echo 'yo';
+                // new update
                 $iInsertedPostId = $oAPC->saveProjectUpdates($aPosts, $sPrefix);
 				if (!is_null($oProj['photo']) && $oProj['photo'] != '') {
 					// Image Resize and Save
 					$sImageFile = "http://www.akvo.org" . $oProj['photo'];
 					$sImageDest = $oAPC->imageResize($sImageFile);
 
-					//$iInsertedPostId = $oAPC->saveProjectUpdates($aPosts, $sPrefix);
                     echo $iInsertedPostId;
 					$oAPC->saveImageAttachment($sImageDest, $sPrefix, $iInsertedPostId);
 					$oAPC->saveImageMeta($sPrefix,$sImageFile, $iInsertedPostId);
@@ -115,14 +107,11 @@ foreach ($aPartnerData as $oOrgId) {
                     if($sImageFile){
                         $sImageDest = $oAPC->imageResize($sImageFile);
 
-                       //$iInsertedPostId = $oAPC->saveProjectUpdates($aPosts, $sPrefix, $iPostToUpdate);
 
                        $oAPC->saveImageAttachment($sImageDest, $sPrefix, $iInsertedPostId);
 					$oAPC->saveImageMeta($sPrefix,$sImageFile, $iInsertedPostId);
                     }
-                } else {
-					//$iInsertedPostId = $oAPC->saveProjectUpdates($aPosts, $sPrefix);
-				}
+                }
 
 				$aProjectUpdateLogEntryData = array(
 					'update_id' => $iAkvoUpdateId,
@@ -132,7 +121,7 @@ foreach ($aPartnerData as $oOrgId) {
 				);
 				$oAPC->saveProjectUpdateLogEntry($sPrefix, $aProjectUpdateLogEntryData);
 			} else {
-				echo 'no';
+                // edit update
 				if (!is_null($oProj['photo']) && $oProj['photo'] != '') {
 					// Image Resize and Save
 					$sImageFile = "http://www.akvo.org" . $oProj['photo'];
@@ -169,33 +158,6 @@ foreach ($aPartnerData as $oOrgId) {
 			}
 		}
 
-
-
-
-
-
-//
-//		if (is_null($aProjectUpdates)) {
-//			//insert to project updates table
-//			//TODO
-//		} else {
-//			if (array_key_exists($oProj->id, $aProjectUpdates)) {
-//				$oLastUpdatedInDb = new DateTime($aProjectUpdates[$oProj->id]);
-//				$oLastUpdatedInApi = new DateTime(strtotime($oProj->time_last_updated));
-//
-//				if ($oLastUpdatedInDb < $oLastUpdatedInApi) {
-//					//update
-//					$oAPC->updateProjectUpdates($sPrefix, $oProj->id, $aPosts);
-//					//image resize and save
-//					$sImageFile = "http://www.akvo.org" . $oProj['photo'];
-//					$sNewImgName = urlencode($oProj['title']);
-//					$sImageDest = $oAPC->imageResize($sImageFile, $sNewImgName, 100, 100);
-//					$oAPC->saveImageAttachment($sImageDest);
-//				}
-//
-//
-//			}
-//		}
 	}
 }
 ?>
