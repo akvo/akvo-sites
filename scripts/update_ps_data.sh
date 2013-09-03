@@ -4,7 +4,7 @@ RUN_PS_UPDATES_SCRIPT="http://akvofoundation.org/runPSUpdates.php?id_organisatio
 LOG_FILE="/var/log/akvo/ps_updates_log.html"
 LOG_FILE_URL="http://akvofoundation.org/log/ps_updates_log.html"
 
-for organisation_id in 272 275 539 912 1060 1061
+for organisation_id in 272 275 539 912 1060 1061 1093
 do
     echo "Updating organisation $organisation_id"
     printf "<br />[`date --rfc-3339=seconds`]<br />" >> $LOG_FILE
