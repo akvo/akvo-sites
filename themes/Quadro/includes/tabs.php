@@ -62,7 +62,7 @@ global $tabOptions;
                     $args = array(
                         'category__in'=>$aCategoryIDs,
                         'posts_per_page' => -1,
-                        'nopaging'=>true
+                        'nopaging'=>true,
                     );
                 }
                 if(isset($tabOptions['country'])){
@@ -74,15 +74,22 @@ global $tabOptions;
                 $aPosts = $wp_query->query($args);
             }
             if($tabOptions['showUpdates']){
- 
+                    $wp_query = null;
+            $wp_query = new WP_Query();
                     $args= array(
                         'post_type'=>'project_update',
-                        'posts_per_page' => -1
+                        'posts_per_page' => -1,
                         );
                    
                     if(isset($tabOptions['country'])){
                         $oAPC = new AkvoPartnerCommunication();
                         $aProjectUpdates = $oAPC->readProjectUpdatesFromDbByCountry($tabOptions['country']);
+                        // var_dump($aProjectUpdates);
+                        $tabOptions['updateIDs']=$aProjectUpdates;
+                        $args['post__in']=$tabOptions['updateIDs'];
+                    }else{
+                        $oAPC = new AkvoPartnerCommunication();
+                        $aProjectUpdates = $oAPC->readProjectUpdatesFromDbForTabs();
                         // var_dump($aProjectUpdates);
                         $tabOptions['updateIDs']=$aProjectUpdates;
                         $args['post__in']=$tabOptions['updateIDs'];
@@ -99,21 +106,29 @@ global $tabOptions;
 
 
             }
+                
             $aAllPosts = array_merge($aPosts,$aUpdates);
+            usort($aAllPosts,'order_combined_posts');
+                
             //array_unique($aAllPosts);
             $aAllPostIDs = wp_list_pluck($aAllPosts, 'ID');
+            
             if(count($aAllPostIDs)>0){
+                $wp_query = null;
+            $wp_query = new WP_Query();
                 $aPostTypes = array('post','project_update') ;
                 $args = array(
                     'post__in'=>$aAllPostIDs,
                     'post_type'=>$aPostTypes,
                     'posts_per_page' => (isset($tabOptions['numposts'])) ? $tabOptions['numposts'] : 9,
                     'posts_per_archive_page' => (isset($tabOptions['numposts'])) ? $tabOptions['numposts'] : 9,
-                    'paged' => $page
+                    'paged' => $page,
+                    'orderby'=>'post__in'
                     );
                 //var_dump($args);
                 $aPosts = $wp_query->query($args);
-                //var_dump($wp_query->query);
+                //usort($aPosts,'order_combined_posts');
+                //akvo_debug_dump($aPosts);
                 //die();
             }
         }

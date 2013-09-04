@@ -1,0 +1,1 @@
+<a href="http://www.elegantthemes.com/gallery/quadro/readme.html" target="_blank"><?php esc_html_e( 'Read Quadro Documentation', $themename ); ?></a>

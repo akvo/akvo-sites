@@ -87,7 +87,7 @@ if (!class_exists("AkvoSiteConfig")) {
             foreach($query->posts AS $post){
                 if($post->post_content!=''){
                     $document = new DOMDocument();
-                    $document->loadHTML($post->post_content);
+                    @$document->loadHTML($post->post_content);
 					$aItems = array();
                     $aItems[] = $document->getElementsByTagName('iframe');
 					$aItems[] = $document->getElementsByTagName('embed');

@@ -1,0 +1,72 @@
+@font-face {
+    font-family: 'museo_sans_500regular';
+    src: url('http://dwa.akvo.com/wp-content/themes/Quadro/fonts/museosans_500-webfont.eot');
+    src: url('http://dwa.akvo.com/wp-content/themes/Quadro/fonts/museosans_500-webfont.eot?#iefix') format('embedded-opentype'),
+         url('http://dwa.akvo.com/wp-content/themes/Quadro/fonts/museosans_500-webfont.woff') format('woff'),
+         url('http://dwa.akvo.com/wp-content/themes/Quadro/fonts/museosans_500-webfont.ttf') format('truetype'),
+         url('http://dwa.akvo.com/wp-content/themes/Quadro/fonts/museosans_500-webfont.svg#museo_sans_500regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+h1,h2,h3,h4{
+  font-family: 'museo_sans_500regular';
+   color:#00A5f1 !important;
+}
+h1{
+    font-size: 24px !important;
+    font-weight:normal;
+}
+h2{
+    font-size: 18px !important;
+    font-weight:normal !important;
+}
+body{
+    font-family: 'Arial','verdana',sans-serif;
+    
+    color:#585858;
+}
+h2.black,h3,h4{
+    color:#FF6E01 !important;
+    
+}
+a, a:hover,a:visited{
+    color:#00A5f1;
+}
+.grey{
+    color:#585858;
+}
+p{
+    font-size: 12px;
+    color:#585858;
+}
+.two_column_right > div{
+    background-color:#00A5f1 !important;
+}
+.two_column_right > div > p.small{
+    color: #fff !important;
+}
+.two_column_right > div.two_column_right_inner,
+.two_column_right > div.green_fold{
+    background-color:#FFF !important;
+}
+
+
+
+#project_status{
+    background:#fff;
+    border:1px solid #CCC;
+    color:#585858 !important;
+}
+#project_status  span,
+#project_status  p{
+    color:#585858 !important;
+}
+#project_status h3,
+#project_status a{
+    color:#00A5f1 !important;
+}
+#project_status .status_large{
+    display:none;
+}

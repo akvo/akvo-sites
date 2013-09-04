@@ -1,0 +1,22 @@
+/* CSS Document */
+
+@import 'default.css';
+
+#snsf-wrapper{
+	background-color:#000;
+	color:#fff !important;
+}
+
+#snsf-wrapper a,#snsf-wrapper a:visited{
+color:#09C !important;
+text-decoration:none
+}
+#snsf-wrapper a:hover{
+color:#fff !important;
+text-decoration:none
+}
+
+#snsf-wrapper label{
+color:#fff !important;	
+}
+

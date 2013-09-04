@@ -28,12 +28,12 @@ $et_ptemplate_blog_perpage = isset( $et_ptemplate_settings['et_ptemplate_blog_pe
             <div id="iDivMap"  style="width: 470px; height: 240px; float: left;"></div>
                 <?php
                     $sCountry = get_post_meta($post->ID,'country',true);
-					$sCountry = (strpos($sCountry,'bolivia')!==false) ? 'bolivia' : $sCountry;
+					$sMapCountry = (strpos($sCountry,'bolivia')!==false) ? 'bolivia' : $sCountry;
                     $sCountry = ($sCountry=='none') ? '' : $sCountry;
 
                     $aCategories = wp_get_post_categories($post->ID);
                 if (function_exists('showMap')) {
-                    showMap($sCountry,1);
+                    showMap($sMapCountry,1);
                 }
                 ?>
 

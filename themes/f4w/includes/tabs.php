@@ -61,8 +61,9 @@ global $tabOptions;
                 );
             }
             if(isset($tabOptions['country'])){
+                
                 $aTagIDs = get_tag_ids(array($tabOptions['country']));
-                $args['tag__in']=join(',',$aTagIDs);
+                $args['tag__in']=$aTagIDs;
             }
             //get posts for category
             $aPosts = $wp_query->query($args);
@@ -90,7 +91,8 @@ global $tabOptions;
 
         }
         $aAllPosts = array_merge($aPosts,$aUpdates);
-        //array_unique($aAllPosts);
+        usort($aAllPosts,'order_combined_posts');
+            //array_unique($aAllPosts);
         $aAllPostIDs = wp_list_pluck($aAllPosts, 'ID');
         if(count($aAllPostIDs)>0){
             $aPostTypes = array('post','project_update') ;
@@ -99,7 +101,8 @@ global $tabOptions;
                 'post_type'=>$aPostTypes,
                 'posts_per_page' => (isset($tabOptions['numposts'])) ? $tabOptions['numposts'] : 9,
                 'posts_per_archive_page' => (isset($tabOptions['numposts'])) ? $tabOptions['numposts'] : 9,
-                'paged' => $page
+                'paged' => $page,
+                    'orderby'=>'post__in'
                 );
             //var_dump($args);
             $aPosts = $wp_query->query($args);
@@ -213,7 +216,8 @@ global $tabOptions;
                                     }
                                     $sPostLabelImgClass='cDivProjUpdateImageTag';
                                     //get the project Id to read more link (link to akvo.org site)
-                                    $sReadMoreLink = "http://connect4change.akvoapp.org/en/project/";
+                                    //$sReadMoreLink = "http://connect4change.akvoapp.org/en/project/";
+									$sReadMoreLink = "http://f4winternational.akvoapp.org/en/project/";									
                                     $oProjectId = $wpdb->get_results("SELECT project_id,update_id FROM " . $wpdb->prefix . "project_update_log WHERE post_id = ".$post->ID);
                                     foreach ($oProjectId as $iId){
                                         $iProjectId = $iId->project_id;

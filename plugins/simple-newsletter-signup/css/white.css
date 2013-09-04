@@ -1,0 +1,10 @@
+@import 'default.css';
+
+#snsf-wrapper{
+	background-color:#fff;
+	color:#000 !important;
+}
+
+#snsf-wrapper a,#snsf-wrapper a:visited{
+text-decoration:none
+}

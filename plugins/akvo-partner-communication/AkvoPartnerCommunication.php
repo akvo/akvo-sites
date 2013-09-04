@@ -15,15 +15,15 @@ if (!class_exists("AkvoPartnerCommunication")) {
 		 *
 		 */
 
-		const API_URL_FOR_PROJECTS = 'http://www.akvo.org/api/v1/project/?format=json&partnerships__organisation=';
+		const API_URL_FOR_PROJECTS = 'http://rsr.akvo.org/api/v1/project/?format=json&partnerships__organisation=';
 		//const API_URL_FOR_PROJECTS = 'http://www.akvo.org/rsr/api/projects.json/live-earth/'; // Old Url
-        const API_URL_FOR_COUNTRIES = 'http://www.akvo.org/api/v1/country/?format=json&limit=0';
-        const API_URL_FOR_LOCATIONS = 'http://www.akvo.org/api/v1/project_location/?format=json&limit=';
-        const API_URL_FOR_PARTNERS = 'http://www.akvo.org/api/v1/organisation/?format=json&distinct=true&partnerships__in=';
+        const API_URL_FOR_COUNTRIES = 'http://rsr.akvo.org/api/v1/country/?format=json&limit=0';
+        const API_URL_FOR_LOCATIONS = 'http://rsr.akvo.org/api/v1/project_location/?format=json&limit=';
+        const API_URL_FOR_PARTNERS = 'http://rsr.akvo.org/api/v1/organisation/?format=json&distinct=true&partnerships__in=';
 		/**
 		 *
 		 */
-		const API_URL_FOR_PROJECT_UPDATES = 'http://www.akvo.org/api/v1/project_update/?project__partnerships__organisation=';
+		const API_URL_FOR_PROJECT_UPDATES = 'http://rsr.akvo.org/api/v1/project_update/?project__partnerships__organisation=';
 
 		/**
 		 *
@@ -126,10 +126,14 @@ if (!class_exists("AkvoPartnerCommunication")) {
 
 			if (!empty($_POST['optionssubmit'])) {
 				//after form submit action
+				//$sDataUrl = $_POST['akvo_partner_communication'];
 				$sOrgId = $_POST['org_id'];
+				//$sOptionsTable = $sPrefix . "options";
 				//get options
 				$sSiteUrl = get_option('siteurl'); //$wpdb->get_row("SELECT option_value FROM  $sOptionsTable WHERE `option_name` LIKE 'siteurl'");
 				//save new option
+//				$wpdb->query("UPDATE $sOptionsTable SET option_value = '$sDataUrl' WHERE option_name = 'akvo_partner_communication'");
+//				$sOptionValue = $sDataUrl;
 				//save partner data (common table data)
 				$oExRecords = $wpdb->get_row("SELECT prefix FROM  $sTblName WHERE prefix = '$sPrefix'");
 				if (!empty($oExRecords)) {
@@ -141,32 +145,23 @@ if (!class_exists("AkvoPartnerCommunication")) {
 				}
 				$sExOrgId = $sOrgId;
 
-				$sReadUrlButton = '
-				<div>
-					<h2>Read Data</h2>
-					<form action="" method="post">
-						<input type="submit" name="runurlsubmit" value="Run!!"/>
-					</form>
-				</div>
-				';
+				
+                $sReadUrlButton = 'Run';
+                $sCount = '';
 			}
 
 			if (!empty($_POST['runurlsubmit'])) {
 				$oAkvo = new AkvoPartnerCommunication();
 				$aProjectListing = $oAkvo->readProjectDetails();
 				//var_dump($aProjectListing);
-                /// get and save organisation projects, partners and locations
+                
 				$oAkvo->flushProjectDetails($sPrefix);
 				$oAkvo->saveProjectDetails($aProjectListing, $sPrefix);
                 $oAkvo->saveProjectPartners($aProjectListing, $sPrefix);
-				$sReadUrlButton = '
-				<div>
-					<h2>Read Data</h2>
-					<form action="" method="post">
-						<input type="submit" name="runurlsubmit" value="Run again!!"/>
-					</form>
-				</div>
-				'.count($aProjectListing).' Projects found';
+				
+                $sReadUrlButton = 'Run again';
+                $sCount = count($aProjectListing).' Projects found';
+                
 			}
 
 
@@ -183,7 +178,14 @@ if (!class_exists("AkvoPartnerCommunication")) {
 			wp_nonce_field('update-options');
 
 			echo "<table width='900'>";
-
+//			echo "<tr valign='top'>";
+//			echo "<th width='92' scope='row'>Enter URL</th>";
+//			echo "<td width='800'>";
+//			echo "<input name='akvo_partner_communication' type='text' id='akvo_partner_communication'
+//			value='" . $sOptionValue . "'; />
+//			";
+//			echo "</td>";
+//			echo "</tr>";
 			echo "<th width='92' scope='row'>Enter Organisation ID</th>";
 			echo "<td width='800'>";
 			echo "<input name='org_id' type='text' id='org_id'
@@ -195,15 +197,24 @@ if (!class_exists("AkvoPartnerCommunication")) {
 
 			echo "<input type='hidden' name='action' value='update' />";
 			echo "<input type='hidden' name='page_options' value='akvo_partner_communication' />";
-
-			echo "<p>";
-			echo "<input type='submit' name='optionssubmit' value='Save Changes'/>";
-			echo "</p>";
+            submit_button('Save Changes','primary','optionssubmit');
+//			echo "<p>";
+//			echo "<input type='submit' name='optionssubmit' value='Save Changes'/>";
+//			echo "</p>";
 
 			echo "</form>";
 			echo "</div>";
-
-			echo $sReadUrlButton;
+if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
+			echo '
+				<div>
+					<h2>Read Data</h2>
+					<form action="" method="post">
+						';
+            submit_button('Run', 'primary', 'runurlsubmit');
+			echo '</form>
+				</div>';
+            echo $sCount;
+}
 		}
 
 		/**
@@ -385,7 +396,7 @@ if (!class_exists("AkvoPartnerCommunication")) {
 		 *
 		 * @global type $wpdb
 		 */
-		public function saveProjectDetails($aProjectListing, $sPrefix) {
+		public function saveProjectDetails($aProjectListing, $sPrefix, $iOrgID = null) {
 
 			global $wpdb;
 
@@ -396,8 +407,10 @@ if (!class_exists("AkvoPartnerCommunication")) {
             $aPartnerUrls=array();
             //temp country import while in development
             
-            $aCoordinates = $this->readLocations();
-
+            $aCoordinates = $this->readLocations($iOrgID);
+//            echo '<pre>';
+//            var_dump($aCoordinates);
+//            echo '</pre>';
             $aCountries = array('bangladesh','benin','ethiopia','ghana','kenya','mali','nepal','uganda');
 			// Iterate through the list of Projects and Insert them
 			foreach ($aProjectListing as $aProjectDetail) {
@@ -415,10 +428,13 @@ if (!class_exists("AkvoPartnerCommunication")) {
                     $aInput['country'] = $aCoordinates[$sLocationUrl]['country'];
                     $aInput['longitude'] = $aCoordinates[$sLocationUrl]['longitude'];
                     $aInput['latitude'] = $aCoordinates[$sLocationUrl]['latitude'];
-
+//                   echo '<pre>';
+//            var_dump($aInput);
+//			echo '</pre>';
                 }
 				$wpdb->insert($sTableName, $aInput);
                 if($aProjectDetail['locations']!=null){
+                    
                     foreach($aProjectDetail['locations'] AS $sLocationUrl){
                         $aInputLocation = array(
                             'project_id' => $aProjectDetail['id'],
@@ -476,10 +492,11 @@ if (!class_exists("AkvoPartnerCommunication")) {
             }
             return $aObjects;
         }
-        public function readLocations(){
+        public function readLocations($iOrgID=null){
             $aCountries = $this->readCountries();
-            $iLimit = 1000 + (int)date('z') + (int)date('G');
-            $sLocations = file_get_contents(self::API_URL_FOR_LOCATIONS.$iLimit);
+            $iLimit = 2000 + (int)date('z') + (int)date('G');
+            $iOrgID = ($iOrgID) ? $iOrgID : $this->getProjectDetailReaderURLOption();
+            $sLocations = file_get_contents(self::API_URL_FOR_LOCATIONS.$iLimit.'&project__partnerships__organisation='.$iOrgID);
             $aLocations = json_decode($sLocations,true);
             $aObjects = array();
             foreach($aLocations['objects'] AS $aLocation){
@@ -636,7 +653,18 @@ if (!class_exists("AkvoPartnerCommunication")) {
         
         public function readProjectUpdatesFromDbByCountry($sCountry){
             global $wpdb;
-            $sQuery = "SELECT wpul.post_id FROM ".$wpdb->prefix.self::TBL_PROJUPDATES." wpul JOIN ".$wpdb->prefix."projects wpp ON wpp.project_id = wpul.project_id WHERE wpp.country='".$sCountry."'";
+            $sQuery = "SELECT wpul.post_id FROM ".$wpdb->prefix.self::TBL_PROJUPDATES." wpul JOIN ".$wpdb->prefix."project_locations wpp ON wpp.project_id = wpul.project_id WHERE wpp.country='".$sCountry."'";
+            //var_dump($sQuery);
+            $oPostIDs = $wpdb->get_results($sQuery,ARRAY_A);
+            $aIDs = array();
+            foreach($oPostIDs AS $oPost){
+                $aIDs[]=$oPost['post_id'];
+            }
+            return $aIDs;
+        }
+        public function readProjectUpdatesFromDbForTabs(){
+            global $wpdb;
+            $sQuery = "SELECT wpul.post_id FROM ".$wpdb->prefix.self::TBL_PROJUPDATES." wpul";
             //var_dump($sQuery);
             $oPostIDs = $wpdb->get_results($sQuery,ARRAY_A);
             $aIDs = array();
@@ -647,7 +675,7 @@ if (!class_exists("AkvoPartnerCommunication")) {
         }
         public static function readProjectUpdateCountry($iUpdateID){
             global $wpdb;
-            $sQuery = "SELECT wpp.country FROM ".$wpdb->prefix."projects wpp JOIN ".$wpdb->prefix.self::TBL_PROJUPDATES." wpul ON wpp.project_id = wpul.project_id WHERE wpul.post_id='".$iUpdateID."'";
+            $sQuery = "SELECT wpp.country FROM ".$wpdb->prefix."project_locations wpp JOIN ".$wpdb->prefix.self::TBL_PROJUPDATES." wpul ON wpp.project_id = wpul.project_id WHERE wpul.post_id='".$iUpdateID."'";
             $oCountry = $wpdb->get_results($sQuery);
             if(count($oCountry)>0){
                 return $oCountry[0]->country;
@@ -818,7 +846,66 @@ if (!class_exists("AkvoPartnerCommunication")) {
                                 'thumbnail')
                             ) 
                         );
-
+//            register_post_type('local alliances', 
+//              array(	
+//                'label' => 'Local alliances',
+//                  'description' => '',
+//                  'public' => true,
+//                  'show_ui' => true,
+//                  'show_in_menu' => true,
+//                  'show_in_nav_menus' => true,
+//                  'has_archive'=>true,
+//                  'capability_type' => 'post',
+//                  'rewrite' => array('slug' => 'local-alliances'),
+//                  'query_var' => true,
+//                  'exclude_from_search' => false,
+//                  'supports' => array(
+//                      'title',
+//                      'editor',
+//                      'excerpt',
+//                      'trackbacks',
+//                      'custom-fields',
+//                      'comments',
+//                      'revisions',
+//                      'thumbnail',
+//                      'author',
+//                      'taxonomy',
+//                      'page-attributes'),
+//                  'labels' => array (
+//                  'name' => 'Local alliances',
+//                  'singular_name' => 'Local alliance',
+//                  'menu_name' => 'Local alliances',
+//                  'add_new' => 'Add Local alliance',
+//                  'add_new_item' => 'Add New Local alliance',
+//                  'edit' => 'Edit',
+//                  'edit_item' => 'Edit Local alliance',
+//                  'new_item' => 'New Local alliance',
+//                  'view' => 'View Local alliance',
+//                  'view_item' => 'View Local alliance',
+//                  'search_items' => 'Search Local alliances',
+//                  'not_found' => 'No Local alliances Found',
+//                  'not_found_in_trash' => 'No Local alliances Found in Trash',
+//                  'parent' => 'Parent Local alliance'
+//                )
+//                  ) 
+//              );
+//            
+//            register_post_type('vacancies', array(	'label' => 'Vacancies','description' => '','public' => true,'show_ui' => true,'show_in_menu' => true,'capability_type' => 'post','hierarchical' => false,'rewrite' => array('slug' => 'vacancies'),'query_var' => true,'exclude_from_search' => false,'supports' => array('title','editor','excerpt','trackbacks','custom-fields','comments','revisions','thumbnail','author','page-attributes',),'labels' => array (
+//              'name' => 'Vacancies',
+//              'singular_name' => 'vacancy',
+//              'menu_name' => 'Vacancies',
+//              'add_new' => 'Add vacancy',
+//              'add_new_item' => 'Add New vacancy',
+//              'edit' => 'Edit',
+//              'edit_item' => 'Edit vacancy',
+//              'new_item' => 'New vacancy',
+//              'view' => 'View vacancy',
+//              'view_item' => 'View vacancy',
+//              'search_items' => 'Search Vacancies',
+//              'not_found' => 'No Vacancies Found',
+//              'not_found_in_trash' => 'No Vacancies Found in Trash',
+//              'parent' => 'Parent vacancy',
+//            ),) );
             
             
         }  
