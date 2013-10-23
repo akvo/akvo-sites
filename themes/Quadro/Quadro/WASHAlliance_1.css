@@ -1,0 +1,405 @@
+
+@font-face {
+    font-family: 'museo_sans_500regular';
+    src: url('/wp-content/themes/Quadro/fonts/museosans_500-webfont.eot');
+    src: url('/wp-content/themes/Quadro/fonts/museosans_500-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/wp-content/themes/Quadro/fonts/museosans_500-webfont.woff') format('woff'),
+		url('/wp-content/themes/Quadro/fonts/museosans_500-webfont.ttf') format('truetype'),
+		url('/wp-content/themes/Quadro/fonts/museosans_500-webfont.svg#museo_sans_500regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+	font-family: 'Arial','verdana',sans-serif;
+	font-size: 14px;
+	color: #A1A1A1;
+	background: #F5F5F5; /*d3f1ff*/
+}
+
+
+/* Heading 1 - kleur van Find Projects    */
+h1 {
+	color:#2097F7;
+	font-size: 1.625em;
+	font-weight: normal;
+	line-height: 1.2em;
+}
+
+.white {
+    color: white;
+}
+
+.tiny {
+	font-size: .7500em;
+}
+
+.pad_top10{
+	padding-top: 0px; }
+
+.container .small.marg_left20 { padding: 0px; }
+
+.bottom_gradient_bar { background: none; }
+.bottom_gradient_bar .container { position: relative; }
+.bottom_gradient_bar .container .small.marg_left20 {
+	position: absolute; right: 0; top: 110px;
+}
+
+.bottom_gradient_bar .container .small a,
+.bottom_gradient_bar .container .small a:link,
+.bottom_gradient_bar .container .small a:visited {
+	display: block; height: 20px; padding: 10px;
+	text-decoration: none; line-height: 25px;
+	background: #71716b; color: #fff;
+	-moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
+}
+.bottom_gradient_bar .container .small a:hover {
+	background: #333333; color: #00bbf9;
+}
+
+.top_gradient_bar { background: none; }
+.top_gradient_bar.pad_bottom10 { padding-bottom: 0; }
+
+#breadcrum_back {
+	/*	border: 0 none;
+		font-weight: bold;*/
+	background-color: #F5F5F5;
+	color: #585858;
+	border: none;
+
+	/*	-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		border-radius: 10px;*/
+}
+
+ul.breadcrum { font-size: 16px; color: #585858; }
+ul.breadcrum li a { color: #585858; }
+
+.last_breadcrum_item {
+	color: #585858; /* text kleur */
+}
+
+#breadcrum ul li a span {
+	background: none;
+}
+
+/*.breadcrum_back {
+border: none;
+font-weight: bold;
+color: fff;
+background: #d3f1ff;  kleur navigatiebalk
+-moz-border-radius: 0px;
+-webkit-border-radius: 0px;
+border-radius: 0px;
+border-image: initial;
+padding: 0px;
+}*/
+
+.marg_left20 {
+	margin-left: 10px;
+}
+
+
+
+.table_top,.table_bottom
+{
+	font-size:.8200 em;
+	background-color: #333333; /* kleur van de table header en footer balk */
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	padding:10px;
+	color:#fff;	/* kleur van text in table header en footer */
+}
+
+.table_top
+{
+	border-top: 1px solid #ccc;
+	border-top-left-radius:0px;
+	border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-right-radius:0px;
+	-webkit-border-top-left-radius:0px;
+}
+
+.table_bottom
+{
+	border-bottom: 1px solid #ccc;
+	border-bottom-left-radius:0px;
+	border-bottom-right-radius:0px;
+	-moz-border-radius-bottomright:0px;
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+}
+
+
+
+a, a:link, a:visited
+{
+	color: #00A0D5;  /* kleur van alle links */
+
+}
+
+
+
+.greybox
+{
+	border: 0px solid #CCC;  /* rand zoekbox */
+	background-color: #d3f1ff;  /* background zoekbox */
+	-moz-border-radius: 0px;    /* radius ronde hoekjes */
+	-webkit-border-radius: 0px; /* radius ronde hoekjes */
+	border-radius: 0px; /* radius ronde hoekjes */
+}
+
+span.tiny.grey {
+	color:#71716b	/* kleur kleine text in zoekbox */
+
+}
+
+a.tiny {
+
+	color:#71716b;
+
+}
+
+/* kleur en border van linker brand area */
+.whitebox.fixed_height_250px {
+	background:none;
+	border:none;
+}
+
+
+
+
+
+
+/* new classes Added by uthpala */
+.two_column_left {
+	width: 627px;
+	color: #A1A1A1;
+
+}
+
+.two_column_left p {
+/*	color: #585858;*/
+}
+
+.two_column_left h2 {
+	color: #00A0D5;
+}
+
+.two_column_left a {
+	text-decoration:none
+}
+
+.grey {
+	color: #FF6E01;
+	font-style: italic;
+}
+
+.green_fold {
+	display: none;
+	font-size: 0;
+}
+
+.two_column_right_inner {
+	background-color: #ffffff;
+	border-left: 1px solid #D6D6D6 !important;
+	border-right: 1px solid #D6D6D6 !important;
+	border-top: 1px solid #D6D6D6 !important;
+}
+.two_column_right_inner[style="margin-top:20px;"] {
+	border-top: 1px solid #D6D6D6 !important;
+	border-bottom: 1px solid #D6D6D6 !important;
+}
+.two_column_right_inner[style="background-color:#fff;"] {
+	border-top: none !important;
+}
+.white_box {
+	border: none;
+}
+div[style="margin-top:35px;"] div.white_box div.space20 h3,
+div[style="margin-top:35px;"] div.white_box div.space20 > p {
+	display: none;
+}
+
+
+
+#project_status {
+	background-image: none;
+	background-color: #ffffff;
+	border-radius: 0px;
+	border: 1px solid #D6D6D6;
+}
+.round {
+	border: none;
+	background-color: #ffffff;
+}
+
+.fundingbox-progress-bar {
+	display: none;
+}
+
+.orange.awesome{
+	background-color: #F5F5F5;
+	color: #A1A1A1;
+}
+
+.status_large {
+	display: none;
+}
+
+.small grey {
+	display: block;
+}
+
+.aqua.awesome .aqua.awesome {
+	background-color: #333333;
+	color: #ffffff;
+}
+
+.round {
+	border: none !important;
+	background-color: #ffffff !important;
+}
+
+ul#breadcrum li a span {
+	background: transparent url(/wp-content/themes/Quadro/images/breadcrumb_arrow.png) no-repeat right !important;
+}
+
+.status_large {
+	display: none !important;
+}
+
+#project_status h3 {
+	display: none !important;
+}
+
+.fundingbox-table {
+	border-spacing: 5px !important;
+	border-collapse: separate !important;
+}
+.fundingbox-table tbody * {
+	color: #FF6E01;
+	font-style: italic;
+	margin: 5px;
+}
+
+.fundingbox-table tbody tr td {
+	background-color: #4B4B4B;
+	width: 100px;
+/*	height: 20px;*/
+	border-radius: 5px;
+	padding: 5px !important;
+	text-align: center;
+	color: #FFFFFF;
+	font-size: 14px;
+}
+#project_status p.small.space0 > a {
+	display: none !important;
+}
+#project_status .orange.awesome,
+#project_status .orange.awesome:hover {
+	width: 186px !important;
+	height: 38px !important;
+	border: 1px solid #D3D3D3 !important;
+	color: #636363 !important;
+	font-size: 18px !important;
+	font-weight: normal;
+	line-height: 38px !important;
+	background-image: none !important;
+	background-color: #F4F4F4 !important;
+	text-shadow: none !important;
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+}
+
+#project_tabs ul {
+	list-style-type: none !important;
+	list-style-image: none !important;
+    margin-left: 0 !important;
+    padding: 0 !important;
+	text-align:center !important;
+}
+
+#project_tabs ul li {
+	float: left !important;
+	height:32px !important;
+	padding-bottom: 10px !important;
+/*	text-align:center !important;*/
+	border: 1px solid #D3D3D3 !important;
+	border-radius: 5px !important;
+	width: 90px !important;
+	height: 20px !important;
+	margin: 2px !important;
+/*	background: url(/wp-content/themes/Quadro/images/catbtn.png) no-repeat*/
+}
+
+#project_tabs ul li a,  #project_tabs ul li a span {
+	background: transparent !important;
+	background-image: none !important;
+	font-size: 12px !important;
+	padding-left: 5px !important;
+
+}
+
+#project_tabs ul li a span:hover {
+	color: #FF6E01;
+}
+
+.ui-tabs-nav .ui-tabs-selected a {
+	color: #FF6E01;
+}
+
+div[style="background-color:#AFF167;padding:2px; padding-left:15px;"] {
+	display: none;
+	font-size: 0;
+}
+
+div[style="float:right; width:116px; height: 100px; text-align:right;"] {
+	display: none;
+}
+
+div[style="float:left; width:175px;"] {
+	width: 290px;
+}
+div[style="border:1px solid #ccc; border-top:none; margin-bottom:10px;"] {
+	margin-bottom: 0 !important;
+	border: none !important;
+}
+.counter_badge {
+	display: none !important;
+}
+
+#tab_background, .ui-tabs-panel {
+	border: none !important;
+}
+
+div[style="float:right; width:166px; margin-left:15px;"] {
+	display: none !important;
+}
+
+.aqua.awesome, .aqua.awesome:visited {
+	background-color: #5D5D5D !important;
+	color: #FFFFFF !important;
+}
+
+.two_column_left div[style="margin-top:35px;"] {
+	border: 1px solid #D3D3D3 !important;
+	background-color: #FFFFFF;
+}
+
+.two_column_left div[style = "background-color:#fff;"] {
+	border: 1px solid #D3D3D3 !important;
+}
+
+#map_canvas {
+	width: 262px !important;
+	height: 182px !important;
+	padding: 2px !important;
+	border: 1px solid #D3D3D3 !important;
+}
+
+

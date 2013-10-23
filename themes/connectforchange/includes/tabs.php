@@ -91,6 +91,7 @@ global $tabOptions;
 
             }
             $aAllPosts = array_merge($aPosts,$aUpdates);
+            usort($aAllPosts,'order_combined_posts');
             //array_unique($aAllPosts);
             $aAllPostIDs = wp_list_pluck($aAllPosts, 'ID');
             if(count($aAllPostIDs)>0){
@@ -100,7 +101,8 @@ global $tabOptions;
                     'post_type'=>$aPostTypes,
                     'posts_per_page' => (isset($tabOptions['numposts'])) ? $tabOptions['numposts'] : 9,
                     'posts_per_archive_page' => (isset($tabOptions['numposts'])) ? $tabOptions['numposts'] : 9,
-                    'paged' => $page
+                    'paged' => $page,
+                    'orderby'=>'post__in'
                     );
                 //var_dump($args);
                 $aPosts = $wp_query->query($args);

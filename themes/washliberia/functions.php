@@ -29,5 +29,8 @@ function widget_akvo_data() {
 	if ( function_exists('register_sidebar_widget') )
 	    wp_register_sidebar_widget('akvo-data',__('Akvo data'), 'widget_akvo_data');
 	
-		
+function akvo_project_domain(){
+    add_option( 'akvo_project_domain', 'http://wash-liberia.akvoapp.org/en');
+}
+add_action('init', 'akvo_project_domain');		
 ?>

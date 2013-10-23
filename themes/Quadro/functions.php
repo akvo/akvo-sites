@@ -249,5 +249,50 @@ function wash_the_content_filter($content) {
 add_filter( 'the_content', 'wash_the_content_filter' );
 add_filter( 'the_title', 'wash_the_content_filter' );
 
+
+// Add the Style Dropdown Menu to the second row of visual editor buttons
+function my_mce_buttons_2($buttons)
+{
+	array_unshift($buttons, 'styleselect');
+	return $buttons;
+}
+add_filter('mce_buttons_2', 'my_mce_buttons_2');
+function my_mce_before_init($init_array)
+	{
+		// Now we add classes with title and separate them with;
+		$style_formats = array(  
+		// Each array child is a format with it's own settings
+		array(  
+			'title' => 'super header',  
+			'block' => 'h1',  
+			'classes' => 'superheader',
+			'wrapper' => false,
+			
+		)
+	);  
+	// Insert the array, JSON ENCODED, into 'style_formats'
+	$init_array['style_formats'] = json_encode( $style_formats ); 
+	return $init_array;
+}
+
+add_filter('tiny_mce_before_init', 'my_mce_before_init');
+add_editor_style('editor.css');
+
+function order_combined_posts($a,$b){
+    $stampA = strtotime($a->post_date);
+    $stampB = strtotime($b->post_date);
+    if($stampA==$stampB){
+        return 0;
+    }
+    return ($stampA < $stampB) ? 1 : -1;
+}
+
+function akvo_debug_dump($a){
+    if(in_array($_SERVER['REMOTE_ADDR'],array('84.80.116.254','77.249.187.100'))){
+        echo '<pre>';
+        var_dump($a);
+        echo '</pre>';
+    }
+}
 // end the_breadcrumbs()
 	?>

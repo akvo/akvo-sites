@@ -207,7 +207,7 @@ class ApiTwitter {
     
     $cachename = $query."-".$this->getOptionsHash($options);
     
-    $options = array_merge($options, array('q' => $query, 'count' => 20));
+    $options = array_merge($options, array('q' => $query, 'count' => 20,'result_type'=>'recent','until'=>date('Y-m-d',strtotime('+1 day'))));
     
     if (empty($key)) return array('error'=>'Missing Consumer Key - Check Settings');
     if (empty($secret)) return array('error'=>'Missing Consumer Secret - Check Settings');
@@ -237,7 +237,7 @@ class ApiTwitter {
         $this->st_last_error = $last_error;
       }
     }
-    
+    //var_dump($result);
     return $result;
   
   }

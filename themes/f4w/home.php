@@ -15,9 +15,13 @@
             <?php endif; ?>
 
                 <?php
-                $latestvideo = AkvoSiteConfig::getLatestVideo('Footballforwater');
-                $post = (object)$latestvideo;
+                $args['post_type']='project_update';
+                $args['posts_per_page']='2';
+                $query = new WP_Query();
+                $updates = $query->query($args);
+                $post = $updates[0];
                 get_template_part('includes/entry');
+                
                 $args['post_type']='post';
                 $args['posts_per_page']='1';
 				$aExclude=get_category_ids(array('partners'));
@@ -27,22 +31,25 @@
                 if ( $posts ) : foreach ($posts AS $post ) :
                     get_template_part('includes/entry');
                 endforeach;endif;
+                
+                $post = $updates[1];
+                get_template_part('includes/entry');
+                
+                $latestvideo = AkvoSiteConfig::getLatestVideo('Footballforwater');
+                $post = (object)$latestvideo;
+                get_template_part('includes/entry');
+                
+                
                 // Restore original Query & Post Data
 		wp_reset_query();
 		wp_reset_postdata();
-                $args['post_type']='project_update';
-                $args['posts_per_page']='2';
-                $query = new WP_Query();
-                $updates = $query->query($args);
-                if ( $updates ) : foreach ($updates AS $post ) :
-                    get_template_part('includes/entry');
-                endforeach;endif;
+                
 			?>
 
 			<div style="clear: both;"></div>
 
 
-			<?php  wp_reset_query(); ?>
+			<?php  //wp_reset_query(); ?>
 
 
 		</div> <!-- end #left-div -->

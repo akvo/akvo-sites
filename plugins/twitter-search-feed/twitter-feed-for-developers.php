@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Twitter search feed
+Plugin Name: Twitter feed list
 Plugin URI: http://kominski.net/dev/plugins/twitter-search-feed.zip
 Description: Twitter API 1.1 compliant plugin that provides a widget displaying a search query feed.
 Version: 1.0
@@ -63,6 +63,7 @@ class oAuth_Twitter_Widget extends WP_Widget {
         $newstr = str_replace($order, $replace, $query);
         $newstr = str_replace('@', 'from:', $newstr);
         if($query != '')$search_query=$newstr;
+        //var_dump($search_query);
         ?>
 				
             <div id="twitter-widget" class="widget twitter">
@@ -74,6 +75,7 @@ class oAuth_Twitter_Widget extends WP_Widget {
                        // var_dump($tweets);
                         foreach($tweets AS $tweet){
                             //make html links for urls, users and hashtags
+                            if(!is_array($tweet))continue;
                             $tweet['text'] = filterTweetContent($tweet['text']);
                             ?>
                     <div class="tweet">
@@ -113,7 +115,7 @@ class oAuth_Twitter_Widget extends WP_Widget {
 		<p>
             
 		<br /><label for="<?php echo $this->get_field_id( 'query' ); ?>">Enter @usernames or #hashtags to follow. One per line.</label> 
-        <br /><textarea  id="<?php echo esc_attr($this->get_field_id('query')); ?>" name="<?php echo esc_attr($this->get_field_name('query')); ?>" type="text" ><?php echo $query; ?></textarea>
+        <br /><textarea  id="<?php echo esc_attr($this->get_field_id('query')); ?>" name="<?php echo esc_attr($this->get_field_name('query')); ?>" type="text" rows="10" ><?php echo $query; ?></textarea>
 		<br /><label for="<?php echo $this->get_field_id( 'display_limit' ); ?>"><?php _e( 'limit:' ); ?></label> 
         <br /><input  id="<?php echo esc_attr($this->get_field_id('display_limit')); ?>" name="<?php echo esc_attr($this->get_field_name('display_limit')); ?>" type="text" value="<?php echo $limit; ?>">
 		
@@ -121,3 +123,4 @@ class oAuth_Twitter_Widget extends WP_Widget {
 		<?php 
 	}
 }
+?>

@@ -171,7 +171,12 @@ h2.project_update a{
     margin:0 auto;
     display:block;
 }
-
+#iDivTabType{
+    color:#FFF;
+}
+.cUlBlogCats li a {
+ font-family: Arial,Verdana,sans-serif;   
+}
 #iDivCustomWrapper {
     min-height: 100%;
 
@@ -460,6 +465,7 @@ width:980px;
 #footer div.memberwidget{
 	float:left;
 	width:70%;
+	width:75%;
 	margin-bottom:20px;
 }
 #footer div.memberwidget h2{
@@ -474,6 +480,7 @@ margin-right:9px;
 #footer > div#iDivPoweredBy{
     float:right;
 	width:30%;
+	width:25%;
 	margin-top:5px;
 }
 #iDivPoweredBy #iDivPoweredByText{
@@ -544,6 +551,10 @@ margin: 15px 0px;
 }
 .no_sidebar {
 width: 930px !important;
+}
+
+#projectupdates.fullwidth {
+width: 957px !important;
 }
 /**bxslider**/
 /**
@@ -757,4 +768,17 @@ z-index:500;
     top: 0px;
     left: 245px;
     z-index: -2;*/
+}
+.mc_signup_submit{
+    text-align:right;
+}
+input[type="submit"]#mc_signup_submit{
+   background-color:#03abe3;
+   font-weight:bold;
+   color:#FFF;
+   border:0px;
+   margin-top:20px;
+}
+input#mc_mv_EMAIL{
+    width:175px;
 }

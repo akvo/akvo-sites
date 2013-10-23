@@ -1,0 +1,18 @@
+/* CSS Document */
+
+@import 'default.css';
+
+#snsf-wrapper{
+	background-color:#069;
+	color:#fff !important;
+}
+
+#snsf-wrapper a,#snsf-wrapper a:visited{
+color:#000;
+text-decoration:none
+}
+#snsf-wrapper a:hover{
+color:#fff;
+text-decoration:none
+}
+

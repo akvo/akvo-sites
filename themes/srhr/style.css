@@ -64,6 +64,7 @@ color: #303030;
     height: 50px;
     width: 50px;
     position: absolute;
+    margin: 0px;
 }
 .cDivNewsPostImageTag.entry {
  margin-top:  156px;
