@@ -6,7 +6,7 @@ LOG_FILE_NAME="proj_updates_log_$LOG_TIME_STAMP.html"
 LOG_FILE="/var/log/akvo/sites/$LOG_FILE_NAME"
 LOG_FILE_URL="http://akvofoundation.org/log/sites/$LOG_FILE_NAME"
 
-for organisation_id in 272 275 539 912 1060 1061 1093
+for organisation_id in 272 275 539 912 1060 1061 1093 1151
 do
     echo "Updating organisation $organisation_id"
     printf "<br />[`date --rfc-3339=seconds`]<br />" >> $LOG_FILE
