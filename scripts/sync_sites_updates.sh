@@ -1,9 +1,11 @@
 #!/bin/bash
 
+mkdir -p /var/akvo/akvosites/logs/cron/
+
 SYNC_SITES_UPDATES_SCRIPT="http://akvofoundation.org/syncUpdates.php"
 LOG_TIME_STAMP=`date +%Y%m%d_%H%M%S`
 LOG_FILE_NAME="sync_updates_log_$LOG_TIME_STAMP.html"
-LOG_FILE="/var/log/akvo/sites/$LOG_FILE_NAME"
+LOG_FILE="/var/akvo/akvosites/logs/cron/$LOG_FILE_NAME"
 LOG_FILE_URL="http://akvofoundation.org/log/sites/$LOG_FILE_NAME"
 
 printf "<br />[`date --rfc-3339=seconds`]<br />" >> $LOG_FILE

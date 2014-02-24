@@ -1,9 +1,11 @@
 #!/bin/bash
 
+mkdir -p /var/akvo/akvosites/logs/cron/
+
 RUN_PROJ_UPDATES_SCRIPT="http://akvofoundation.org/updateAkvoSite.php?id_organisation"
 LOG_TIME_STAMP=`date +%Y%m%d_%H%M%S`
 LOG_FILE_NAME="proj_updates_log_$LOG_TIME_STAMP.html"
-LOG_FILE="/var/log/akvo/sites/$LOG_FILE_NAME"
+LOG_FILE="/var/akvo/akvosites/logs/cron/$LOG_FILE_NAME"
 LOG_FILE_URL="http://akvofoundation.org/log/sites/$LOG_FILE_NAME"
 
 for organisation_id in 272 275 539 815 912 1060 1061 1093 1151
