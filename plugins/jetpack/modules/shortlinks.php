@@ -4,6 +4,8 @@
  * Module Description: Enable WP.me-powered shortlinks for all of your Posts and Pages for easier sharing.
  * Sort Order: 10
  * First Introduced: 1.1
+ * Requires Connection: Yes
+ * Auto Activate: Yes
  */
 
 add_filter( 'get_shortlink', 'wpme_get_shortlink_handler', 1, 4 );

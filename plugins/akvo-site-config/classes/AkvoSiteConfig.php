@@ -43,27 +43,57 @@ if (!class_exists("AkvoSiteConfig")) {
                         );
         }
         
-        public static function getLatestVideo($sUserName){
-            $xml = simplexml_load_file(sprintf('http://gdata.youtube.com/feeds/base/users/%s/uploads?alt=rss&v=2&orderby=published', $sUserName));
+        public static function getLatestVideo($sUserName, $iOffset=0){
+            $xml = simplexml_load_file(sprintf('http://gdata.youtube.com/feeds/api/users/%s/uploads?alt=rss', $sUserName));
             $avideo = array();
-            if ( ! empty($xml->channel->item[0]->link) )
+            if ( ! empty($xml->channel->item[$iOffset]->link) )
             {
                 
-                parse_str(parse_url($xml->channel->item[0]->link, PHP_URL_QUERY), $url_query);
+                parse_str(parse_url($xml->channel->item[$iOffset]->link, PHP_URL_QUERY), $url_query);
               
               if ( ! empty($url_query['v']) )
                 $id = $url_query['v'];
                 $img = 'http://img.youtube.com/vi/'.$id.'/0.jpg';
                 $feedURL = 'http://gdata.youtube.com/feeds/api/videos/' . $id;
                 $entry = AkvoYoutube::parseVideoEntry(simplexml_load_file($feedURL));
+                
+                $avideo['id'] = $id;
                 $avideo['image'] = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$img.'&w=271&h=167&zc=1&q=100';
                 $avideo['title'] = (string)$entry->title;
                 $avideo['post_content'] = (string)$entry->description;
                 $avideo['post_type'] = 'video';
-                $avideo['link'] = (string)$xml->channel->item[0]->link;
-                $avideo['date'] = (string)$xml->channel->item[0]->pubDate;
+                $avideo['link'] = (string)$xml->channel->item[$iOffset]->link;
+                $avideo['date'] = (string)$xml->channel->item[$iOffset]->pubDate;
                 
                 return $avideo;
+            }
+        }
+        
+        public static function getSecondLatestVideo($sUserName){
+            $xml = simplexml_load_file(sprintf('http://gdata.youtube.com/feeds/api/users/%s/uploads?alt=rss', $sUserName));
+            
+            $avideo = array();
+            if ( ! empty($xml->channel->item[1]->link) )
+            {
+
+                parse_str(parse_url($xml->channel->item[1]->link, PHP_URL_QUERY), $url_query);
+
+              if ( ! empty($url_query['v']) )
+                $id = $url_query['v'];
+                $img = 'http://img.youtube.com/vi/'.$id.'/0.jpg';
+                $feedURL = 'http://gdata.youtube.com/feeds/api/videos/' . $id;
+                $entry = AkvoYoutube::parseVideoEntry(simplexml_load_file($feedURL));
+                //$avideo['id'] = $id;
+				$avideo['image'] = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$img.'&w=271&h=167&zc=1&q=100';
+                $avideo['title'] = (string)$entry->title;
+                $avideo['post_content'] = (string)$entry->description;
+                $avideo['post_type'] = 'video';
+                $avideo['link'] = (string)$xml->channel->item[1]->link;
+                $avideo['date'] = (string)$xml->channel->item[1]->pubDate;
+
+                return $avideo;
+            }else{
+                return false;
             }
         }
 		

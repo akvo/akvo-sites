@@ -20,11 +20,11 @@
  * loaded by timthumb. This will save you having to re-edit these variables
  * everytime you download a new version
 */
-define ('VERSION', '2.8.10');																		// Version of this script 
+define ('VERSION', '2.8.10'); 																		// Version of this script 
 //Load a config file if it exists. Otherwise, use the values below
 if( file_exists(dirname(__FILE__) . '/timthumb-config.php'))	require_once('timthumb-config.php');
 if(! defined('DEBUG_ON') )					define ('DEBUG_ON', false);								// Enable debug logging to web server error log (STDERR)
-if(! defined('DEBUG_LEVEL') )				define ('DEBUG_LEVEL', 1);								// Debug level 1 is less noisy and 3 is the most noisy
+if(! defined('DEBUG_LEVEL') )				define ('DEBUG_LEVEL', 3);								// Debug level 1 is less noisy and 3 is the most noisy
 if(! defined('MEMORY_LIMIT') )				define ('MEMORY_LIMIT', '30M');							// Set PHP memory limit
 if(! defined('BLOCK_EXTERNAL_LEECHERS') ) 	define ('BLOCK_EXTERNAL_LEECHERS', false);				// If the image or webshot is being loaded on an external site, display a red "No Hotlinking" gif.
 
@@ -134,13 +134,17 @@ if(! isset($ALLOWED_SITES)){
 		'imageshack.us',
 		'tinypic.com',
 		'akvofoundation.org',
+		'wvw.akvofoundation.org',
 		'akvo.org',
 		'kominski.nl',
 		'connect4change.nl', 
+		'rain4food.net', 
 		'akvo.com',
 		'youtube.com',
 		'vimeocdn.com',
 		'cocoasustainability.com',
+		'wandelenvoorwater.nl',
+
 		'wordpress.com',
 		'shout-africa.com'
 	);
@@ -841,10 +845,12 @@ if (is_multisite())
     if (isset($blog_id) && $blog_id > 0)
     {
         $docRoot .= '/wp-content/blogs.dir/' . $blog_id . '/';
+        
     }
 }
 		if (defined('LOCAL_FILE_BASE_DIRECTORY')) {
-			$docRoot = LOCAL_FILE_BASE_DIRECTORY;   
+			$docRoot = LOCAL_FILE_BASE_DIRECTORY;  
+            $this->debug(3, "LOCAL_FILE_BASE_DIRECTORY is: " . LOCAL_FILE_BASE_DIRECTORY);
 		}
 		if(!isset($docRoot)){ 
 			$this->debug(3, "DOCUMENT_ROOT is not set. This is probably windows. Starting search 1.");

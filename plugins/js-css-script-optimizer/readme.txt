@@ -3,27 +3,29 @@ Contributors: evgenniy
 Donate link: http://4coder.info/en/
 Tags: performance, javascript, css, script, js, compress, pack, combine, optimization
 Requires at least: 2.8
-Tested up to: 3.4.1
+Tested up to: 3.5.1
 Stable tag: trunk
 
-This plugin will help you make your Website more quick. It can packing and grouping (to make fewer HTTP requests) Java Scripts and CSS files. Also it provides an opportunity to add CSS & JS via admin panel.
+Make your Website faster by packing and grouping JavaScript and CSS files. Also it provides an opportunity to add CSS & JS via admin panel.
 
 == Description ==
 = Features =
-- Combine several scripts into the single file (to minimize http requests)
 - Pack scripts using Dean Edwards's JavaScript Packer
+- Combine several scripts into the single file (to minimize http requests)
 - You can move all JavaScripts to the bottom
 - Combine all CSS scripts into the single files (with grouping by "media")
 - Pack CSS files (remove comments, tabs, spaces, newlines)
 - Ability to include JavaScript and CSS files (new)
-- If any script fails and shows error you can add it to exclude list
+- Network / WPMU support
 
 = Recommendations =
 - This Plugin processes only those scripts that are included properly (using "wp_enqueue_script" or "wp_enqueue_style" function)
 - Uploads directory should be writable
-- Read <a title="Permanent Link to How to properly add CSS in WordPress" rel="bookmark" href="http://4coder.info/en/how-to-properly-add-css-in-wordpress/">How to properly add CSS in WordPress</a>
+- Read <a title="Permanent Link to How to properly add CSS in WordPress" rel="bookmark" href="http://4coder.info/en/blog/2010/how-to-properly-add-css-in-wordpress/">How to properly add CSS in WordPress</a>
+- If any script fails and shows error you can add it to exclude list
+- Check "Strict ordering" option for better compatibility with other plugins <sup>betta</sup>
 
-For more info visit <a title="This WordPress plugin home page" href="http://4coder.info/en/projects/wordpress-plugins/js-css-script-optimizer/">http://4coder.info/en/projects/wordpress-plugins/js-css-script-optimizer/</a>.
+For more info visit <a title="This WordPress plugin home page" href="http://4coder.info/en/code/wordpress-plugins/js-css-script-optimizer/">http://4coder.info/en/code/wordpress-plugins/js-css-script-optimizer/</a>.
 
 == Installation ==
 
@@ -37,6 +39,14 @@ For more info visit <a title="This WordPress plugin home page" href="http://4cod
 1. Ability to include CSS files
 
 == Changelog ==
+= 0.2.5 =
+* Better compatibility with other plugins (betta)
+* Plugin options updated
+* Some minor changes/fixes
+= 0.2.4 =
+* Added WPMU / Network support
+* CSS compression bug has been fixed
+* Some minor changes/fixes
 = 0.2.3 =
 * CSS compression has been improved
 * Ability to add CSS files only for logged in users

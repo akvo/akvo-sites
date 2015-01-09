@@ -40,83 +40,7 @@ class Ai1ec_View_Helper {
 		if( self::$_instance === NULL ) {
 			self::$_instance = new self();
 		}
-
 		return self::$_instance;
-	}
-
-	/**
-	 * Enqueue a script from the admin resources directory (app/view/admin/js).
-	 *
-   * @param string $name Unique identifer for the script
-   * @param string $file Filename of the script
-   * @param array $deps Dependencies of the script
-   * @param bool $in_footer Whether to add the script to the footer of the page
-   *
-	 * @return void
-	 */
-	function admin_enqueue_script( $name, $file, $deps = array(), $in_footer = FALSE ) {
-		if( ! $file || empty( $file ) ) {
-			throw new Ai1ec_File_Not_Provided( "You need to specify a script file." );
-		}
-
-		$_file = AI1EC_ADMIN_THEME_JS_PATH . '/' . $file;
-
-		if( ! file_exists( $_file ) ) {
-			throw new Ai1ec_File_Not_Found( "The specified file " . $_file . " doesn't exist." );
-		} else {
-			$file = AI1EC_ADMIN_THEME_JS_URL . '/' . $file;
-			wp_enqueue_script( $name, $file, $deps, AI1EC_VERSION, $in_footer );
-		}
-	}
-	/**
-	 * Looks in the currently selected theme folder if there is the js file otherwise it falls back to the default template
-	 *
-	 * @param string $file the file to look for
-	 *
-	 * @throws Ai1ec_File_Not_Found if the file is not found
-	 *
-	 * @return string $file the path to the js file
-	 */
-	public function get_path_of_js_file_to_load( $file ) {
-		global $ai1ec_themes_controller;
-		// template path
-		$active_template_path = $ai1ec_themes_controller->active_template_path();
-		// template url
-		$active_template_url = $ai1ec_themes_controller->active_template_url();
-
-		// look for the file in the active theme
-		$themes_root = array(
-				(object) array(
-						'path' => $active_template_path . '/' . AI1EC_JS_FOLDER,
-						'url'  => $active_template_url . '/' . AI1EC_JS_FOLDER
-				),
-				(object) array(
-						'path' => AI1EC_DEFAULT_THEME_PATH . '/' . AI1EC_JS_FOLDER,
-						'url'  => AI1EC_DEFAULT_THEME_URL . '/' . AI1EC_JS_FOLDER
-				),
-		);
-
-		$file_found = false;
-
-		// look for the file in each theme
-		foreach( $themes_root as $theme_root ) {
-			// $_file is a local var to hold the value of
-			// the file we are looking for
-			$_file = $theme_root->path . '/' . $file;
-			if( file_exists( $_file ) ) {
-				// file is found
-				$file_found = true;
-				// assign the found file
-				$file       = $theme_root->url . '/' . $file;
-				// exit the loop;
-				break;
-			}
-		}
-		if( $file_found === false ) {
-			throw new Ai1ec_File_Not_Found( "The specified file '" . $file . "' doesn't exist." );
-		} else {
-			return $file;
-		}
 	}
 
 	/**
@@ -144,7 +68,8 @@ class Ai1ec_View_Helper {
 					$name,
 					$file_path,
 					$deps,
-					AI1EC_VERSION . '-' . get_option( 'ai1ec_themes_version', 1 ),
+					AI1EC_VERSION . '-' .
+						Ai1ec_Meta::get_option( 'ai1ec_themes_version', 1 ),
 					$in_footer
 			);
 		} catch ( Ai1ec_File_Not_Found  $e ) {
@@ -236,7 +161,8 @@ class Ai1ec_View_Helper {
 				$name,
 				$file,
 				$deps,
-				AI1EC_VERSION . '-' . get_option( 'ai1ec_themes_version', 1 )
+				AI1EC_VERSION . '-' .
+					Ai1ec_Meta::get_option( 'ai1ec_themes_version', 1 )
 			);
 		}
 	}
@@ -573,7 +499,7 @@ class Ai1ec_View_Helper {
     global $ai1ec_themes_controller;
 
 		if( ! $file || empty( $file ) ) {
-			throw new Ai1ec_File_Not_Provided( "You need to specify a style file." );
+			throw new Ai1ec_File_Not_Provided( "You need to specify an image file." );
 		}
 
     // template path
@@ -618,23 +544,186 @@ class Ai1ec_View_Helper {
 	}
 
 	/**
-	 * json_response function
-	 *
 	 * Utility for properly outputting JSON data as an AJAX response.
 	 *
 	 * @param array $data
 	 *
 	 * @return void
-	 **/
+	 */
 	function json_response( $data ) {
+		$this->_dump_buffers();
+		header( 'HTTP/1.1 200 OK' );
 		header( 'Cache-Control: no-cache, must-revalidate' );
 		header( 'Pragma: no-cache' );
-		header( 'Content-type: application/json' );
+		header( 'Content-Type: application/json; charset=UTF-8' );
 
 		// Output JSON-encoded result and quit
-		echo json_encode( $data );
+		echo json_encode( ai1ec_utf8( $data ) );
+		return ai1ec_stop( 0 );
+	}
+
+	/**
+	 * Utility for properly outputting JSONP data as an AJAX response.
+	 *
+	 * @param string $data
+	 *
+	 * @param string $callback
+	 *
+	 * @return void
+	 */
+	function jsonp_response( $data, $callback ) {
+		$this->_dump_buffers();
+		header( 'HTTP/1.1 200 OK' );
+		header( 'Content-Type: application/json; charset=UTF-8' );
+
+		// Output JSONP-encoded result and quit
+		echo $callback . '(' . json_encode( ai1ec_utf8( $data ) ) . ')';
+		return ai1ec_stop( 0 );
+	}
+
+	/**
+	 * Dump output buffers before starting output
+	 *
+	 * @return bool True unless an error occurs
+	 */
+	protected function _dump_buffers() {
+		$result = true;
+		while ( ob_get_level() ) {
+			$result &= ob_end_clean();
+		}
+		return $result;
+	}
+
+	/**
+	 * Utility for properly outputting XML data as an AJAX response.
+	 *
+	 * @param array $data
+	 *
+	 * @return void
+	 */
+	function xml_response( $data ) {
+		header( 'Content-Type: text/xml; charset=UTF-8' );
+
+		// Output JSON-encoded result and quit
+		echo Ai1ec_XML_Utility::serialize_to_xml( ai1ec_utf8( $data ) );
 		exit;
 	}
+
+	/**
+	 * url method
+	 *
+	 * Generate page link given stub (base) and arguments to inject.
+	 * Some arguments are treated specially. I.e. 'action', which is
+	 * injected using WP add_query_arg method.
+	 *
+	 * @uses add_query_arg       To inject special query vars
+	 * @uses Ai1ec_Router::uri() To generate final URI
+	 *
+	 * @param string $page Page stub (base) to extend
+	 * @param array  $argv Arguments to add to query
+	 *
+	 * @return string Fully usable URI
+	 */
+	public function url( $page, array $argv = array() ) {
+		global $ai1ec_settings, $ai1ec_router;
+		$action = $ai1ec_settings->default_calendar_view;
+		extract( $argv, EXTR_IF_EXISTS );
+		if ( 0 !== strncmp( $action, 'ai1ec_', 6 ) ) {
+			$action = 'ai1ec_' . $action;
+		}
+		if ( false === strpos( $page, '#' ) ) {
+			add_query_arg( compact( 'action' ), $page );
+		}
+		return $ai1ec_router->uri( $argv, $page );
+	}
+
+	/**
+	 * disable_autosave method
+	 *
+	 * Callback to disable autosave script
+	 *
+	 * @param array $input List of scripts registered
+	 *
+	 * @return array Modified scripts list
+	 */
+	public function disable_autosave( array $input ) {
+		wp_deregister_script( 'autosave' );
+		$autosave_key = array_search( 'autosave', $input );
+		if ( false === $autosave_key || ! is_scalar( $autosave_key ) ) {
+			unset( $input[$autosave_key] );
+		}
+		return $input;
+	}
+
+	/**
+	 * Inject base event edit link for modified instances
+	 *
+	 * Modified instances are events, belonging to some parent having recurrence
+	 * rule, and having some of it's properties altered.
+	 *
+	 * @param array    $actions List of defined actions
+	 * @param stdClass $post    Instance being rendered (WP_Post class instance in WP 3.5+)
+	 *
+	 * @return array Optionally modified $actions list
+	 */
+	public function post_row_actions( array $actions, $post ) {
+		if ( is_ai1ec_post( $post ) ) {
+			global $ai1ec_events_helper;
+			$parent_post_id = $ai1ec_events_helper->event_parent( $post->ID );
+			if (
+				$parent_post_id &&
+				NULL !== ( $parent_post = get_post( $parent_post_id ) ) &&
+				isset( $parent_post->post_status ) &&
+				'trash' !== $parent_post->post_status
+			) {
+				$parent_link = get_edit_post_link(
+					$parent_post_id,
+					'display'
+				);
+				$actions['ai1ec_parent'] = sprintf(
+					'<a href="%s" title="%s">%s</a>',
+					wp_nonce_url( $parent_link ),
+					sprintf(
+						__( 'Edit &#8220;%s&#8221;', AI1EC_PLUGIN_NAME ),
+						apply_filters(
+							'the_title',
+							$parent_post->post_title,
+							$parent_post->ID
+						)
+					),
+					__( 'Base Event', AI1EC_PLUGIN_NAME )
+				);
+			}
+		}
+		return $actions;
+	}
+
+	/**
+	 * the_title_admin method
+	 *
+	 * Override title, visible in admin side, to display parent event
+	 * title in-line.
+	 *
+	 * @param string $title	  Title to be displayed
+	 * @param int	 $post_id ID of post being displayed
+	 *
+	 * @return string Modified title
+	 */
+	public function the_title_admin( $title, $post_id ) {
+		global $ai1ec_events_helper;
+		$parent_post_id = $ai1ec_events_helper->event_parent( $post_id );
+		if ( $parent_post_id ) {
+			try {
+				$current_event = new Ai1ec_Event( $post_id );
+				$title        .= ' @ ' .
+					$current_event->get_timespan_html();
+			} catch ( Ai1ec_Event_Not_Found $exception ) {
+				// ignore
+			}
+		}
+		return $title;
+	}
+
 
 }
 // END class

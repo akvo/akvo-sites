@@ -16,6 +16,26 @@
 			<strong><?php echo $tags; ?></strong>
 		</div>
 	<?php endif ?>
+	<div class="ai1ec-feed-comments-enabled">
+		<?php _e( 'Allow comments', AI1EC_PLUGIN_NAME ); ?>:
+		<strong><?php
+		if ( $comments_enabled ) {
+			_e( 'Yes', AI1EC_PLUGIN_NAME );
+		} else {
+			_e( 'No',  AI1EC_PLUGIN_NAME );
+		}
+		?></strong>
+	</div>
+	<div class="ai1ec-feed-map-display-enabled">
+		<?php _e( 'Show map', AI1EC_PLUGIN_NAME ); ?>:
+		<strong><?php
+		if ( $map_display_enabled ) {
+			_e( 'Yes', AI1EC_PLUGIN_NAME );
+		} else {
+			_e( 'No',  AI1EC_PLUGIN_NAME );
+		}
+		?></strong>
+	</div>
 	<input type="button" class="button ai1ec_delete_ics" value="<?php _e( '× Remove', AI1EC_PLUGIN_NAME ); ?>" />
 	<input type="button" class="button ai1ec_update_ics" value="<?php _e( 'Refresh', AI1EC_PLUGIN_NAME ); ?>" />
 	<?php if( $events ): ?>

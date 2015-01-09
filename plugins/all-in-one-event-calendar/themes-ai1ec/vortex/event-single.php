@@ -1,70 +1,131 @@
+<div class="timely ai1ec-single-event
+	ai1ec-event-id-<?php echo $event->post_id; ?>
+	<?php if ( $event->get_multiday() ) echo 'ai1ec-multiday'; ?>
+	<?php if ( $event->allday ) echo 'ai1ec-allday'; ?>">
+
 <a name="ai1ec-event"></a>
-<table class="timely ai1ec-full-event ai1ec-single-event ai1ec-event-id-<?php echo $event->post_id ?> <?php if( $event->multiday ) echo 'ai1ec-multiday' ?> <?php if( $event->allday ) echo 'ai1ec-allday' ?>">
-	<tbody>
-		<tr>
-			<th scope="row" class="ai1ec-time"><?php _e( 'When:', AI1EC_PLUGIN_NAME ) ?></th>
-			<td colspan="2" class="ai1ec-time">
-				<a class="ai1ec-calendar-link btn pull-right" href="<?php echo $calendar_url ?>">
-					<i class="icon-arrow-left"></i> <?php _e( 'Back to Calendar', AI1EC_PLUGIN_NAME ) ?>
+
+<div class="ai1ec-event-details clearfix">
+
+	<div class="clearfix"><?php echo $back_to_calendar; ?></div>
+
+	<div class="ai1ec-time">
+		<div class="ai1ec-label"><?php _e( 'When:', AI1EC_PLUGIN_NAME ); ?></div>
+		<div class="ai1ec-field-value"><?php echo $event->get_timespan_html(); ?></div>
+	</div>
+
+	<?php if ( $recurrence ) : ?>
+		<div class="ai1ec-recurrence">
+			<div class="ai1ec-label">
+				<i class="icon-repeat"></i>
+				<?php _e( 'Repeats:', AI1EC_PLUGIN_NAME ); ?>
+			</div>
+			<div class="ai1ec-field-value">
+				<?php if ( $edit_instance_url ) : ?>
+					<a class="ai1ec-edit-instance-link pull-right"
+						href="<?php echo $edit_instance_url; ?>">
+						<i class="icon-pencil"></i>
+						<?php echo $edit_instance_text; ?>
+					</a>
+				<?php endif; ?>
+				<?php echo ucfirst( $recurrence ); ?>
+				<?php if ( $exclude ) : ?>
+					<div class="ai1ec-exclude">
+						<?php _e( 'Excluding:', AI1EC_PLUGIN_NAME ); ?>
+						<?php echo $exclude; ?>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+	<?php endif; ?>
+
+
+	<?php if ( $map ) : ?>
+		<div class="ai1ec-map pull-right"><?php echo $map; ?></div>
+	<?php endif; ?>
+
+	<?php if ( $show_subscribe_buttons || $event->ticket_url ) : ?>
+		<div class="ai1ec-actions pull-right btn-group">
+			<?php if ( $event->ticket_url ) : ?>
+				<a href="<?php esc_attr_e( $event->ticket_url ); ?>" target="_blank"
+					class="ai1ec-tickets btn btn-small btn-primary">
+					<i class="icon-shopping-cart"></i>
+					<?php _e( 'Buy Tickets', AI1EC_PLUGIN_NAME ); ?>
 				</a>
-				<?php echo $event->timespan_html ?>
-			</td>
-		</tr>
-		<?php if( $recurrence ): ?>
-			<tr>
-				<th scope="row" class="ai1ec-recurrence"><?php _e( 'Repeats:', AI1EC_PLUGIN_NAME ) ?></th>
-				<td class="ai1ec-recurrence" colspan="2"><?php echo $recurrence ?></td>
-			</tr>
-		<?php endif ?>
-		<?php if( $exclude ): ?>
-			<tr>
-				<th scope="row" class="ai1ec-exclude"><?php _e( 'Excluding:', AI1EC_PLUGIN_NAME ) ?></th>
-				<td class="ai1ec-exclude" colspan="2"><?php echo $exclude ?></td>
-			</tr>
-		<?php endif ?>
-			<th scope="row" class="ai1ec-location <?php if( ! $location ) echo 'ai1ec-empty' ?>"><?php if( $location ) _e( 'Where:', AI1EC_PLUGIN_NAME ) ?></th>
-			<td class="ai1ec-location <?php if( ! $location ) echo 'ai1ec-empty' ?>"><?php echo $location ?></td>
-			<td rowspan="5" class="ai1ec-map <?php if( $map ) echo 'ai1ec-has-map' ?>">
-				<?php echo $map ?>
-				<?php if( $show_subscribe_buttons ) : ?>
-  				<a class="btn btn-small ai1ec-subscribe"
-  					href="<?php echo esc_attr( $subscribe_url ) ?>"
-  					title="<?php _e( 'Add this event to your favourite calendar program (iCal, Outlook, etc.)', AI1EC_PLUGIN_NAME ) ?>" />
-  					<?php _e( '✔ Add to Calendar', AI1EC_PLUGIN_NAME ) ?></a>
-  				<a class="btn btn-small ai1ec-subscribe-google" target="_blank"
-  					href="<?php echo esc_attr( $google_url ) ?>"
-  					title="<?php _e( 'Add this event to your Google Calendar', AI1EC_PLUGIN_NAME ) ?>" />
-  					<img src="<?php echo $this->get_theme_img_url( 'google-calendar.png' ) ?>" />
-  					<?php _e( 'Add to Google Calendar', AI1EC_PLUGIN_NAME ) ?>
-  				</a>
-				<?php endif ?>
-			</td>
-		</tr>
-		<tr>
-			<?php if( $event->cost ): ?>
-				<th scope="row" class="ai1ec-cost"><?php _e( 'Cost:', AI1EC_PLUGIN_NAME ) ?></th>
-				<td class="ai1ec-cost"><?php echo esc_html( $event->cost ) ?></td>
-			<?php endif ?>
-		</tr>
-		<tr>
-			<?php if( $contact ): ?>
-				<th scope="row" class="ai1ec-contact"><?php _e( 'Contact:', AI1EC_PLUGIN_NAME ) ?></th>
-				<td class="ai1ec-contact"><?php echo $contact ?></td>
-			<?php endif ?>
-		</tr>
-		<tr>
-			<?php if( $categories ): ?>
-				<th scope="row" class="ai1ec-categories"><?php _e( 'Categories:', AI1EC_PLUGIN_NAME ) ?></th>
-				<td class="ai1ec-categories"><?php echo $categories ?></td>
-			<?php endif ?>
-		</tr>
-		<tr>
-			<th scope="row" class="ai1ec-tags">
-				<?php if( $tags ): ?>
-					<i class="icon-tags"></i> <?php _e( 'Tags:', AI1EC_PLUGIN_NAME ) ?>
-				<?php endif ?>
-			</th>
-			<td class="ai1ec-tags"><?php echo $tags ?></td>
-		</tr>
-	</tbody>
-</table>
+			<?php endif; ?>
+			<?php if ( $show_subscribe_buttons ) : ?>
+				<a class="btn btn-small ai1ec-subscribe"
+					href="<?php echo esc_attr( $subscribe_url ); ?>"
+					title="<?php _e( 'Add this event to your favourite calendar program (iCal, Outlook, etc.)', AI1EC_PLUGIN_NAME ); ?>" >
+					<i class="icon-plus"></i>
+					<?php _e( 'Add to Calendar', AI1EC_PLUGIN_NAME ); ?></a>
+				<a class="btn btn-small ai1ec-subscribe-google" target="_blank"
+					href="<?php echo esc_attr( $google_url ); ?>"
+					title="<?php _e( 'Add this event to your Google Calendar', AI1EC_PLUGIN_NAME ); ?>" >
+					<i class="icon-google-plus icon-large"></i>
+					<?php _e( 'Add to Google', AI1EC_PLUGIN_NAME ); ?>
+				</a>
+			<?php endif; ?>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( $location ) : ?>
+		<div class="ai1ec-location">
+			<div class="ai1ec-label"><?php _e( 'Where:', AI1EC_PLUGIN_NAME ); ?></div>
+			<div class="ai1ec-field-value"><?php echo $location; ?></div>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( $event->cost ) : ?>
+		<div class="ai1ec-cost">
+			<div class="ai1ec-label"><?php _e( 'Cost:', AI1EC_PLUGIN_NAME ); ?></div>
+			<div class="ai1ec-field-value"><?php echo esc_html( $event->cost ); ?></div>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( $contact ) : ?>
+		<div class="ai1ec-contact">
+			<div class="ai1ec-label"><?php _e( 'Contact:', AI1EC_PLUGIN_NAME ); ?></div>
+			<div class="ai1ec-field-value"><?php echo $contact; ?></div>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( $categories ) : ?>
+		<div class="ai1ec-categories">
+			<div class="ai1ec-label ai1ec-hidden-narrow-phone" title="<?php _e( 'Categories', AI1EC_PLUGIN_NAME ); ?>">
+				<i class="icon-folder-open icon-large"></i>
+			</div>
+			<div class="ai1ec-label ai1ec-visible-narrow-phone">
+				<i class="icon-folder-open"></i>
+				<?php _e( 'Categories:', AI1EC_PLUGIN_NAME ); ?>
+			</div>
+			<div class="ai1ec-field-value"><?php echo $categories; ?></div>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( $tags ) : ?>
+		<div class="ai1ec-tags">
+			<div class="ai1ec-label ai1ec-hidden-narrow-phone" title="<?php _e( 'Tags', AI1EC_PLUGIN_NAME ); ?>">
+				<i class="icon-tags icon-large"></i>
+			</div>
+			<div class="ai1ec-label ai1ec-visible-narrow-phone">
+				<i class="icon-tags"></i>
+				<?php _e( 'Tags:', AI1EC_PLUGIN_NAME ); ?>
+			</div>
+			<div class="ai1ec-field-value"><?php echo $tags; ?></div>
+		</div>
+	<?php endif; ?>
+
+</div>
+
+<?php
+	if ( ! $event->get_content_img_url() ) {
+		echo $event->get_event_avatar(
+			array( 'post_thumbnail', 'location_avatar', 'category_avatar' ),
+			'timely alignleft',
+			false
+		);
+	}
+?>
+
+</div>

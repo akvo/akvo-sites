@@ -1,0 +1,267 @@
+<?php include AkvoWvwParticipantRegistry_Plugin_Dir . '/src/Admin/View/scripts/partials/header.phtml'; ?>
+<?php
+$aDetail = $aContent['detail'];
+?>
+<div class="container-fluid cAWPRContentWrapper">
+
+	<div class="row-fluid">
+		<div class="span12">
+			<h2><i class="icon-file-text"></i>&nbsp;Registrant Detail</h2>
+			<a class="btn btn-small" href="<?php echo menu_page_url(\Akvo\WvW\ParticipantRegistry\Admin\Controller\Home::MENU_SLUG, false); ?>"><i class="icon-arrow-left"></i>&nbsp; Back</a>
+			<a class="btn btn-warning btn-small" href="<?php echo menu_page_url(\Akvo\WvW\ParticipantRegistry\Admin\Controller\Registrant\Edit::MENU_SLUG, false) . '&id=' . $aDetail['id']; ?>"><i class="icon-pencil"></i>&nbsp; Edit</a>
+			<a class="btn btn-danger btn-small" href="<?php echo menu_page_url(\Akvo\WvW\ParticipantRegistry\Admin\Controller\Registrant\Remove::MENU_SLUG, false) . '&id=' . $aDetail['id']; ?>"><i class="icon-trash"></i>&nbsp; Remove</a>
+		</div>
+	</div>
+
+	<div id="iDivRegistrantDetailContainer">
+		<div class="row-fluid">
+			<div class="span6">
+				<div class="row-fluid">
+					<div class="span9 offset3">
+						<h3>School</h3>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						ID
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['id']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						School Name
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['name']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Address
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['address']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						City
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['city']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Postal Code
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['postal_code']; ?>
+					</div>
+				</div>
+			</div>
+			<div class="span6">
+				<div class="row-fluid">
+					<div class="span9 offset3">
+						<h3>Contact Person</h3>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Name
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['contact_name']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Email
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['email']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Phone
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['phone']; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--<hr>-->
+		<div class="row-fluid">
+			<div class="span6">
+				<div class="row-fluid">
+					<div class="span9 offset3">
+						<h3>Participation</h3>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Participation
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['participation']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Groups of Grade 7
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['groups_grade_7']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Groups of Grade 8
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['groups_grade_8']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Groups of Grade 6/7
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['groups_grade_6_7']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Groups of Grade 6/7/8
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['groups_grade_6_7_8']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Groups of Grade 7/8
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['groups_grade_7_8']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Total number of students
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['total_students']; ?>
+					</div>
+				</div>
+			</div>
+			<div class="span6">
+				<div class="row-fluid">
+					<div class="span9 offset3">
+						<h3>Walk</h3>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Support Point
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['support_point']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Date
+					</div>
+					<div class="span9">
+						<?php echo date('Y-m-d', strtotime($aDetail['date_of_walk'])); ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						City
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['city_of_walk']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Comments
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['comments']; ?>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!--<hr>-->
+		<div class="row-fluid">
+			<div class="span6">
+				<div class="row-fluid">
+					<div class="span9 offset3">
+						<h3>Other/Administrative</h3>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Batch
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['batch']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Date Registered
+					</div>
+					<div class="span9">
+						<?php echo date('Y-m-d', strtotime($aDetail['date_created'])); ?>
+					</div>
+				</div>
+<?php if ($aDetail['date_created'] != $aDetail['date_updated']) {
+?>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Date Updated
+					</div>
+					<div class="span9">
+						<?php echo date('Y-m-d', strtotime($aDetail['date_updated'])); ?>
+					</div>
+				</div>
+<?php
+}
+?>
+			</div>
+			<div class="span6">
+				<div class="row-fluid">
+					<div class="span9 offset3">
+						<h3>Map Placement</h3>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Latitude
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['latitude']; ?>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3 text-right">
+						Longitude
+					</div>
+					<div class="span9">
+						<?php echo $aDetail['longitude']; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

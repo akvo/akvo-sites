@@ -103,22 +103,32 @@ class Ai1ec_App_Helper {
 		global $ai1ec_settings;
 
 		// Create event contributor role with the same capabilities
-		// as subscriber role, plus event managing capabilities - if we haven't done
-		// so yet.
-		if( ! get_role( 'ai1ec_event_assistant' ) ) {
+		// as subscriber role, plus event managing capabilities
+		// if we have not created it yet.
+		if ( ! get_role( 'ai1ec_event_assistant' ) ) {
 			$caps = get_role( 'subscriber' )->capabilities;
-			$role = add_role( 'ai1ec_event_assistant', 'Event Contributor', $caps );
+			$role = add_role(
+				'ai1ec_event_assistant',
+				'Event Contributor',
+				$caps
+			);
 			$role->add_cap( 'edit_ai1ec_events' );
 			$role->add_cap( 'delete_ai1ec_event' );
 			$role->add_cap( 'read' );
+			unset( $caps, $role );
 		}
 
-		// Add event managing capabilities to administrator, editor, author. (The
-		// last created capability is "manage_ai1ec_feeds", so check for that one.)
+		// Add event managing capabilities to administrator, editor, author.
+		// The last created capability is "manage_ai1ec_feeds", so check for
+		// that one.
 		$role = get_role( 'administrator' );
-		if( is_object( $role ) && ! $role->has_cap( 'manage_ai1ec_feeds' ) ) {
-			foreach( array( 'administrator', 'editor', 'author' ) as $role_name ) {
+		if ( is_object( $role ) && ! $role->has_cap( 'manage_ai1ec_feeds' ) ) {
+			$role_list = array( 'administrator', 'editor', 'author' );
+			foreach ( $role_list as $role_name ) {
 				$role = get_role( $role_name );
+				if ( NULL === $role || ! ( $role instanceof WP_Role ) ) {
+					continue;
+				}
 				// Read events.
 				$role->add_cap( 'read_ai1ec_event' );
 				// Edit events.
@@ -142,7 +152,7 @@ class Ai1ec_App_Helper {
 				// Manage calendar feeds.
 				$role->add_cap( 'manage_ai1ec_feeds' );
 
-				if( $role_name == 'administrator' ) {
+				if ( 'administrator' === $role_name ) {
 					// Change calendar themes & manage calendar options.
 					$role->add_cap( 'switch_ai1ec_themes' );
 					$role->add_cap( 'manage_ai1ec_options' );
@@ -154,19 +164,19 @@ class Ai1ec_App_Helper {
 		// = labels for custom post type =
 		// ===============================
 		$labels = array(
-			'name' 								=> _x( 'Events', 'Custom post type name', AI1EC_PLUGIN_NAME ),
-			'singular_name' 			=> _x( 'Event', 'Custom post type name (singular)', AI1EC_PLUGIN_NAME ),
-			'add_new'							=> __( 'Add New', AI1EC_PLUGIN_NAME ),
-			'add_new_item'				=> __( 'Add New Event', AI1EC_PLUGIN_NAME ),
-			'edit_item'						=> __( 'Edit Event', AI1EC_PLUGIN_NAME ),
-			'new_item'						=> __( 'New Event', AI1EC_PLUGIN_NAME ),
-			'view_item'						=> __( 'View Event', AI1EC_PLUGIN_NAME ),
-			'search_items'				=> __( 'Search Events', AI1EC_PLUGIN_NAME ),
-			'not_found'						=> __( 'No Events found', AI1EC_PLUGIN_NAME ),
-			'not_found_in_trash'	=> __( 'No Events found in Trash', AI1EC_PLUGIN_NAME ),
-			'parent_item_colon'		=> __( 'Parent Event', AI1EC_PLUGIN_NAME ),
-			'menu_name'						=> __( 'Events', AI1EC_PLUGIN_NAME ),
-			'all_items'						=> $this->get_all_items_name()
+			'name'               => _x( 'Events', 'Custom post type name', AI1EC_PLUGIN_NAME ),
+			'singular_name'      => _x( 'Event', 'Custom post type name (singular)', AI1EC_PLUGIN_NAME ),
+			'add_new'            => __( 'Add New', AI1EC_PLUGIN_NAME ),
+			'add_new_item'       => __( 'Add New Event', AI1EC_PLUGIN_NAME ),
+			'edit_item'          => __( 'Edit Event', AI1EC_PLUGIN_NAME ),
+			'new_item'           => __( 'New Event', AI1EC_PLUGIN_NAME ),
+			'view_item'          => __( 'View Event', AI1EC_PLUGIN_NAME ),
+			'search_items'       => __( 'Search Events', AI1EC_PLUGIN_NAME ),
+			'not_found'          => __( 'No Events found', AI1EC_PLUGIN_NAME ),
+			'not_found_in_trash' => __( 'No Events found in Trash', AI1EC_PLUGIN_NAME ),
+			'parent_item_colon'  => __( 'Parent Event', AI1EC_PLUGIN_NAME ),
+			'menu_name'          => __( 'Events', AI1EC_PLUGIN_NAME ),
+			'all_items'          => $this->get_all_items_name(),
 		);
 
 
@@ -389,7 +399,7 @@ class Ai1ec_App_Helper {
 		// ===========================
 		// = Order by Event date ASC =
 		// ===========================
-		if( $typenow == 'ai1ec_event' ) {
+		if( $typenow === 'ai1ec_event' ) {
 			if( ! array_key_exists( 'orderby', $query->query_vars ) ) {
 				$query->query_vars["orderby"] = 'ai1ec_event_date';
 				$query->query_vars["order"] 	= 'desc';
@@ -410,16 +420,118 @@ class Ai1ec_App_Helper {
 	function orderby( $orderby, $wp_query ) {
 		global $typenow, $wpdb, $post;
 
-		if( $typenow == 'ai1ec_event' ) {
+		if( $typenow === 'ai1ec_event' ) {
 			$wp_query->query = wp_parse_args( $wp_query->query );
 			$table_name = $wpdb->prefix . 'ai1ec_events';
-			if( 'ai1ec_event_date' == @$wp_query->query['orderby'] ) {
+			if( 'ai1ec_event_date' === @$wp_query->query['orderby'] ) {
 				$orderby = "(SELECT start FROM {$table_name} WHERE post_id =  $wpdb->posts.ID) " . $wp_query->get('order');
-			} else if( empty( $wp_query->query['orderby'] ) ) {
+			} else if( empty( $wp_query->query['orderby'] ) || $wp_query->query['orderby'] === 'menu_order title' ) {
 				$orderby = "(SELECT start FROM {$table_name} WHERE post_id =  $wpdb->posts.ID) " . 'desc';
 			}
 		}
 		return $orderby;
+	}
+
+	/**
+	 * add_profile_boxes method
+	 *
+	 * Add options HTML to `wp-admin/profile.php` page.
+	 *
+	 * @return void Method does not return
+	 */
+	public function add_profile_boxes() {
+		global $ai1ec_view_helper;
+		$user		 = wp_get_current_user();
+		$selected_tz = '';
+		if ( $user->ID > 0 ) {
+			$selected_tz = $this->user_selected_tz( $user->ID );
+		}
+		$argv = array(
+			'tz_selector' => wp_timezone_choice( $selected_tz ),
+		);
+		$ai1ec_view_helper->display_admin(
+			'box_profile_timezone.php',
+			$argv
+		);
+	}
+
+	/**
+	 * save_user_profile method
+	 *
+	 * Process user selections made on forms generated
+	 * in {@see self::add_profile_boxes()} method.
+	 *
+	 * @param int $user_id ID of user whose profile is being updated
+	 *
+	 * @return void Method does not return
+	 */
+	public function save_user_profile( $user_id ) {
+		if ( isset( $_POST['ai1ec_user_timezone'] ) ) {
+			$this->user_selected_tz(
+				$user_id,
+				$_POST['ai1ec_user_timezone']
+			);
+		}
+	}
+
+	/**
+	 * user_selected_tz method
+	 *
+	 * Get/set user selected (preferred) timezone.
+	 * If only {@see $user_id} is provided - method acts as getter.
+	 * Otherwise it acts as setter.
+	 *
+	 * @param int    $user_id      ID of user whose timezone is being checked/changed
+	 * @param string $new_value    New timezone string value to set user preferrence
+	 * @param bool   $force_update Set to true to force value update instead of add
+	 *
+	 * @return mixed Return value depends on activity:
+	 *     - [getter] string User preferred timezone name (might be empty string)
+	 *     - [setter] bool   Success of preferrence change
+	 */
+	public function user_selected_tz(
+		$user_id,
+		$new_value    = NULL,
+		$force_update = false
+	) {
+		$meta_key  = 'ai1ec_timezone';
+		$user_id   = (int)$user_id;
+		$old_value = Ai1ec_Meta::instance( 'User' )->get(
+			$user_id,
+			$meta_key,
+			NULL,
+			true
+		);
+		if ( NULL !== $new_value ) {
+			if ( ! in_array( $new_value, timezone_identifiers_list() ) ) {
+				return false;
+			}
+			$success = false;
+			if ( true === $force_update || ! empty( $old_value ) ) {
+				$success = update_user_meta(
+					$user_id,
+					$meta_key,
+					$new_value,
+					$old_value
+				);
+			} else {
+				$success = add_user_meta(
+					$user_id,
+					$meta_key,
+					$new_value,
+					true
+				);
+				if ( false === $success ) {
+					return $this->user_selected_tz(
+						$user_id,
+						$new_value,
+						true
+					);
+				}
+			}
+			return $success;
+		}
+		return $old_value;
 	}
 
 	/**
@@ -443,22 +555,6 @@ class Ai1ec_App_Helper {
 	}
 
 	/**
-	 * screen_layout_columns function
-	 *
-	 * Since WordPress 2.8 we have to tell, that we support 2 columns!
-	 *
-	 * @return void
-	 **/
-	function screen_layout_columns( $columns, $screen ) {
-		global $ai1ec_settings;
-
-		if( isset( $ai1ec_settings->settings_page ) && $screen == $ai1ec_settings->settings_page )
-			$columns[$ai1ec_settings->settings_page] = 2;
-
-		return $columns;
-	}
-
-	/**
 	 * change_columns function
 	 *
 	 * Adds Event date/time column to our custom post type
@@ -467,10 +563,11 @@ class Ai1ec_App_Helper {
 	 * @param array $columns Existing columns
 	 *
 	 * @return array Updated columns array
-	 **/
-	function change_columns( $columns ) {
-		$columns["date"] 							= __( 'Post Date', 			 AI1EC_PLUGIN_NAME );
-		$columns["ai1ec_event_date"] 	= __( 'Event date/time', AI1EC_PLUGIN_NAME );
+	 */
+	function change_columns( array $columns = array() ) {
+		$columns['author']           = __( 'Author',          AI1EC_PLUGIN_NAME );
+		$columns['date']             = __( 'Post Date',       AI1EC_PLUGIN_NAME );
+		$columns['ai1ec_event_date'] = __( 'Event date/time', AI1EC_PLUGIN_NAME );
 		return $columns;
 	}
 
@@ -487,7 +584,7 @@ class Ai1ec_App_Helper {
 			case 'ai1ec_event_date':
 				try {
 					$e = new Ai1ec_Event( $post_id );
-					echo $e->short_start_date . ' ' . $e->short_start_time . " - " . $e->short_end_date . ' ' .$e->short_end_time;
+					echo $e->get_timespan_html();
 				} catch( Exception $e ) {
 					// event wasn't found, output empty string
 					echo "";
@@ -525,19 +622,6 @@ class Ai1ec_App_Helper {
 		if( isset( $_GET[$param] ) )
 			return $_GET[$param];
 		return $default;
-	}
-
-	/**
-	 * get_param_delimiter_char function
-	 *
-	 * Returns the delimiter character in a link
-	 *
-	 * @param string $link Link to parse
-	 *
-	 * @return string
-	 **/
-	function get_param_delimiter_char( $link ) {
-		return strpos( $link, '?' ) === false ? '?' : '&';
 	}
 
 	/**
@@ -600,8 +684,6 @@ class Ai1ec_App_Helper {
 	}
 
 	/**
-	 * function calendar_term_link
-	 *
 	 * Corrects the URL for the calendar page when injected into the post
 	 * categories.
 	 *
@@ -611,15 +693,14 @@ class Ai1ec_App_Helper {
 	 *
 	 * @return string The correct link to the calendar page
 	 */
-	function calendar_term_link( $link, $term, $taxonomy )
-	{
+	function calendar_term_link( $link, $term, $taxonomy ) {
 		global $ai1ec_calendar_helper;
 
 		if( $taxonomy == 'events_categories' ) {
 			if( $term->term_id == AI1EC_FAKE_CATEGORY_ID )
-				$link = $ai1ec_calendar_helper->get_calendar_url( null );
+				$link = $ai1ec_calendar_helper->get_calendar_url();
 			else
-				$link = $ai1ec_calendar_helper->get_calendar_url( null,
+				$link = $ai1ec_calendar_helper->get_calendar_url(
 					array( 'cat_ids' => array( $term->term_id ) )
 				);
 		}
@@ -643,8 +724,7 @@ class Ai1ec_App_Helper {
 		global $ai1ec_calendar_controller, $ai1ec_settings;
 
 		// First check if current page is calendar
-		if( is_page( $ai1ec_settings->calendar_page_id ) )
-		{
+		if( is_page( $ai1ec_settings->calendar_page_id ) ) {
 			$cat_ids = array_filter( explode( ',', $ai1ec_calendar_controller->get_requested_categories() ), 'is_numeric' );
 			if( $cat_ids ) {
 				// Mark each filtered event category link as selected
@@ -737,14 +817,17 @@ class Ai1ec_App_Helper {
 		}
 
 		// Outdated themes notice (on all pages except update themes page).
-		if ( $plugin_page != AI1EC_PLUGIN_NAME . '-update-themes' && $ai1ec_themes_controller->are_themes_outdated() ) {
+		if (
+			$plugin_page != AI1EC_PLUGIN_NAME . '-update-themes' &&
+			$ai1ec_themes_controller->are_themes_outdated()
+		) {
 			$args = array(
 				'label' => __( 'All-in-One Event Calendar Notice', AI1EC_PLUGIN_NAME ),
 				'msg' => sprintf(
 					__( '<p><strong>Core Calendar Themes are out of date.</strong> ' .
 					'We have found updates for some of your core Calendar Theme files and you should update them now to ensure proper functioning of your calendar.</p>' .
-					'<p><strong>Warning:</strong> If you have previously modified any core Calendar Theme files, ' .
-					'your changes may be lost during update. Please make a backup of all modifications before proceeding.</p>' .
+					'<p><strong>Warning:</strong> If you have previously modified any <strong>core</strong> Calendar Theme files, ' .
+					'your changes will be lost during update. Please make a backup of all modifications to core themes before proceeding.</p>' .
 					'<p>Once you are ready, please <a href="%s">update your core Calendar Themes</a>.</p>', AI1EC_PLUGIN_NAME ),
 					admin_url( AI1EC_UPDATE_THEMES_BASE_URL )
 				),
@@ -774,9 +857,13 @@ class Ai1ec_App_Helper {
 		// If calendar page or time zone has not been set, this is a fresh install.
 		// Additionally, if we're not already updating the settings, alert user
 		// appropriately that the calendar is not properly set up.
-		if( ! $ai1ec_settings->calendar_page_id ||
-			  ! get_option( 'timezone_string' ) &&
-			  ! isset( $_REQUEST['ai1ec_save_settings'] ) ) {
+		if (
+			(
+				! $ai1ec_settings->calendar_page_id ||
+				! Ai1ec_Meta::get_option( 'timezone_string' )
+			) &&
+			! isset( $_REQUEST['ai1ec_save_settings'] )
+		) {
 			$args = array();
 			$messages = array();
 
@@ -787,14 +874,14 @@ class Ai1ec_App_Helper {
 					if( ! $ai1ec_settings->calendar_page_id ) {
 						$messages[] = __( 'Select an option in the <strong>Calendar page</strong> dropdown list.', AI1EC_PLUGIN_NAME );
 					}
-					if( ! get_option( 'timezone_string' ) ) {
+					if ( ! Ai1ec_Meta::get_option( 'timezone_string' ) ) {
 						$messages[] = __( 'Select an option in the <strong>Timezone</strong> dropdown list.', AI1EC_PLUGIN_NAME );
 					}
 					$messages[] = __( 'Click <strong>Update Settings</strong>.', AI1EC_PLUGIN_NAME );
 				}
 				// Else, not on the settings page, so direct user there.
 				else {
-					$msg .= sprintf(
+					$msg = sprintf(
 						__( 'The plugin is installed, but has not been configured. <a href="%s">Click here to set it up now &raquo;</a>', AI1EC_PLUGIN_NAME ),
 						admin_url( AI1EC_SETTINGS_BASE_URL )
 					);
@@ -821,15 +908,18 @@ class Ai1ec_App_Helper {
 		}
 
 		// Premium plugin update available notice.
-		if( get_option( 'ai1ec_update_available', false ) && current_user_can( 'update_plugins' ) ) {
+		$meta = Ai1ec_Meta::instance( 'Option' );
+		if ( $meta->is_visible_update() ) {
 			$args = array(
 				'label' => __( 'All-in-One Event Calendar Update', AI1EC_PLUGIN_NAME ),
 			);
-			$update_url = 'edit.php?post_type=' . AI1EC_POST_TYPE . '&amp;page=' . AI1EC_PLUGIN_NAME . '-upgrade';
-			$update_url .= '&amp;package=' . esc_url( get_option( 'ai1ec_package_url' ) );
-			$update_url .= '&amp;plugin_name=' . esc_url( get_option( 'ai1ec_plugin_name' ) );
-			$args['msg'] = '<p>' . get_option( 'ai1ec_update_message', '' ) . '</p>';
-			$args['msg'] .= '<p><a class="button" href="' . admin_url( $update_url ) . '">';
+			$update_url   = AI1EC_UPGRADE_PLUGIN_BASE_URL;
+
+			$args['msg']  = '<p>' .
+				$meta->get( 'ai1ec_update_message', NULL, '' ) .
+				'</p>';
+			$args['msg'] .= '<p><a class="button" href="' .
+				admin_url( $update_url ) . '">';
 			$args['msg'] .= __( 'Upgrade now', AI1EC_PLUGIN_NAME );
 			$args['msg'] .= '</a></p>';
 			$ai1ec_view_helper->display_admin( 'admin_notices.php', $args );
@@ -852,8 +942,8 @@ class Ai1ec_App_Helper {
 		$num = number_format_i18n( $num_events->publish );
 		$text = _n( 'Event', 'Events', $num_events->publish );
 		if ( current_user_can( 'edit_ai1ec_events' ) ) {
-			$num = "<a href='edit.php?post_type=" . AI1EC_POST_TYPE . "'>$num</a>";
-			$text = "<a href='edit.php?post_type=" . AI1EC_POST_TYPE . "'>$text</a>";
+			$num = '<a href="' . AI1EC_ADMIN_BASE_URL . '">' . $num . '</a>';
+			$text = '<a href="' . AI1EC_ADMIN_BASE_URL . '">' . $text . '</a>';
 		}
 		echo '<td class="first b b-ai1ec-event">' . $num . '</td>';
 		echo '<td class="t ai1ec-event">' . $text . '</td>';
@@ -895,16 +985,27 @@ class Ai1ec_App_Helper {
 
 		// Common styles.
 		$ai1ec_view_helper->admin_enqueue_style( 'ai1ec-admin', 'admin.css' );
+
 		switch( $hook_suffix ) {
 			// Event lists.
 			// Widgets screen.
 			case 'widgets.php':
 				// Styles.
-				$ai1ec_view_helper->admin_enqueue_style( 'ai1ec-widget', '/widget.css', array(), AI1EC_VERSION );
+				$ai1ec_view_helper->admin_enqueue_style( 'ai1ec-widget', 'widget.css' );
 				break;
 
 			// Calendar settings & feeds screens.
 			case $ai1ec_settings->settings_page:
+				// Scripts.
+				wp_enqueue_script( 'common' );
+				wp_enqueue_script( 'wp-lists' );
+				wp_enqueue_script( 'postbox' );
+				// Styles.
+				$ai1ec_view_helper->admin_enqueue_style( 'ai1ec-settings', 'settings.css' );
+				$ai1ec_view_helper->admin_enqueue_style( 'timely-bootstrap', 'bootstrap.min.css' );
+				$ai1ec_view_helper->admin_enqueue_style( 'timely-boootstrap-datepicker', 'bootstrap_datepicker.css' );
+				break;
+
 			case $ai1ec_settings->feeds_page:
 				// Scripts.
 				wp_enqueue_script( 'common' );
@@ -913,10 +1014,44 @@ class Ai1ec_App_Helper {
 				// Styles.
 				$ai1ec_view_helper->admin_enqueue_style( 'ai1ec-settings', 'settings.css' );
 				$ai1ec_view_helper->admin_enqueue_style( 'timely-bootstrap', 'bootstrap.min.css' );
+				// include plugins style
+				$ai1ec_view_helper->admin_enqueue_style( 'ai1ec_plugins_common', 'plugins/plugins-common.css' );
 				break;
+
 			case "post.php":
+			case "post-new.php":
 				$ai1ec_view_helper->admin_enqueue_style( 'timely-bootstrap', 'bootstrap.min.css' );
+				// include add new event style
+				$ai1ec_view_helper->admin_enqueue_style( 'ai1ec_add_new_event', 'add_new_event.css' );
+				// include datepicker style
+				$ai1ec_view_helper->admin_enqueue_style( 'ai1ec_datepicker', 'datepicker.css' );
+				break;
+
+			case $ai1ec_settings->less_variables_page:
+				$ai1ec_view_helper->admin_enqueue_style( 'ai1ec-settings', 'settings.css' );
+				$ai1ec_view_helper->admin_enqueue_style( 'timely-bootstrap', 'bootstrap.min.css' );
+				$ai1ec_view_helper->admin_enqueue_style( 'timely-bootstrap-colorpicker', 'bootstrap_colorpicker.css' );
+				break;
+
+			case "edit-tags.php":
+				$ai1ec_view_helper->admin_enqueue_style( 'timely-bootstrap-colorpicker', 'colorpicker.css' );
+				break;
 		}
+	}
+
+	/**
+	 * Returns a map of calendar view keys to translated names.
+	 *
+	 * @return  array
+	 */
+	public function view_names() {
+		return array(
+			'posterboard' => __( 'Posterboard', AI1EC_PLUGIN_NAME ),
+			'month' => __( 'Month', AI1EC_PLUGIN_NAME ),
+			'week' => __( 'Week', AI1EC_PLUGIN_NAME ),
+			'oneday' => __( 'Day', AI1EC_PLUGIN_NAME ),
+			'agenda' => __( 'Agenda', AI1EC_PLUGIN_NAME ),
+		);
 	}
 }
 // END class

@@ -1,3 +1,1 @@
-require(
-		[ "scripts/event_category" ]
-);
+timely.require(["scripts/event_category"]);

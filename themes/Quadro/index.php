@@ -6,7 +6,10 @@
 			<?php
 			global $wp_query;
 			$args = array_merge($wp_query->query_vars, array('posts_per_archive_page'=>6,'post_type' => array('post','project_update','news','page')));
-			query_posts($args);
+            
+			//query_posts($args);
+            $wp_query = new WP_Query($args);
+            //akvo_debug_dump($wp_query->query);
 			if (have_posts()) : while (have_posts()) : the_post();
 					?>
 					<?php get_template_part('includes/entry'); ?>

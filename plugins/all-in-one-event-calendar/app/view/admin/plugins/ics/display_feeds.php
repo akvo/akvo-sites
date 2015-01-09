@@ -28,6 +28,20 @@
 		</label>
 		<input type="text" name="ai1ec_feed_tags" id="ai1ec_feed_tags" />
 	</div>
+	<div class="ai1ec-feed-comments-enabled">
+		<label for="ai1ec_comments_enabled">
+			<input type="checkbox" name="ai1ec_comments_enabled"
+				id="ai1ec_comments_enabled" value="1" />
+			<?php _e( 'Allow comments on imported events', AI1EC_PLUGIN_NAME ); ?>
+		</label>
+	</div>
+	<div class="ai1ec-feed-map-display-enabled">
+		<label for="ai1ec_map_display_enabled">
+			<input type="checkbox" name="ai1ec_map_display_enabled"
+				id="ai1ec_map_display_enabled" value="1" />
+			<?php _e( 'Show map on imported events', AI1EC_PLUGIN_NAME ); ?>
+		</label>
+	</div>
 	<input type="button" id="ai1ec_add_new_ics" class="button" value="<?php _e( '+ Add new subscription', AI1EC_PLUGIN_NAME ) ?>" />
 </div>
 

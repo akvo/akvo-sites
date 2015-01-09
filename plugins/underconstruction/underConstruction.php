@@ -3,7 +3,7 @@
  Plugin Name: Under Construction
  Plugin URI: http://www.masseltech.com/
  Description: Makes it so your site can only be accessed by users who log in. Useful for developing a site on a live server, without the world being able to see it
- Version: 1.08
+ Version: 1.11
  Author: Jeremy Massel
  Author URI: http://www.masseltech.com/
  */
@@ -127,8 +127,16 @@ class underConstruction
 
 	function uc_admin_override_WP(){
 
-		if(get_option('underConstructionRequiredRole')){
-			$editable_roles = get_editable_roles();
+		if(!$this->pluginIsActive()){
+			return;
+		}
+
+		if(get_option('underConstructionRequiredRole') && is_user_logged_in()){
+			
+			global $wp_roles;
+			$all_roles = $wp_roles->roles;
+					
+			$editable_roles = apply_filters('editable_roles', $all_roles);
 
 			$required_role = $editable_roles[get_option('underConstructionRequiredRole')];
 
@@ -292,14 +300,19 @@ $underConstructionPlugin = new underConstruction();
 
 add_action('template_redirect', array($underConstructionPlugin, 'uc_overrideWP'));
 add_action('admin_init', array($underConstructionPlugin, 'uc_admin_override_WP'));
+add_action('wp_login', array($underConstructionPlugin, 'uc_admin_override_WP'));
+
+
+add_action('plugins_loaded', 'underConstructionInitTranslation');
+
+add_action('admin_init', array($underConstructionPlugin, 'underConstructionAdminInit'));
+add_action('admin_menu', array($underConstructionPlugin, 'uc_adminMenu'));
 
 register_activation_hook(__FILE__, array($underConstructionPlugin, 'uc_activate'));
 register_deactivation_hook(__FILE__, array($underConstructionPlugin, 'uc_deactivate'));
 register_uninstall_hook(__FILE__, 'underConstructionPlugin_delete');
 
 
-add_action('admin_init', array($underConstructionPlugin, 'underConstructionAdminInit'));
-add_action('admin_menu', array($underConstructionPlugin, 'uc_adminMenu'));
 
 function underConstructionPlugin_delete()
 {
@@ -325,6 +338,11 @@ function underConstructionPluginLinks($links, $file)
 	}
 	return $links;
 }
+
+function underConstructionInitTranslation() {
+  load_plugin_textdomain( 'underconstruction', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+
 
 add_filter('plugin_action_links', 'underConstructionPluginLinks', 10, 2);
 

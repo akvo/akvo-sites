@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Raphaël · Tiger</title>
+        
+        
+    </head>
+    <body style="background-color: #006786;">
+        <div id="rsr"></div>
+        <script type="text/javascript" src="raphael.js"></script>
+    <script type="text/javascript" src="wiel.js"></script>
+    <!--<script type="text/javascript" src="financial.js"></script>-->
+    <!--<script type="text/javascript" src="institutional.js"></script>-->
+    <!--<script type="text/javascript" src="environmental.js"></script>-->
+    <!--<script type="text/javascript" src="technical.js"></script>-->
+    <!--<script type="text/javascript" src="social.js"></script>-->
+    <script type="text/javascript">
+        for (var i = 0, len = bollen.length; i < len; i++) {
+        var el = bollen[i];
+            
+        
+            //var inactive = el.attrs.fill;
+            el.mouseover(function() {
+                console.log(this.data('id'));
+                this.attr({
+                    cursor: 'pointer'
+                });
+                this.toFront();
+                this.animate({
+                    fill : '#FF6E01'
+                }, 200);
+                
+            })
+            .mouseout(function() {
+                
+                this.animate({
+                    fill : '#ffffff'
+                }, 200);
+                
+            });
+            
+
+    }
+    </script>
+    </body>
+    
+    
+</html>

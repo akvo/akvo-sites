@@ -1,6 +1,15 @@
 /* General form attributes */
-#ai1ec_event {
-	overflow: hidden;
+
+/* Add/edit event form hidden by default to that DOM can be rearranged without
+   flashing of unstyled content. */
+.icon32-posts-ai1ec_event ~ #post {
+	visibility: hidden;
+}
+.icon32-posts-ai1ec_event ~ #post.ai1ec-visible {
+	visibility: visible;
+}
+#ai1ec-time-and-date-box .accordion-inner {
+	min-height: 200px;
 }
 .ai1ec-form, .ai1ec-form-nested {
 	width: 100%;
@@ -14,11 +23,12 @@
 }
 .ai1ec-form label, .ai1ec-form-nested label {
 	font-size: 9pt;
+	margin-bottom: 0;
 }
 .ai1ec-form td, .ai1ec-form-nested td {
 	line-height: 1.5em;
 }
-.ai1ec-section-title {
+#ai1ec-add-new-event-accordion .ai1ec-section-title {
 	text-transform: uppercase;
 	border-bottom: 1px solid #eee;
 	padding-bottom: 0.4em;
@@ -61,38 +71,42 @@
 }
 
 /* Event post fields */
-.ai1ec-date-input {
-	width: 7em;
+.timely .ai1ec-date-input {
+	background: no-repeat url(../img/date-field-icon.png) 95% 40%;
+	width: 7.5em;
 }
-.ai1ec-time-input {
+.timely .ai1ec-time-input {
 	width: 5.5em;
 }
-#ai1ec_venue, #ai1ec_address, #ai1ec_cost,
-#ai1ec_contact_name, #ai1ec_contact_phone, #ai1ec_contact_email {
+#ai1ec_venue,
+#ai1ec_address,
+#ai1ec_cost,
+#ai1ec_contact_name,
+#ai1ec_contact_phone,
+#ai1ec_contact_email,
+#ai1ec_contact_url,
+#ai1ec_ticket_url {
 	width: 100%;
 	max-width: 20em;
 }
+#ai1ec-event-location-box {
+	overflow: hidden;
+}
+#ai1ec-event-location-box .accordion-inner {
+	min-width: 625px;
+}
 .ai1ec-form.ai1ec-location-form {
-	float: left;
-	width: 33em;
+	width: 360px;
 }
 #side-info-column .ai1ec-form.ai1ec-location-form {
 	float: none;
 	width: 100%;
 }
 
-/* Address autocomplete */
-.ac_results img {
-	float: left;
-	margin: 0.2em 0.7em 0.2em 0.2em;
-}
-
 /* Google map */
 .ai1ec_box_map {
 	float: right;
-	margin-bottom: 1em;
-	margin-top: -11em;
-	/* These are needed for proper map initialization: */
+	/* These two are needed for proper map initialization: */
 	position: absolute;
 	visibility: hidden;
 	border: 1px solid #ddd;
@@ -102,8 +116,8 @@
 	visibility: visible;
 }
 #ai1ec_map_canvas {
-	width: 264px;
-	height: 16em;
+	width: 250px;
+	height: 155px;
 }
 /* Bottom publish button */
 .ai1ec_bottom_publish {
@@ -418,7 +432,8 @@ ul.ai1ec_repeat_tabs li a.ai1ec_active {
 #ai1ec_exclude_text {
 	margin-right: 20px;
 }
-#ai1ec_ending_box, #ai1ec_apply_button_holder {
+#ai1ec_ending_box,
+#ai1ec_apply_button_holder {
 	margin-top: 10px;
 }
 .ai1ec_repeat_cancel {
@@ -430,7 +445,8 @@ a.ai1ec_repeat_cancel:hover {
 	color: white;
 	background-color: red;
 }
-#ai1ec_count_holder, #ai1ec_until_holder {
+#ai1ec_count_holder,
+#ai1ec_until_holder {
 	display: none;
 }
 #ai1ec_until_holder input {
@@ -439,11 +455,11 @@ a.ai1ec_repeat_cancel:hover {
 #ai1ec_end_holder {
 	height: 30px;
 }
-#menu-posts-ai1ec_event > div.wp-menu-image {
-	background-image: url( '../img/admin-menu.png' ) !important;
-}
-div.growlUI h1, div.growlUI h2 {
-	color: white; padding: 5px 5px 5px 75px; text-align: left
+div.growlUI h1,
+div.growlUI h2 {
+	color: white;
+	padding: 5px 5px 5px 75px;
+	text-align: left;
 }
 /* General AJAX */
 .ai1ec-repeat-box-loading {

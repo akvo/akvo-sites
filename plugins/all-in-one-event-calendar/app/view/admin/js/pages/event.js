@@ -1,6 +1,1 @@
-require( 
-		[ "scripts/event" ], 
-		function( page ) {
-			page.start();
-		}
-);
+timely.require(["scripts/event"],function(e){e.start()});

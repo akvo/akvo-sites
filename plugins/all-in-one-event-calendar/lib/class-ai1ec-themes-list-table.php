@@ -255,8 +255,10 @@ class Ai1ec_Themes_List_Table extends WP_List_Table {
 				$template_dir   = $themes[$theme_name]['Template Dir'];
 				$parent_theme   = $themes[$theme_name]['Parent Theme'];
 				$theme_root     = $themes[$theme_name]['Theme Root'];
-				$theme_root_uri = $themes[$theme_name]['Theme Root URI'];
-				$preview_link   = esc_url( get_option( 'home' ) . '/' );
+				$theme_root_uri = esc_url( $themes[$theme_name]['Theme Root URI'] );
+				$preview_link   = esc_url(
+					Ai1ec_Meta::get_option( 'home' ) . '/'
+				);
 
 				if ( is_ssl() )
 					$preview_link = str_replace( 'http://', 'https://', $preview_link );
@@ -442,7 +444,7 @@ class Ai1ec_Themes_List_Table extends WP_List_Table {
 		$ct->author = $themes[$current_theme]['Author'];
 		$ct->tags = $themes[$current_theme]['Tags'];
 		$ct->theme_root = $themes[$current_theme]['Theme Root'];
-		$ct->theme_root_uri = $themes[$current_theme]['Theme Root URI'];
+		$ct->theme_root_uri = esc_url( $themes[$current_theme]['Theme Root URI'] );
 		$this->switch_theme_folders_end();
 		return $ct;
 	}
@@ -458,16 +460,17 @@ class Ai1ec_Themes_List_Table extends WP_List_Table {
 	 * @return string
 	 */
 	static function get_current_ai1ec_theme() {
-		if( $theme = get_option('ai1ec_current_theme') )
+		if ( $theme = Ai1ec_Meta::get_option( 'ai1ec_current_theme' ) ) {
 			return $theme;
+		}
 
 		$themes = get_themes();
 		$current_theme = 'Vortex';
 
 		if ( $themes ) {
 			$theme_names = array_keys( $themes );
-			$current_template   = get_option( 'ai1ec_template' );
-			$current_stylesheet = get_option( 'ai1ec_stylesheet' );
+			$current_template   = Ai1ec_Meta::get_option( 'ai1ec_template' );
+			$current_stylesheet = Ai1ec_Meta::get_option( 'ai1ec_stylesheet' );
 
 			foreach ( (array) $theme_names as $theme_name ) {
 				if ( $themes[$theme_name]['Stylesheet'] == $current_stylesheet &&

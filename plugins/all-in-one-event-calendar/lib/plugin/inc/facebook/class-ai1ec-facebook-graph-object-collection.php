@@ -203,6 +203,7 @@ class Ai1ec_Facebook_Graph_Object_Collection {
 			array(
 				'%d',
 				'%d',
+				'%d',
 				'%s',
 				'%d'
 				 ),
@@ -466,7 +467,19 @@ class Ai1ec_Facebook_Graph_Object_Collection {
 			// Check if the event is already present in the db.
 			$post_id = $this->get_post_id_from_eid( $event['eid'] );
 			// Save data in the user_events table
-			$table_user_update_ok = $this->handle_saving_in_user_events_table( $event['facebook_user'], $event['eid'], Ai1ec_Facebook_Event::convert_facebook_time_to_gmt_timestamp( $event['start_time'], $this->_facebook_user->get_timezone() ) );
+			$_curr_evt_start = Ai1ec_Facebook_Event::convert_facebook_time_to_gmt_timestamp(
+				$event['start_time'],
+				$this->_facebook_user->get_timezone()
+			);
+			if ( $_curr_evt_start <= 0 ) {
+				$return['errors'] = TRUE;
+				continue; // ignore event with unknown start time
+			}
+			$table_user_update_ok = $this->handle_saving_in_user_events_table(
+				$event['facebook_user'],
+				$event['eid'],
+				$_curr_evt_start
+			);
 			// Unset the event if it was present from the event which were already in the db.
 			if( isset( $events_in_the_db[$event['eid']] ) ) {
 				unset( $events_in_the_db[$event['eid']] );
@@ -533,12 +546,16 @@ class Ai1ec_Facebook_Graph_Object_Collection {
 	 *
 	 * @param int $user_timezone the timezone of the currently logged on user
 	 *
-	 * @throws Exception If there was an error in saving the event
+	 * @throws Exception|Ai1ec_Invalid_Argument If there was an error in saving the event
 	 */
 	private function save_event( array $event, $user_timezone ) {
 		global $ai1ec_events_helper;
 		// Convert the Facebook event to Ai1ec_Event.
-		$ai1ec_event = $this->convert_facebook_event_to_ai1ec_event( $event, $user_timezone );
+		try {
+			$ai1ec_event = $this->convert_facebook_event_to_ai1ec_event( $event, $user_timezone );
+		} catch ( Ai1ec_Invalid_Argument $exception ) {
+			throw $exception;
+		}
 		// Save the event.
 		$new_post_id = $ai1ec_event->save( FALSE );
 		// Throw an Exception if saving post failed for some reason.
@@ -560,6 +577,8 @@ class Ai1ec_Facebook_Graph_Object_Collection {
 	 * @param int $post_id the id of the wp_post if we are updating
 	 *
 	 * @return Ai1ec_Event|array an Ai1ec object if we are performing an insert or an array if we ar updating
+	 *
+	 * @throws Exception If there was an error converting event
 	 */
 	private function convert_facebook_event_to_ai1ec_event( array $facebook_event, $user_timezone, $post_id = NULL ) {
 		global $ai1ec_events_helper;
@@ -569,8 +588,20 @@ class Ai1ec_Facebook_Graph_Object_Collection {
 		if ( isset( $facebook_event['start_time'] ) ) {
 			$event->start           = Ai1ec_Facebook_Event::convert_facebook_time_to_gmt_timestamp( $facebook_event['start_time'], $user_timezone );
 		}
-		if ( isset( $facebook_event['end_time'] ) && $facebook_event['end_time'] !== NULL ) {
+		if (
+			isset( $facebook_event['end_time'] ) &&
+			! empty( $facebook_event['end_time'] )
+		) {
 			$event->end             = Ai1ec_Facebook_Event::convert_facebook_time_to_gmt_timestamp( $facebook_event['end_time'], $user_timezone );
+		}
+		if ( $event->start <= 0 ) {
+			throw new Ai1ec_Invalid_Argument(
+				'Event start time is undefined/invalid'
+			);
+		}
+		if ( $event->end <= 0 ) { // make it an instantaneous event
+			$event->end             = $event->start + 1800;
+			$event->instant_event   = 1;
 		}
 		// Check if the coordinates are set.
 		$coordinates_set = isset( $facebook_event['venue']['longitude'] ) && isset( $facebook_event['venue']['latitude'] );
@@ -631,7 +662,7 @@ class Ai1ec_Facebook_Graph_Object_Collection {
 		if ( $facebook_event['has_profile_pic'] ) {
 			list( , , , $attr ) = getimagesize( $facebook_event['pic_big'] );
 			$post['post_content'] =
-				'<div class="ai1ec-event-avatar alignleft"><img src="' .
+				'<div class="ai1ec-event-avatar alignleft timely"><img src="' .
 				esc_attr( $facebook_event['pic_big'] ) .
 				'" ' . $attr . ' /></div>' . $post['post_content'];
 		}
@@ -702,9 +733,13 @@ class Ai1ec_Facebook_Graph_Object_Collection {
 		}
 		global $ai1ec_events_helper;
 		// Convert the data coming from Facebook into a Ai1ec_Event and a $post array
-		$return_array = $this->convert_facebook_event_to_ai1ec_event(
-			$event, $user_timezone, $post_id
-		);
+		try {
+			$return_array = $this->convert_facebook_event_to_ai1ec_event(
+				$event, $user_timezone, $post_id
+			);
+		} catch ( Ai1ec_Invalid_Argument $exception ) {
+			return;
+		}
 
 		// Update the event.
 		$ai1ec_event = $return_array['event'];

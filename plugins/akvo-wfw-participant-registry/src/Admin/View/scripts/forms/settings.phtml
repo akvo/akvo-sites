@@ -1,0 +1,125 @@
+<?php
+
+$sWrapperId = '';
+$sTemporaryWrapperId = $this->element->getParameter('wrapper_id');
+
+if (is_null($sTemporaryWrapperId)) {
+	$sFormId = $this->element->getAttrib('id');
+	if ($sFormId != '') {
+		$sWrapperId = 'iDivWrapperFor' . $sFormId;
+	}
+} else {
+	$sWrapperId = $sTemporaryWrapperId;
+}
+
+$sWrapperAttributes = '';
+$sWrapperAttributes .= ' id="' . $sWrapperId . '"';
+$sWrapperAttributes .= ' class="cDivZendFormWrapper"';
+
+?>
+<div<?php echo $sWrapperAttributes; ?>>
+	<div id="iDivFormResponseContainer"></div>
+
+	<form class=""<?php include 'partials/form_attributes.phtml'; ?>>
+
+		<div class="row-fluid">
+
+			<div class="span12">
+
+				<fieldset>
+					<legend>Google Maps</legend>
+
+					<div class="span4">
+
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textGoogleMapsApiKey->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textGoogleMapsApiKey->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textGoogleMapsApiKey"><?php echo $this->element->textGoogleMapsApiKey->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textGoogleMapsApiKey; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textGoogleMapsDefaultZoomFactor->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textGoogleMapsDefaultZoomFactor->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textGoogleMapsDefaultZoomFactor"><?php echo $this->element->textGoogleMapsDefaultZoomFactor->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textGoogleMapsDefaultZoomFactor; ?>
+						</div>
+					</div>
+
+					</div>
+					<div class="span4">
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textGoogleMapsDefaultCenterPointLatitude->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textGoogleMapsDefaultCenterPointLatitude->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textGoogleMapsDefaultCenterPointLatitude"><?php echo $this->element->textGoogleMapsDefaultCenterPointLatitude->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textGoogleMapsDefaultCenterPointLatitude; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textGoogleMapsDefaultCenterPointLongitude->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textGoogleMapsDefaultCenterPointLongitude->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textGoogleMapsDefaultCenterPointLongitude"><?php echo $this->element->textGoogleMapsDefaultCenterPointLongitude->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textGoogleMapsDefaultCenterPointLongitude; ?>
+						</div>
+					</div>
+
+
+					</div>
+
+				</fieldset>
+
+			</div>
+
+		</div>
+
+		<div class="row-fluid">
+			<div class="form-actions">
+				<?php echo $this->element->submitSubmit; ?>
+			</div>
+		</div>
+
+	</form>
+</div>

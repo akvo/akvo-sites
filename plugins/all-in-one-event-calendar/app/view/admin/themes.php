@@ -1,7 +1,7 @@
 <?php if( $activated ) : ?>
 	<div id="message2" class="updated">
 		<p>
-			<?php printf( __( 'New theme activated. <a href="%s">Visit site</a>', AI1EC_PLUGIN_NAME ), home_url( '/' ) ); ?>
+			<?php printf( __( 'New theme activated. <a href="%s">Visit site</a>' ), home_url( '/' ) ); ?>
 		</p>
 	</div>
 <?php elseif( $deleted ) : ?>
@@ -14,8 +14,8 @@
 
 <div class="wrap">
 	<?php screen_icon() ?>
-	<h2><?php echo esc_html( __( 'Manage Themes', AI1EC_PLUGIN_NAME ) ); ?></h2>
-	<h3><?php _e('Current Theme'); ?></h3>
+	<h2><?php echo esc_html( $page_title ); ?></h2>
+	<h3><?php _e('Current Calendar Theme'); ?></h3>
 	<div id="current-theme"<?php echo ( $ct->screenshot ) ? ' class="has-screenshot"' : '' ?>>
 	<?php if ( $ct->screenshot ) : ?>
 	<img src="<?php echo $ct->theme_root_uri . '/' . $ct->stylesheet . '/' . $ct->screenshot; ?>" alt="<?php esc_attr_e('Current theme preview'); ?>" />
@@ -35,14 +35,16 @@
 
 	<br class="clear" />
 	<?php
-	if ( ! current_user_can( 'switch_themes' ) ) {
+	if (
+		! current_user_can( 'switch_themes' ) &&
+		! current_user_can( 'switch_ai1ec_themes' )
+	) {
 		echo '</div>';
-		require( './admin-footer.php' );
-		exit;
+		return false;
 	}
 	?>
 
-	<h3><?php _e('Available Themes'); ?></h3>
+	<h3><?php _e('Available Calendar Themes'); ?></h3>
 
 	<?php if ( !empty( $_REQUEST['s'] ) || !empty( $_REQUEST['filter'] ) || $wp_list_table->has_items() ) : ?>
 
@@ -110,7 +112,7 @@
 	if ( current_user_can('edit_themes') && count( $broken_themes ) ) {
 	?>
 
-	<h3><?php _e('Broken Themes'); ?></h3>
+	<h3><?php _e('Broken Calendar Themes'); ?></h3>
 	<p><?php _e('The following themes are installed but incomplete. Themes must have a stylesheet and a template.'); ?></p>
 
 	<table id="broken-themes">

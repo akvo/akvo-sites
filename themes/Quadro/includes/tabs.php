@@ -59,6 +59,7 @@ global $tabOptions;
             if((!isset($tabOptions['onlyupdates']) || $tabOptions['onlyupdates']==0) && (count($aCategoryIDs)>0 || isset($tabOptions['country']))){
                 $args=array();
                 if(count($aCategoryIDs)>0){
+//                    akvo_debug_dump($aCategoryIDs);
                     $args = array(
                         'category__in'=>$aCategoryIDs,
                         'posts_per_page' => -1,
@@ -72,13 +73,14 @@ global $tabOptions;
     //var_dump($args);
                 //get posts for category
                 $aPosts = $wp_query->query($args);
+//                akvo_debug_dump($aPosts);
             }
             if($tabOptions['showUpdates']){
                     $wp_query = null;
             $wp_query = new WP_Query();
                     $args= array(
                         'post_type'=>'project_update',
-                        'posts_per_page' => -1,
+                        'posts_per_page' => 100,
                         );
                    
                     if(isset($tabOptions['country'])){
@@ -90,6 +92,7 @@ global $tabOptions;
                     }else{
                         $oAPC = new AkvoPartnerCommunication();
                         $aProjectUpdates = $oAPC->readProjectUpdatesFromDbForTabs();
+                        $aProjectUpdates = array_slice($aProjectUpdates, 0,200);
                         // var_dump($aProjectUpdates);
                         $tabOptions['updateIDs']=$aProjectUpdates;
                         $args['post__in']=$tabOptions['updateIDs'];
@@ -138,7 +141,7 @@ global $tabOptions;
                <li id="iLiBlogPosts" class="cLiFilterBy" rel="all">
 					Filter by:
 				</li>
-				<li id="iLiBlogPosts" class="cLiBlogCat" rel="all">
+				<li id="iLiBlogPosts" class="cLiBlogCat" rel="blog">
 					<a>All</a>
 				</li>
             <?php
@@ -161,6 +164,7 @@ global $tabOptions;
             }else{
             ///add category tab per category
                 foreach($aCategoryNames AS $iK=>$sCategory){
+                    //if($sCategory=='Blog')continue;
                     ?>
                         <li id="iLiBlogPosts" class="cLiBlogCat" rel="<?php echo $sCategory; ?>" catid ="<?php echo $aCategoryIDs[$sCategory]; ?>">
                             <a><?php echo $sCategory; ?></a>
@@ -179,129 +183,9 @@ if($tabOptions['showTabs']==0){
 
                             <?php
                             if ( have_posts() ) : while ( have_posts() ) : the_post();
-                                //continue;
-                                //die();
-								$postid = $post->ID;
-								$title = wash_the_content_filter($post->post_title);
-								$date = date('M d, Y',  strtotime($post->post_date));
-                                if($post->post_type=='post'){
-                                    $aPostCats =wp_get_post_categories($post->ID,array('fields'=>'all'));
-                                    $aPostTags = wp_get_post_tags($post->ID);
-                                    //var_dump($aPostTags);
-                                    $aPostCatNames=array();
-				foreach($aPostCats AS $oCat)$aPostCatNames[]=$oCat->name;
-                                    $aPostTagNames=array();
-				foreach($aPostTags AS $oTag)$aPostTagNames[]=$oTag->name;
-                                    $sCategory = $aCategoryNames[array_search($aPostCats[0]->name,$aCategoryNames)];
-                                    $sCategoryTag = join(', ',array_slice($aPostCatNames,0,2));
-                                    //$sCategoryTag = '';
-                                    $sReadMoreLink = get_permalink($post->ID);
-                                    $width = 271;
-                                    $height = 167;
-                                    $classtext = 'no-border';
-                                    $thumbnail = get_thumbnail($width, $height, $classtext, $title, $title, true, 'Featured');
-
-                                    $thumb =$thumbnail['thumb'];
-                                    $sImgSrc = print_thumbnail($thumb, $thumbnail["use_timthumb"], $title, $width, $height, $classtext,false,true);
-                                    if($sImgSrc==''){
-                                        $sFirstImg = catch_that_image();
-                                        if($sFirstImg!=''){ 
-                                            //$sFirstImg = str_replace('http://washalliance.nl/wp-content/blogs.dir/2/','http://www.washalliance.nl/',$sFirstImg);
-                                            $sImgSrc = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$sFirstImg.'&w=271&h=167&zc=1&q=100';   
-                                        }//$sImgSrc = catch_that_image();
-                                    }
-                                    if($sImgSrc==''){
-                                        if (function_exists('z_taxonomy_image_url')){
-                                            if(count($aPostTags)>0){
-                                                //var_dump($aPostTags[0]);
-                                                $sImgSrc= z_taxonomy_image_url($aPostTags[0]->term_id);
-                                            }else{
-                                                $sImgSrc= z_taxonomy_image_url($aPostCats[0]->term_id); 
-                                            }
-                                        }
-                                    }
-                                    if($sImgSrc=='' && isset($tabOptions['country'])){
-                                        $sImgSrc = '/wp-content/themes/Quadro/images/countryplaceholders/'.$tabOptions['country'].'.jpg';
-                                    }
-                                    $sPostLabelImgClass='cDivBlogPostImageTag';
-                                }elseif($post->post_type=='project_update'){
-                                    $sCategory = 'project updates';
-                                    $sCategoryTag = 'project updates';
-                                    
-                                    $aPostAttachments = AkvoPartnerCommunication::getUpdateImages($post->ID);
-                                    $sAttachmentLink = null;
-                                    if ($aPostAttachments) {
-                                        foreach ($aPostAttachments as $oAttachment) {
-                                            $sAttachmentLink = wp_get_attachment_url($oAttachment->ID);
-                                        }
-                                    }
-                                    $sImgSrc = "";
-                                    if (!is_null($sAttachmentLink)) {
-
-                                        $sImgSrc = str_replace('uploads20', 'uploads/20', $sAttachmentLink);
-                                        $sImgSrc = str_replace('files20', 'files/20', $sImgSrc);
-                                        if(!@getimagesize($sImgSrc))$sImgSrc='';
-                                    }
-                                    if($sImgSrc==''){
-                                        $sCountry = AkvoPartnerCommunication::readProjectUpdateCountry($post->ID);
-                                        if($sCountry)$sImgSrc = '/wp-content/themes/Quadro/images/countryplaceholders/'.$sCountry.'.jpg';
-                                    }
-                                    $sPostLabelImgClass='cDivProjUpdateImageTag';
-                                    //get the project Id to read more link (link to akvo.org site)
-                                    $sReadMoreLink = "http://washalliance.akvoapp.org/en/project/";
-                                    $oProjectId = $wpdb->get_results("SELECT project_id,update_id FROM " . $wpdb->prefix . "project_update_log WHERE post_id = ".$post->ID);
-                                    foreach ($oProjectId as $iId){
-                                        $iProjectId = $iId->project_id;
-                                        $iUpdateId = $iId->update_id;
-                                    }
-                                    $sReadMoreLink = $sReadMoreLink.$iProjectId.'/update/'.$iUpdateId;
-                                }
-                                $sNoImgClass = ($sImgSrc=='') ? 'noImg' : '';
-                                if(
-                                       $sImgSrc==''
-                                        
-                                    ){
-//                                    echo "NO IMG";
-//                                    var_dump($post);
-//                                    continue;
-                                }
-								//$i++;
-								?>
-								<li class="cLiBlogPost <?php echo $sNoImgClass; ?>" rel="<?php echo $sCategory; ?>" posttype="<?php echo $post->post_type; ?>">
-									<div class="<?php echo $sPostLabelImgClass.' '.$sTagPlacementClass; ?>"></div>
-									<?php if($sImgSrc!=''){ ?>
-                                        <div class="cDivBlogPostImageWrapper">
-                                            <div class="cDivBlogPostImage">
-                                                <img src="<?php echo $sImgSrc; ?>" />
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-									<div class ="cDivBlogPostTitle">
-									<h2>
-										<a href="<?php echo esc_url($sReadMoreLink); ?>" title="<?php echo esc_attr($title); ?>">
-										<?php $sTitle = textClipper(strip_tags($title), 40);?>	
-                                        <?php echo $sTitle; ?>
-										</a>
-									</h2>
-									</div>
-
-									<div class="cDivBlogPostDate">
-										<?php echo $date.'  -  '.$sCategoryTag; ?>
-									</div>
-									
-									<div class="cDivBlogPostTextContent">
-										<?php
-										$sContent = wash_the_content_filter($post->post_content);
-                                        $iClipText =($sNoImgClass=='noImg') ? 800 : 200;
-										echo textClipper(strip_tags($sContent), $iClipText);
-                                        ?>
-									</div>
-
-									<div class="cDivReadmore">
-										<a href="<?php echo $sReadMoreLink; ?>" rel="bookmark" title="<?php printf(esc_attr__('Permanent Link to %s', 'Quadro'), the_title()) ?>"><?php esc_html_e('Read More', 'Quadro'); ?></a>
-									</div>
-                                    <br style="clear:both;" />
-								</li>
+                                ?>
+                            <?php get_template_part('includes/entry'); ?>
+                             
 							<?php
 							endwhile; endif;
                             

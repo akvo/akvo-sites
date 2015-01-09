@@ -45,7 +45,7 @@ class Ai1ec_Platform_Controller {
 		       $ai1ec_settings;
 
 		// Modify role permissions.
-		add_action( 'init',                     array( &$ai1ec_platform_helper, 'modify_roles' ) );
+		add_action( 'plugins_loaded',                     array( &$ai1ec_platform_helper, 'modify_roles' ) );
 
 		// Only further modify admin UI if event platform is requested.
 		if( $ai1ec_settings->event_platform_active ) {

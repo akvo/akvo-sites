@@ -26,6 +26,30 @@ class Ai1ec_Database
 	protected $_schema_delta = array();
 
 	/**
+	 * @var array List of valid table prefixes
+	 */
+	protected $_prefixes     = array();
+
+	/**
+	 * @var wpdb Localized instance of wpdb object
+	 */
+	protected $_db = NULL;
+
+	/**
+	 * @var bool If set to true - no operations will be performed
+	 */
+	protected $_dry_run  = false;
+
+	protected function __construct( wpdb $db = NULL ) {
+		$this->_db       = $db;
+		$this->_prefixes = array(
+			$db->prefix . 'ai1ec_',
+			$db->prefix,
+			'',
+		);
+	}
+
+	/**
 	 * instance method
 	 *
 	 * Get singleton instance of self (Ai1ec_Database).
@@ -34,9 +58,212 @@ class Ai1ec_Database
 	 */
 	static public function instance() {
 		if ( ! ( self::$_instance instanceof Ai1ec_Database ) ) {
-			self::$_instance = new Ai1ec_Database();
+			global $wpdb;
+			self::$_instance = new Ai1ec_Database( $wpdb );
 		}
 		return self::$_instance;
+	}
+
+	/**
+	 * Check if dry run is enabled
+	 *
+	 * @param bool $dry Change dryness [optional=NULL]
+	 *
+	 * @return bool Dryness of run or previous value
+	 */
+	public function is_dry( $dry = NULL ) {
+		if ( NULL !== $dry ) {
+			$previous = $this->_dry_run;
+			$this->_dry_run = (bool)$dry;
+			return $previous;
+		}
+		return $this->_dry_run;
+	}
+
+	/**
+	 * Get fully-qualified table name given it's abbreviated form
+	 *
+	 * @param string $name         Name (abbreviation) of table to check
+	 * @param bool   $ignore_check Return longest name if no table exist [false]
+	 *
+	 * @return string Fully-qualified table name
+	 *
+	 * @throws Ai1ec_Database_Schema_Exception If no table matches
+	 */
+	public function table( $name, $ignore_check = false ) {
+		$existing  = $this->get_all_tables();
+		$table     = NULL;
+		$candidate = NULL;
+		$name      = $name;
+		foreach ( $this->_prefixes as $prefix ) {
+			$candidate = $prefix . $name;
+			$index     = strtolower( $candidate );
+			if ( isset( $existing[$index] ) ) {
+				$table = $existing[$index];
+				break;
+			}
+		}
+		if ( NULL === $table ) {
+			if ( true === $ignore_check ) {
+				return $candidate;
+			}
+			throw new Ai1ec_Database_Schema_Exception(
+				'Table \'' . $name . '\' does not exist'
+			);
+		}
+		return $table;
+	}
+
+	/**
+	 * Drop given indices from table
+	 *
+	 * @param string       $table   Name of table to modify
+	 * @param string|array $indices List, or single, of indices to remove
+	 *
+	 * @return bool Success
+	 *
+	 * @throws Ai1ec_Database_Schema_Exception If table is not found
+	 */
+	public function drop_indices( $table, $indices ) {
+		if ( ! is_array( $indices ) ) {
+			$indices = array( (string)$indices );
+		}
+		$table    = $this->table( $table );
+		$existing = $this->get_indices( $table );
+		$removed  = 0;
+		foreach ( $indices as $index ) {
+			if (
+				! isset( $existing[$index] ) ||
+				$this->_dry_query(
+					'ALTER TABLE ' . $table . ' DROP INDEX ' . $index
+				)
+			) {
+				++$removed;
+			}
+		}
+		return ( count( $indices ) === $removed );
+	}
+
+	/**
+	 * Create indices for given table
+	 *
+	 * Input ({@see $indices}) must be the same, as output of
+	 * method {@see self::get_indices()}.
+	 *
+	 * @param string $table   Name of table to create indices for
+	 * @param array  $indices Indices representation to be created
+	 *
+	 * @return bool Success
+	 *
+	 * @throws Ai1ec_Database_Schema_Exception If table is not found
+	 */
+	public function create_indices( $table, array $indices ) {
+		$table = $this->table( $table );
+		foreach ( $indices as $name => $definition ) {
+			$query = 'ALTER TABLE ' . $table . ' ADD ';
+			if ( $definition['unique'] ) {
+				$query .= 'UNIQUE ';
+			}
+			$query .= 'KEY ' . $name . ' (' .
+				implode( ', ', $definition['columns'] ) .
+				')';
+			if ( ! $this->_dry_query( $query ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * get_indices method
+	 *
+	 * Get map of indices defined for table.
+	 *
+	 * @NOTICE: no optimization will be performed here, and response will not
+	 * be cached, to allow checking result of DDL statements.
+	 *
+	 * Returned array structure (example):
+	 * array(
+	 *     'index_name' => array(
+	 *         'name'    => 'index_name',
+	 *         'columns' => array(
+	 *             'column1',
+	 *             'column2',
+	 *             'column3',
+	 *         ),
+	 *         'unique'  => true,
+	 *     ),
+	 * )
+	 *
+	 * @param string $table Name of table to retrieve index names for
+	 *
+	 * @return array Map of index names and their representation
+	 *
+	 * @throws Ai1ec_Database_Schema_Exception If table is not found
+	 */
+	public function get_indices( $table ) {
+		$sql_query = 'SHOW INDEXES FROM ' . $this->table( $table );
+		$result    = $this->_db->get_results( $sql_query );
+		$indices   = array();
+		foreach ( $result as $index ) {
+			$name = $index->Key_name;
+			if ( ! isset( $indices[$name] ) ) {
+				$indices[$name] = array(
+					'name'    => $name,
+					'columns' => array(),
+					'unique'  => ! (bool)intval( $index->Non_unique ),
+				);
+			}
+			$indices[$name]['columns'][$index->Column_name] = $index->Sub_part;
+		}
+		return $indices;
+	}
+
+	/**
+	 * Perform query, unless `dry_run` is selected. In later case just output
+	 * the final query and return true.
+	 *
+	 * @param string $query SQL Query to execute
+	 *
+	 * @return mixed Query state, or true in dry run mode
+	 */
+	public function _dry_query( $query ) {
+		if ( $this->is_dry() ) {
+			pr( $query );
+			return true;
+		}
+		$result = $this->_db->query( $query );
+		if ( AI1EC_DEBUG ) {
+			echo '<h4>', $query, '</h4><pre>', var_export( $result, true ), '</pre>';
+		}
+		return $result;
+	}
+
+	/**
+	 * Check if given table exists
+	 *
+	 * @param string $table Name of table to check
+	 *
+	 * @return bool Existance
+	 */
+	public function table_exists( $table ) {
+		$map = $this->get_all_tables();
+		return isset( $map[strtolower( $table )] );
+	}
+
+	/**
+	 * Return a list of all tables currently present
+	 *
+	 * @return array Map of tables present
+	 */
+	public function get_all_tables() {
+		$sql_query = 'SHOW TABLES LIKE \'' . $this->_db->prefix . '%\'';
+		$result    = $this->_db->get_col( $sql_query );
+		$tables    = array();
+		foreach ( $result as $table ) {
+			$tables[strtolower( $table )] = $table;
+		}
+		return $tables;
 	}
 
 	/**
@@ -404,13 +631,12 @@ class Ai1ec_Database
 	 * @throws Ai1ec_Database_Error In case of any error
 	 */
 	protected function _check_delta() {
-		global $wpdb;
 		if ( empty( $this->_schema_delta ) ) {
 			return true;
 		}
 		foreach ( $this->_schema_delta as $table => $description ) {
 
-			$columns = $wpdb->get_results( 'SHOW FULL COLUMNS FROM ' . $table );
+			$columns = $this->_db->get_results( 'SHOW FULL COLUMNS FROM ' . $table );
 			if ( empty( $columns ) ) {
 				throw new Ai1ec_Database_Error(
 					'Required table `' . $table . '` was not created'
@@ -419,15 +645,17 @@ class Ai1ec_Database
 			$db_column_names = array();
 			foreach ( $columns as $column ) {
 				if ( ! isset( $description['columns'][$column->Field] ) ) {
-					trigger_error(
-						'Unknown column `' . $column->Field .
-						'` is present in table `' . $table . '`'
-					);
-					continue; // TODO: this is ignored, so far
-					throw new Ai1ec_Database_Error(
-						'Unknown column `' . $column->Field .
-						'` is present in table `' . $table . '`'
-					);
+					if ( $this->_db->query(
+						'ALTER TABLE `' . $table .
+						'` DROP COLUMN `' . $column->Field . '`'
+					 ) ) {
+						continue;
+					}
+					continue; // ignore so far
+					//throw new Ai1ec_Database_Error(
+					//	'Unknown column `' . $column->Field .
+					//	'` is present in table `' . $table . '`'
+					//);
 				}
 				$db_column_names[$column->Field] = $column->Field;
 				$type_db = $column->Type;
@@ -499,26 +727,15 @@ class Ai1ec_Database
 					);
 			}
 
-			$index_list = $wpdb->get_results( 'SHOW INDEXES FROM ' . $table );
-			$indexes = array();
-			foreach ( $index_list as $index_def ) {
-				$name = $index_def->Key_name;
-				if ( ! isset( $indexes[$name] ) ) {
-					$indexes[$name] = array(
-						'columns' => array(),
-						'unique'  => ( 0 !== $index_def->Non_unique ),
-					);
-				}
-				$indexes[$name]['columns'][$index_def->Column_name] =
-					$index_def->Sub_part;
-			}
+			$indexes = $this->get_indices( $table );
 
 			foreach ( $indexes as $name => $definition ) {
 				if ( ! isset( $description['indexes'][$name] ) ) {
-					throw new Ai1ec_Database_Error(
-						'Unknown index `' . $name .
-						'` is defined for table `' . $table . '`'
-					);
+					continue; // ignore so far
+					//throw new Ai1ec_Database_Error(
+					//	'Unknown index `' . $name .
+					//	'` is defined for table `' . $table . '`'
+					//);
 				}
 				if (
 					$missed = array_diff_assoc(

@@ -12,6 +12,7 @@ require_once 'classes/memberswidget.php';
 require_once 'classes/newswidget.php';
 require_once 'classes/aboutboxwidget.php';
 require_once 'classes/flickr.php';
+require_once 'classes/AkvoPedia.php';
 
 function asc_register_widgets() {
 	register_widget( 'MembersWidget' );
@@ -36,10 +37,16 @@ function akvo_contentblock($atts=null,$content){
 }
 add_shortcode( 'contentblock', 'akvo_contentblock' );
 function akvo_newcontentblock($atts=null,$content){
-    $addclass=(is_array($atts) && (array_search('wide',$atts)!==false) || array_key_exists('wide', $atts)) ? 'no_sidebar' : '';
-    return '</div><div class="post-wrapper '.$addclass.'">';
+    $addclass=(is_array($atts) && (array_search('wide',$atts)!==false || array_key_exists('wide', $atts))) ? 'no_sidebar' : '';
+    return '</div><div class="post-wrapper '.$addclass.' clearfix">';
 }
 add_shortcode( 'newcontentblock', 'akvo_newcontentblock' );
+
+function akvo_pedia($atts=null,$content){
+    $porta=(is_array($atts) && (array_search('portal',$atts)!==false || array_key_exists('portal', $atts))) ? 'no_sidebar' : '';
+    return '</div><div class="post-wrapper '.$addclass.'">';
+}
+add_shortcode( 'akvopedia', 'AkvoPedia::displaywiki' );
 
 add_shortcode( 'akvoflickr', 'AkvoFlickrSlideshow::displayslideshow' );
 
@@ -117,4 +124,55 @@ if ( ! wp_next_scheduled('akvo_featured_video') ) {
 }
  
 add_action( 'akvo_featured_video', 'AkvoSiteConfig::getPostsFeaturedVideo' );
+
+///list past events. This function requires "all in one event calendar" plugin to be activated
+function akvo_list_past_events(){
+    
+    global $wpdb;
+    $sQuery = "SELECT `post_id`,`start` FROM `" . $wpdb->prefix . "ai1ec_events` WHERE `start` < NOW() ORDER BY `start` DESC";
+        
+    $aResults = $wpdb->get_results($sQuery, ARRAY_A);
+    $aEvents = array();
+    foreach($aResults AS $aEvent){
+        $aEvents[$aEvent['post_id']]=$aEvent;
+    }
+    $return='';
+    if(count($aEvents) > 0){
+        $args = array(
+          'post_type' => 'ai1ec_event',
+          'posts_per_page' => -1,
+          'nopaging' => true,
+          'post__in' => array_keys($aEvents),
+          'orderby' => 'post__in'
+        );
+        $the_query = new WP_Query($args);
+        $return = '<br style="clear:both;" /><h1 class="titles"><a href="#">Past events</a></h1>';
+
+        // The Loop
+        if ( $the_query->have_posts() ) {
+                $return .= '<ul>';
+                $currentyear = '';
+            while ( $the_query->have_posts() ) {
+                $the_query->the_post();
+                $id=get_the_ID();
+                $eventyear = date('Y',  strtotime($aEvents[$id]['start']));
+                if($eventyear!=$currentyear){
+                    //display year title
+                    $return.= '</ul><h3>'.$eventyear.'</h3><ul>';
+                    $currentyear = $eventyear;
+                }
+                $return .= '<li><strong><a href="'.get_permalink().'">'.date('d M',  strtotime($aEvents[$id]['start'])).'</a> - </strong>' . get_the_title() . '</li>';
+            }
+                $return .= '</ul>';
+        } else {
+            $return .= "There are no past events";
+            // no posts found
+        }
+        /* Restore original Post Data */
+        wp_reset_postdata();
+    }
+    return $return;
+}
+
+add_shortcode('akvo_past_events','akvo_list_past_events');
 ?>

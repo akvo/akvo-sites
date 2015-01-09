@@ -262,13 +262,18 @@ class Ai1ec_Lessphp_Controller {
 		$variables = $db_adapter->get_data_from_config(
 				self::DB_KEY_FOR_LESS_VARIABLES
 		);
+		if ( ! $variables ) {
+			return array();
+		}
 		$variables_with_description = self::get_less_variable_data_from_config_file(
-			Ai1ec_Less_Factory::create_less_file_instance( Ai1ec_Less_File::USER_VARIABLES_FILE )
+			Ai1ec_Less_Factory::create_less_file_instance(
+				Ai1ec_Less_File::USER_VARIABLES_FILE
+			)
 		);
 		// Add the description at runtime so that it can get the translation
-		foreach( $variables as $name => $attrs ) {
-			if( isset( $variables_with_description[$name]['description'] ) ) {
-				$variables[$name]['description'] = $variables_with_description[$name]['description'];
+		foreach ( $variables as $name => $attrs ) {
+			if ( isset( $variables_with_description[$name]['description'] ) ) {
+				$variables[$name]['description'] = $variables_description[$name]['description'];
 			}
 		}
 		return $variables;

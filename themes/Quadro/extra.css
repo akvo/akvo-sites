@@ -152,7 +152,6 @@ margin-bottom: 15px;
 }
 .search #sidebar-wrapper,
 .page #sidebar-wrapper,
-.error404 #sidebar-wrapper,
 .single #sidebar-wrapper{
     float:right;
     margin:0px;
@@ -232,14 +231,17 @@ ul.sub-menu li{
     padding-left:20px;
 }
 #pages ul li ul.sub-menu li,
-#pages ul li ul.sub-menu li:hover,
-#pages ul li ul.sub-menu a,
-#pages ul li ul.sub-menu a:hover{
+#pages ul li ul.sub-menu li:hover{
     background-color: transparent;
     width: 100%;
 }
+#pages ul li ul.sub-menu a,
+#pages ul li ul.sub-menu a:hover{
+    background-color: transparent;
+    width: 90%;
+}
 #pages ul li ul li ul{
-    margin-left:-100px;
+    margin-left:-60px;
     border-top:1px solid #D6D6D6 !important;
 }
 
@@ -311,7 +313,7 @@ overflow:hidden;
     border:0px;
 }
 #footer div.widget{
-    width:60%;
+    width:65%;
     margin-right:3%;
     float:left;
 }
@@ -333,11 +335,9 @@ div.memberwidget img{
     margin-right:0px;
     margin-top:5px;
     font-style: italic;
-    float:right;
 	text-align:right;
 }
 #iDivPoweredBy #iDivPoweredByImage{
-    float:right;
     margin-bottom:15px;
 	text-align:right;
 }
@@ -681,8 +681,235 @@ z-index:500;
 	padding: 10px;
 }
 .superheader{
-    font-size: 48px !important;
-    line-height: 50px !important;
+    font-size: 30px !important;
+    line-height: 32px !important;
     font-weight:normal;
     color: #FF6E01;
 } 
+.widget_mailchimpsf_widget{
+    border: 1px solid #d6d6d6;
+    background-color: #fff;
+    margin-top: 15px;
+    padding: 20px;
+    border-radius: 25px;
+border-bottom-right-radius: 0;
+}
+.widget_mailchimpsf_widget h2{
+    margin:0px;
+}
+.widget_mailchimpsf_widget label{
+    width: 100px;
+display: inline-block;
+}
+.widget_mailchimpsf_widget .mc_signup_submit {
+text-align: left;
+margin-top: 15px;
+}
+/** sustainability pages **/
+.cDivSustainabilityHeader{
+    position:relative;
+    width:950px;
+    border:1px solid #D6D6D6;
+    height:335px;
+    margin-bottom:15px;
+    
+}
+.cDivSustainabilityHeader .cDivPackageBanner{
+    position:absolute;
+    bottom:-100px;
+    right:-50px;
+    width:150px;
+    height:150px;
+    background:url(images/fiets/packagebtn.png) no-repeat;
+    text-align:center;
+    z-index:3;
+}
+.cDivSustainabilityHeader .cDivPackageBanner a{
+    color: #FFF;
+font-family: 'museo_sans_500regular';
+font-size: 19px !important;
+text-decoration: none;
+height: 90px;
+margin: 40px 20px;
+display: block;
+line-height: 24px;
+}
+
+.cDivSustainabilityHeader .cDivHeaderImage{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    top:0px;
+    
+}
+.cDivSustainabilityHeader .cDivHeaderImage img.cImgHeader{
+    
+    width:100%;
+}
+.cDivSustainabilityHeader .cDivFietsImage{
+    position:absolute;
+    height:100%;
+    width:100%;
+    text-align:center;
+    z-index:1;
+    top:10px;
+}
+.cDivSustainabilityHeader .cAportalHome{
+    position:absolute;
+    z-index:1;
+    top:15px;
+    right:15px;
+    color:#00A5f1 !important;
+    font-family: 'museo_sans_500regular';
+    background-color:#FFF !important;
+    font-size: 16px !important;
+    border: none !important;
+    -webkit-box-shadow: 0px 1px 3px 0px rgba(50, 50, 50, 0.75) !important;
+    -moz-box-shadow:    0px 1px 3px 0px rgba(50, 50, 50, 0.75) !important;
+    box-shadow:         0px 1px 3px 0px rgba(50, 50, 50, 0.75) !important;
+    padding:5px 15px !important;
+}
+.cDivSustainabilityHeader .cDivTitle{
+    font-family: 'museo_sans_500regular';
+    position: absolute;
+bottom: 12px;
+left: 267px;
+font-size: 37px;
+color: #fff;
+text-transform: uppercase;
+text-shadow: 2px 2px 2px rgba(50, 50, 50, 1);
+/* width: 350px; */
+line-height: 39px;
+text-align: right;
+    
+}
+.page-template-page-sustainability-portal-sub-php .cDivSustainabilityHeader .cDivFietsImage{
+    text-align:left;
+    padding-left:15px;
+}
+.page-template-page-sustainability-portal-sub-php .post-wrapper table{
+    width:100%;
+    
+}
+.page-template-page-sustainability-portal-php .post-wrapper td img,
+.page-template-page-sustainability-portal-php .post-wrapper td a,
+.page-template-page-sustainability-portal-sub-php .post-wrapper td img,
+.page-template-page-sustainability-portal-sub-php .post-wrapper td a{
+    border:0px;
+}
+.page-template-page-sustainability-portal-sub-php .post-wrapper td{
+    vertical-align: top;
+    padding:0px 15px 15px 0px;
+    text-align:center;
+}
+.page-template-page-sustainability-portal-sub-php .post-wrapper td img.alignleft{
+    float:none;
+/*    box-shadow: 2px 2px 2px rgba(50, 50, 50, 1);
+    -moz-box-shadow: 2px 2px 2px rgba(50, 50, 50, 1);
+    -webkit-box-shadow: 2px 2px 2px rgba(50, 50, 50, 1);*/
+}
+.page-template-page-sustainability-portal-php .post-wrapper h1,
+.page-template-page-sustainability-portal-sub-php .post-wrapper h1{
+    font-size:18px !important;
+}
+.page-template-page-sustainability-portal-php .post-wrapper td h1,
+.page-template-page-sustainability-portal-sub-php .post-wrapper td h1{
+    font-size:15px !important;
+}
+.page-template-page-sustainability-portal-php .post-wrapper table.cTableIcons td a,
+.page-template-page-sustainability-portal-sub-php .post-wrapper table.cTableIcons td a{
+    font-size:15px !important;
+    font-family: 'museo_sans_500regular';
+    color:#00A5f1;
+}
+.page-template-page-sustainability-portal-php .post-wrapper table.cTableIcons td a:hover,
+.page-template-page-sustainability-portal-sub-php .post-wrapper table.cTableIcons td a:hover{
+    color:#FF6E01;
+}
+.page-template-page-sustainability-portal-php .post-wrapper a,
+.page-template-page-sustainability-portal-sub-php .post-wrapper a{
+    color:#00A5f1;
+}
+.page-template-page-sustainability-portal-php .post-wrapper a:hover,
+.page-template-page-sustainability-portal-sub-php .post-wrapper a:hover{
+    color:#FF6E01;
+}
+.cDivSustainabilityHeader .cDivFietsImage img{
+    height:100%;
+    position:relative;
+    top:0px;
+}
+.cDivOrangeBlock{
+    color:#00A5f1;
+    font-family: 'museo_sans_500regular';
+    background-color:#FFF;
+    width:920px;
+    border:1px solid #00A5f1;
+    padding:15px;
+    margin-bottom:15px;
+    font-size: 15px !important;
+    line-height:20px;
+}
+.cDivOrangeBlock a{
+    text-decoration:underline;
+}
+.cDivOrangeBlock a:hover{
+    color:#FF6E01;
+}
+.cDivOrangeBlock h1{
+    font-family: 'museo_sans_500regular';
+    color:#FFF;
+    font-weight:normal;
+    font-size:38px !important;
+    line-height:30px !important;
+}
+.cDivOrangeBlock h2{
+    font-family: 'museo_sans_500regular';
+    
+    color:#00A5f1;
+    font-weight:normal;
+    font-size:25px !important;
+    line-height:30px !important;
+}
+
+.cDivBlueBlock{
+    color:#FFF;
+    background-color:#00A5f1;
+    width:920px;
+    border:1px solid #D6D6D6;
+    padding:15px;
+    margin-bottom:15px;
+    font-size: 14px !important;
+    line-height:20px;
+}
+.cDivBlueBlock h1{
+    font-family: 'museo_sans_500regular';
+    color:#FFF;
+    font-weight:normal;
+    font-size:18px !important;
+    line-height:20px !important;
+    width: 92%;
+}
+.cDivBlueBlock h2{
+    font-family: 'museo_sans_500regular';
+    color:#FF6E01;
+    font-weight:normal;
+    font-size:25px !important;
+    line-height:30px !important;
+}
+.cDivBlueBlock p,
+.cDivOrangeBlock p{
+    margin:0px;
+}
+.qtipWiel{
+    color:#00A5f1 !important;
+    font-family: 'museo_sans_500regular';
+    background-color:#FFF !important;
+    font-size: 16px !important;
+    border: none !important;
+    -webkit-box-shadow: 0px 1px 3px 0px rgba(50, 50, 50, 0.75) !important;
+    -moz-box-shadow:    0px 1px 3px 0px rgba(50, 50, 50, 0.75) !important;
+    box-shadow:         0px 1px 3px 0px rgba(50, 50, 50, 0.75) !important;
+    padding:5px !important;
+}

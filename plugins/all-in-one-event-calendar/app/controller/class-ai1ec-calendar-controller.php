@@ -1,17 +1,14 @@
 <?php
-//
-//  class-ai1ec-calendar-controller.php
-//  all-in-one-event-calendar
-//
-//  Created by The Seed Studio on 2011-07-13.
-//
 
 /**
- * Ai1ec_Calendar_Controller class
+ * Controller class for calendars.
  *
- * @package Controllers
- * @author time.ly
- **/
+ * @author     Timely Network Inc
+ * @since      2011.07.13
+ *
+ * @package    AllInOneEventCalendar
+ * @subpackage AllInOneEventCalendar.App.Controller
+ */
 class Ai1ec_Calendar_Controller {
 	/**
 	 * _instance class variable
@@ -23,127 +20,12 @@ class Ai1ec_Calendar_Controller {
 	static $_instance = NULL;
 
 	/**
-	 * request class variable
-	 *
-	 * Stores a custom $_REQUEST array for all calendar requests
-	 *
-	 * @var array
-	 **/
-	private $request = array();
-
-	/**
 	 * __construct function
 	 *
 	 * Default constructor - calendar initialization
 	 **/
 	private function __construct() {
-		// ===========
-		// = ACTIONS =
-		// ===========
-		// Handle AJAX requests
-		// Strange! Now regular WordPress requests will respond to the below AJAX
-		// hooks! Thus we need to check to make sure we are being called by the
-		// AJAX script before returning AJAX responses.
-		if( basename( $_SERVER['SCRIPT_NAME'] ) == 'admin-ajax.php' )
-		{
-			add_action( 'wp_ajax_ai1ec_posterboard', array( &$this, 'ajax_posterboard' ) );
-			add_action( 'wp_ajax_ai1ec_month', array( &$this, 'ajax_month' ) );
-			add_action( 'wp_ajax_ai1ec_oneday', array( &$this, 'ajax_oneday' ) );
-			add_action( 'wp_ajax_ai1ec_week', array( &$this, 'ajax_week' ) );
-			add_action( 'wp_ajax_ai1ec_agenda', array( &$this, 'ajax_agenda' ) );
-			add_action( 'wp_ajax_ai1ec_term_filter', array( &$this, 'ajax_term_filter' ) );
 
-			add_action( 'wp_ajax_nopriv_ai1ec_posterboard', array( &$this, 'ajax_posterboard' ) );
-			add_action( 'wp_ajax_nopriv_ai1ec_month', array( &$this, 'ajax_month' ) );
-			add_action( 'wp_ajax_nopriv_ai1ec_oneday', array( &$this, 'ajax_oneday' ) );
-			add_action( 'wp_ajax_nopriv_ai1ec_week', array( &$this, 'ajax_week' ) );
-			add_action( 'wp_ajax_nopriv_ai1ec_agenda', array( &$this, 'ajax_agenda' ) );
-			add_action( 'wp_ajax_nopriv_ai1ec_term_filter', array( &$this, 'ajax_term_filter' ) );
-		}
-	}
-	/**
-	 * process_request function
-	 *
-	 * Initialize/validate custom request array, based on contents of $_REQUEST,
-	 * to keep track of this component's request variables.
-	 *
-	 * @return void
-	 **/
-	function process_request()
-	{
-		global $ai1ec_settings;
-
-		// Find out which view of the calendar page was requested, then validate
-		// request parameters accordingly and save them to our custom request
-		// object
-		$this->request['action'] = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : '';
-		if( ! in_array( $this->request['action'],
-			      array( 'ai1ec_posterboard', 'ai1ec_month', 'ai1ec_oneday', 'ai1ec_week', 'ai1ec_agenda', 'ai1ec_term_filter' ) ) )
-			$this->request['action'] = 'ai1ec_' . $ai1ec_settings->default_calendar_view;
-
-		switch( $this->request['action'] )
-		{
-
-			case 'ai1ec_posterboard':
-				$this->request['ai1ec_page_offset'] =
-					isset( $_REQUEST['ai1ec_page_offset'] ) ? intval( $_REQUEST['ai1ec_page_offset'] ) : 0;
-				// Parse active event parameter as an integer ID
-				$this->request['ai1ec_active_event'] = isset( $_REQUEST['ai1ec_active_event'] ) ? intval( $_REQUEST['ai1ec_active_event'] ) : null;
-				// Category/tag filter parameters
-				$this->request['ai1ec_cat_ids'] = isset( $_REQUEST['ai1ec_cat_ids'] ) ? $_REQUEST['ai1ec_cat_ids'] : null;
-				$this->request['ai1ec_tag_ids'] = isset( $_REQUEST['ai1ec_tag_ids'] ) ? $_REQUEST['ai1ec_tag_ids'] : null;
-				$this->request['ai1ec_post_ids'] = isset( $_REQUEST['ai1ec_post_ids'] ) ? $_REQUEST['ai1ec_post_ids'] : null;
-				break;
-
-			case 'ai1ec_month':
-				$this->request['ai1ec_month_offset'] =
-					isset( $_REQUEST['ai1ec_month_offset'] ) ? intval( $_REQUEST['ai1ec_month_offset'] ) : 0;
-				// Parse active event parameter as an integer ID
-				$this->request['ai1ec_active_event'] = isset( $_REQUEST['ai1ec_active_event'] ) ? intval( $_REQUEST['ai1ec_active_event'] ) : null;
-				// Category/tag filter parameters
-				$this->request['ai1ec_cat_ids'] = isset( $_REQUEST['ai1ec_cat_ids'] ) ? $_REQUEST['ai1ec_cat_ids'] : null;
-				$this->request['ai1ec_tag_ids'] = isset( $_REQUEST['ai1ec_tag_ids'] ) ? $_REQUEST['ai1ec_tag_ids'] : null;
-				$this->request['ai1ec_post_ids'] = isset( $_REQUEST['ai1ec_post_ids'] ) ? $_REQUEST['ai1ec_post_ids'] : null;
-				break;
-
-			case 'ai1ec_oneday':
-				$this->request['ai1ec_oneday_offset'] =
-					isset( $_REQUEST['ai1ec_oneday_offset'] ) ? intval( $_REQUEST['ai1ec_oneday_offset'] ) : 0;
-				// Parse active event parameter as an integer ID
-				$this->request['ai1ec_active_event'] = isset( $_REQUEST['ai1ec_active_event'] ) ? intval( $_REQUEST['ai1ec_active_event'] ) : null;
-				// Category/tag filter parameters
-				$this->request['ai1ec_cat_ids'] = isset( $_REQUEST['ai1ec_cat_ids'] ) ? $_REQUEST['ai1ec_cat_ids'] : null;
-				$this->request['ai1ec_tag_ids'] = isset( $_REQUEST['ai1ec_tag_ids'] ) ? $_REQUEST['ai1ec_tag_ids'] : null;
-				$this->request['ai1ec_post_ids'] = isset( $_REQUEST['ai1ec_post_ids'] ) ? $_REQUEST['ai1ec_post_ids'] : null;
-				break;
-
-			case 'ai1ec_week':
-				$this->request['ai1ec_week_offset'] =
-					isset( $_REQUEST['ai1ec_week_offset'] ) ? intval( $_REQUEST['ai1ec_week_offset'] ) : 0;
-				// Parse active event parameter as an integer ID
-				$this->request['ai1ec_active_event'] = isset( $_REQUEST['ai1ec_active_event'] ) ? intval( $_REQUEST['ai1ec_active_event'] ) : null;
-				// Category/tag filter parameters
-				$this->request['ai1ec_cat_ids'] = isset( $_REQUEST['ai1ec_cat_ids'] ) ? $_REQUEST['ai1ec_cat_ids'] : null;
-				$this->request['ai1ec_tag_ids'] = isset( $_REQUEST['ai1ec_tag_ids'] ) ? $_REQUEST['ai1ec_tag_ids'] : null;
-				$this->request['ai1ec_post_ids'] = isset( $_REQUEST['ai1ec_post_ids'] ) ? $_REQUEST['ai1ec_post_ids'] : null;
-				break;
-
-			case 'ai1ec_agenda':
-				$this->request['ai1ec_page_offset'] =
-					isset( $_REQUEST['ai1ec_page_offset'] ) ? intval( $_REQUEST['ai1ec_page_offset'] ) : 0;
-				// Parse active event parameter as an integer ID
-				$this->request['ai1ec_active_event'] = isset( $_REQUEST['ai1ec_active_event'] ) ? intval( $_REQUEST['ai1ec_active_event'] ) : null;
-				// Category/tag filter parameters
-				$this->request['ai1ec_cat_ids'] = isset( $_REQUEST['ai1ec_cat_ids'] ) ? $_REQUEST['ai1ec_cat_ids'] : null;
-				$this->request['ai1ec_tag_ids'] = isset( $_REQUEST['ai1ec_tag_ids'] ) ? $_REQUEST['ai1ec_tag_ids'] : null;
-				$this->request['ai1ec_post_ids'] = isset( $_REQUEST['ai1ec_post_ids'] ) ? $_REQUEST['ai1ec_post_ids'] : null;
-				break;
-
-			case 'ai1ec_term_filter':
-				$this->request['ai1ec_post_ids'] = isset( $_REQUEST['ai1ec_post_ids'] ) ? $_REQUEST['ai1ec_post_ids'] : null;
-				$this->request['ai1ec_term_ids'] = isset( $_REQUEST['ai1ec_term_ids'] ) ? $_REQUEST['ai1ec_term_ids'] : null;
-				break;
-		}
 	}
 
 	/**
@@ -162,314 +44,456 @@ class Ai1ec_Calendar_Controller {
 	}
 
 	/**
-	 * view function
+	 * Returns rendered calendar page.
 	 *
-	 * Display requested calendar page.
-	 *
-	 * @return void
-	 **/
-	function view()
- 	{
+	 * @return string Rendered calendar page
+	 */
+	public function get_calendar_page( Ai1ec_Abstract_Query $request ) {
 		global $ai1ec_view_helper,
 		       $ai1ec_settings,
-		       $ai1ec_events_helper;
+		       $ai1ec_events_helper,
+		       $ai1ec_calendar_helper,
+		       $ai1ec_themes_controller;
 
-		$this->process_request();
+		if ( $notice = $ai1ec_themes_controller->frontend_outdated_themes_notice( false ) ) {
+			return $notice;
+		}
 
-		// Set body class
-		add_filter( 'body_class', array( &$this, 'body_class' ) );
 		// Queue any styles, scripts
 		$this->load_css();
+		// Are we loading a shortcode?
+		$shortcode = $request->get( 'shortcode' );
 
+		$view_args = $this->get_view_args_for_view( $request );
+		$action = $view_args['action'];
+		$type = $request->get( 'request_type' );
 
-	  $post_ids = array_filter( explode( ',', $this->request['ai1ec_post_ids'] ), 'is_numeric' );
-		// Define arguments for specific calendar sub-view (month, agenda, posterboard, etc.)
-		$args = array(
-			'active_event' => $this->request['ai1ec_active_event'],
-		  'post_ids'     => $post_ids,
-		);
+		$exact_date = $this->get_exact_date( $request );
+		$get_view = "get_{$action}_view";
 
-		// Find out which view of the calendar page was requested
-		switch( $this->request['action'] )
-		{
-			case 'ai1ec_posterboard':
-				$args['page_offset'] = $this->request['ai1ec_page_offset'];
-				$view = $this->get_posterboard_view( $args );
-				break;
-
-			case 'ai1ec_month':
-				$args['month_offset'] = $this->request['ai1ec_month_offset'];
-				$view = $this->get_month_view( $args );
-				break;
-
-			case 'ai1ec_oneday':
-				$args['oneday_offset'] = $this->request['ai1ec_oneday_offset'];
-				$view = $this->get_oneday_view( $args );
-				break;
-
-			case 'ai1ec_week':
-				$args['week_offset'] = $this->request['ai1ec_week_offset'];
-				$view = $this->get_week_view( $args );
-				break;
-
-			case 'ai1ec_agenda':
-				$args['page_offset'] = $this->request['ai1ec_page_offset'];
-				$view = $this->get_agenda_view( $args );
-				break;
+		$view = $this->$get_view( $view_args );
+		$content = '';
+		$args_for_filter = array();
+		$categories = $ai1ec_calendar_helper->get_html_for_categories( $view_args );
+		$tags = $ai1ec_calendar_helper->get_html_for_tags( $view_args );
+		$dropdown_args = $view_args;
+		if ( isset( $dropdown_args['time_limit'] ) && false !== $exact_date ) {
+			$dropdown_args['exact_date'] = $exact_date;
 		}
-
-		if( $ai1ec_settings->show_create_event_button && current_user_can( 'edit_ai1ec_events' ) )
-			$create_event_url = admin_url( 'post-new.php?post_type=' . AI1EC_POST_TYPE );
-		else
-			$create_event_url = false;
-
-		// Validate preselected category/tag/post IDs
-		$cat_ids  = join( ',', array_filter( explode( ',', $this->request['ai1ec_cat_ids'] ), 'is_numeric' ) );
-		$tag_ids  = join( ',', array_filter( explode( ',', $this->request['ai1ec_tag_ids'] ), 'is_numeric' ) );
-		$post_ids = join( ',', $post_ids );
-
-		$categories = get_terms( 'events_categories', array( 'orderby' => 'name' ) );
-		foreach( $categories as &$cat ) {
-			$cat->color = $ai1ec_events_helper->get_category_color_square( $cat->term_id );
+		$views_dropdown =
+			$ai1ec_calendar_helper->get_html_for_views_dropdown( $dropdown_args );
+		$subscribe_buttons = '';
+		if ( ! $ai1ec_settings->turn_off_subscription_buttons ) {
+			$subscribe_buttons =
+				$ai1ec_calendar_helper->get_html_for_subscribe_buttons( $view_args );
 		}
+		if ( ( $view_args['no_navigation'] || $type !== 'standard' ) &&
+		     'true' !== $shortcode ) {
+			$args_for_filter = $view_args;
+			// send data both for json and jsonp as shortcodes are jsonp
+			$content = array(
+				'html'              => $view,
+				'categories'        => $categories,
+				'tags'              => $tags,
+				'views_dropdown'    => $views_dropdown,
+				'subscribe_buttons' => $subscribe_buttons
+			);
 
-		// Create an empty array to fill with successfully returned values.
-		$available_views = array();
-
-		// Loop through array of views and check TRUE / FALSE on `view_instance_enabled`
-		// if FALSE, continue, if TRUE add to the $available_views array.
-		foreach( Ai1ec_Settings::$view_names as $key => $val ) {
-			$view_enabled = 'view_' . $key . '_enabled';
-			if( $ai1ec_settings->$view_enabled ) {
-				$available_views[$key] = $val;
+		} else {
+			if ( $ai1ec_settings->show_create_event_button &&
+			     current_user_can( 'edit_ai1ec_events' ) ) {
+				$create_event_url = admin_url(
+					'post-new.php?post_type=' . AI1EC_POST_TYPE );
+			} else {
+				$create_event_url = false;
 			}
-		};
 
-		$current_view = substr( $this->request['action'], 6 );
+			// Define new arguments for overall calendar view
+			$page_args = array(
+				'current_view'            => $action,
+				'views_dropdown'          => $views_dropdown,
+				'view'                    => $view,
+				'categories'              => $categories,
+				'create_event_url'        => $create_event_url,
+				'tags'                    => $tags,
+				'subscribe_buttons'       => $subscribe_buttons,
+				'data_type'               => $view_args['data_type'],
+			);
+			$content = $ai1ec_view_helper->get_theme_view( 'calendar.php', $page_args );
+			$args_for_filter = $page_args;
+		}
 
-		// Define new arguments for overall calendar view
-		$args = array(
-			'view_names'              => Ai1ec_Settings::$view_names,
-			'available_views'         => $available_views,
-			'current_view'            => $current_view,
-			'view'                    => $view,
-			'create_event_url'        => $create_event_url,
-			'categories'              => $categories,
-			'tags'                    => get_terms( 'events_tags', array( 'orderby' => 'name' ) ),
-			'selected_cat_ids'        => $cat_ids,
-			'selected_tag_ids'        => $tag_ids,
-			'selected_post_ids'       => $post_ids,
-			'show_subscribe_buttons'  => ! $ai1ec_settings->turn_off_subscription_buttons,
-			'ai1ec_view_helper'       => $ai1ec_view_helper,
+		return apply_filters(
+			'ai1ec_view',
+			$content,
+			$args_for_filter
 		);
+	}
 
-		// Feed month view into generic calendar view
-		echo apply_filters( 'ai1ec_view', $ai1ec_view_helper->get_theme_view( 'calendar.php', $args ), $args );
+	public function get_view_args_for_view( Ai1ec_Abstract_Query $request ) {
+		global $ai1ec_events_helper, $ai1ec_settings;
+		// Define arguments for specific calendar sub-view (month, agenda,
+		// posterboard, etc.)
+		// Preprocess action.
+		// Allow action w/ or w/o ai1ec_ prefix. Remove ai1ec_ if provided.
+		$action = $request->get( 'action' );
+
+		if ( 0 === strncmp( $action, 'ai1ec_', 6 ) ) {
+			$action = substr( $action, 6 );
+		}
+		$view_args = $request->get_dict( array(
+			'post_ids',
+			'cat_ids',
+			'tag_ids',
+		) );
+
+		$add_defaults = array(
+			'cat_ids' => 'default_categories',
+			'tag_ids' => 'default_tags',
+		);
+		foreach ( $add_defaults as $query => $default ) {
+			if ( empty( $view_args[$query] ) ) {
+				$view_args[$query] = $ai1ec_settings->{$default};
+			}
+		}
+
+		$type = $request->get( 'request_type' );
+		$view_args['data_type'] = $this->return_data_type_for_request_type( $type );
+
+		$exact_date = $this->get_exact_date( $request );
+
+		$view_args['no_navigation'] = $request->get( 'no_navigation' ) === 'true' ? true : false;
+
+		// Find out which view of the calendar page was requested, and render it
+		// accordingly.
+		$view_args['action'] = $action;
+		switch( $action ) {
+			case 'posterboard':
+			case 'agenda':
+				$view_args += $request->get_dict( array(
+				'page_offset',
+				'time_limit',
+				) );
+				if( false !== $exact_date ) {
+					$view_args['time_limit'] = $ai1ec_events_helper->local_to_gmt( $exact_date ) - 1;
+				}
+				break;
+
+			case 'month':
+			case 'oneday':
+			case 'week':
+				$view_args["{$action}_offset"] = $request->get( "{$action}_offset" );
+				if( false !== $exact_date ) {
+					$view_args['exact_date'] = $exact_date;
+				}
+				break;
+		}
+		$view_args['request'] = $request;
+		return $view_args;
 	}
 
 	/**
-	 * get_posterboard_view function
+	 * Get the exact date from request if available, or else from settings.
 	 *
-	 * Return the embedded posterboard view of the calendar, optionally filtered by
-	 * event categories and tags.
+	 * @param Ai1ec_Abstract_Query $request
+	 * @return boolean|int
+	 */
+	private function get_exact_date( Ai1ec_Abstract_Query $request ) {
+		global $ai1ec_settings;
+
+		// Preprocess exact_date.
+		// Check to see if a date has been specified.
+		$exact_date = $request->get( 'exact_date' );
+		// Let's check if we have a date
+		if ( false !== $exact_date ) {
+			// If it's not a timestamp
+			if( ! Ai1ec_Validation_Utility::is_valid_time_stamp( $exact_date ) ) {
+				// Try to parse it
+				$exact_date = $this->return_gmtime_from_exact_date( $exact_date );
+			}
+		}
+		// Last try, let's see if an exact date is set in settings.
+		if ( false === $exact_date && $ai1ec_settings->exact_date !== '' ) {
+			$exact_date = $this->return_gmtime_from_exact_date(
+				$ai1ec_settings->exact_date
+			);
+		}
+		return $exact_date;
+	}
+
+	/**
+	 * Returns the correct data attribute to use in views
 	 *
+	 * @param string $type
+	 */
+	private function return_data_type_for_request_type( $type ) {
+		$data_type = 'data-type="json"';
+		if ( $type === 'jsonp' ) {
+			$data_type = 'data-type="jsonp"';
+		}
+		return $data_type;
+	}
+
+	/**
+	 * Decomposes an 'exact_date' parameter into month, day, year components based
+	 * on date pattern defined in settings (assumed to be in local time zone),
+	 * then returns a timestamp in GMT.
+	 *
+	 * @param  string     $exact_date 'exact_date' parameter passed to a view
+	 * @return bool|int               false if argument not provided or invalid,
+	 *                                else UNIX timestamp in GMT
+	 */
+	private function return_gmtime_from_exact_date( $exact_date ) {
+		global $ai1ec_settings;
+
+		$bits = Ai1ec_Validation_Utility::validate_date_and_return_parsed_date(
+			$exact_date,
+			$ai1ec_settings->input_date_format
+		);
+		if( false === $bits ) {
+			$exact_date = false;
+		} else {
+			$exact_date = Ai1ec_Time_Utility::local_to_gmt( gmmktime(
+				0, 0, 0, $bits['month'], $bits['day'], $bits['year']
+			) );
+		}
+		return $exact_date;
+	}
+
+	/**
+	 * Return an agenda-like view of the calendar, one of 'posterboard',
+	 * or 'agenda', optionally filtered by event categories and tags.
+	 *
+	 * @param string $type    Type of view: 'posterboard', or 'agenda'
 	 * @param array $args     associative array with any of these elements:
 	 *   int page_offset   => specifies which page to display relative to today's page
-	 *   int active_event  => specifies which event to make visible when
-	 *                        page is loaded
+	 *   int time_limit    => specifies upper/lower (depending on direction) time limit
 	 *   array categories  => restrict events returned to the given set of
 	 *                        event category slugs
 	 *   array tags        => restrict events returned to the given set of
 	 *                        event tag names
 	 *
 	 * @return string	        returns string of view output
-	 **/
-	function get_posterboard_view( $args )
- 	{
+	 */
+	function get_agenda_like_view( $type, $args ) {
 		global $ai1ec_view_helper,
 		       $ai1ec_events_helper,
 		       $ai1ec_calendar_helper,
 		       $ai1ec_settings;
 
-		extract( $args );
-
 		// Get localized time
-		$timestamp = $ai1ec_events_helper->gmt_to_local( time() );
+		$timestamp = $ai1ec_events_helper->gmt_to_local(
+			Ai1ec_Time_Utility::current_time()
+		);
 
 		// Get events, then classify into date array
-		$event_results = $ai1ec_calendar_helper->get_events_relative_to(
+		$per_page_setting = $type . '_events_per_page';
+		$results = $ai1ec_calendar_helper->get_events_relative_to(
 			$timestamp,
-			$ai1ec_settings->posterboard_events_per_page,
-			$page_offset,
-			array( 'post_ids' => $post_ids )
+			$ai1ec_settings->$per_page_setting,
+			$args['page_offset'],
+			array(
+				'post_ids' => $args['post_ids'],
+				'cat_ids' => $args['cat_ids'],
+				'tag_ids' => $args['tag_ids'],
+			),
+			$args['time_limit']
 		);
-		$dates = $ai1ec_calendar_helper->get_posterboard_date_array( $event_results['events'] );
-
-		$pagination_links =
-			$ai1ec_calendar_helper->get_posterboard_pagination_links(
-			 	$page_offset, $event_results['prev'], $event_results['next'] );
-
-		// Incorporate offset into date
-		$args = array(
-			'title'                  => __( 'Posterboard', AI1EC_PLUGIN_NAME ),
-			'dates'                  => $dates,
-			'show_location_in_title' => $ai1ec_settings->show_location_in_title,
-			'page_offset'            => $page_offset,
-			'pagination_links'       => $pagination_links,
-			'active_event'           => $active_event,
-			'expanded'               => $ai1ec_settings->posterboard_events_expanded,
-			'post_ids'               => join( ',', $post_ids )
+		$dates = $ai1ec_calendar_helper->get_agenda_like_date_array(
+			$results['events'],
+			$args['request']
 		);
-		return apply_filters( 'ai1ec_get_posterboard_view', $ai1ec_view_helper->get_theme_view( 'posterboard.php', $args ), $args );
+
+		// Create pagination links.
+		$pagination_links = '';
+		if( ! $args['no_navigation'] ) {
+			$pagination_links =
+				$ai1ec_calendar_helper->get_agenda_like_pagination_links(
+					$args,
+					$results['prev'],
+					$results['next'],
+					$results['date_first'],
+					$results['date_last']
+				);
+			$pagination_links = $ai1ec_view_helper->get_theme_view(
+				'pagination.php',
+				array( 'links' => $pagination_links, 'data_type' => $args['data_type'] )
+			);
+		}
+
+		// Generate title of view based on date range month & year.
+		$range_start = $results['date_first'] ? $results['date_first'] : $timestamp;
+		$range_end   = $results['date_last']  ? $results['date_last'] : $timestamp;
+		$range_start = Ai1ec_Time_Utility::gmt_to_local( $range_start );
+		$range_end   = Ai1ec_Time_Utility::gmt_to_local( $range_end );
+		$start_year  = Ai1ec_Time_Utility::date_i18n( 'Y', $range_start );
+		$end_year    = Ai1ec_Time_Utility::date_i18n( 'Y', $range_end );
+		$start_month = Ai1ec_Time_Utility::date_i18n( 'F', $range_start );
+		$end_month   = Ai1ec_Time_Utility::date_i18n( 'F', $range_end );
+		if ( $start_year === $end_year && $start_month === $end_month ) {
+			$title_date_range = "$start_month $start_year";
+		} elseif ( $start_year === $end_year ) {
+			$title_date_range = "$start_month – $end_month $end_year";
+		} else {
+			$title_date_range = "$start_month $start_year – $end_month $end_year";
+		}
+
+		$view_args = array(
+			'title'                     => $title_date_range,
+			'dates'                     => $dates,
+			'type'                      => $type,
+			'tile_min_width'            => $ai1ec_settings->posterboard_tile_min_width,
+			'show_year_in_agenda_dates' => $ai1ec_settings->show_year_in_agenda_dates,
+			'expanded'                  => $ai1ec_settings->agenda_events_expanded,
+			'show_location_in_title'    => $ai1ec_settings->show_location_in_title,
+			'page_offset'               => $args['page_offset'],
+			'pagination_links'          => $pagination_links,
+			'post_ids'                  => join( ',', $args['post_ids'] ),
+ 			'data_type'                 => $args['data_type'],
+			'data_type_events'          => '',
+		);
+		if( $ai1ec_settings->ajaxify_events_in_web_widget ) {
+			$view_args['data_type_events'] = $args['data_type'];
+		}
+		// Add extra buttons to Agenda view if events were returned.
+		if ( $type === 'agenda' && $dates ) {
+			$view_args['before_pagination'] =
+				$ai1ec_view_helper->get_theme_view( 'agenda-buttons.php', $view_args );
+		}
+		// Add navigation if requested.
+		$view_args['navigation'] = $args['no_navigation'] ? '' :
+			$ai1ec_view_helper->get_theme_view( 'navigation.php', $view_args );
+
+		return apply_filters(
+			'ai1ec_get_' . $type . '_view',
+			$ai1ec_view_helper->get_theme_view( $type . '.php', $view_args ),
+			$view_args
+		);
 	}
 
-	 /**
-	 * get_month_view function
+	/**
+	 * Return the embedded posterboard view of the calendar, optionally filtered
+	 * by event categories and tags.
 	 *
+	 * @param array $args     associative array with any of these elements:
+	 *   int page_offset   => specifies which page to display relative to today's page
+	 *   array categories  => restrict events returned to the given set of
+	 *                        event category slugs
+	 *   array tags        => restrict events returned to the given set of
+	 *                        event tag names
+	 *
+	 * @return string	        returns string of view output
+	 */
+	function get_posterboard_view( $args ) {
+		return $this->get_agenda_like_view( 'posterboard', $args );
+	}
+
+	/**
 	 * Return the embedded month view of the calendar, optionally filtered by
 	 * event categories and tags.
 	 *
 	 * @param array $args     associative array with any of these elements:
 	 *   int month_offset  => specifies which month to display relative to the
 	 *                        current month
-	 *   int active_event  => specifies which event to make visible when
-	 *                        page is loaded
-	 *   array categories  => restrict events returned to the given set of
+	 *   array cat_ids     => restrict events returned to the given set of
 	 *                        event category slugs
-	 *   array tags        => restrict events returned to the given set of
-	 *                        event tag names
-	 *   array post_ids    => restrict events returned to the given set of
-	 *                        post IDs
-	 *
-	 * @return string	        returns string of view output
-	 **/
-	function get_month_view( $args )
- 	{
-		global $ai1ec_view_helper,
-		       $ai1ec_events_helper,
-		       $ai1ec_calendar_helper,
-		       $ai1ec_settings;
-
-    $defaults = array(
-      'month_offset'  => 0,
-      'active_event'  => null,
-      'categories'    => array(),
-      'tags'          => array(),
-      'post_ids'      => array(),
-    );
-    $args = wp_parse_args( $args, $defaults );
-
-		extract( $args );
-
-		// Get components of localized time
-		$bits = $ai1ec_events_helper->gmgetdate( $ai1ec_events_helper->gmt_to_local( time() ) );
-		// Use first day of the month as reference timestamp, and apply month offset
-		$timestamp = gmmktime( 0, 0, 0, $bits['mon'] + $month_offset, 1, $bits['year'] );
-
-		$days_events = $ai1ec_calendar_helper->get_events_for_month( $timestamp,
-			array( 'cat_ids' => $categories, 'cat_ids' => $tags, 'post_ids' => $post_ids ) );
-		$cell_array = $ai1ec_calendar_helper->get_month_cell_array( $timestamp, $days_events );
-		$pagination_links = $ai1ec_calendar_helper->get_month_pagination_links( $month_offset );
-
-		$view_args = array(
-			'title'                  => date_i18n( 'F Y', $timestamp, true ),
-			'weekdays'               => $ai1ec_calendar_helper->get_weekdays(),
-			'cell_array'             => $cell_array,
-			'show_location_in_title' => $ai1ec_settings->show_location_in_title,
-			'pagination_links'       => $pagination_links,
-			'active_event'           => $active_event,
-			'post_ids'               => join( ',', $post_ids ),
-		);
-
-		return apply_filters( 'ai1ec_get_month_view', $ai1ec_view_helper->get_theme_view( 'month.php', $view_args ), $view_args );
-	}
-
-	/**
-	 * get_oneday_view function
-	 *
-	 * Return the embedded dayh view of the calendar, optionally filtered by
-	 * event categories and tags.
-	 *
-	 * @param array $args     associative array with any of these elements:
-	 *   int oneday_offset  => specifies which day to display relative to the
-	 *                        current day
-	 *   int active_event  => specifies which event to make visible when
-	 *                        page is loaded
-	 *   array categories  => restrict events returned to the given set of
-	 *                        event category slugs
-	 *   array tags        => restrict events returned to the given set of
-	 *                        event tag names
-	 *   array post_ids    => restrict events returned to the given set of
-	 *                        post IDs
-	 *
-	 * @return string	        returns string of view output
-	 **/
-	function get_oneday_view( $args )
- 	{
-		global $ai1ec_view_helper,
-		       $ai1ec_events_helper,
-		       $ai1ec_calendar_helper,
-		       $ai1ec_settings;
-
-		$defaults = array(
-			'oneday_offset'  => 0,
-			'active_event'  => null,
-			'categories'    => array(),
-			'tags'          => array(),
-			'post_ids'      => array(),
-		);
-		$args = wp_parse_args( $args, $defaults );
-
-		extract( $args );
-		// Get components of localized time
-		$bits = $ai1ec_events_helper->gmgetdate( $ai1ec_events_helper->gmt_to_local( time() ) );
-		// Use actually day of the month as reference timestamp, and apply day offset
-		$timestamp = gmmktime( 0, 0, 0, $bits['mon'], $bits['mday'], $bits['year'] );
-		$day_shift = 0;
-		// Then apply one-day offset
-		$day_shift += $args['oneday_offset'];
-		$timestamp = gmmktime( 0, 0, 0, $bits['mon'], $bits['mday'] + $day_shift, $bits['year'] );
-
-		$cell_array = $ai1ec_calendar_helper->get_oneday_cell_array( $timestamp, array( 'cat_ids' => $categories, 'cat_ids' => $tags, 'post_ids' => $post_ids ) );
-		$pagination_links = $ai1ec_calendar_helper->get_oneday_pagination_links( $oneday_offset );
-
-		$view_args = array(
-			'title'                  => date_i18n( 'j F Y', $timestamp, true ),
-			'cell_array'             => $cell_array,
-			'show_location_in_title' => $ai1ec_settings->show_location_in_title,
-			'now_top'                => $bits['hours'] * 60 + $bits['minutes'],
-			'pagination_links'       => $pagination_links,
-			'active_event'           => $active_event,
-			'post_ids'               => join( ',', $post_ids ),
-			'time_format'            => get_option( 'time_format', 'g a' ),
-			'done_allday_label'      => false,
-			'done_grid'              => false
-		);
-		return apply_filters( 'ai1ec_get_oneday_view', $ai1ec_view_helper->get_theme_view( 'oneday.php', $view_args ), $view_args );
-	}
-
-	/**
-	 * get_week_view function
-	 *
-	 * Return the embedded week view of the calendar, optionally filtered by
-	 * event categories and tags.
-	 *
-	 * @param array $args     associative array with any of these elements:
-	 *   int week_offset   => specifies which week to display relative to the
-	 *                        current week
-	 *   int active_event  => specifies which event to make visible when
-	 *                        page is loaded
-	 *   array categories  => restrict events returned to the given set of
-	 *                        event category slugs
-	 *   array tags        => restrict events returned to the given set of
+	 *   array tag_ids     => restrict events returned to the given set of
 	 *                        event tag names
 	 *   array post_ids    => restrict events returned to the given set of
 	 *                        post IDs
 	 *
 	 * @return string	        returns string of view output
 	 */
-	function get_week_view( $args )
- 	{
+	function get_month_view( $args ) {
+		global $ai1ec_view_helper,
+		       $ai1ec_calendar_helper,
+		       $ai1ec_settings;
+
+		$defaults = array(
+			'month_offset'  => 0,
+			'cat_ids'       => array(),
+			'tag_ids'       => array(),
+			'post_ids'      => array(),
+			'exact_date'    => Ai1ec_Time_Utility::current_time(),
+		);
+		$args = wp_parse_args( $args, $defaults );
+
+		// Localize requested date and get components.
+		$local_date = Ai1ec_Time_Utility::gmt_to_local( $args['exact_date'] );
+		$bits = Ai1ec_Time_Utility::gmgetdate( $local_date );
+		// Align date to first day of the month, with month offset applied.
+		$local_date = gmmktime(
+			0, 0, 0,
+			$bits['mon'] + $args['month_offset'], 1, $bits['year']
+		);
+
+		$days_events = $ai1ec_calendar_helper->get_events_for_month(
+			$local_date,
+			array(
+				'cat_ids'  => $args['cat_ids'],
+				'tag_ids'  => $args['tag_ids'],
+				'post_ids' => $args['post_ids']
+			)
+		);
+
+		$cell_array = $ai1ec_calendar_helper->get_month_cell_array(
+			$local_date,
+			$days_events
+		);
+
+		// Create pagination links.
+		$pagination_links =
+			$ai1ec_calendar_helper->get_month_pagination_links( $args );
+		$pagination_links = $ai1ec_view_helper->get_theme_view(
+			'pagination.php',
+			array( 'links' => $pagination_links, 'data_type' => $args['data_type'] )
+		);
+
+		$title = Ai1ec_Time_Utility::date_i18n(
+			'F Y', $local_date, true
+		);
+		$view_args = array(
+			'title'                  => $title,
+			'type'                   => 'month',
+			'weekdays'               => $ai1ec_calendar_helper->get_weekdays(),
+			'cell_array'             => $cell_array,
+			'show_location_in_title' => $ai1ec_settings->show_location_in_title,
+			'pagination_links'       => $pagination_links,
+			'post_ids'               => join( ',', $args['post_ids'] ),
+ 	 		'data_type'              => $args['data_type'],
+			'data_type_events'       => '',
+		);
+		if( $ai1ec_settings->ajaxify_events_in_web_widget ) {
+			$view_args['data_type_events'] = $args['data_type'];
+		}
+		// Add navigation if requested.
+		$view_args['navigation'] = $args['no_navigation'] ? '' :
+			$ai1ec_view_helper->get_theme_view( 'navigation.php', $view_args );
+
+		return apply_filters(
+			'ai1ec_get_month_view',
+			$ai1ec_view_helper->get_theme_view( 'month.php', $view_args ),
+			$view_args
+		);
+	}
+
+	/**
+	 * Return the embedded week view of the calendar, optionally filtered by
+	 * event categories and tags.
+	 *
+	 * @param array $args     associative array with any of these elements:
+	 *   int week_offset   => specifies which week to display relative to the
+	 *                        current week
+	 *   array cat_ids     => restrict events returned to the given set of
+	 *                        event category slugs
+	 *   array tag_ids     => restrict events returned to the given set of
+	 *                        event tag names
+	 *   array post_ids    => restrict events returned to the given set of
+	 *                        post IDs
+	 *
+	 * @return string	        returns string of view output
+	 */
+	function get_week_view( $args ) {
 		global $ai1ec_view_helper,
 		       $ai1ec_events_helper,
 		       $ai1ec_calendar_helper,
@@ -477,291 +501,232 @@ class Ai1ec_Calendar_Controller {
 
 		$defaults = array(
 			'week_offset'   => 0,
-			'active_event'  => null,
-			'categories'    => array(),
-			'tags'          => array(),
+			'cat_ids'       => array(),
+			'tag_ids'       => array(),
 			'post_ids'      => array(),
+			'exact_date'    => Ai1ec_Time_Utility::current_time(),
 		);
 		$args = wp_parse_args( $args, $defaults );
 
-		extract( $args );
-
-		// Get components of localized time
-		$bits = $ai1ec_events_helper->gmgetdate( $ai1ec_events_helper->gmt_to_local( time() ) );
-		// Day shift is initially the first day of the week according to settings
+		// Localize requested date and get components.
+		$local_date = Ai1ec_Time_Utility::gmt_to_local( $args['exact_date'] );
+		$bits = Ai1ec_Time_Utility::gmgetdate( $local_date );
+		// Day shift is initially the first day of the week according to settings.
 		$day_shift = $ai1ec_events_helper->get_week_start_day_offset( $bits['wday'] );
-		// Then apply week offset
+		// Then apply week offset.
 		$day_shift += $args['week_offset'] * 7;
+		// Now align date to start of week.
+		$local_date = gmmktime(
+			0, 0, 0,
+			$bits['mon'], $bits['mday'] + $day_shift, $bits['year']
+		);
 
-		// Now apply to reference timestamp
-		$timestamp = gmmktime( 0, 0, 0, $bits['mon'], $bits['mday'] + $day_shift, $bits['year'] );
+		$cell_array = $ai1ec_calendar_helper->get_week_cell_array(
+			$local_date,
+			array(
+				'cat_ids'  => $args['cat_ids'],
+				'tag_ids'  => $args['tag_ids'],
+				'post_ids' => $args['post_ids'],
+			)
+		);
 
-		$cell_array = $ai1ec_calendar_helper->get_week_cell_array( $timestamp,
-			array( 'cat_ids' => $categories, 'cat_ids' => $tags, 'post_ids' => $post_ids ) );
-		$pagination_links = $ai1ec_calendar_helper->get_week_pagination_links( $week_offset );
+		// Create pagination links.
+		$pagination_links =
+			$ai1ec_calendar_helper->get_week_pagination_links( $args );
+		$pagination_links = $ai1ec_view_helper->get_theme_view(
+			'pagination.php',
+			array( 'links' => $pagination_links, 'data_type' => $args['data_type'] )
+		);
 
 		// Translators: "%s" below represents the week's start date.
+		$title = sprintf(
+			__( 'Week of %s', AI1EC_PLUGIN_NAME ),
+			Ai1ec_Time_Utility::date_i18n(
+				__( 'F j', AI1EC_PLUGIN_NAME ), $local_date, true
+			)
+		);
+		$time_format = Ai1ec_Meta::get_option(
+			'time_format',
+			__( 'g a', AI1EC_PLUGIN_NAME )
+		);
+
+		// Calculate today marker's position.
+		$now = Ai1ec_Time_Utility::current_time();
+		$now = Ai1ec_Time_Utility::gmt_to_local( $now );
+		$now_text = $ai1ec_events_helper->get_short_time( $now, false );
+		$now = Ai1ec_Time_Utility::gmgetdate( $now );
+		$now = $now['hours'] * 60 + $now['minutes'];
+		// Find out if the current week view contains "now" and thus should display
+		// the "now" marker.
+		$show_now = false;
+		foreach ( $cell_array as $day ) {
+			if ( $day['today'] ) {
+				$show_now = true;
+				break;
+			}
+		}
+
 		$view_args = array(
-			'title'                  => sprintf( __( 'Week of %s', AI1EC_PLUGIN_NAME ), date_i18n( __( 'F j', AI1EC_PLUGIN_NAME ), $timestamp, true ) ),
+			'title'                  => $title,
+			'type'                   => 'week',
 			'cell_array'             => $cell_array,
 			'show_location_in_title' => $ai1ec_settings->show_location_in_title,
-			'now_top'                => $bits['hours'] * 60 + $bits['minutes'],
+			'now_top'                => $now,
+			'now_text'               => $now_text,
+			'show_now'               => $show_now,
 			'pagination_links'       => $pagination_links,
-			'active_event'           => $active_event,
-			'post_ids'               => join( ',', $post_ids ),
-			'time_format'            => get_option( 'time_format', 'g a' ),
+			'post_ids'               => join( ',', $args['post_ids'] ),
+			'time_format'            => $time_format,
 			'done_allday_label'      => false,
-			'done_grid'              => false
+			'done_grid'              => false,
+	 		'data_type'              => $args['data_type'],
+			'data_type_events'       => '',
 		);
-		return apply_filters( 'ai1ec_get_week_view', $ai1ec_view_helper->get_theme_view( 'week.php', $view_args ), $view_args );
+		if( $ai1ec_settings->ajaxify_events_in_web_widget ) {
+			$view_args['data_type_events'] = $args['data_type'];
+		}
+		// Add navigation if requested.
+		$view_args['navigation'] = $args['no_navigation'] ? '' :
+			$ai1ec_view_helper->get_theme_view( 'navigation.php', $view_args );
+
+		return apply_filters(
+			'ai1ec_get_week_view',
+			$ai1ec_view_helper->get_theme_view( 'week.php', $view_args ),
+			$view_args
+		);
 	}
 
 	/**
-	 * get_agenda_view function
+	 * Return the embedded day view of the calendar, optionally filtered by
+	 * event categories and tags.
 	 *
+	 * @param array $args     associative array with any of these elements:
+	 *   int oneday_offset  => specifies which day to display relative to the
+	 *                        current day
+	 *   array cat_ids     => restrict events returned to the given set of
+	 *                        event category slugs
+	 *   array tag_ids     => restrict events returned to the given set of
+	 *                        event tag names
+	 *   array post_ids    => restrict events returned to the given set of
+	 *                        post IDs
+	 *
+	 * @return string	        returns string of view output
+	 */
+	function get_oneday_view( $args ) {
+		global $ai1ec_view_helper,
+		       $ai1ec_events_helper,
+		       $ai1ec_calendar_helper,
+		       $ai1ec_settings;
+
+		$defaults = array(
+			'oneday_offset' => 0,
+			'cat_ids'       => array(),
+			'tag_ids'       => array(),
+			'post_ids'      => array(),
+			'exact_date'    => Ai1ec_Time_Utility::current_time(),
+		);
+		$args = wp_parse_args( $args, $defaults );
+
+		// Localize requested date and get components.
+    $local_date = Ai1ec_Time_Utility::gmt_to_local( $args['exact_date'] );
+		$bits = Ai1ec_Time_Utility::gmgetdate( $local_date );
+		// Apply day offset.
+		$day_shift = 0 + $args['oneday_offset'];
+		// Now align date to start of day (midnight).
+		$local_date = gmmktime(
+			0, 0, 0,
+			$bits['mon'], $bits['mday'] + $day_shift, $bits['year']
+		);
+
+		$cell_array = $ai1ec_calendar_helper->get_oneday_cell_array(
+			$local_date,
+			array(
+				'cat_ids'  => $args['cat_ids'],
+				'tag_ids'  => $args['tag_ids'],
+				'post_ids' => $args['post_ids']
+			)
+		);
+
+		// Create pagination links.
+		$pagination_links =
+			$ai1ec_calendar_helper->get_oneday_pagination_links( $args );
+		$pagination_links = $ai1ec_view_helper->get_theme_view(
+			'pagination.php',
+			array( 'links' => $pagination_links, 'data_type' => $args['data_type'] )
+		);
+
+		$date_format = Ai1ec_Meta::get_option( 'date_format', 'l, M j, Y' );
+		$title = Ai1ec_Time_Utility::date_i18n(
+			$date_format, $local_date, true
+		);
+		$time_format = Ai1ec_Meta::get_option( 'time_format', 'g a' );
+
+		// Calculate today marker's position.
+		$now = Ai1ec_Time_Utility::current_time();
+		$now = Ai1ec_Time_Utility::gmt_to_local( $now );
+		$now_text = $ai1ec_events_helper->get_short_time( $now, false );
+		$now = Ai1ec_Time_Utility::gmgetdate( $now );
+		$now = $now['hours'] * 60 + $now['minutes'];
+
+		$view_args = array(
+			'title'                  => $title,
+			'type'                   => 'oneday',
+			'cell_array'             => $cell_array,
+			'show_location_in_title' => $ai1ec_settings->show_location_in_title,
+			'now_top'                => $now,
+			'now_text'               => $now_text,
+			'pagination_links'       => $pagination_links,
+			'post_ids'               => join( ',', $args['post_ids'] ),
+			'time_format'            => $time_format,
+			'done_allday_label'      => false,
+			'done_grid'              => false,
+ 	 		'data_type'              => $args['data_type'],
+			'data_type_events'       => '',
+		);
+		if( $ai1ec_settings->ajaxify_events_in_web_widget ) {
+			$view_args['data_type_events'] = $args['data_type'];
+		}
+		// Add navigation if requested.
+		$view_args['navigation'] = $args['no_navigation'] ? '' :
+			$ai1ec_view_helper->get_theme_view( 'navigation.php', $view_args );
+
+		return apply_filters(
+			'ai1ec_get_oneday_view',
+			$ai1ec_view_helper->get_theme_view( 'oneday.php', $view_args ),
+			$view_args
+		);
+	}
+
+	/**
 	 * Return the embedded agenda view of the calendar, optionally filtered by
 	 * event categories and tags.
 	 *
 	 * @param array $args     associative array with any of these elements:
 	 *   int page_offset   => specifies which page to display relative to today's page
-	 *   int active_event  => specifies which event to make visible when
-	 *                        page is loaded
+	 *   int time_limit    => specifies upper/lower (depending on direction) time limit
 	 *   array categories  => restrict events returned to the given set of
 	 *                        event category slugs
 	 *   array tags        => restrict events returned to the given set of
 	 *                        event tag names
 	 *
 	 * @return string	        returns string of view output
-	 **/
-	function get_agenda_view( $args )
- 	{
-		global $ai1ec_view_helper,
-		       $ai1ec_events_helper,
-		       $ai1ec_calendar_helper,
-		       $ai1ec_settings;
-
-		extract( $args );
-
-		// Get localized time
-		$timestamp = $ai1ec_events_helper->gmt_to_local( time() );
-
-		// Get events, then classify into date array
-		$event_results = $ai1ec_calendar_helper->get_events_relative_to(
-			$timestamp,
-			$ai1ec_settings->agenda_events_per_page,
-			$page_offset,
-			array( 'post_ids' => $post_ids )
-		);
-		$dates = $ai1ec_calendar_helper->get_agenda_date_array( $event_results['events'] );
-
-		$pagination_links =
-			$ai1ec_calendar_helper->get_agenda_pagination_links(
-			 	$page_offset, $event_results['prev'], $event_results['next'] );
-
-		// Incorporate offset into date
-		$args = array(
-			'title'                  => __( 'Agenda', AI1EC_PLUGIN_NAME ),
-			'dates'                  => $dates,
-			'show_location_in_title' => $ai1ec_settings->show_location_in_title,
-			'show_year_in_agenda_dates' => $ai1ec_settings->show_year_in_agenda_dates,
-			'page_offset'            => $page_offset,
-			'pagination_links'       => $pagination_links,
-			'active_event'           => $active_event,
-			'expanded'               => $ai1ec_settings->agenda_events_expanded,
-			'post_ids'               => join( ',', $post_ids )
-		);
-		return apply_filters( 'ai1ec_get_agenda_view', $ai1ec_view_helper->get_theme_view( 'agenda.php', $args ), $args );
-	}
-
-	/**
-	 * ajax_posterboard function
-	 *
-	 * AJAX request handler for posterboard view.
-	 *
-	 * @return void
-	 **/
-	function ajax_posterboard() {
-		global $ai1ec_view_helper;
-
-		$this->process_request();
-
-		// View arguments
-		$args = array(
-			'page_offset'  => $this->request['ai1ec_page_offset'],
-			'active_event' => $this->request['ai1ec_active_event'],
-			'post_ids'     => array_filter( explode( ',', $this->request['ai1ec_post_ids'] ), 'is_numeric' ),
-		);
-
-		// Return this data structure to the client
-		$data = array(
-			'body_class' => join( ' ', $this->body_class() ),
-			'html' => $this->get_posterboard_view( $args ),
-		);
-		$ai1ec_view_helper->json_response( $data );
-	}
-
-	/**
-	 * ajax_month function
-	 *
-	 * AJAX request handler for month view.
-	 *
-	 * @return void
 	 */
-	function ajax_month() {
-		global $ai1ec_view_helper;
-
-		$this->process_request();
-
-		// View arguments
-		$args = array(
-			'month_offset' => $this->request['ai1ec_month_offset'],
-			'active_event' => $this->request['ai1ec_active_event'],
-		  'post_ids'     => array_filter( explode( ',', $this->request['ai1ec_post_ids'] ), 'is_numeric' ),
-		);
-
-		// Return this data structure to the client
-		$data = array(
-			'body_class' => join( ' ', $this->body_class() ),
-			'html' => $this->get_month_view( $args ),
-		);
-		$ai1ec_view_helper->json_response( $data );
+	function get_agenda_view( $args ) {
+		return $this->get_agenda_like_view( 'agenda', $args );
 	}
 
 	/**
-	 * ajax_oneday function
 	 *
-	 * AJAX request handler for day view.
-	 *
-	 * @return void
+	 * @param array $args
+	 * @param string $param
+	 * @param mixed $default The default value of $param as set in Ai1ec_Abstract_Query::add_rule()
 	 */
-	function ajax_oneday() {
-		global $ai1ec_view_helper;
-
-		$this->process_request();
-
-		// View arguments
-		$args = array(
-			'oneday_offset' => $this->request['ai1ec_oneday_offset'],
-			'active_event' => $this->request['ai1ec_active_event'],
-			'post_ids'     => array_filter( explode( ',', $this->request['ai1ec_post_ids'] ), 'is_numeric' ),
-		);
-
-		// Return this data structure to the client
-		$data = array(
-			'body_class' => join( ' ', $this->body_class() ),
-			'html' => $this->get_oneday_view( $args ),
-		);
-		$ai1ec_view_helper->json_response( $data );
-	}
-
-	/**
-	 * ajax_week function
-	 *
-	 * AJAX request handler for week view.
-	 *
-	 * @return void
-	 */
-	function ajax_week() {
-		global $ai1ec_view_helper;
-
-		$this->process_request();
-
-		// View arguments
-		$args = array(
-			'week_offset' => $this->request['ai1ec_week_offset'],
-			'active_event' => $this->request['ai1ec_active_event'],
-		  'post_ids'     => array_filter( explode( ',', $this->request['ai1ec_post_ids'] ), 'is_numeric' ),
-		);
-
-		// Return this data structure to the client
-		$data = array(
-			'body_class' => join( ' ', $this->body_class() ),
-			'html' => $this->get_week_view( $args ),
-		);
-		$ai1ec_view_helper->json_response( $data );
-	}
-
-	/**
-	 * ajax_agenda function
-	 *
-	 * AJAX request handler for agenda view.
-	 *
-	 * @return void
-	 **/
-	function ajax_agenda() {
-		global $ai1ec_view_helper;
-
-		$this->process_request();
-
-		// View arguments
-		$args = array(
-			'page_offset'  => $this->request['ai1ec_page_offset'],
-			'active_event' => $this->request['ai1ec_active_event'],
-			'post_ids'     => array_filter( explode( ',', $this->request['ai1ec_post_ids'] ), 'is_numeric' ),
-		);
-
-		// Return this data structure to the client
-		$data = array(
-			'body_class' => join( ' ', $this->body_class() ),
-			'html' => $this->get_agenda_view( $args ),
-		);
-		$ai1ec_view_helper->json_response( $data );
-	}
-
-	/**
-	 * ajax_term_filter function
-	 *
-	 * AJAX request handler that takes a comma-separated list of event IDs and
-	 * comma-separated list of term IDs and returns those event IDs within the
-	 * set that have any of the term IDs.
-	 *
-	 * @return void
-	 **/
-	function ajax_term_filter() {
-		global $ai1ec_view_helper, $ai1ec_events_helper;
-
-		$this->process_request();
-
-		$post_ids = array_unique( explode( ',', $this->request['ai1ec_post_ids'] ) );
-
-		if( $this->request['ai1ec_term_ids'] ) {
-			$term_ids = explode( ',', $this->request['ai1ec_term_ids'] );
-			$matching_ids = $ai1ec_events_helper->filter_by_terms( $post_ids, $term_ids );
-		} else {
-			// If no term IDs were provided for filtering, then return all posts
-			$matching_ids = $post_ids;
+	private function set_arg_param_if_set_in_request( array $args, $param, $default ) {
+		$exact_date = $this->request->get( $param );
+		if( $default !== $exact_date ) {
+			$args[$param] = $exact_date;
 		}
-
-		$unmatching_ids = array_diff( $post_ids, $matching_ids );
-
-		$data = array(
-			'matching_ids' => $matching_ids,
-			'unmatching_ids' => $unmatching_ids,
-	 	);
-		$ai1ec_view_helper->json_response( $data );
-	}
-
-	/**
-	 * body_class function
-	 *
-	 * Append custom classes to body element.
-	 *
-	 * @return void
-	 **/
-	function body_class( $classes = array() ) {
-		$classes[] = 'ai1ec-calendar';
-
-		// Reformat action for body class
-		$action = $this->request['action'];
-		$action = strtr( $action, '_', '-' );
-		$action = preg_replace( '/^ai1ec-/', '', $action );
-
-		$classes[] = "ai1ec-action-$action";
-		if( isset( $this->request['ai1ec_month_offset'] ) && ! $this->request['ai1ec_month_offset'] &&
-				isset( $this->request['ai1ec_page_offset'] ) && ! $this->request['ai1ec_page_offset'] ) {
-			$classes[] = 'ai1ec-today';
-		}
-		return $classes;
+		return $args;
 	}
 
 	/**
@@ -774,9 +739,6 @@ class Ai1ec_Calendar_Controller {
 	 */
 	function load_css() {
 		global $ai1ec_settings, $ai1ec_view_helper;
-
-		$ai1ec_view_helper->theme_enqueue_style( 'ai1ec-general', 'style.css' );
-		$ai1ec_view_helper->theme_enqueue_style( 'ai1ec-calendar', 'calendar.css' );
 
 		if( $ai1ec_settings->calendar_css_selector )
 			add_action( 'wp_head', array( &$this, 'selector_css' ) );
@@ -798,39 +760,6 @@ class Ai1ec_Calendar_Controller {
 	}
 
 	/**
-	 * load_js_translations function
-	 *
-	 * Load js data required by the calendar view
-	 *
-	 * @return void
-	 **/
-	function load_js_translations()
- 	{
-		global $ai1ec_settings,
-		       $ai1ec_app_controller;
-		$data = array(
-			// Point script to AJAX URL - use relative to plugin URL to fix domain mapping issues
-			'ajaxurl'       => site_url( 'wp-admin/admin-ajax.php' ),
-			// What this view defaults to, in case there is no #hash appended
-			'default_hash'  => '#' . http_build_query( $this->request ),
-			'export_url'    => AI1EC_EXPORT_URL,
-			// Body classes if need to be set manually
-			'body_class'    => join( ' ', $this->body_class() ),
-		);
-		// Replace desired CSS selector with calendar, if selector has been set
-		if( $ai1ec_settings->calendar_css_selector )
-		{
-			$page = get_post( $ai1ec_settings->calendar_post_id );
-			$data['selector'] = $ai1ec_settings->calendar_css_selector;
-			$data['title']    = $page->post_title;
-		}
-
-		$ai1ec_app_controller->localize_script_for_requirejs( 'ai1ec_calendar_requirejs', 'ai1ec_calendar', $data, true );
-	}
-
-	/**
-	 * function is_category_requested
-	 *
 	 * Returns the comma-separated list of category IDs that the calendar page
 	 * was requested to be prefiltered by.
 	 *

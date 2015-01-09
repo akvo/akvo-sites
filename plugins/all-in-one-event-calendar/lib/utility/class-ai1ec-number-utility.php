@@ -13,6 +13,42 @@ class Ai1ec_Number_Utility
 {
 
 	/**
+	 * map_to_integer method
+	 *
+	 * Return positive integer values from given array.
+	 *
+	 * @param array $input Allegedly list of positive integers
+	 *
+	 * @return array List of positive integers
+	 */
+	static public function map_to_integer( array $input ) {
+		$output = array();
+		foreach ( $input as $value ) {
+			$value = (int)$value;
+			if ( $value > 0 ) {
+				$output[] = $value;
+			}
+		}
+		return $output;
+	}
+
+	/**
+	 * convert_to_int_list method
+	 *
+	 * Convert given input to array of positive integers.
+	 *
+	 * @param char  $separator Value used to separate integers, if any
+	 * @param array $input     Allegedly list of positive integers
+	 *
+	 * @return array List of positive integers
+	 */
+	static public function convert_to_int_list( $separator, $input ) {
+		return self::map_to_integer(
+			Ai1ec_Utility_Array::opt_explode( $separator, $input )
+		);
+	}
+
+	/**
 	 * db_bool method
 	 *
 	 * Convert value to MySQL boolean

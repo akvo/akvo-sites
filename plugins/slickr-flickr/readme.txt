@@ -4,7 +4,7 @@ Donate link: http://www.slickrflickr.com/donate/
 Tags: wordpress flickr plugin, flickr wordpress plugin, flickr slideshow, flickr gallery, flickr galleria, flickr photo gallery, slideshow lightbox, flickr widget, flickr rss, flickr api
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 1.43
+Stable tag: 1.44
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ A Flickr WordPress plugin to display your photos either as a gallery, a galleria
 * Works with various LightBoxes such as Evolution LightBox, FancyBox, Highslide, LightBox Plus, Pretty Photo, Slimbox, ShadowBox, Shutterbox and ThickBox.
 * See http://www.slickrflickr.com/ for tutorials on using the plugin
 * See http://www.slickrflickr.com/pro/ for Pro Edition Priority Support and Bonus Features
-* New release 1.43 has improved LightBox integration for FancyBox, Highslide and PrettyPhoto and the latest Galleria 1.2.8
+* New release 1.44 has latest Galleria 1.2.9 with an extended timeout of 60 seconds when loading the galleria theme; it supports links in photo descriptions; has flickr_link_title and flickr_link_target so you can control the tooltip on the link to Flickr and whether it pops in a new window; if you set lightbox to "none" it no longer automatically links the photos the Flickr and respects the flickr_link settings.
 
 == Installation ==
 1. Use the standard WordPress plugin automatic updates system for installing and updating to the latest version or use the manual steps below. 
@@ -51,6 +51,9 @@ See http://www.slickrflickr.com/slickr-flickr-help/ for the full list of questio
 
 == Changelog ==
 
+= 1.44 =
+* Includes Galleria 1.2.9, and the ability to include links within photo descriptions
+
 = 1.43 =
 * links and descriptions now supported in captions for all third party lightboxes
 
@@ -65,8 +68,8 @@ See full version history at http://www.slickrflickr.com/about/
 
 == Upgrade Notice ==
 
-= 1.43 = 
-* Recommended - improved third party LightBox integration
+= 1.44 = 
+* Recommended - with latest Galleria 1.2.9 and longer timeout when loading Galleria theme
 
 == How to Use The Plugin ==
 

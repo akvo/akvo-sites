@@ -171,9 +171,11 @@ class SyndicatedPost {
 			
 			foreach ($postMetaOut as $key => $values) :
 				$this->post['meta'][$key] = array();
-				foreach ($values as $value) :
-					$this->post['meta'][$key][] = apply_filters("syndicated_post_meta_{$key}", $value, $this);
-				endforeach;
+                if(is_array($values)):
+                    foreach ($values as $value) :
+                        $this->post['meta'][$key][] = apply_filters("syndicated_post_meta_{$key}", $value, $this);
+                    endforeach;
+                endif;
 			endforeach;
 			
 			// RSS 2.0 / Atom 1.0 enclosure support

@@ -13,7 +13,7 @@ class AkvoFlickrSlideshow{
             "user" => "60455798@N03",
             'api_key' => '6a3eb90aa9326a66aed37c198b5e519b'
         ), $atts ) );
-        $sBaseURI = 'http://www.flickr.com/services/rest/?nojsoncallback=1&format=json';
+        $sBaseURI = 'https://www.flickr.com/services/rest/?nojsoncallback=1&format=json';
         $aArgs = array(
             'method' => 'flickr.people.getPublicPhotos',
             'user_id' => $user,
@@ -34,11 +34,13 @@ class AkvoFlickrSlideshow{
     <?php //var_dump($aFotos);?>
     
     <?php foreach($aFotos['photos'] AS $aPage){
-        foreach($aPage AS $aPhoto){
-			
-        echo '<a href="http://farm'.$aPhoto['farm'].'.staticflickr.com/'.$aPhoto['server'].'/'.$aPhoto['id'].'_'.$aPhoto['secret'].'_b.jpg" >';
-        echo '<img data-title="'.$aPhoto['title'].'" src="http://farm'.$aPhoto['farm'].'.staticflickr.com/'.$aPhoto['server'].'/'.$aPhoto['id'].'_'.$aPhoto['secret'].'_q.jpg" />';
-        echo '</a>';
+        if(is_array($aPage)){
+            foreach($aPage AS $aPhoto){
+
+            echo '<a href="http://farm'.$aPhoto['farm'].'.staticflickr.com/'.$aPhoto['server'].'/'.$aPhoto['id'].'_'.$aPhoto['secret'].'_b.jpg" >';
+            echo '<img data-title="'.$aPhoto['title'].'" src="http://farm'.$aPhoto['farm'].'.staticflickr.com/'.$aPhoto['server'].'/'.$aPhoto['id'].'_'.$aPhoto['secret'].'_q.jpg" />';
+            echo '</a>';
+            }
         }
     }?>
 </div>

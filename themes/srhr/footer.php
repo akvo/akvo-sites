@@ -22,7 +22,7 @@
                         </a>
                     </div>
 		    <div id="iDivPoweredByText">
-                        Copyright SRHR. All rights reserved.
+                        <a href="/licensing-and-copyrights">Copyright</a>. Some rights reserved.
                     </div>
                 </div>
                 <br style="clear:both;" />

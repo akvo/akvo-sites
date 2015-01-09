@@ -3,6 +3,7 @@ global $post, $blog_id;
 $postid = $post->ID;
 $title = $post->post_title;
 $date = date('M d, Y',  strtotime($post->post_date));
+$sContent = $post->post_content;
 if($post->post_type=='video'){
     $sCategory = 'video';
     $sReadMoreLink = '/video';
@@ -14,6 +15,10 @@ if($post->post_type=='video'){
     $sPostLabelImgClass= 'cDivVideoPostImageTag';
 }
 if($post->post_type=='post' || $post->post_type=='news'  || $post->post_type=='page'){
+    $sContent = get_the_excerpt();
+    if($sContent===''){
+        $sContent = $post->post_content;
+    }
     $aPostCats =wp_get_post_categories($post->ID,array('fields'=>'all'));
     $sCategory = $aPostCats[0]->name;
     $sReadMoreLink = get_permalink($post->ID);
@@ -59,22 +64,19 @@ if($post->post_type=='post' || $post->post_type=='news'  || $post->post_type=='p
     $sPostLabelImgClass=($post->post_type=='post') ? 'cDivBlogPostImageTag' : 'cDivNewsPostImageTag entry';
 	if($post->post_type=='page')$sPostLabelImgClass='';
 }elseif($post->post_type=='project_update'){
-    $aPostAttachments = AkvoPartnerCommunication::getUpdateImages($post->ID);
     $sCategory = 'project update';
     $sAttachmentLink = null;
-    if ($aPostAttachments) {
-        foreach ($aPostAttachments as $oAttachment) {
-            $sAttachmentLink = wp_get_attachment_url($oAttachment->ID);
-        }
-    }
     $sImgSrc = "";
+    $sAttachmentLink = get_post_meta($post->ID, 'enclosure', true);
+
     if (!is_null($sAttachmentLink)) {
-		$sImgSrc = str_replace('uploads20', 'uploads/20', $sAttachmentLink);
-		$sImgSrc = str_replace('sites/'.$blog_id.'20', 'sites/'.$blog_id.'/20', $sImgSrc);
-//        var_dump($blog_id);
-       //var_dump($sImgSrc);
+
+        $sImgSrc = str_replace('uploads2012', 'uploads/2012', $sAttachmentLink);
         if(!@getimagesize($sImgSrc))$sImgSrc='';
+        else $sImgSrc = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$sImgSrc.'&w=271&h=167&zc=1&q=100';   
+                                        
     }
+    
     if($sImgSrc==''){
         $sImgSrc = '/wp-content/themes/ifad/images/placeholder.jpg';
     }
@@ -119,7 +121,7 @@ $sNoImgClass = ($sImgSrc=='') ? 'noImg' : '';
     </div>
     <div class="cDivBlogPostTextContent">
         <?php
-        $sContent = $post->post_content;
+        //$sContent = $post->post_content;
         $iClipText =($sNoImgClass=='noImg') ? 800 : 200;
         echo textClipper(strip_tags(strip_shortcodes($sContent)), $iClipText);
         ?>

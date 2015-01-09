@@ -18,5 +18,3 @@ class Ai1ec_Facebook_Db_Exception extends Exception {
 
 	
 }
-
-?>

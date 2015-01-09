@@ -1,3 +1,10 @@
+<?php
+
+global $wpdb; 
+
+//akvo_debug_dump($wpdb->last_result);
+    
+    ?>
 <?php get_header(); ?>
 
 <div id="container">

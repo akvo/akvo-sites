@@ -9,7 +9,8 @@
 	$value = esc_attr( $setting['setting-value'] );
 	$id = esc_attr( $setting['setting-id'] );
 	?>
-	<label class="textinput" for="<?php echo $id; ?>"><?php echo $description; ?></label>
-	<input name="<?php echo $id; ?>" id="<?php echo $id; ?>" type="text"  value="<?php echo $value; ?>" />
-	<br class="clear" />
+	<div class="clearfix">
+		<label class="textinput" for="<?php echo $id; ?>"><?php echo $description; ?></label>
+		<input name="<?php echo $id; ?>" id="<?php echo $id; ?>" type="text" class="input-xlarge" value="<?php echo $value; ?>" />
+	</div>
 <?php endforeach; ?>

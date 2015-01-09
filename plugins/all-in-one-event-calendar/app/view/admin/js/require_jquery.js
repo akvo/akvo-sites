@@ -1,4 +1,1 @@
-define( ["jquery_lib"], function() {
-	// Raw jQuery does not return anything, so return it explicitly here.
-	return jQuery.noConflict( true );
-} );
+timely.define(["jquery_lib"],function(){return jQuery.noConflict(!0)});

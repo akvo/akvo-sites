@@ -110,7 +110,13 @@ class Ai1ec_Adapter_Query_Wordpress implements Ai1ec_Adapter_Query_Interface
 	}
 
 	/**
-	 * Register rewrite rule
+	 * Register rewrite rule with framework
+	 *
+	 * @param string $regexp   Expression to register
+	 * @param string $landing  URL to be executed on match
+	 * @param int    $priority Numeric rule priority - higher means sooner check
+	 *
+	 * @return string Regexp rule registered with framework
 	 */
 	public function register_rule( $regexp, $landing, $priority = NULL ) {
 		if ( NULL === $priority ) {
@@ -118,22 +124,26 @@ class Ai1ec_Adapter_Query_Wordpress implements Ai1ec_Adapter_Query_Interface
 		}
 		$priority = ( $priority > 0 ) ? 'top' : 'bottom';
 		$regexp	  = $this->_inject_route_groups( $regexp );
-		$this->_rewrite->add_rule(
-			$regexp,
-			$landing,
-			$priority
-		);
-		return $this->_rewrite->flush_rules();
+		$existing = $this->_rewrite->wp_rewrite_rules();
+		if ( ! isset( $existing[$regexp] ) ) {
+			$this->_rewrite->add_rule(
+				$regexp,
+				$landing,
+				$priority
+			);
+			$this->_rewrite->flush_rules();
+		}
+		return $regexp;
 	}
 
 	/**
 	 * Add serialized (key:value) value to query arguments list
 	 */
 	protected function _add_serialized_var( $element ) {
-		if ( false === strpos( $element, ':' ) ) {
+		if ( false === strpos( $element, Ai1ec_Uri::DIRECTION_SEPARATOR ) ) {
 			return false;
 		}
-		list( $key, $value ) = explode( ':', $element, 2 );
+		list( $key, $value ) = explode( Ai1ec_Uri::DIRECTION_SEPARATOR, $element, 2 );
 		$this->variable( $key, $value );
 		return true;
 	}

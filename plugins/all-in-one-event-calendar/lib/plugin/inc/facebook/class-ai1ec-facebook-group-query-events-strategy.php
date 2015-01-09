@@ -42,7 +42,7 @@ class Ai1ec_Facebook_Group_Query_Events_Strategy extends Ai1ec_Facebook_Query_Ab
 		$fql = array();
 		foreach ( $grouped_eids as $id => $eids ) {
 			$imploded_eids = implode( ',', $eids );
-			$time = Ai1ec_Facebook_Event::get_facebook_actual_time( $timestamp );
+			$time = Ai1ec_Facebook_Event::get_facebook_actual_time_for_events( $timestamp );
 			$fql[$id] =
 				"SELECT
 					eid,

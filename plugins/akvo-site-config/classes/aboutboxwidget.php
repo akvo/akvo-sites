@@ -38,6 +38,8 @@ class AboutboxWidget extends WP_Widget {
                 $sLink = ($sURL) ? $sURL : get_permalink() ; 
                 switch($type){
                     case "map":
+//                        $bMail = wp_mail('eveline@kominski.net', 'test', 'testing');
+//                        akvo_debug_dump($bMail);
                         $width = (isset($instance['width'])) ? apply_filters( 'widget_type', $instance['width'] ) : 470;
                         $height = (isset($instance['height'])) ? apply_filters( 'widget_type', $instance['height'] ) : 240;
 
@@ -45,7 +47,9 @@ class AboutboxWidget extends WP_Widget {
                 <div id="iDivMap"  style="width: <?php echo $width;?>px; height: <?php echo $height;?>px; float: left;"></div>
                         <?php
                         if (function_exists('showMap')) {
+				
                             showMap('');
+
                         }
                     break;
                     case "photo":
@@ -74,16 +78,17 @@ class AboutboxWidget extends WP_Widget {
                         $classtext = 'no-border';
                         $titletext = get_the_title();
                         $aImages = catch_post_images();
+                        
                         ?>
                             <div class="thumbnail-div-slider">
-                            <ul class="bxslider">
-                                <?php foreach($aImages AS $sImage){
-                                    $thumb = plugins_url('akvo-site-config/classes/thumb.php').'?src='.$sImage.'&w='.$width.'&h='.$height.'&zc=1&q=100';
+                                <ul class="bxslider">
+                                    <?php foreach($aImages AS $sImage){
+                                        $sImage = preg_replace('/(\w+).akvofoundation.org/i', 'akvofoundation.org', $sImage);
+                                        $thumb = plugins_url('akvo-site-config/classes/thumb.php').'?src='.$sImage.'&w='.$width.'&h='.$height.'&zc=1&q=100';
+                                        echo '<li><img src="'.$thumb.'" /></li>';
+                                    }?>
 
-                                    echo '<li><img src="'.$thumb.'" /></li>';
-                                }?>
-                              
-                            </ul>
+                                </ul>
                             </div>
                             <script type="text/javascript">
                                 jQuery.getScript('<?php echo plugins_url('akvo-site-config/bxslider.js');?>', function(){
@@ -107,9 +112,9 @@ class AboutboxWidget extends WP_Widget {
                     </h1>
                     <?php the_excerpt(); ?>
                     <div style="clear: both;"></div>
-
+                    <?php $sReadmore = (get_current_blog_id()==11) ? 'lees verder' : 'Read more';?>
                     <div class="readmore">
-                        <a href="<?php echo $sLink; ?>" rel="bookmark" title="<?php printf(esc_attr__('Permanent Link to %s','Quadro'), the_title()) ?>"><?php esc_html_e('Read More','Quadro'); ?></a>
+                        <a href="<?php echo $sLink; ?>" rel="bookmark" title="<?php printf(esc_attr__('Permanent Link to %s','Quadro'), the_title()) ?>"><?php esc_html_e('Read more','Quadro'); ?></a>
                     </div>
                 </div> <!-- end #featured-content -->
 

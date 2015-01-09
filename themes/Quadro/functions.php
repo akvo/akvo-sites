@@ -189,7 +189,7 @@ if (!function_exists('et_list_pings')) {
 				$parent = get_post($post->post_parent);
 				$cat = get_the_category($parent->ID);
 				$cat = $cat[0];
-				echo get_category_parents($cat, TRUE, ' ' . $delimiter . ' ');
+				//echo get_category_parents($cat, TRUE, ' ' . $delimiter . ' ');
 				echo '<a href="' . get_permalink($parent) . '">' . $parent->post_title . '</a>';
 				if ($showCurrent == 1)
 					echo ' ' . $delimiter . ' ' . $before . get_the_title() . $after;
@@ -286,7 +286,16 @@ function order_combined_posts($a,$b){
     }
     return ($stampA < $stampB) ? 1 : -1;
 }
+function the_title_trim($title)
+{
+  $pattern[0] = '/Protected:/';
+  $pattern[1] = '/Private:/';
+  $replacement[0] = ''; // Enter some text to put in place of Protected:
+  $replacement[1] = ''; // Enter some text to put in place of Private:
 
+  return preg_replace($pattern, $replacement, $title);
+}
+add_filter('the_title', 'the_title_trim');
 function akvo_debug_dump($a){
     if(in_array($_SERVER['REMOTE_ADDR'],array('84.80.116.254','77.249.187.100'))){
         echo '<pre>';
@@ -294,5 +303,29 @@ function akvo_debug_dump($a){
         echo '</pre>';
     }
 }
+
+add_action('wp','redirect_stuffs', 0);
+function redirect_stuffs(){
+global $wpdb; 
+    if ($wpdb->last_result[0]->post_status == "private" && !is_user_logged_in() ):
+        //wp_redirect( wp_login_url( get_permalink($wpdb->last_result[0]->ID) ), 301 );
+        //echo get_template();
+        include( get_stylesheet_directory() . '/customlogin.php' );
+        exit();
+        
+    endif;
+}
+
+
+//function my_page_template_redirect()
+//{
+//    global $wpdb; 
+//    if( $wpdb->last_result[0]->post_status == "private" && !is_user_logged_in() )
+//    {
+//        wp_redirect( home_url( '/signup/' ) );
+//        exit();
+//    }
+//}
+//add_action( 'template_redirect', 'my_page_template_redirect' );
 // end the_breadcrumbs()
 	?>

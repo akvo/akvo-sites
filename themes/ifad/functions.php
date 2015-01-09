@@ -17,12 +17,12 @@ add_action( 'widgets_init', 'register_ifad_data_widget' );
 
 class ifad_data_Widget extends WP_Widget {
     var $aFields = array(
-            'Title'=>'title',
-            'Community members'=>'cmembers',
-            'Commmunity contributions'=>'cdiscussions',
+//            'Title'=>'title',
+//            'Community members'=>'cmembers',
+//            'Commmunity contributions'=>'cdiscussions',
             'Wiki visitors'=>'wvisitors',
-            'Wiki articles'=>'warticles',
-            'Shared documents'=>'sdocuments'
+            'Wiki pageviews'=>'warticles',
+            //'Shared documents'=>'sdocuments'
         );
 	function __construct() {
 		// Instantiate the parent object
@@ -33,18 +33,43 @@ class ifad_data_Widget extends WP_Widget {
 		// Widget output
         global $wpdb;
         extract($instance);
-        $projects = $wpdb->get_var( "SELECT COUNT(*) FROM ".$wpdb->prefix."projects" );
-        //if($query != '')$search_query=$newstr;
+        $project_updates = $wpdb->get_var( "SELECT COUNT(*) FROM ".$wpdb->prefix."posts WHERE post_status='publish' AND post_type='project_update'" );
+        $sFiles = file_get_contents('http://api.rain4food.net/files');
+        $aFiles = json_decode($sFiles,true);
+        $sApiKey = 'rain4food';
+$sApiSecret = '77e03e882c9d4bbbb468ee26bddd36a3';
+$sPath = '/rwsn/rainwater/__api/v2/stats/basic';
+$sTimestamp = file_get_contents('https://dgroups.org/rwsn/rainwater/__api/v2/time');
+$sHash = sha1($sPath.$sApiKey.$sApiSecret.$sTimestamp);
+$sUrl = 'https://dgroups.org'.$sPath;
+$crl = curl_init();
+
+$headr = array();
+$headr[] = 'Accept: application/json';
+$headr[] = 'Path: '.$sPath;
+$headr[] = 'Authorization: '.$sHash;
+$headr[] = 'X-ECS-Api-Key: '.$sApiKey;
+$headr[] = 'X-ECS-Api-RequestTime: '.$sTimestamp;
+curl_setopt($crl, CURLOPT_URL, $sUrl);
+curl_setopt($crl, CURLOPT_HEADER, false);
+curl_setopt($crl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($crl, CURLOPT_HTTPHEADER,$headr);
+$rest = @curl_exec($crl);
+
+curl_close($crl);
+$apiresult = json_decode($rest,true);
         ?>
 				
             <div id="text-2" class="sidebar-box widget_text">			
-                <div class="textwidget"><h2><?php echo $title; ?></h2>
+                <div class="textwidget"><h2><?php echo __('Current status','AkvoSites'); ?></h2>
                 <div class="akvodata">
-                    <?php foreach($this->aFields AS $label=> $value){
-                        if($value=='title')continue;?>
-                    <label><?php echo $label; ?>:</label><span><?php echo $$value; ?></span><br>
-                    <?php } ?>
-                    <label>Projects:</label><span><?php echo $projects;?></span>
+                    <label><?php echo __('Community members','AkvoSites');?>:</label><span><?php echo $apiresult['Members'];?></span><br>
+                    <label><?php echo __('Community contributions','AkvoSites');?>:</label><span><?php echo $apiresult['Contributions'];?></span><br>
+                    <label><?php echo __('Member countries','AkvoSites');?>:</label><span><?php echo $apiresult['Countries'];?></span><br>
+                    <label><?php echo __('Wiki visitors','AkvoSites');?>:</label><span><?php echo $instance['wvisitors'];?></span><br>
+                    <label><?php echo __('Wiki pageviews','AkvoSites');?>:</label><span><?php echo $instance['warticles'];?></span><br>
+                    <label><?php echo __('Shared documents','AkvoSites');?>:</label><span><?php echo $aFiles['count'];?></span><br>
+                    <label><?php echo __('Project updates','AkvoSites');?>:</label><span><?php echo $project_updates;?></span>
               </div>
                 </div>
 		</div>
@@ -71,14 +96,7 @@ class ifad_data_Widget extends WP_Widget {
         $wvisitors = ( isset( $instance[ 'wvisitors' ] ) ) ? $instance[ 'wvisitors' ] : 0;
         $warticles = ( isset( $instance[ 'warticles' ] ) ) ? $instance[ 'warticles' ] : 0;
         $sdocuments = ( isset( $instance[ 'sdocuments' ] ) ) ? $instance[ 'sdocuments' ] : 0;
-//        $aFields=array(
-//            'Title'=>'title',
-//            'Community members'=>'cmembers',
-//            'Commmunity discussions'=>'cdiscussions',
-//            'Wiki visitors'=>'wvisitors',
-//            'Wiki articles'=>'warticles',
-//            'Shared documents'=>'sdocuments'
-//        );
+
         ?>
         <p>
             <?php

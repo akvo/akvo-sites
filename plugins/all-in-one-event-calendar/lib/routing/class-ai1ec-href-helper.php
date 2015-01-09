@@ -4,21 +4,24 @@
  * @author Timely Network Inc
  */
 
-class Ai1ec_Href_Helper {
+class Ai1ec_Href_Helper
+{
+
 	/**
 	 * @var array the parameters that are used in the urls
 	 */
 	private $used_paramaters = array(
-			'page_offset',
-			'month_offset',
-			'action',
-			'time_limit',
-			'exact_date',
-			'cat_ids',
-			'post_ids',
-			'tag_ids',
-			'oneday_offset',
-			'week_offset',
+		'action',
+		'page_offset',
+		'month_offset',
+		'oneday_offset',
+		'week_offset',
+		'time_limit',
+		'exact_date',
+		'cat_ids',
+		'auth_ids',
+		'post_ids',
+		'tag_ids',
 	);
 
 	/**
@@ -98,7 +101,7 @@ class Ai1ec_Href_Helper {
 				if( is_array( $this->args[$key] ) ) {
 					$value = implode( ',', $this->args[$key] );
 				}
-				$to_implode[$key] = "$key:$value";
+				$to_implode[$key] = $key . Ai1ec_Uri::DIRECTION_SEPARATOR . $value;
 			}
 		}
 		if( $this->is_category || $this->is_tag ) {
@@ -151,10 +154,11 @@ class Ai1ec_Href_Helper {
 			if( empty( $copy ) ) {
 				unset( $to_implode[$array_key] );
 			} else {
-				$to_implode[$array_key] = "$array_key:" . implode( ',', $copy );
+				$to_implode[$array_key] = $array_key . Ai1ec_Uri::DIRECTION_SEPARATOR .
+					implode( ',', $copy );
 			}
 		} else {
-			$to_implode[$array_key] = "$array_key:" . $this->term_id;
+			$to_implode[$array_key] = $array_key . Ai1ec_Uri::DIRECTION_SEPARATOR . $this->term_id;
 		}
 		return $to_implode;
 	}

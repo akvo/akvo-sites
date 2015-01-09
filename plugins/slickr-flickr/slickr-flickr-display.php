@@ -6,8 +6,9 @@ class slickr_flickr_display {
 	function __construct() {}
 
 	function show($attr) {
+		slickr_flickr_public::note_active();
   		$params = shortcode_atts( SlickrFlickrUtils::get_options(), $attr ); //apply plugin defaults    
-  		foreach ( $params as $k => $v ) if (($k != 'id') && ($k != 'options') && ($k != 'galleria_options') && ($k != 'attribution')) $params[$k] = strtolower($v); //set all params as lower case
+  		foreach ( $params as $k => $v ) if (($k != 'id') && ($k != 'options') && ($k != 'galleria_options') && ($k != 'attribution') && ($k != 'flickr_link_title')) $params[$k] = strtolower($v); //set all params as lower case
   		if (empty($params['id'])) return "<p>Please specify a Flickr ID for this ".$params['type']."</p>";
   		if ( (!empty($params['tagmode'])) && empty($params['tag']) && ($params['search']=="photos")) return "<p>Please set up a Flickr tag for this ".$params['type']."</p>";
   		if (empty($params['api_key']) && ($params['use_key'] == "y")) return "<p>Please add your Flickr API Key in Slickr Flickr Admin settings to fetch more than 20 photos.</p>";
@@ -195,9 +196,11 @@ NAV;
 		//separator is required if title and description end up together on the same line
 	    $sep = (($params["descriptions"] =='on') && ($params["type"] !='galleria') && ! $ptags) ? '.&nbsp;' : ''; 
 	    $ptitle = empty($title) ? '' : sprintf(($ptags ? '<p%2$s>%1$s</p>' : '<span%2$s>%1$s</span>').$sep ,$title, $border);
-	    $plink = sprintf($ptags ? '<p>%1$s</p>' : '%1$s' ,'<a title="Click to see photo on Flickr" href="'. $link . '">'.$title.'</a>'.$sep);
+		$link_target = empty($params["flickr_link_target"]) ? '' : sprintf('target="%1$s"',$params["flickr_link_target"]);
+	    $plink = sprintf($ptags ? '<p>%1$s</p>' : '%1$s' , 
+	    	sprintf('<a title="%1$s" %2$s href="%3$s">%4$s</a>%5$s', $params["flickr_link_title"], $link_target, $link, $title, $sep));
 	    $captiontitle = $params["flickr_link"]=="on"?$plink:$ptitle;
-	    $alt = $params["descriptions"]=="on"? ($ptags ? $description : strip_tags($description)) : "";
+	    $alt = $params["descriptions"]=="on"? ($ptags ? $description : strip_tags($description,'<a>')) : "";
 	    switch ($params['type']) {
 	       case "slideshow": {
 	            $caption = $params['captions']=="off"?"":($captiontitle.$alt);
@@ -216,8 +219,9 @@ NAV;
 	}
 
 	function get_lightbox_html ($params, $full_url, $link_url, $thumb_url, $a_title, $img_title, $img_alt) {
-    	//if (($params['lightbox']=='thickbox') && (!empty($lightbox_title))) $title = " title='". str_replace("'",'"',$lightbox_title)."'";
-    	if ($params['lightbox']=="none") $full_url = empty($params['link']) ? $link_url : $params['link']; //link to flickr if no lightbox
+		if ($params['lightbox']=="none") { //if no lightbox then maybe link directly to Flickr
+			$full_url = !empty($params['link']) ?  $params['link'] : ('on'==$params['flickr_link'] ? $link_url : '') ; 
+		}
     	$thumbcaption = $params['thumbnail_captions']=="on"?('<br/><span class="slickr-flickr-caption">'.$img_title.'</span>'):"";
     	$full_caption= ($params["captions"]=="off" ? '' : $a_title) . ($params["descriptions"]=="on" ? $img_alt : "");
 		$img_title = empty($img_title) ? '' : sprintf('title="%1$s"',htmlspecialchars($img_title));
@@ -230,9 +234,13 @@ NAV;
 	      case "thickbox": $title = sprintf('title=\'%1$s\'', str_replace("'","&acute;",$full_caption)); break; //avoid thickbox issue with apostrophes
 		  default: $title = sprintf('title="%1$s"', htmlspecialchars($full_caption));
 		}
-    	return sprintf('<a href="%1$s" %2$s %3$s><img src="%4$s" %5$s %6$s %7$s />%8$s</a>',
-			$full_url, $params['lightboxrel'], $title, 
-			$thumb_url, $params['image_style'], $img_alt, $img_title, $thumbcaption);
+		if (empty($full_url))
+			return sprintf('<img src="%1$s" %2$s %3$s %4$s />%5$s',
+				$thumb_url, $params['image_style'], $img_alt, $img_title, $thumbcaption);
+		else
+			return sprintf('<a href="%1$s" %2$s %3$s><img src="%4$s" %5$s %6$s %7$s />%8$s</a>',
+				$full_url, $params['lightboxrel'], $title, 
+				$thumb_url, $params['image_style'], $img_alt, $img_title, $thumbcaption);
 	}
 
 	function get_start($params,$numitems) {
@@ -290,8 +298,8 @@ NAV;
 
 	function lightbox_options($params) {
     	$options = array();
+		if (!empty($params['options'])) $this->parse_json_options($params['options'], $options);
     	if ($params['lightbox'] == "sf-lbox-auto") {
-			if (!empty($params['options'])) $this->parse_json_options($params['options'], $options);
     		if (!array_key_exists('nextSlideDelay',$options)) $options['nextSlideDelay'] = $params['delay'] * 1000;
     		if (!array_key_exists('autoPlay',$options)) $options['autoPlay'] = $params['autoplay']=="on"?true:false;
 		}

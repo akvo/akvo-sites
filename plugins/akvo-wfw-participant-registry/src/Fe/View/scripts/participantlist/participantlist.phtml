@@ -1,0 +1,96 @@
+<br /><br />
+<div class="row-fluid">
+<?php
+if (isset($aContent['registry']) && count($aContent['registry']) > 0) {
+?>
+    
+    <div class="tablepagination tablepagination-right">
+        Totaal aantal deelnemende scholen: <?php echo $aContent['total'];?><br />
+  <ul>
+      <?php if($aContent['page']!=1){?>
+      <li><a href="?order_by_column=<?php echo $sOrderByColumn;?>&order_by_direction=<?php echo $sOrderByDirection;?>&paging=<?php echo ($aContent['page']-1);?>">Vorige</a></li>
+      <?php
+      }
+	for ($i=1; $i<=$aContent['pages'];$i++) {
+
+?>
+    
+    <li><a href="?order_by_column=<?php echo $sOrderByColumn;?>&order_by_direction=<?php echo $sOrderByDirection;?>&paging=<?php echo $i;?>"><?php echo $i; ?></a></li>
+    
+    <?php }
+    if($aContent['page']!=$aContent['pages']){
+    ?>
+    <li><a href="?order_by_column=<?php echo $sOrderByColumn;?>&order_by_direction=<?php echo $sOrderByDirection;?>&paging=<?php echo ($aContent['page']+1);?>">Volgende</a></li>
+    <?php } ?>
+  </ul>
+</div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+                    <?php
+                    $dir = ($sOrderByColumn=='country' && $sOrderByDirection=='ASC') ? 'DESC' : 'ASC';
+                    ?>
+					<th><a href="?order_by_column=country&order_by_direction=<?php echo $dir;?>">Country, School</a></th>
+					<?php
+                    $dir = ($sOrderByColumn=='id_project' && $sOrderByDirection=='ASC') ? 'DESC' : 'ASC';
+                    ?>
+					<th><a href="?order_by_column=id_project&order_by_direction=<?php echo $dir;?>">Project</a></th>
+					
+					<?php
+                    $dir = ($sOrderByColumn=='total_students' && $sOrderByDirection=='ASC') ? 'DESC' : 'ASC';
+                    ?>
+					<th><a href="?order_by_column=total_students&order_by_direction=<?php echo $dir;?>">Nr of students</a></th>
+					
+				</tr>
+			</thead>
+			<tbody>
+<?php
+	foreach ($aContent['registry'] as $mKey => $aRegistryEntry) {
+
+?>
+				<tr>
+					<td>
+						<small><strong><?php echo $aRegistryEntry['country']; ?></strong></small><br>
+						<?php echo $aRegistryEntry['name']; ?>
+					</td>
+					
+					<td><?php echo $aRegistryEntry['id_project']; ?></td>
+					<td><?php echo $aRegistryEntry['total_students']; ?></td>
+					
+					
+				</tr>
+<?php
+
+	}
+?>
+			</tbody>
+		</table>
+    <div class="tablepagination tablepagination-right">
+  <ul>
+      <?php if($aContent['page']!=1){?>
+      <li><a href="?order_by_column=<?php echo $sOrderByColumn;?>&order_by_direction=<?php echo $sOrderByDirection;?>&paging=<?php echo ($aContent['page']-1);?>">Vorige</a></li>
+      <?php
+      }
+	for ($i=1; $i<=$aContent['pages'];$i++) {
+
+?>
+    
+    <li><a href="?order_by_column=<?php echo $sOrderByColumn;?>&order_by_direction=<?php echo $sOrderByDirection;?>&paging=<?php echo $i;?>"><?php echo $i; ?></a></li>
+    
+    <?php }
+    if($aContent['page']!=$aContent['pages']){
+    ?>
+    <li><a href="?order_by_column=<?php echo $sOrderByColumn;?>&order_by_direction=<?php echo $sOrderByDirection;?>&paging=<?php echo ($aContent['page']+1);?>">Volgende</a></li>
+    <?php } ?>
+  </ul>
+</div>
+<?php
+} else {
+?>
+		<div class="span12">
+			 <div class="alert alert-block alert-error">Nog geen scholen geregistreerd</div>
+		</div>
+<?php
+}
+?>
+	</div>

@@ -44,7 +44,7 @@ function remove_taxonomy( $taxonomy ) {
 // = Trigger Uninstall process only if WP_UNINSTALL_PLUGIN is defined =
 // ====================================================================
 if( defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	
+
 	global $wpdb, $wp_filesystem, $ai1ec_importer_plugin_helper;
 
 
@@ -66,13 +66,28 @@ if( defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 	// Delete settings
 	delete_option( 'ai1ec_settings' );
-	
+
 	// Remove statistics version
 	delete_option( 'ai1ec_n_cron_version' );
-	
-	// Remove update cron version 
+
+	// Remove update cron version
 	delete_option( 'ai1ec_u_cron_version' );
-	
+
+	// Remove package url option
+	delete_option( 'ai1ec_package_url' );
+
+	// Remove update available option
+	delete_option( 'ai1ec_update_available' );
+
+	// Remove update message option
+	delete_option( 'ai1ec_update_message' );
+
+	// Delete our current theme option
+	delete_option( 'ai1ec_current_theme' );
+
+	// Delete our plugin name options
+	delete_option( 'ai1ec_plugin_name' );
+
 	// Delete scheduled update cron
 	wp_clear_scheduled_hook( 'ai1ec_u_cron' );
 
@@ -112,5 +127,12 @@ if( defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	}
 	// Let the plugin run their uninstall procedures
 	$ai1ec_importer_plugin_helper->run_uninstall_procedures();
+	// Delete cached css from persistence
+	$css_controller = Ai1ec_Less_Factory::create_css_controller_instance();
+	$css_controller->invalidate_cache();
+	// Delete last updated time for css parsing
+	delete_option( Ai1ec_Css_Controller::GET_VARIBALE_NAME );
+	// Delete parsed variables for css generation
+	delete_option( Ai1ec_Lessphp_Controller::DB_KEY_FOR_LESS_VARIABLES );
 
 }

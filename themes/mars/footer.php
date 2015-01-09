@@ -15,7 +15,7 @@
             <?php endif; ?>
                 <div id="iDivPoweredBy">
                     <div id="iDivPoweredByText">
-                        Copyright Mars, Inc and its affiliates. All rights reserved.
+                        <a href="/licensing-and-copyrights">Copyright</a>. Some rights reserved.
                     </div>
                     <div id="iDivPoweredByImage">
                         <a href="http://akvo.org">

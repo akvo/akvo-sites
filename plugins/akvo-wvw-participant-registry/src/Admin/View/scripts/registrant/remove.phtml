@@ -1,0 +1,51 @@
+<?php include AkvoWvwParticipantRegistry_Plugin_Dir . '/src/Admin/View/scripts/partials/header.phtml'; ?>
+<?php
+if (isset($aContent['form'])) {
+	$oForm = $aContent['form'];
+?>
+<div class="container-fluid cAWPRContentWrapper">
+
+	<div class="row-fluid">
+		<div class="span12">
+			<h2><i class="icon-trash"></i>&nbsp;Remove Registrant</h2>
+			<a class="btn btn-small" href="<?php echo menu_page_url(\Akvo\WvW\ParticipantRegistry\Admin\Controller\Home::MENU_SLUG, false); ?>"><i class="icon-arrow-left"></i>&nbsp; Back</a>
+		</div>
+	</div>
+
+	<?php echo $oForm; ?>
+
+	<a class="btn btn-small" href="<?php echo menu_page_url(\Akvo\WvW\ParticipantRegistry\Admin\Controller\Home::MENU_SLUG, false); ?>"><i class="icon-arrow-left"></i>&nbsp; Back</a>
+
+</div>
+
+<div id="iDivModalRemoveRegistrant" class="modal hide fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3>Are you sure?</h3>
+	</div>
+	<div class="modal-body">
+		<p>This action will remove this registrant. Removal is permanent and cannot be undone.</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal">Cancel</button>
+		<button class="btn btn-danger" id="iButtonRemoveRegistrantConfirmation">Remove Registrant</button>
+	</div>
+</div>
+<?php
+} else {
+	if (isset($aContent['redirect'])) {
+?>
+<div class="container-fluid cAWPRContentWrapper">
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="alert alert-success">
+				<h2><i class="icon-ok-sign"></i>&nbsp;Redirecting...</h2>
+				<p>The registrant has been successfully removed. You will be redirected to the Registrant List in 3 seconds.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<?php
+	}
+}
+?>

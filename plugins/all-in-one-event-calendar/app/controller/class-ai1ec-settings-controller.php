@@ -40,7 +40,6 @@ class Ai1ec_Settings_Controller {
 		if( self::$_instance === NULL ) {
 			self::$_instance = new self();
 		}
-
 		return self::$_instance;
 	}
 
@@ -53,8 +52,13 @@ class Ai1ec_Settings_Controller {
 		global $ai1ec_view_helper,
 		       $ai1ec_settings;
 
+		// save settings
 		if( isset( $_REQUEST['ai1ec_save_settings'] ) ) {
 			$this->save( 'settings' );
+		}
+		// upgrade using the submitted license
+		if( isset( $_REQUEST['ai1ec_upgrade_to_pro'] ) ) {
+			wp_redirect( admin_url( AI1EC_UPGRADE_PRO_BASE_URL ) . '&ai1ec_license_key=' . $_REQUEST['ai1ec_license_key'] );
 		}
 		$args = array(
 			'title'             => __( 'All-in-One Event Calendar: Settings', AI1EC_PLUGIN_NAME ),
@@ -164,16 +168,7 @@ class Ai1ec_Settings_Controller {
 			_x( 'General Settings', 'meta box', AI1EC_PLUGIN_NAME ),
 			array( &$ai1ec_settings_helper, 'general_settings_meta_box' ),
 			$ai1ec_settings->settings_page,
-			'left-side',
-			'default'
-		);
-		// Add the 'Advanced Settings' meta box.
-		add_meta_box(
-			'ai1ec-advanced-settings',
-			_x( 'Advanced Settings', 'meta box', AI1EC_PLUGIN_NAME ),
-			array( &$ai1ec_settings_helper, 'advanced_settings_meta_box' ),
-			$ai1ec_settings->settings_page,
-			'left-side',
+			'left',
 			'default'
 		);
 
@@ -184,18 +179,18 @@ class Ai1ec_Settings_Controller {
 					_x( 'Connection Settings', 'meta box', AI1EC_PLUGIN_NAME ),
 					array( &$ai1ec_importer_plugin_helper, 'plugins_settings_meta_box' ),
 					$ai1ec_settings->settings_page,
-					'left-side',
+					'left',
 					'default'
 			);
 		}
 
-		// Add the 'Timely Support' meta box.
+		// Add the 'Timely' meta box.
 		add_meta_box(
 			'ai1ec-support',
-			_x( 'Timely Support', 'meta box', AI1EC_PLUGIN_NAME ),
+			_x( 'Timely', 'meta box', AI1EC_PLUGIN_NAME ),
 			array( &$ai1ec_settings_helper, 'support_meta_box' ),
 			$ai1ec_settings->settings_page,
-			'right-side',
+			'right',
 			'default'
 		);
 	}
@@ -215,7 +210,7 @@ class Ai1ec_Settings_Controller {
 			_x( 'Feed Subscriptions', 'meta box', AI1EC_PLUGIN_NAME ),
 			array( &$ai1ec_settings_helper, 'feeds_meta_box' ),
 			$ai1ec_settings->feeds_page,
-			'left-side',
+			'left',
 			'default'
 		);
 		// Add the 'Timely Support' meta box.
@@ -224,7 +219,7 @@ class Ai1ec_Settings_Controller {
 			_x( 'Timely Support', 'meta box', AI1EC_PLUGIN_NAME ),
 			array( &$ai1ec_settings_helper, 'support_meta_box' ),
 			$ai1ec_settings->feeds_page,
-			'right-side',
+			'right',
 			'default'
 		);
 	}
@@ -279,10 +274,10 @@ class Ai1ec_Settings_Controller {
 			// continue only if there is a result
 			$updater = json_decode( $response['body'] );
 			$new = isset( $updater->version ) ? $updater->version : AI1EC_VERSION;
-			$new = trim( str_replace( '-PREMIUM', '', strtoupper( $new ) ) );
-			$old = str_replace( '-PREMIUM', '', strtoupper( AI1EC_VERSION ) );
-			$old = str_replace( ' PREMIUM', '', $old );
-			$old = trim( str_replace( 'PREMIUM', '', $old ) );
+			$new = trim( str_replace( '-STANDARD', '', strtoupper( $new ) ) );
+			$old = str_replace( '-STANDARD', '', strtoupper( AI1EC_VERSION ) );
+			$old = str_replace( ' STANDARD', '', $old );
+			$old = trim( str_replace( 'STANDARD', '', $old ) );
 			if( ( version_compare( $old, $new ) == -1 ) ) {
 				update_option( 'ai1ec_update_available', 1 );
 				update_option( 'ai1ec_update_message', $updater->message );

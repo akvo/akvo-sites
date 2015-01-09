@@ -45,7 +45,7 @@ class WP_Scoped_User extends WP_User {
 		$args = array_merge( $defaults, (array) $args );
 		extract($args);
 
-		if ( $this->ID ) {
+		if ( $this->ID || defined( 'SCOPER_ANON_METAGROUP' ) ) {
 			if ( ! $disable_wp_roles ) {
 				// include both WP roles and custom caps, which are treated as a hidden single-cap role capable of satisfying single-cap current_user_can calls
 				$this->assigned_blog_roles[ANY_CONTENT_DATE_RS] = $this->caps;
@@ -86,6 +86,8 @@ class WP_Scoped_User extends WP_User {
 			// as long as the object or its terms are not configured to require that role to be term-assigned or object-assigned.
 
 			//log_mem_usage_rs( 'new Scoped User done' );
+			
+			add_filter('user_has_cap', array(&$this, 'reinstate_caps'), 99, 3);
 		}
 	}
 	
@@ -170,6 +172,11 @@ class WP_Scoped_User extends WP_User {
 		if ( ! $wpdb->user2group_rs )
 			return array();
 
+		if ( ! $user_id ) {
+			// include WP metagroup for anonymous user
+			return array_fill_keys( scoper_get_col( "SELECT $wpdb->groups_id_col FROM $wpdb->groups_rs WHERE {$wpdb->groups_rs}.{$wpdb->groups_meta_id_col} = 'wp_anon'" ), 'true' );
+		}
+			
 		$status_clause = ( $status ) ? "AND status = '$status'" : '';	
 
 		$query = "SELECT $wpdb->user2group_gid_col FROM $wpdb->user2group_rs WHERE $wpdb->user2group_uid_col = '$user_id' $status_clause ORDER BY $wpdb->user2group_gid_col";
@@ -205,7 +212,7 @@ class WP_Scoped_User extends WP_User {
 	
 	// return group_id as array keys
 	function _get_usergroups($args = array()) {
-		if ( ! $this->ID )
+		if ( ! $this->ID && ! defined( 'SCOPER_ANON_METAGROUP' ) )
 			return array();
 
 		$args = (array) $args;
@@ -384,6 +391,16 @@ class WP_Scoped_User extends WP_User {
 		}
 		
 		$this->allcaps['is_scoped_user'] = true; // use this to detect when something tampers with scoped allcaps array
+	}
+	
+	function reinstate_caps( $wp_blogcaps, $orig_reqd_caps, $args ) {
+		global $current_user, $current_rs_user;
+	
+		if ( ( $args[1] == $current_rs_user->ID ) && array_diff_key( $current_rs_user->allcaps, $current_user->allcaps ) ) {
+			$current_user->allcaps = array_intersect( array_merge( $current_user->allcaps, $current_rs_user->allcaps ), array(true,1,'1') );
+		}
+		
+		return $wp_blogcaps;
 	}
 
 } // end class WP_Scoped_User

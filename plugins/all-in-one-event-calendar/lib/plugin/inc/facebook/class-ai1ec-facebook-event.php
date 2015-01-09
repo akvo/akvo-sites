@@ -285,6 +285,19 @@ class Ai1ec_Facebook_Event {
 		$offset -= ( $ai1ec_events_helper->get_gmt_offset() * 3600 );
 		return $timestamp - $offset;
 	}
+
+	/**
+	 * Substract one day from events
+	 *
+	 * @param string $timestamp
+	 * @return number
+	 */
+	static public function get_facebook_actual_time_for_events( $timestamp = NULL ) {
+		$timestamp = self::get_facebook_actual_time( $timestamp );
+		$timestamp -= 60 * 60 * 24;
+		return $timestamp;
+	}
+
 	/**
 	 * Remove the last character from a string if it's a comma.
 	 *
@@ -437,6 +450,15 @@ class Ai1ec_Facebook_Event {
 	 */
 	public function save_to_facebook( Facebook_WP_Extend_Ai1ec $facebook ) {
 		$data_to_send = get_object_vars( $this );
+		$data_to_send['description'] = preg_replace( 
+			'#<\s*script[^>]*>.+<\s*/\s*script\s*>#x', 
+			'', 
+			$data_to_send['description']
+		);
+		$data_to_send['description'] = strip_shortcodes( 
+			strip_tags( $data_to_send['description'] )
+		);
+
 		if ( $data_to_send['id'] === NULL ) {
 			$result = array ();
 			unset( $data_to_send['id'] );

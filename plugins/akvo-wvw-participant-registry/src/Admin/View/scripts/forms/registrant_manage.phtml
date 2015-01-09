@@ -1,0 +1,486 @@
+<?php
+
+$sWrapperId = '';
+$sTemporaryWrapperId = $this->element->getParameter('wrapper_id');
+
+if (is_null($sTemporaryWrapperId)) {
+	$sFormId = $this->element->getAttrib('id');
+	if ($sFormId != '') {
+		$sWrapperId = 'iDivWrapperFor' . $sFormId;
+	}
+} else {
+	$sWrapperId = $sTemporaryWrapperId;
+}
+
+$sWrapperAttributes = '';
+$sWrapperAttributes .= ' id="' . $sWrapperId . '"';
+$sWrapperAttributes .= ' class="cDivZendFormWrapper"';
+
+?>
+<div<?php echo $sWrapperAttributes; ?>>
+	<div id="iDivFormResponseContainer"></div>
+
+	<form class=""<?php include 'partials/form_attributes.phtml'; ?>>
+
+		<div class="row-fluid">
+
+			<div class="span6">
+
+				<fieldset>
+					<legend>School</legend>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textName->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textName->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textName"><?php echo $this->element->textName->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textName; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textAddress->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textAddress->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textAddress"><?php echo $this->element->textAddress->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textAddress; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textCity->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textCity->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textCity"><?php echo $this->element->textCity->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textCity; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textPostalCode->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textPostalCode->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textPostalCode"><?php echo $this->element->textPostalCode->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textPostalCode; ?>
+						</div>
+					</div>
+
+				</fieldset>
+
+			</div>
+
+			<div class="span6">
+
+				<fieldset>
+					<legend>Contact Person</legend>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textContactName->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textContactName->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textContactName"><?php echo $this->element->textContactName->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textContactName; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textEmail->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textEmail->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textEmail"><?php echo $this->element->textEmail->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textEmail; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textPhone->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textPhone->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textPhone"><?php echo $this->element->textPhone->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textPhone; ?>
+						</div>
+					</div>
+
+				</fieldset>
+
+			</div>
+
+		</div>
+
+		<div class="row-fluid">
+
+			<div class="span6">
+
+				<fieldset>
+					<legend>Participation</legend>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->radioParticipatedBefore->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->radioParticipatedBefore->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group  cDivRadioButtonContainer<?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="radioParticipatedBefore"><?php echo $this->element->radioParticipatedBefore->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->radioParticipatedBefore; ?>
+						<br class="clearfix">
+						</div>
+					</div>
+
+					<div class="control-group<?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<div class="controls">
+							<label class="checkbox"><?php echo $this->element->checkboxParticipatedLastYear; ?><?php echo $this->element->checkboxParticipatedLastYear->getLabel(); ?></label>
+							<label class="checkbox"><?php echo $this->element->checkboxParticipatedYearBeforeLast; ?><?php echo $this->element->checkboxParticipatedYearBeforeLast->getLabel(); ?></label>
+							<label class="checkbox"><?php echo $this->element->checkboxParticipatedBeforeTheLastTwoYears; ?><?php echo $this->element->checkboxParticipatedBeforeTheLastTwoYears->getLabel(); ?></label>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textGrade7Groups->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textGrade7Groups->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textGrade7Groups"><?php echo $this->element->textGrade7Groups->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textGrade7Groups; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textGrade8Groups->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textGrade8Groups->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textGrade8Groups"><?php echo $this->element->textGrade8Groups->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textGrade8Groups; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textGrade67Groups->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textGrade67Groups->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textGrade67Groups"><?php echo $this->element->textGrade67Groups->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textGrade67Groups; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textGrade678Groups->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textGrade678Groups->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textGrade678Groups"><?php echo $this->element->textGrade678Groups->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textGrade678Groups; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textGrade78Groups->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textGrade78Groups->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textGrade78Groups"><?php echo $this->element->textGrade78Groups->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textGrade78Groups; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textTotalStudents->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textTotalStudents->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textTotalStudents"><?php echo $this->element->textTotalStudents->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textTotalStudents; ?>
+						</div>
+					</div>
+
+				</fieldset>
+
+			</div>
+
+			<div class="span6">
+
+				<fieldset>
+					<legend>Walk</legend>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->selectSupportPoint->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->selectSupportPoint->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="selectSupportPoint"><?php echo $this->element->selectSupportPoint->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->selectSupportPoint; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textWalkDate->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textWalkDate->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textWalkDate"><?php echo $this->element->textWalkDate->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textWalkDate; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textWalkCity->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textWalkCity->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textWalkCity"><?php echo $this->element->textWalkCity->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textWalkCity; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textComments->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textComments->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textComments"><?php echo $this->element->textComments->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textComments; ?>
+						</div>
+					</div>
+
+				</fieldset>
+
+			</div>
+
+		</div>
+
+		<div class="row-fluid">
+
+			<div class="span6">
+
+				<fieldset>
+					<legend>Other/Administrative</legend>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textBatch->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textBatch->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textBatch"><?php echo $this->element->textBatch->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textBatch; ?>
+						</div>
+					</div>
+
+				</fieldset>
+
+			</div>
+
+			<div class="span6">
+
+				<fieldset>
+
+					<legend>Map Placement</legend>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textLatitude->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textLatitude->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textLatitude"><?php echo $this->element->textLatitude->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textLatitude; ?>
+						</div>
+					</div>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textLongitude->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textLongitude->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textLongitude"><?php echo $this->element->textLongitude->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textLongitude; ?>
+						</div>
+					</div>
+
+				</fieldset>
+
+			</div>
+
+		</div>
+
+		<div class="row-fluid">
+			<div class="form-actions">
+				<?php echo $this->element->submitSubmit; ?>
+			</div>
+		</div>
+
+	</form>
+</div>

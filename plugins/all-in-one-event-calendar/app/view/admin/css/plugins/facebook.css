@@ -44,6 +44,9 @@
 	font-size: 0.9em;
 	margin-top: 0.25em;
 }
+.ai1ec-facebook-category-tag-wrapper > * {
+	margin-right: 6px;
+}
 .ai1ec-facebook-multiselect-title-wrapper {
 	display: block;
 }

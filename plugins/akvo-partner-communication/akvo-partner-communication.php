@@ -47,7 +47,13 @@ function showMap($sCountry='',$iZoom=0) {
 	}
 }
 
-
+function akvo_map_shortcode($atts=null,$content){
+    $width=(is_array($atts) && (array_search('width',$atts)!==false || array_key_exists('width', $atts))) ? $atts['width'] : '100%';
+    $height=(is_array($atts) && (array_search('height',$atts)!==false || array_key_exists('height', $atts))) ? $atts['height'] : '400px';
+    echo '<div class="cDivMap" id="iDivMap" style="width:'.$width.';height:'.$height.';"></div>';
+    showMap();
+}
+add_shortcode( 'akvomap', 'akvo_map_shortcode' );
 
 
 ?>

@@ -20,7 +20,7 @@
                         </a>
                     </div>
                     <div id="iDivPoweredByText">
-                        Copyright Dutch WASH Alliance. All rights reserved.
+                        <a href="/copyrights">Copyright</a>. Some rights reserved.
                     </div>
                     
                 </div>

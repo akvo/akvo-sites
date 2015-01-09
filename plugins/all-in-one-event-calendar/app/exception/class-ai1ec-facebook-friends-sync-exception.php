@@ -16,5 +16,3 @@ class Ai1ec_Facebook_Friends_Sync_Exception extends Exception {
 		$this->error_messages = $error_messages;
 	}
 }
-
-?>

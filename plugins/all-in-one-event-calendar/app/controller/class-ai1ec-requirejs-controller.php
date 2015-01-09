@@ -216,18 +216,6 @@ class Ai1ec_Requirejs_Controller {
 			$this->ai1ec_scripts->localize_script_for_requirejs(
 				'ai1ec_calendar_requirejs', 'ai1ec_config', $data, true
 			);
-			// Now it's time to load custom functions from the themes
-			try {
-				$this->ai1ec_scripts->enqueue_admin_script(
-					'ai1ec_calendar_theme_require',
-					"themes/vortex/pages/calendar.js",
-					array( self::JS_HANDLE ),
-					true
-				);
-			}
-			catch ( Ai1ec_File_Not_Found $e ) {
-				// There is no custom file to load.
-			}
 			$this->load_frontend_js_translations( 'ai1ec_calendar_requirejs' );
 		}
 	}
@@ -380,6 +368,13 @@ class Ai1ec_Requirejs_Controller {
 
 		$lang = $this->events_helper->get_lang();
 
+		$force_ssl_admin = force_ssl_admin();
+		if ( $force_ssl_admin && ! is_ssl() ) {
+			force_ssl_admin( false );
+		}
+		$ajax_url        = admin_url( 'admin-ajax.php' );
+		force_ssl_admin( $force_ssl_admin );
+
 		$data = array(
 			'select_one_option'              => __( 'Select at least one user/group/page to subscribe to.', AI1EC_PLUGIN_NAME ),
 			'error_no_response'              => __( 'An unexpected error occurred. Try reloading the page.', AI1EC_PLUGIN_NAME ),
@@ -417,7 +412,7 @@ class Ai1ec_Requirejs_Controller {
 			'platform_active'                => $this->settings->event_platform_active,
 			'facebook_logged_in'             => $ai1ec_importer_plugin_helper->check_if_we_have_a_valid_facebook_access_token(),
 			'app_id_and_secret_are_required' => __( "You must specify both an app ID and app secret to connect to Facebook.", AI1EC_PLUGIN_NAME ),
-			'ajax_url'                       => admin_url( 'admin-ajax.php' ),
+			'ajax_url'                       => $ajax_url,
 			'url_not_valid'                  => __( "The URL you have entered seems to be invalid. Please remember that URLs must start with either 'http://' or 'https://'.", AI1EC_PLUGIN_NAME ),
 			'mail_url_required'              => __( "Both the <em>calendar URL</em> and <em>e-mail address</em> fields are required.", AI1EC_PLUGIN_NAME ),
 			'confirm_reset_theme'            => __( "Are you sure you want to reset your theme options to their default values?", AI1EC_PLUGIN_NAME )

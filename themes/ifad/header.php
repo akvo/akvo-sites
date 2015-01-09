@@ -65,7 +65,64 @@
 	    </div>
 
 	    <div id="iDivSocialNw">
-		<?php dynamic_sidebar( 'header' ); ?>
+            <div id="cnss_widget-2" class="header-box widget_cnss_widget">
+                <h2> </h2>
+                <table class="cnss-social-icon" style="width:216px" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td style="width:36px">
+                                <a target="_blank" title="RSS" href="/feed">
+                                    <img src="/wp-content/uploads/1378222050_1368465136_sm_icons_05.png" border="0" width="32" height="32">
+                                </a>
+                            </td>
+                            <td style="width:36px">
+                                <a target="_blank" title="Youtube" href="http://www.youtube.com/user/RAINfoundation">
+                                    <img src="/wp-content/uploads/1378222061_1368465243_sm_icons_11.png" border="0" width="32" height="32" style="opacity: 1;">
+                                </a>
+                            </td>
+                            <td style="width:36px">
+                                <a target="_blank" title="Twitter" href="https://twitter.com/rainwater4food">
+                                    <img src="/wp-content/uploads/1378222107_1376579549_IFAD-WebSetup_20130502_03.png" border="0" width="32" height="32" style="opacity: 1;">
+                                </a>
+                            </td>
+                            <?php
+                                $languages = icl_get_languages('skip_missing=0&orderby=code');
+                                if(!empty($languages)){
+                                    foreach($languages as $l){
+                                        if($l['language_code']==='en'){
+                                            ?>
+                                            <td style="width:36px">
+                                                <a title="en" href="<?php echo $l['url'];?>">
+                                                    <img src="/wp-content/uploads/1402665631_en.png" border="0" width="32" height="32">
+                                                </a>
+                                            </td>
+                                            <?php
+                                        }elseif($l['language_code']==='fr'){
+                                            ?>
+                                            <td style="width:36px">
+                                                <a title="fr" href="<?php echo $l['url'];?>">
+                                                    <img src="/wp-content/uploads/1402665391_fr.png" border="0" width="32" height="32">
+                                                </a>
+                                            </td>
+                                            <?php
+                                        }elseif($l['language_code']==='es'){
+                                            ?>
+                                            <td style="width:36px">
+                                                <a title="es" href="<?php echo $l['url'];?>">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/images/icon_es.png" border="0" width="32" height="32">
+                                                </a>
+                                            </td>
+                                            <?php
+                                        }
+                                    }
+                                }
+                            ?>
+                            
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 	    </div>
 	    <br clear="all"/>
 

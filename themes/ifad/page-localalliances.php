@@ -44,7 +44,7 @@ $et_ptemplate_blog_perpage = isset( $et_ptemplate_settings['et_ptemplate_blog_pe
                     <?php  //truncate_post(510); //the_excerpt();
   //truncate_post(510);
                     echo get_the_excerpt();
-        				the_excerpt();
+        				//the_excerpt();
                     ?>
                     <div style="clear: both;"></div>
 

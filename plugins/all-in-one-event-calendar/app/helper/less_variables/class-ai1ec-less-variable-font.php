@@ -16,7 +16,6 @@ class Ai1ec_Less_Variable_Font extends Ai1ec_Less_Variable {
 		'Arial Black'         => '"Arial Black", Gadget, sans-serif',
 		'Comic Sans MS'       => '"Comic Sans MS", cursive',
 		'Courier New'         => '"Courier New", monospace',
-		'Font Awesome'        => 'FontAwesome',
 		'Georgia'             => 'Georgia, Georgia, serif',
 		'Helvetica Neue'      => '"Helvetica Neue", Helvetica, Arial, sans-serif',
 		'Impact'              => 'Impact, Charcoal, sans-serif',

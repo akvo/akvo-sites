@@ -47,11 +47,13 @@ $et_ptemplate_blog_perpage = isset($et_ptemplate_settings['et_ptemplate_blog_per
 		<?php 
         
         if(get_previous_posts_link()){
-            echo get_previous_posts_link();
+            $slabel = (get_current_blog_id()==11) ? '&laquo; Vorige Pagina' : '&laquo; Previous Page' ;
+            echo get_previous_posts_link($slabel);
         }
         if(get_next_posts_link()){
-            echo get_next_posts_link();
-        }
+            $slabel = (get_current_blog_id()==11) ? 'Volgende Pagina &raquo;' : 'Next Page &raquo;' ;
+            echo get_next_posts_link($slabel);
+        } 
         
         ?>
         </div>

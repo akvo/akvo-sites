@@ -3,7 +3,7 @@
 Plugin Name: Role Scoper
 Plugin URI: http://agapetry.net/
 Description: CMS-like permissions for reading and editing. Content-specific restrictions and roles supplement/override WordPress roles. User groups optional.
-Version: 1.3.57
+Version: 1.3.61
 Author: Kevin Behrens
 Author URI: http://agapetry.net/
 Min WP Version: 3.0
@@ -11,7 +11,7 @@ License: GPL version 2 - http://www.opensource.org/licenses/gpl-license.php
 */
 
 /*
-Copyright (c) 2008-2012, Kevin Behrens.
+Copyright (c) 2008-2013, Kevin Behrens.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -41,7 +41,7 @@ if ( defined( 'SCOPER_VERSION' ) ) {
 	return;
 }
 
-define ('SCOPER_VERSION', '1.3.57');
+define ('SCOPER_VERSION', '1.3.61');
 define ('SCOPER_DB_VERSION', '1.1.4');
 
 // No filtering on dashboard Ajax or plugin installation/update, but run this check after defining version to prevent nuisance error message from Role Scoping for NGG
@@ -211,7 +211,7 @@ if ( ! $bail ) {
 	
 	//log_mem_usage_rs( 'defaults_rs' );
 	
-	if ( IS_MU_RS )
+	if ( IS_MU_RS && agp_is_plugin_network_active( SCOPER_BASENAME ) )
 		scoper_refresh_options_sitewide();
 	
 	//log_mem_usage_rs( 'refresh_options_sitewide' );
@@ -225,7 +225,7 @@ if ( ! $bail ) {
 	else
 		scoper_get_init_options();
 	
-	if ( IS_MU_RS ) {
+	if ( IS_MU_RS && agp_is_plugin_network_active( SCOPER_BASENAME ) ) {
 		// If groups are sitewide, default groups must also be defined/applied sitewide (and vice versa)
 		global $scoper_sitewide_groups, $scoper_options_sitewide;
 		if ( $scoper_sitewide_groups = scoper_get_site_option( 'mu_sitewide_groups' ) )

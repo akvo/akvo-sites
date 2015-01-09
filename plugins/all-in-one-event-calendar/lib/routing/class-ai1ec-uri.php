@@ -13,9 +13,9 @@ class Ai1ec_Uri
 {
 
 	/**
-	 * @var string Key => value separator
+	 * Set direction separator
 	 */
-	protected $_direction_separator = ':';
+	const DIRECTION_SEPARATOR = '~';
 
 	/**
 	 * @var string Arguments (list) separator
@@ -49,14 +49,14 @@ class Ai1ec_Uri
 		}
 
 		if ( ! empty( $parsed['path'] ) ) {
-			if ( false !== strpos( $parsed['path'], ':' ) ) {
+			if ( false !== strpos( $parsed['path'], self::DIRECTION_SEPARATOR ) ) {
 				$result['_type'] = 'pretty';
 				$elements = explode(
 					$this->_arguments_separator,
 					$parsed['path']
 				);
 				foreach ( $elements as $particle ) {
-					$sep = strpos( $particle, $this->_direction_separator );
+					$sep = strpos( $particle, self::DIRECTION_SEPARATOR );
 					if ( false !== $sep ) {
 						$key = substr( $particle, 0, $sep );
 						$result['ai1ec'][$key] = substr( $particle, $sep + 1 );
@@ -102,7 +102,7 @@ class Ai1ec_Uri
 			foreach ( $parsed['ai1ec'] as $key => $value ) {
 				$uri .= $this->_arguments_separator .
 					$this->_clean_key( $key ) .
-					$this->_direction_separator .
+					self::DIRECTION_SEPARATOR .
 					$this->_safe_uri_value( $value );
 			}
 		} else {
@@ -127,7 +127,7 @@ class Ai1ec_Uri
 			$combined_ai1ec = array();
 			foreach ( $parsed['ai1ec'] as $key => $value ) {
 				$combined_ai1ec[] = $this->_clean_key( $key ) .
-					':' . $this->_safe_uri_value( $value );
+					self::DIRECTION_SEPARATOR . $this->_safe_uri_value( $value );
 			}
 			$combined_ai1ec = implode( '|', $combined_ai1ec );
 			$parsed[$place]['ai1ec'] = $combined_ai1ec;
@@ -175,7 +175,7 @@ class Ai1ec_Uri
 						$value		= array();
 						foreach ( $value_list as $entry ) {
 							list( $sub_key, $sub_value ) = explode(
-								':',
+								self::DIRECTION_SEPARATOR,
 								$entry
 							);
 							$value[$sub_key] = $sub_value;

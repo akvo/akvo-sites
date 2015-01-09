@@ -15,16 +15,6 @@
             <?php endif; ?>
 			
                 <?php 
-                $args['post_type']='project_update';
-                $args['posts_per_page']='2';
-                $query = new WP_Query();
-                $updates = $query->query($args);
-                if ( $updates ) : foreach ($updates AS $post ) : 
-                    get_template_part('includes/entry');
-                endforeach;endif;
-                $latestvideo = AkvoSiteConfig::getLatestVideo('MarsSustainability'); 
-                $video = (object)$latestvideo;
-                //get_template_part('includes/entry');
                 $args['post_type']='post';
                 $args['posts_per_page']='3';
                 $query = new WP_Query();
@@ -40,12 +30,23 @@
                     
                     get_template_part('includes/entry');
                 endforeach;endif;
+                $latestvideo = AkvoSiteConfig::getLatestVideo('MarsSustainability'); 
+                $video = (object)$latestvideo;
+                //get_template_part('includes/entry');
+                
                 if($video){
                     //if video is older than latest three blogposts, finally show latest video
                     $post=$video;
                     get_template_part('includes/entry');
                 }
-                // Restore original Query & Post Data
+                $args['post_type']='project_update';
+                $args['posts_per_page']='2';
+                $query = new WP_Query();
+                $updates = $query->query($args);
+                if ( $updates ) : foreach ($updates AS $post ) : 
+                    get_template_part('includes/entry');
+                endforeach;endif;
+                
 wp_reset_query();
 wp_reset_postdata();
                 

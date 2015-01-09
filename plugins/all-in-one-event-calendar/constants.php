@@ -34,37 +34,37 @@ function ai1ec_initiate_constants() {
 	// = Plugin Version =
 	// ==================
 	if ( ! defined( 'AI1EC_VERSION' ) ) {
-		define( 'AI1EC_VERSION',            '1.9.5-standard' );
+		define( 'AI1EC_VERSION',            '1.10.9-standard' );
 	}
 
 	// ====================
 	// = Database Version =
 	// ====================
 	if ( ! defined( 'AI1EC_DB_VERSION' ) ) {
-		define( 'AI1EC_DB_VERSION',         118 );
+		define( 'AI1EC_DB_VERSION',         122 );
 	}
 
 	// ====================================
 	// = Bundled themes version & edition =
 	// ====================================
 	if ( ! defined( 'AI1EC_THEMES_VERSION' ) ) {
-		define( 'AI1EC_THEMES_VERSION',     '23-standard' );
+		define( 'AI1EC_THEMES_VERSION',     '27-standard' );
 	}
 
 	// ================
 	// = Cron Version =
 	// ================
 	if ( ! defined( 'AI1EC_CRON_VERSION' ) ) {
-		define( 'AI1EC_CRON_VERSION',       106 );
+		define( 'AI1EC_CRON_VERSION',       109 );
 	}
 	if ( ! defined( 'AI1EC_N_CRON_VERSION' ) ) {
-		define( 'AI1EC_N_CRON_VERSION',     104 );
+		define( 'AI1EC_N_CRON_VERSION',     107 );
 	}
 	if ( ! defined( 'AI1EC_N_CRON_FREQ' ) ) {
 		define( 'AI1EC_N_CRON_FREQ',        'daily' );
 	}
 	if ( ! defined( 'AI1EC_U_CRON_VERSION' ) ) {
-		define( 'AI1EC_U_CRON_VERSION',     109 );
+		define( 'AI1EC_U_CRON_VERSION',     112 );
 	}
 	if ( ! defined( 'AI1EC_U_CRON_FREQ' ) ) {
 		define( 'AI1EC_U_CRON_FREQ',        'hourly' );
@@ -471,6 +471,13 @@ function ai1ec_initiate_constants() {
 	// pure event management.
 	if ( ! defined( 'AI1EC_EVENT_PLATFORM' ) ) {
 		define( 'AI1EC_EVENT_PLATFORM',     FALSE );
+	}
+
+	// ===============================
+	// = Time.ly redirection service =
+	// ===============================
+	if ( ! defined( 'AI1EC_REDIRECTION_SERVICE' ) ) {
+		define( 'AI1EC_REDIRECTION_SERVICE', 'http://aggregator.time.ly/ticket_redirect/' );
 	}
 
 	// Enable All-in-One-Event-Calendar to work in debug mode, which means,

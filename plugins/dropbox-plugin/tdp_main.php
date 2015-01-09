@@ -174,8 +174,9 @@ $output="";
 $consumerKey=get_option('tdp_mail');
 $consumerSecret=get_option('tdp_pass');
 $pagename="";
-$pagename="http"; if ($_SERVER["HTTPS"] == "on")$pagename.='s';$pagename.="://";
-$pagename.=$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+
+$pagename=get_bloginfo('siteurl').$_SERVER['REQUEST_URI'];
+//$pagename = get_bloginfo('siteurl');
 if($tdp_sps=strrpos($pagename,"?g="))$pagename=substr($pagename,0,$tdp_sps);
 else if($tdp_sps=strrpos($pagename,"&g="))$pagename=substr($pagename,0,$tdp_sps);
 if(!strpos($pagename,"?"))$tdp_fancysep="?";

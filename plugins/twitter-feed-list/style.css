@@ -1,0 +1,21 @@
+
+#twitter-widget {
+height: auto;
+padding: 20px;
+position:relative;
+}
+#twitter_widget .widget_tag{
+    position:absolute;
+}
+#twitter-widget h2 {
+background: transparent url("twitterbird.png") no-repeat 100% 50%;
+}
+
+.tweet {
+    height:auto;
+padding: 5px 0px;
+border-top: 1px solid #c0c0c0;
+}
+.tweet img{
+margin: 0px 5px 5px 0px;
+}

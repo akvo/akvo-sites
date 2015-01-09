@@ -20,7 +20,7 @@
                         </a>
                     </div>
                     <div id="iDivPoweredByText">
-                        Copyright Connect 4 Change. All rights reserved.
+                         <a href="/licensing-and-copyrights">Copyright</a>. Some rights reserved.
                     </div>
                     
                 </div>

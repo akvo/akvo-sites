@@ -70,7 +70,7 @@ abstract class Ai1ec_Abstract_Query implements arrayaccess
 			$arg_list = explode( '/', $argv );
 			$argv     = array();
 			foreach ( $arg_list as $arg ) {
-				if ( ( $colon = strpos( $arg, ':' ) ) > 0 ) {
+				if ( ( $colon = strpos( $arg, Ai1ec_Uri::DIRECTION_SEPARATOR ) ) > 0 ) {
 					$argv[substr( $arg, 0, $colon )] = substr( $arg, $colon + 1 );
 				}
 			}

@@ -1,0 +1,64 @@
+<?php
+
+$sWrapperId = '';
+$sTemporaryWrapperId = $this->element->getParameter('wrapper_id');
+
+if (is_null($sTemporaryWrapperId)) {
+	$sFormId = $this->element->getAttrib('id');
+	if ($sFormId != '') {
+		$sWrapperId = 'iDivWrapperFor' . $sFormId;
+	}
+} else {
+	$sWrapperId = $sTemporaryWrapperId;
+}
+
+$sWrapperAttributes = '';
+$sWrapperAttributes .= ' id="' . $sWrapperId . '"';
+$sWrapperAttributes .= ' class="cDivZendFormWrapper"';
+
+?>
+<div<?php echo $sWrapperAttributes; ?>>
+	<div id="iDivFormResponseContainer"></div>
+
+	<form class=""<?php include 'partials/form_attributes.phtml'; ?>>
+
+		<div class="row-fluid">
+
+			<div class="span12">
+
+				<fieldset>
+					<legend>School</legend>
+
+<?php
+$sErrorClass = '';
+$sErrorPopup = '';
+$aNameErrors = $this->element->textName->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textName->getMessages();
+	$sErrorClass = 'error cFormErrorPopover';
+	$sErrors = include 'partials/form_element_error_list.phtml';
+	$sErrorPopup = ' data-content="' . $sErrors . '"';
+}
+?>
+					<div class="control-group <?php echo $sErrorClass; ?>"<?php echo $sErrorPopup; ?>>
+						<label class="control-label" for="textName"><?php echo $this->element->textName->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $this->element->textName; ?>
+						</div>
+					</div>
+
+
+				</fieldset>
+
+			</div>
+
+		</div>
+
+		<div class="row-fluid">
+			<div class="form-actions">
+				<?php echo $this->element->submitSubmit; ?>
+			</div>
+		</div>
+
+	</form>
+</div>

@@ -15,10 +15,7 @@ class PluginFrameworkPreload {
         add_action( 'wp_print_scripts',     array( $this, 'setVariable' ) );
         
         //enque conditional script/style for shortcode
-        add_filter( 'the_posts', array( $this, 'enqueShortcodeScripts' ));
-        
-        //$pluginFramework->addScript( 'plugin-framework.js' );
-        //$pluginFramework->addScript( 'plugin-framework.css' );                                                           
+        //add_filter( 'the_posts', array( $this, 'enqueShortcodeScripts' ));                                                                 
     }                    
     
        
@@ -45,7 +42,7 @@ class PluginFrameworkPreload {
                     
         foreach( $userMeta->scripts['common'] as $data ){
             if( $data['type'] == 'js' )
-                wp_enqueue_script( $data['handle'], $data['url'], array('jquery'),'',true );
+                wp_enqueue_script( $data['handle'], $data['url'], array('jquery') );
             elseif( $data['type'] == 'css' )
                 wp_enqueue_style( $data['handle'], $data['url'] );
         }                
@@ -72,7 +69,7 @@ class PluginFrameworkPreload {
             
             if($loadScript ){
                 if( $data['type'] == 'js' )
-                    wp_enqueue_script( $data['handle'], $data['url'], array('jquery'),'',true );
+                    wp_enqueue_script( $data['handle'], $data['url'], array('jquery') );
                 elseif( $data['type'] == 'css' )
                     wp_enqueue_style( $data['handle'], $data['url'] );                    
             }
@@ -99,7 +96,7 @@ class PluginFrameworkPreload {
             
             if($loadScript ){
                 if( $data['type'] == 'js' )
-                    wp_enqueue_script( $data['handle'], $data['url'], array('jquery'),'',true );
+                    wp_enqueue_script( $data['handle'], $data['url'], array('jquery') );
                 elseif( $data['type'] == 'css' )
                     wp_enqueue_style( $data['handle'], $data['url'] );                    
             }

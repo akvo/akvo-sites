@@ -1,0 +1,545 @@
+<?php
+$sWrapperId = '';
+$sTemporaryWrapperId = $this->element->getParameter('wrapper_id');
+
+if (is_null($sTemporaryWrapperId)) {
+	$sFormId = $this->element->getAttrib('id');
+	if ($sFormId != '') {
+		$sWrapperId = 'iDivWrapperFor' . $sFormId;
+	}
+} else {
+	$sWrapperId = $sTemporaryWrapperId;
+}
+
+$sWrapperAttributes = '';
+$sWrapperAttributes .= ' id="' . $sWrapperId . '"';
+$sWrapperAttributes .= ' class="cDivZendFormWrapper"';
+
+$sRequiredHtml = '<span class="cSpanFormElementRequired">*</span>';
+$sErrorClass = ' cError';
+?>
+
+<div<?php echo $sWrapperAttributes; ?>>
+	<div id="iDivFormResponseContainer"></div>
+	<form class="cFormParticipantRegistryRegistration"<?php include 'partials/form_attributes.phtml'; ?>>
+
+		<fieldset>
+
+			<div class="cDivFormHeading">
+				Gegevens van de school en contactpersoon
+			</div>
+
+		<div class="cDivFormSection cDivFormSectionLeft">
+
+<?php
+$sNameErrorClass = '';
+$sNameErrorHtml = '';
+$aNameErrors = $this->element->textName->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textName->getMessages();
+	$sNameErrorClass = $sErrorClass;
+	$sNameErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sNameErrorClass; ?>">
+				<label class="cLabelFormElement" for="textName">
+					<?php echo $this->element->textName->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textName; ?>
+				<?php echo $sNameErrorHtml; ?>
+			</div>
+
+<?php
+$sAddressErrorClass = '';
+$sAddressErrorHtml = '';
+$aAddressErrors = $this->element->textAddress->getErrors();
+if (!empty($aAddressErrors)) {
+	$aErrorMessages = $this->element->textAddress->getMessages();
+	$sAddressErrorClass = $sErrorClass;
+	$sAddressErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sAddressErrorClass; ?>">
+				<label class="cLabelFormElement" for="textAddress">
+					<?php echo $this->element->textAddress->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textAddress; ?>
+				<?php echo $sAddressErrorHtml; ?>
+			</div>
+<?php
+$sPostalCodeErrorClass = '';
+$sPostalCodeErrorHtml = '';
+$aPostalCodeErrors = $this->element->textPostalCode->getErrors();
+if (!empty($aPostalCodeErrors)) {
+	$aErrorMessages = $this->element->textPostalCode->getMessages();
+	$sPostalCodeErrorClass = $sErrorClass;
+	$sPostalCodeErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sPostalCodeErrorClass; ?>">
+				<label class="cLabelFormElement" for="textPostalCode">
+					<?php echo $this->element->textPostalCode->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textPostalCode; ?>
+				<?php echo $sPostalCodeErrorHtml; ?>
+			</div>
+<?php
+$sCityErrorClass = '';
+$sCityErrorHtml = '';
+$aCityErrors = $this->element->textCity->getErrors();
+if (!empty($aCityErrors)) {
+	$aErrorMessages = $this->element->textCity->getMessages();
+	$sCityErrorClass = $sErrorClass;
+	$sCityErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sCityErrorClass; ?>">
+				<label class="cLabelFormElement" for="textCity">
+					<?php echo $this->element->textCity->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textCity; ?>
+				<?php echo $sCityErrorHtml; ?>
+			</div>
+
+
+
+		</div>
+
+		<div class="cDivFormSection cDivFormSectionRight">
+
+<?php
+$sContactNameErrorClass = '';
+$sContactNameErrorHtml = '';
+$aContactNameErrors = $this->element->textContactName->getErrors();
+if (!empty($aContactNameErrors)) {
+	$aErrorMessages = $this->element->textContactName->getMessages();
+	$sContactNameErrorClass = $sErrorClass;
+	$sContactNameErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sContactNameErrorClass; ?>">
+				<label class="cLabelFormElement" for="textContactName">
+					<?php echo $this->element->textContactName->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textContactName; ?>
+				<?php echo $sContactNameErrorHtml; ?>
+			</div>
+
+<?php
+$sEmailErrorClass = '';
+$sEmailErrorHtml = '';
+$aEmailErrors = $this->element->textEmail->getErrors();
+if (!empty($aEmailErrors)) {
+	$aErrorMessages = $this->element->textEmail->getMessages();
+	$sEmailErrorClass = $sErrorClass;
+	$sEmailErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sEmailErrorClass; ?>">
+				<label class="cLabelFormElement" for="textEmail">
+					<?php echo $this->element->textEmail->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textEmail; ?>
+				<?php echo $sEmailErrorHtml; ?>
+			</div>
+
+<?php
+$sPhoneErrorClass = '';
+$sPhoneErrorHtml = '';
+$aPhoneErrors = $this->element->textPhone->getErrors();
+if (!empty($aPhoneErrors)) {
+	$aErrorMessages = $this->element->textPhone->getMessages();
+	$sPhoneErrorClass = $sErrorClass;
+	$sPhoneErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sPhoneErrorClass; ?>">
+				<label class="cLabelFormElement" for="textPhone">
+					<?php echo $this->element->textPhone->getLabel(); ?>
+				</label>
+				<?php echo $this->element->textPhone; ?>
+				<?php echo $sPhoneErrorHtml; ?>
+			</div>
+
+		</div>
+
+		</fieldset>
+
+
+		<fieldset>
+
+			<div class="cDivFormHeading">
+				Heeft de school in de afgelopen jaren eerder meegedaan met Wandelen voor Water? U kunt meerdere opties aanklikken.
+			</div>
+
+			<div class="cDivFormSection cDivFormSectionLeft">
+
+<?php
+$sParticipatedBeforeErrorClass = '';
+$sParticipatedBeforeErrorHtml = '';
+$aParticipatedBeforeErrors = $this->element->radioParticipatedBefore->getErrors();
+if (!empty($aParticipatedBeforeErrors)) {
+	$aErrorMessages = $this->element->radioParticipatedBefore->getMessages();
+	$sParticipatedBeforeErrorClass = $sErrorClass;
+	$sParticipatedBeforeErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sParticipatedBeforeErrorClass; ?>">
+					<label class="cLabelFormElement" for="radioParticipatedBefore">
+						<?php //echo $this->element->radioParticipatedBefore->getLabel(); ?>
+					</label>
+					<?php echo $this->element->radioParticipatedBefore; ?>
+					<?php echo $sParticipatedBeforeErrorHtml; ?>
+				</div>
+
+			</div>
+
+			<div class="cDivFormSection cDivFormSectionRight">
+
+<?php
+$sParticipatedLastYearErrorClass = '';
+$sParticipatedLastYearErrorHtml = '';
+$aParticipatedLastYearErrors = $this->element->checkboxParticipatedLastYear->getErrors();
+if (!empty($aParticipatedLastYearErrors)) {
+	$aErrorMessages = $this->element->checkboxParticipatedLastYear->getMessages();
+	$sParticipatedLastYearErrorClass = $sErrorClass;
+	$sParticipatedLastYearErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock cDivFormSectionElementBlockCheckbox<?php echo $sParticipatedLastYearErrorClass; ?>">
+					<?php echo $this->element->checkboxParticipatedLastYear; ?>
+					<label class="cLabelFormElement" for="checkboxParticipatedLastYear">
+						<?php echo $this->element->checkboxParticipatedLastYear->getLabel(); ?>
+					</label>
+					<?php echo $sParticipatedLastYearErrorHtml; ?>
+				</div>
+
+<?php
+$sParticipatedYearBeforeLastErrorClass = '';
+$sParticipatedYearBeforeLastErrorHtml = '';
+$aParticipatedYearBeforeLastErrors = $this->element->checkboxParticipatedYearBeforeLast->getErrors();
+if (!empty($aParticipatedYearBeforeLastErrors)) {
+	$aErrorMessages = $this->element->checkboxParticipatedYearBeforeLast->getMessages();
+	$sParticipatedYearBeforeLastErrorClass = $sErrorClass;
+	$sParticipatedYearBeforeLastErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock cDivFormSectionElementBlockCheckbox<?php echo $sParticipatedYearBeforeLastErrorClass; ?>">
+					<?php echo $this->element->checkboxParticipatedYearBeforeLast; ?>
+					<label class="cLabelFormElement" for="checkboxParticipatedYearBeforeLast">
+						<?php echo $this->element->checkboxParticipatedYearBeforeLast->getLabel(); ?>
+					</label>
+					<?php echo $sParticipatedYearBeforeLastErrorHtml; ?>
+				</div>
+
+<?php
+$sParticipatedBeforeTheLastTwoYearsErrorClass = '';
+$sParticipatedBeforeTheLastTwoYearsErrorHtml = '';
+$aParticipatedBeforeTheLastTwoYearsErrors = $this->element->checkboxParticipatedBeforeTheLastTwoYears->getErrors();
+if (!empty($aParticipatedBeforeTheLastTwoYearsErrors)) {
+	$aErrorMessages = $this->element->checkboxParticipatedBeforeTheLastTwoYears->getMessages();
+	$sParticipatedBeforeTheLastTwoYearsErrorClass = $sErrorClass;
+	$sParticipatedBeforeTheLastTwoYearsErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock cDivFormSectionElementBlockCheckbox<?php echo $sParticipatedBeforeTheLastTwoYearsErrorClass; ?>">
+					<?php echo $this->element->checkboxParticipatedBeforeTheLastTwoYears; ?>
+					<label class="cLabelFormElement" for="checkboxParticipatedBeforeTheLastTwoYears">
+						<?php echo $this->element->checkboxParticipatedBeforeTheLastTwoYears->getLabel(); ?>
+					</label>
+					<?php echo $sParticipatedBeforeTheLastTwoYearsErrorHtml; ?>
+				</div>
+
+			</div>
+
+		</fieldset>
+
+		<fieldset>
+
+			<div class="cDivFormHeading">
+				Deelnemende groepen en aantal leerlingen
+			</div>
+
+			<div class="cDivFormHeading">
+				In de velden voor de groepen het aantal groepen invullen, dus niet het aantal leerlingen per groep.
+			</div>
+
+			<div class="cDivFormSection cDivFormSectionLeft">
+
+<?php
+$sTotalStudentsErrorClass = '';
+$sTotalStudentsErrorHtml = '';
+$aTotalStudentsErrors = $this->element->textTotalStudents->getErrors();
+if (!empty($aTotalStudentsErrors)) {
+	$aErrorMessages = $this->element->textTotalStudents->getMessages();
+	$sTotalStudentsErrorClass = $sErrorClass;
+	$sTotalStudentsErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sTotalStudentsErrorClass; ?>">
+					<label class="cLabelFormElement" for="textTotalStudents">
+						<?php echo $this->element->textTotalStudents->getLabel(); ?><?php echo $sRequiredHtml; ?>
+					</label>
+					<?php echo $this->element->textTotalStudents; ?>
+					<?php echo $sTotalStudentsErrorHtml; ?>
+				</div>
+
+			</div>
+
+
+			<div class="cDivFormSection cDivFormSectionRight">
+
+<?php
+$sGrade7GroupsErrorClass = '';
+$sGrade7GroupsErrorHtml = '';
+$aGrade7GroupsErrors = $this->element->textGrade7Groups->getErrors();
+if (!empty($aGrade7GroupsErrors)) {
+	$aErrorMessages = $this->element->textGrade7Groups->getMessages();
+	$sGrade7GroupsErrorClass = $sErrorClass;
+	$sGrade7GroupsErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sGrade7GroupsErrorClass; ?>">
+					<label class="cLabelFormElement" for="textGrade7Groups">
+						<?php echo $this->element->textGrade7Groups->getLabel(); ?>
+					</label>
+					<?php echo $this->element->textGrade7Groups; ?>
+					<?php echo $sGrade7GroupsErrorHtml; ?>
+				</div>
+
+<?php
+$sGrade8GroupsErrorClass = '';
+$sGrade8GroupsErrorHtml = '';
+$aGrade8GroupsErrors = $this->element->textGrade8Groups->getErrors();
+if (!empty($aGrade8GroupsErrors)) {
+	$aErrorMessages = $this->element->textGrade8Groups->getMessages();
+	$sGrade8GroupsErrorClass = $sErrorClass;
+	$sGrade8GroupsErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sGrade8GroupsErrorClass; ?>">
+					<label class="cLabelFormElement" for="textGrade8Groups">
+						<?php echo $this->element->textGrade8Groups->getLabel(); ?>
+					</label>
+					<?php echo $this->element->textGrade8Groups; ?>
+					<?php echo $sGrade8GroupsErrorHtml; ?>
+				</div>
+
+<?php
+$sGrade67GroupsErrorClass = '';
+$sGrade67GroupsErrorHtml = '';
+$aGrade67GroupsErrors = $this->element->textGrade67Groups->getErrors();
+if (!empty($aGrade67GroupsErrors)) {
+	$aErrorMessages = $this->element->textGrade67Groups->getMessages();
+	$sGrade67GroupsErrorClass = $sErrorClass;
+	$sGrade67GroupsErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sGrade67GroupsErrorClass; ?>">
+					<label class="cLabelFormElement" for="textGrade67Groups">
+						<?php echo $this->element->textGrade67Groups->getLabel(); ?>
+					</label>
+					<?php echo $this->element->textGrade67Groups; ?>
+					<?php echo $sGrade67GroupsErrorHtml; ?>
+				</div>
+
+<?php
+$sGrade678GroupsErrorClass = '';
+$sGrade678GroupsErrorHtml = '';
+$aGrade678GroupsErrors = $this->element->textGrade678Groups->getErrors();
+if (!empty($aGrade678GroupsErrors)) {
+	$aErrorMessages = $this->element->textGrade678Groups->getMessages();
+	$sGrade678GroupsErrorClass = $sErrorClass;
+	$sGrade678GroupsErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sGrade678GroupsErrorClass; ?>">
+					<label class="cLabelFormElement" for="textGrade678Groups">
+						<?php echo $this->element->textGrade678Groups->getLabel(); ?>
+					</label>
+					<?php echo $this->element->textGrade678Groups; ?>
+					<?php echo $sGrade678GroupsErrorHtml; ?>
+				</div>
+
+<?php
+$sGrade78GroupsErrorClass = '';
+$sGrade78GroupsErrorHtml = '';
+$aGrade78GroupsErrors = $this->element->textGrade78Groups->getErrors();
+if (!empty($aGrade78GroupsErrors)) {
+	$aErrorMessages = $this->element->textGrade78Groups->getMessages();
+	$sGrade78GroupsErrorClass = $sErrorClass;
+	$sGrade78GroupsErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sGrade78GroupsErrorClass; ?>">
+					<label class="cLabelFormElement" for="textGrade78Groups">
+						<?php echo $this->element->textGrade78Groups->getLabel(); ?>
+					</label>
+					<?php echo $this->element->textGrade78Groups; ?>
+					<?php echo $sGrade78GroupsErrorHtml; ?>
+				</div>
+
+			</div>
+
+		</fieldset>
+
+		<fieldset>
+
+			<div class="cDivFormHeading">
+				Gegevens wandeling
+			</div>
+
+			<div class="cDivFormSection cDivFormSectionLeft">
+
+<?php
+$sSupportPointErrorClass = '';
+$sSupportPointErrorHtml = '';
+$aSupportPointErrors = $this->element->selectSupportPoint->getErrors();
+if (!empty($aSupportPointErrors)) {
+	$aErrorMessages = $this->element->selectSupportPoint->getMessages();
+	$sSupportPointErrorClass = $sErrorClass;
+	$sSupportPointErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sSupportPointErrorClass; ?>">
+					<label class="cLabelFormElement" for="selectSupportPoint">
+						<?php echo $this->element->selectSupportPoint->getLabel(); ?><?php echo $sRequiredHtml; ?>
+					</label>
+					<?php echo $this->element->selectSupportPoint; ?>
+					<?php echo $sSupportPointErrorHtml; ?>
+				</div>
+
+			</div>
+
+			<div class="cDivFormSection cDivFormSectionRight">
+
+<?php
+$sWalkDateErrorClass = '';
+$sWalkDateErrorHtml = '';
+$aWalkDateErrors = $this->element->textWalkDate->getErrors();
+if (!empty($aWalkDateErrors)) {
+	$aErrorMessages = $this->element->textWalkDate->getMessages();
+	$sWalkDateErrorClass = $sErrorClass;
+	$sWalkDateErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sWalkDateErrorClass; ?>">
+					<label class="cLabelFormElement" for="textWalkDate">
+						<?php echo $this->element->textWalkDate->getLabel(); ?>
+					</label>
+					<?php echo $this->element->textWalkDate; ?>
+					<?php echo $sWalkDateErrorHtml; ?>
+				</div>
+
+<?php
+$sWalkCityErrorClass = '';
+$sWalkCityErrorHtml = '';
+$aWalkCityErrors = $this->element->textWalkCity->getErrors();
+if (!empty($aWalkCityErrors)) {
+	$aErrorMessages = $this->element->textWalkCity->getMessages();
+	$sWalkCityErrorClass = $sErrorClass;
+	$sWalkCityErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sWalkCityErrorClass; ?>">
+					<label class="cLabelFormElement" for="textWalkCity">
+						<?php echo $this->element->textWalkCity->getLabel(); ?>
+					</label>
+					<?php echo $this->element->textWalkCity; ?>
+					<?php echo $sWalkCityErrorHtml; ?>
+				</div>
+
+			</div>
+
+		</fieldset>
+
+		<fieldset>
+
+			<div class="cDivFormHeading">
+				Akkoord voorwaarden en opmerkingen
+			</div>
+
+			<div class="cDivFormSection cDivFormSectionLeft">
+
+<?php
+$sCommentsErrorClass = '';
+$sCommentsErrorHtml = '';
+$aCommentsErrors = $this->element->textComments->getErrors();
+if (!empty($aCommentsErrors)) {
+	$aErrorMessages = $this->element->textComments->getMessages();
+	$sCommentsErrorClass = $sErrorClass;
+	$sCommentsErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sCommentsErrorClass; ?>">
+					<label class="cLabelFormElement" for="textComments">
+						<?php echo $this->element->textComments->getLabel(); ?>
+					</label>
+					<?php echo $this->element->textComments; ?>
+					<?php echo $sCommentsErrorHtml; ?>
+				</div>
+
+			</div>
+
+			<div class="cDivFormSection cDivFormSectionLeft">
+
+<?php
+$sAgreeErrorClass = '';
+$sAgreeErrorHtml = '';
+$aAgreeErrors = $this->element->checkboxAgree->getErrors();
+if (!empty($aAgreeErrors)) {
+	$aErrorMessages = $this->element->checkboxAgree->getMessages();
+	$sAgreeErrorClass = $sErrorClass;
+	$sAgreeErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock cDivFormSectionElementBlockCheckbox<?php echo $sAgreeErrorClass; ?>">
+					<?php echo $this->element->checkboxAgree; ?>
+					<label class="cLabelFormElement" for="checkboxAgree">
+						<?php echo $this->element->checkboxAgree->getLabel(); ?><?php echo $sRequiredHtml; ?>
+					</label>
+					<?php echo $sAgreeErrorHtml; ?>
+				</div>
+
+
+			</div>
+
+
+		</fieldset>
+
+
+		<fieldset>
+
+			<div class="cDivFormHeading">
+				Anti-spam test. Typ de twee woorden in, en klik pas daarna op 'submit'.<?php echo $sRequiredHtml; ?>
+			</div>
+<?php
+
+
+$bShowRecaptcha = $this->element->getParameter('show_recaptcha');
+if (isset($bShowRecaptcha) && $bShowRecaptcha) {
+
+	$oRecaptcha = \KwgPress\Recaptcha::getInstance();
+	$sRecaptchaError = $oRecaptcha->error();
+	switch ($sRecaptchaError) {
+		case \KwgPress\Recaptcha::ERROR_INCORRECT_CAPTCHA:
+			$sRecaptchaError = 'Uw CAPTCHA invoer was onjuist. Probeer het nog eens.';
+			break;
+	}
+	if (isset($sRecaptchaError) && !is_null($sRecaptchaError)) {
+?>
+			<div class="cDivReCaptchaError">
+				<?php echo $sRecaptchaError; ?>
+			</div>
+<?php
+	}
+	$oRecaptcha->render();
+}
+?>
+
+		</fieldset>
+
+		<?php echo $this->element->submitSubmit; ?>
+
+	</form>
+</div>

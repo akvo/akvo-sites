@@ -1,86 +1,86 @@
-<h2 class="ai1ec-calendar-title"><?php echo esc_html( $title ); ?></h2>
-<div class="ai1ec-title-buttons btn-toolbar">
-	<div class="btn-group">
-		<a id="ai1ec-today" class="ai1ec-load-view btn btn-mini"
-			href="#action=ai1ec_posterboard&amp;ai1ec_post_ids=<?php echo $post_ids; ?>">
-			<?php _e( 'Today', AI1EC_PLUGIN_NAME ); ?>
-		</a>
-	</div>
-	<div class="ai1ec-pagination btn-group pull-right">
-		<?php foreach( $pagination_links as $link ): ?>
-			<a id="<?php echo $link['id']; ?>"
-				class="ai1ec-load-view btn"
-				href="<?php echo esc_attr( $link['href'] ); ?>&amp;ai1ec_post_ids=<?php echo $post_ids; ?>">
-				<?php echo esc_html( $link['text'] ); ?>
-			</a>
-		<?php endforeach; ?>
-	</div>
-</div>
-<ol class="ai1ec-posterboard-view">
+<?php echo $navigation; ?>
+<div class="ai1ec-posterboard-view"
+	data-ai1ec-tile-min-width="<?php echo $tile_min_width; ?>">
 	<?php if( ! $dates ): ?>
 		<p class="ai1ec-no-results">
 			<?php _e( 'There are no upcoming events to display at this time.', AI1EC_PLUGIN_NAME ) ?>
 		</p>
 	<?php else: ?>
-		<?php foreach( $dates as $timestamp => $date_info ): ?>
-			<?php foreach( $date_info['events'] as $category ): ?>
-				<?php foreach( $category as $event ): ?>
-					<li class="ai1ec-event
-						ai1ec-event-id-<?php echo $event->post_id ?>
-						ai1ec-event-instance-id-<?php echo $event->instance_id ?>
-						<?php if( $event->allday ) echo 'ai1ec-allday' ?>
-						<?php if( $event->post_id == $active_event ) echo 'ai1ec-active-event' ?>">
-						<div class="ai1ec-event-wrap">
-							<?php // Insert post ID for use by JavaScript filtering later ?>
-							<input type="hidden" class="ai1ec-post-id" value="<?php echo $event->post_id ?>" />
-
-							<?php // Event summary ?>
-							<div class="ai1ec-event-summary">
-								<div class="ai1ec-date-block-wrap" <?php echo $event->category_bg_color ?>>
-									<div class="ai1ec-month"><?php echo date_i18n( 'M', $timestamp, true ) ?></div>
-									<div class="ai1ec-day"><?php echo date_i18n( 'j', $timestamp, true ) ?></div>
-								</div>
-								<div class="ai1ec-event-title">
-									<a href="<?php echo esc_attr( get_permalink( $event->post_id ) . $event->instance_id ) ?>" <?php echo $event->category_text_color ?>>
-										<?php echo esc_html( apply_filters( 'the_title', $event->post->post_title ) ) ?>
-
+		<?php foreach ( $dates as $timestamp => $date_info ) : ?>
+			<?php foreach ( $date_info['events'] as $category ) : ?>
+				<?php foreach ( $category as $event ) : ?>
+					<div class="ai1ec-event
+						ai1ec-event-id-<?php echo $event->post_id; ?>
+						ai1ec-event-instance-id-<?php echo $event->instance_id; ?>
+						<?php if( $event->allday ) echo 'ai1ec-allday'; ?>">
+						<div class="ai1ec-event-wrap clearfix">
+							<div class="ai1ec-date-block-wrap" <?php echo $event->get_category_bg_color(); ?>>
+								<a class="ai1ec-load-view" href="<?php echo $date_info['href']; ?>" <?php echo $data_type; ?> >
+									<div class="ai1ec-month"><?php echo Ai1ec_Time_Utility::date_i18n( 'M', $timestamp, true ); ?></div>
+                  <div class="ai1ec-day"><?php echo Ai1ec_Time_Utility::date_i18n( 'j', $timestamp, true ); ?></div>
+									<div class="ai1ec-weekday"><?php echo Ai1ec_Time_Utility::date_i18n( 'D', $timestamp, true ); ?></div>
+                  <?php if ( $show_year_in_agenda_dates ) : ?>
+                    <div class="ai1ec-year"><?php echo Ai1ec_Time_Utility::date_i18n( 'Y', $timestamp, true ) ?></div>
+                  <?php endif; ?>
+								</a><!--/.ai1ec-load-view-->
+							</div><!--/.ai1ec-date-block-wrap-->
+							<?php edit_post_link(
+								'<i class="icon-pencil"></i> ' . __( 'Edit', AI1EC_PLUGIN_NAME ),
+								'', '', $event->post_id
+							); ?>
+							<div class="ai1ec-event-title-wrap">
+								<span class="ai1ec-event-title">
+									<a class="ai1ec-load-event"
+									    href="<?php echo esc_attr( get_permalink( $event->post_id ) . $event->instance_id ) ?>"
+									   <?php echo $event->get_category_text_color(); ?>
+									   <?php echo $data_type_events ?>
+									   title="<?php echo esc_attr( apply_filters( 'the_title', $event->post->post_title, $event->post_id ) ) ?>" >
+										<?php echo esc_html( apply_filters( 'the_title', $event->post->post_title, $event->post_id ) ) ?>
 									</a>
 									<?php if ( $show_location_in_title && isset( $event->venue ) && $event->venue != '' ): ?>
-										<span class="ai1ec-event-location"><?php echo sprintf( __( '@ %s', AI1EC_PLUGIN_NAME ), $event->venue ); ?></span>
+										<span class="ai1ec-event-location"><?php echo sprintf( __( '@ %s', AI1EC_PLUGIN_NAME ), esc_html( $event->venue ) ); ?></span>
 									<?php endif; ?>
-								</div>
+								</span><!--/.ai1ec-event-title-->
 								<div class="ai1ec-event-time">
-									<span class="ai1ec-weekday"><?php echo date_i18n( 'l', $timestamp, true ) ?>:</span>
-									<?php if( $event->allday ): ?>
-										<?php echo esc_html( $event->short_start_date ) ?>
-										<?php if( $event->short_end_date != $event->short_start_date ): ?>
-											– <?php echo esc_html( $event->short_end_date ) ?>
-										<?php endif ?>
-										<?php echo ' (all day)' ?>
-									<?php else: ?>
-										<?php echo esc_html( $event->start_time . ' – ' . $event->end_time ) ?></span>
-									<?php endif ?>
+									<?php echo $event->get_timespan_html(); ?>
 								</div>
-								<div class="ai1ec-event-description">
-									<?php echo apply_filters( 'the_content', $event->post->post_content ) ?>
-								</div>
-								<?php if( $event->categories_html ): ?>
-									<div class="ai1ec-categories">
-										<span class="ai1ec-label"><?php _e( 'Categories:', AI1EC_PLUGIN_NAME ) ?></span>
-										<?php echo $event->categories_html ?>
-									</div>
-								<?php endif ?>
-								<?php if( $event->tags_html ): ?>
-									<div class="ai1ec-tags">
-										<span class="ai1ec-label"><?php _e( 'Tags:', AI1EC_PLUGIN_NAME ) ?></span>
-										<?php echo $event->tags_html ?>
-									</div>
-								<?php endif ?>
 							</div>
-						</div>
-					</li>
+							<div class="clearfix">
+								<?php
+									echo $event->get_event_avatar( array(
+										'post_thumbnail',
+										'content_img',
+										'location_avatar',
+										'category_avatar',
+									) );
+								?>
+								<?php if ( $event->get_post_excerpt() ) : ?>
+									<div class="ai1ec-event-description">
+										<?php echo esc_html( $event->get_post_excerpt() ); ?>
+									</div>
+								<?php endif; ?>
+							</div>
+							<?php if ( $event->get_categories_html() || $event->get_tags_html() ) : ?>
+								<footer>
+									<div>
+										<?php if ( $event->get_categories_html() ) : ?>
+											<span class="ai1ec-categories">
+												<?php echo $event->get_categories_html(); ?>
+											</span>
+										<?php endif; ?>
+										<?php if ( $event->get_tags_html() ) : ?>
+											<span class="ai1ec-tags">
+												<?php echo $event->get_tags_html(); ?>
+											</span>
+										<?php endif; ?>
+									</div>
+								</footer>
+							<?php endif; ?>
+						</div><!--/.ai1ec-event-wrap-->
+					</div><!--/.ai1ec-event-->
 				<?php endforeach ?>
 			<?php endforeach ?>
 		<?php endforeach ?>
 	<?php endif ?>
-</ol>
+</div><!--/.ai1ec-posterboard-view-->
+<div class="pull-right"><?php echo $pagination_links; ?></div>

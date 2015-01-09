@@ -1,6 +1,1 @@
-require( 
-		[ "scripts/calendar" ], 
-		function( page ) {
-			page.start();
-		}
-);
+timely.require(["scripts/calendar"],function(e){e.start()});

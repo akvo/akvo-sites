@@ -1,0 +1,73 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 31, 2014, 11:25:14 AM
+    Author     : eveline
+*/
+
+@media (max-width: 767px) {
+    .widget_akvoblocks_featured_widget .cDivWrapper .cDivContent,
+    .widget_akvoblocks_featured_widget .cDivWrapper .cDivDownloadBtn{
+        position:relative;
+        right:0px;
+        padding-top:15px;
+    }
+    .widget_akvoblocks_featured_widget .cDivWrapper .cDivContent{
+        margin:15px 0px;
+        padding:0px;
+    }
+    .cDivHomeArea2 .widget_dgroups_api_widget{
+        float:none;
+        width:100%;
+    }
+    .cDivHomeArea2 .widget_dgroups_api_widget .cDivDataArea.members,
+    .cDivHomeArea2 .widget_dgroups_api_widget .cDivDataArea.countries,
+    .cDivHomeArea2 .widget_dgroups_login_widget,
+    .cDivAmbassadorArea3 .widget_dgroups_login_widget,
+    .otw-sidebar-2 .widget_dgroups_login_widget,
+    .otw-sidebar-2 .widget_r4f_bap_widget,
+    .otw-sidebar-1 .widget,
+    .cDivAmbassadorArea3 .widget_r4f_featured_video_widget,
+    .widget_akvoblocks_testimonials_widget .cDivSlideImage,
+    .widget_akvoblocks_testimonials_widget .cDivSlideContent,
+    .cDivHomeArea3 .widget_akvoblocks_projectsmap_widget,
+    .cDivHomeArea3 .twitter,
+    .cDivHomeArea4,
+    .cDivEntry
+    {
+        float:none;
+        width:100%;
+        padding:15px 0px;
+    }
+    
+    .dynamicSideBarTop.otw-sidebar-1{
+        height:auto;
+        
+    }
+    .cDivHomeArea3 .twitter,
+    .otw-sidebar-1 .widget_r4f_bap_widget,
+    .cDivHomeArea4{
+        padding:20px 15px 15px;
+    }
+    .cDivHomeArea3,
+    .cDivEntry
+    {
+        padding-top:0px;
+    }
+    .cDivEntry .cDivBlogPostTitle,
+    .cDivEntry .cDivBlogPostTextContent
+    {
+        height:auto;
+    }
+    .cDivEntry .cDivEntryImage a img
+    {
+        margin:0 auto;
+    }
+    #shared_docs_container .filter > *{
+        width:100%;
+
+    }
+}

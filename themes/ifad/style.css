@@ -193,13 +193,21 @@ margin: 5px;
     border: 0px !important;
 }
 #sidebar > div{
-    padding:10px !important;
-    padding-top:14px !important;
+    padding:10px;
+    padding-top:14px;
     margin-bottom:20px !important;
     background-color:#FFF;
 }
 #sidebar > div p {
 margin: 10px !important; 
+}
+#sidebar > div.widget_sp_image{
+    background: none;
+    padding:0px;
+    width:100%;
+}
+#sidebar > div.widget_sp_image h2{
+    display:none;
 }
 .readmore,.cDivReadmore {
 background-image: url(images/more.gif) !important;
@@ -255,15 +263,24 @@ width: 920px !important;
     line-height:21px;
 }
 #pages li.menu-item-106{
-    padding:0px 42px !important;
+    padding:0px 41px !important;
 }
 #pages li:first-child{
     padding: 0px 51px !important;
 }
-#pages li:last-child{
+
+#pages #menu-main-menu-spanish-1 > li ,
+#pages #menu-main-menu-french-1 > li {
+
+padding: 0px 26px !important;
+
+
+}
+#pages #menu-main-menu-spanish-1 > li:last-child,
+#pages #menu-main-menu-french-1 > li:last-child{
  border:0px solid #fff;   
 }
-#pages li.current_page_item a,#pages li a:hover{
+#pages li.current_page_item a,#pages li.current-menu-item a,#pages li a:hover{
     color:#174D73 !important;
     /*background:url(images/menubg_inactive.png) repeat-x !important;*/
 }
@@ -290,10 +307,10 @@ width: 920px !important;
  line-height:12px;
  display:block;
  padding:10px 0px 10px 25px !important;
+ width:auto;
 }
-#pages li ul.sub-menu li a:hover{
-    background-color:#ececec;
-}
+
+
 #pages li ul.sub-menu li{
  background:none !important;
  border:0px solid #fff !important;
@@ -301,7 +318,9 @@ width: 920px !important;
  padding:0px !important;
  width:100% !important;
 }
-
+#pages li ul.sub-menu li:hover{
+    background-color:#ececec !important;
+}
 #featured, #iDivNewsBox, .post-wrapper{
     margin-bottom:15px;
 }
@@ -395,6 +414,9 @@ float: left;
 margin-top: 5px;
 }
 .page-id-25 #footerContainer,
+.page-id-5692 #footerContainer,
+.page-id-5885 #footerContainer,
+.page-id-5894 #footerContainer,
 .page-id-28 #footerContainer{
     display:none;
 }

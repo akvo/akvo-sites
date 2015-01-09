@@ -42,7 +42,7 @@ class Ai1ec_Facebook_User_Query_Events_Strategy extends Ai1ec_Facebook_Query_Abs
 	private function generate_fql_multiquery_to_get_events_details( array $users, $timestamp ) {
 		$fql = array();
 		// When we make a query we must convert
-		$time = Ai1ec_Facebook_Event::get_facebook_actual_time( $timestamp );
+		$time = Ai1ec_Facebook_Event::get_facebook_actual_time_for_events( $timestamp );
 		foreach( $users as $id ) {
 			$fql[$id] =
 				"SELECT

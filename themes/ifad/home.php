@@ -18,15 +18,10 @@
                 $latestvideo = AkvoSiteConfig::getLatestVideo('RAINfoundation');
                 $post = (object)$latestvideo;
                 get_template_part('includes/entry');
-                $args['post_type']='post';
-                $args['posts_per_page']='1';
-				$aExclude=get_category_ids(array('partners'));
-				$args['category__not_in']=$aExclude;
-                $query = new WP_Query();
-                $posts = $query->query($args);
-                if ( $posts ) : foreach ($posts AS $post ) :
-                    get_template_part('includes/entry');
-                endforeach;endif;
+                global $wpdb;
+                $post = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix."posts WHERE post_type='post' AND post_status='publish' ORDER BY post_date DESC");
+                get_template_part('includes/entry');
+                
                 // Restore original Query & Post Data
 		wp_reset_query();
 		wp_reset_postdata();

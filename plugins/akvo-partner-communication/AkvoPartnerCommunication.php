@@ -15,11 +15,12 @@ if (!class_exists("AkvoPartnerCommunication")) {
 		 *
 		 */
 
-		const API_URL_FOR_PROJECTS = 'http://rsr.akvo.org/api/v1/project/?format=json&partnerships__organisation=';
+		const API_URL_FOR_PROJECTS = 'http://rsr.akvo.org/api/v1/project/?format=json';
+//		const API_URL_FOR_PROJECTS = 'http://rsr.akvo.org/api/v1/project/?format=json&partnerships__organisation=';
 		//const API_URL_FOR_PROJECTS = 'http://www.akvo.org/rsr/api/projects.json/live-earth/'; // Old Url
         const API_URL_FOR_COUNTRIES = 'http://rsr.akvo.org/api/v1/country/?format=json&limit=0';
         const API_URL_FOR_LOCATIONS = 'http://rsr.akvo.org/api/v1/project_location/?format=json&limit=';
-        const API_URL_FOR_PARTNERS = 'http://rsr.akvo.org/api/v1/organisation/?format=json&distinct=true&partnerships__in=';
+        const API_URL_FOR_PARTNERS = 'http://rsr.akvo.org/api/v1/organisation/?format=json&partnerships__project__in=';
 		/**
 		 *
 		 */
@@ -120,31 +121,32 @@ if (!class_exists("AkvoPartnerCommunication")) {
 			$sTblName = self::TBL_PARTNERDETAILS;
             
 			//$sOptionValue = get_option('akvo_partner_communication');
-			$oExOrgId = $wpdb->get_row("SELECT organisation_id FROM  $sTblName WHERE prefix = '$sPrefix' AND status = 1");
-			$sExOrgId = $oExOrgId->organisation_id;
+			$oExOrgRow = $wpdb->get_row("SELECT organisation_id,rsr_keywords FROM  $sTblName WHERE prefix = '$sPrefix' AND status = 1");
+			$sExOrgId = $oExOrgRow->organisation_id;
+			$sExRSRkeywords = $oExOrgRow->rsr_keywords;
 			$sReadUrlButton = "";
 
 			if (!empty($_POST['optionssubmit'])) {
 				//after form submit action
-				//$sDataUrl = $_POST['akvo_partner_communication'];
+				
 				$sOrgId = $_POST['org_id'];
-				//$sOptionsTable = $sPrefix . "options";
+				$sRSRkeywords = $_POST['rsr_keywords'];
+				
 				//get options
 				$sSiteUrl = get_option('siteurl'); //$wpdb->get_row("SELECT option_value FROM  $sOptionsTable WHERE `option_name` LIKE 'siteurl'");
 				//save new option
-//				$wpdb->query("UPDATE $sOptionsTable SET option_value = '$sDataUrl' WHERE option_name = 'akvo_partner_communication'");
-//				$sOptionValue = $sDataUrl;
+//				
 				//save partner data (common table data)
 				$oExRecords = $wpdb->get_row("SELECT prefix FROM  $sTblName WHERE prefix = '$sPrefix'");
 				if (!empty($oExRecords)) {
 					//update
-					$wpdb->query("UPDATE $sTblName SET organisation_id = '$sOrgId' WHERE prefix = '$sPrefix'");
+					$wpdb->query("UPDATE $sTblName SET organisation_id = '$sOrgId', rsr_keywords='$sRSRkeywords' WHERE prefix = '$sPrefix'");
 				} else {
 					//insert
-					$wpdb->insert($sTblName, array('organisation_id' => $sOrgId, 'site_url' => $sSiteUrl, 'prefix' => $sPrefix, 'status' => '1'));
+					$wpdb->insert($sTblName, array('organisation_id' => $sOrgId,'rsr_keywords'=>$sRSRkeywords, 'site_url' => $sSiteUrl, 'prefix' => $sPrefix, 'status' => '1'));
 				}
 				$sExOrgId = $sOrgId;
-
+                $sExRSRkeywords = $sRSRkeywords;
 				
                 $sReadUrlButton = 'Run';
                 $sCount = '';
@@ -178,18 +180,19 @@ if (!class_exists("AkvoPartnerCommunication")) {
 			wp_nonce_field('update-options');
 
 			echo "<table width='900'>";
-//			echo "<tr valign='top'>";
-//			echo "<th width='92' scope='row'>Enter URL</th>";
-//			echo "<td width='800'>";
-//			echo "<input name='akvo_partner_communication' type='text' id='akvo_partner_communication'
-//			value='" . $sOptionValue . "'; />
-//			";
-//			echo "</td>";
-//			echo "</tr>";
+            echo "<tr>";
 			echo "<th width='92' scope='row'>Enter Organisation ID</th>";
 			echo "<td width='800'>";
 			echo "<input name='org_id' type='text' id='org_id'
 			value='$sExOrgId'; />
+			";
+			echo "</td>";
+			echo "</tr>";
+			echo "<tr>";
+			echo "<th width='92' scope='row'>Enter RSR keyword</th>";
+			echo "<td width='800'>";
+			echo "<input name='rsr_keywords' type='text' id='rsr_keywords'
+			value='$sExRSRkeywords'; />
 			";
 			echo "</td>";
 			echo "</tr>";
@@ -198,9 +201,7 @@ if (!class_exists("AkvoPartnerCommunication")) {
 			echo "<input type='hidden' name='action' value='update' />";
 			echo "<input type='hidden' name='page_options' value='akvo_partner_communication' />";
             submit_button('Save Changes','primary','optionssubmit');
-//			echo "<p>";
-//			echo "<input type='submit' name='optionssubmit' value='Save Changes'/>";
-//			echo "</p>";
+
 
 			echo "</form>";
 			echo "</div>";
@@ -228,12 +229,13 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 				CREATE TABLE IF NOT EXISTS " . $sTableName . " (
 					id int(11) NOT NULL AUTO_INCREMENT,
 					organisation_id int(11) NOT NULL,
+					rsr_keywords varchar(255),
 					data_url varchar(255),
 					site_url varchar(255) NOT NULL,
 					prefix varchar(25) NOT NULL,
 					status TINYINT NOT NULL,
                     funds FLOAT( 10, 2 ) NOT NULL DEFAULT  '0.00',
-                    partners INT( 11 ) NOT NULL DEFAULT  '0'
+                    partners INT( 11 ) NOT NULL DEFAULT  '0',
 					PRIMARY KEY (id)
 					) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1"; //create statement
 
@@ -357,6 +359,12 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 			//$sQuery = "DELETE FROM " . $sTable_name;
 			$sQuery = "TRUNCATE TABLE " . $sTableName;
 			$wpdb->query($sQuery);
+			$sTableName = $sPrefix . "project_partners";
+
+			//flush the data
+			//$sQuery = "DELETE FROM " . $sTable_name;
+			$sQuery = "TRUNCATE TABLE " . $sTableName;
+			$wpdb->query($sQuery);
 		}
 
 		/**
@@ -367,7 +375,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 		public function readProjectDetails($sUrl = "") {
             $iLimit = 1000 + (int)date('z') + (int)date('G');
 			if ($sUrl == "") {
-				$sUrl = self::API_URL_FOR_PROJECTS . $this->getProjectDetailReaderURLOption() . '&limit='.$iLimit;
+				$sUrl = self::API_URL_FOR_PROJECTS . '&' . $this->getProjectDetailReaderURLOption() . '&limit='.$iLimit;
 			}
 
 			$oResponse = file_get_contents($sUrl);
@@ -381,14 +389,34 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 		 * @global type $wpdb
 		 * @return string
 		 */
+//		public function getProjectDetailReaderURLOption() {
+//			global $wpdb;
+//			$table_name = self::TBL_PARTNERDETAILS;
+//
+//			$oOprions = $wpdb->get_row("SELECT organisation_id FROM " . $table_name . "
+//											WHERE `prefix` = '$wpdb->prefix'");
+//			$sProjectDetailReaderUrl = $oOprions->organisation_id;
+//			return $sProjectDetailReaderUrl;
+//		}
+		/**
+		 *
+		 * @global type $wpdb
+		 * @return string
+		 */
 		public function getProjectDetailReaderURLOption() {
 			global $wpdb;
 			$table_name = self::TBL_PARTNERDETAILS;
 
-			$oOprions = $wpdb->get_row("SELECT organisation_id FROM " . $table_name . "
+			$oOptions = $wpdb->get_row("SELECT organisation_id,rsr_keywords FROM " . $table_name . "
 											WHERE `prefix` = '$wpdb->prefix'");
-			$sProjectDetailReaderUrl = $oOprions->organisation_id;
-			return $sProjectDetailReaderUrl;
+            if(isset($oOptions->rsr_keywords) && $oOptions->rsr_keywords!==''){
+                $urlOption =  'keywords__label='.$oOptions->rsr_keywords;
+            }else{
+                $urlOption =  'partnerships__organisation='.$oOptions->organisation_id;
+            }
+            var_dump($urlOption);
+            return $urlOption;
+			
 		}
 
 		/**
@@ -396,7 +424,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 		 *
 		 * @global type $wpdb
 		 */
-		public function saveProjectDetails($aProjectListing, $sPrefix, $iOrgID = null) {
+		public function saveProjectDetails($aProjectListing, $sPrefix, $sUrlParam = null) {
 
 			global $wpdb;
 
@@ -407,16 +435,13 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
             $aPartnerUrls=array();
             //temp country import while in development
             
-            $aCoordinates = $this->readLocations($iOrgID);
-//            echo '<pre>';
-//            var_dump($aCoordinates);
-//            echo '</pre>';
+            $aCoordinates = $this->readLocations($sUrlParam);
+//        
             $aCountries = array('bangladesh','benin','ethiopia','ghana','kenya','mali','nepal','uganda');
 			// Iterate through the list of Projects and Insert them
 			foreach ($aProjectListing as $aProjectDetail) {
                 $iTotalFunds += (floatval($aProjectDetail['funds']));
-                $iTotalPartners += count($aProjectDetail['partnerships']);
-                foreach($aProjectDetail['partnerships'] AS $sPartner)$aPartnerUrls[]=$sPartner;
+//                
                 $aInput = array(
                     'title' => $aProjectDetail['title'],
 					'project_id' => $aProjectDetail['id']
@@ -428,9 +453,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                     $aInput['country'] = $aCoordinates[$sLocationUrl]['country'];
                     $aInput['longitude'] = $aCoordinates[$sLocationUrl]['longitude'];
                     $aInput['latitude'] = $aCoordinates[$sLocationUrl]['latitude'];
-//                   echo '<pre>';
-//            var_dump($aInput);
-//			echo '</pre>';
+//                  
                 }
 				$wpdb->insert($sTableName, $aInput);
                 if($aProjectDetail['locations']!=null){
@@ -448,10 +471,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                     }
                 }
 			}
-			sort($aPartnerUrls);
-            //var_dump(array_unique($aPartnerUrls));
-			$iTotalPartners = count(array_unique($aPartnerUrls));
-            $wpdb->update('partner_details',array('funds'=>$iTotalFunds,'partners'=>$iTotalPartners),array('prefix'=>$sPrefix));
+			$wpdb->update('partner_details',array('funds'=>$iTotalFunds),array('prefix'=>$sPrefix));
 		}
         
         public function saveProjectPartners($aProjectListing, $sPrefix){
@@ -460,25 +480,29 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
             $aPartnerIDs = array();
             // Iterate through the list of Projects and Insert them
 			foreach ($aProjectListing as $aProjectDetail) {
+                $aPartnerIDs[]=$aProjectDetail['id'];
                 
-                foreach($aProjectDetail['partnerships'] AS $sPartner){
-                    $sPartnerURL = (substr($sPartner,-1)=='/') ? substr($sPartner,0,strlen($sPartner)-1) : $sPartner;
-                    $aPartnerURL = explode('/',$sPartnerURL);
-                    $iPartner = end($aPartnerURL);
-                    $aPartnerIDs[]=$iPartner;
-                }
             }
             //var_dump($aPartnerIDs);die();
             if(count($aPartnerIDs)>0){
-                $sPartners = file_get_contents(self::API_URL_FOR_PARTNERS.join(',',$aPartnerIDs));
+//                echo self::API_URL_FOR_PARTNERS.join(',',$aPartnerIDs).'<br />';
+                $sPartners = file_get_contents(self::API_URL_FOR_PARTNERS.join(',',$aPartnerIDs).'&limit=0');
                 $aPartners = json_decode($sPartners,true);
+                $aUnique = array();
                 foreach($aPartners['objects'] AS $aPartner){
-                    $aInput['title'] = $aPartner['long_name'];
-                    $aInput['logo'] = ($aPartner['logo']['original']!='') ? 'http://akvo.org'.$aPartner['logo']['original'] : '';
-                    $aInput['description'] = $aPartner['description'];
-                    $aInput['url'] = $aPartner['url'];
-                   $wpdb->insert($sTableName, $aInput);
+                        
+                        $aUnique[] = $aPartner['long_name'];
+                        $aInput['title'] = $aPartner['long_name'];
+                        $aInput['logo'] = ($aPartner['logo']['original']!='') ? 'http://akvo.org'.$aPartner['logo']['original'] : '';
+                        $aInput['description'] = $aPartner['description'];
+                        $aInput['url'] = $aPartner['url'];
+                       $wpdb->insert($sTableName, $aInput);
                 }
+                $iTotalPartners = count($aUnique);
+                $wpdb->update('partner_details',array('partners'=>$iTotalPartners),array('prefix'=>$sPrefix));
+//                echo '<pre>';
+//                var_dump($aUnique);
+//                echo '</pre>';
 				
             }
         }
@@ -492,11 +516,12 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
             }
             return $aObjects;
         }
-        public function readLocations($iOrgID=null){
+        public function readLocations($sUrlParam=null){
             $aCountries = $this->readCountries();
             $iLimit = 2000 + (int)date('z') + (int)date('G');
-            $iOrgID = ($iOrgID) ? $iOrgID : $this->getProjectDetailReaderURLOption();
-            $sLocations = file_get_contents(self::API_URL_FOR_LOCATIONS.$iLimit.'&project__partnerships__organisation='.$iOrgID);
+            $sUrlParam = ($sUrlParam) ? $sUrlParam : $this->getProjectDetailReaderURLOption();
+            var_dump(self::API_URL_FOR_LOCATIONS.$iLimit.'&project__'.$sUrlParam);
+            $sLocations = file_get_contents(self::API_URL_FOR_LOCATIONS.$iLimit.'&project__'.$sUrlParam);
             $aLocations = json_decode($sLocations,true);
             $aObjects = array();
             foreach($aLocations['objects'] AS $aLocation){
@@ -556,7 +581,8 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                 $sScript .= "function geocodeResult(results, status) {";
                 $sScript .= "if (status == 'OK' && results.length > 0) {";
 				
-				$sScript .= "map.fitBounds(results[0].geometry.viewport);";
+				$sScript .= "map.fitBounds(results[0].geometry.bounds);";
+                if($iZoom===0 && $sCountry==='pakistan')$iZoom=2;
                 if($iZoom>0)$sScript .= "map.setZoom(Math.round(parseInt(map.getZoom())+".$iZoom."));";
                 $sScript .= "} else {";
                 $sScript .= "alert(\"Geocode was not successful for the following reason: \" + status);";
@@ -575,7 +601,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                 $sScript .= "  var markerPos=new google.maps.LatLng(" . $oProject->latitude . "," . $oProject->longitude . ");";
 				$sScript .= "	var marker = new google.maps.Marker({
 						flat: true,
-						icon: 'http://akvo.org/rsr/media/core/img/blueMarker.png',
+						icon: '".plugin_dir_url(__FILE__)."marker-icon.png',
 						map: map,
 						position:  markerPos
 					});";
@@ -587,7 +613,9 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 					infoWindow.open(map, marker);
 				});";
 			$sScript .= "}";
-			$sScript .= "map.fitBounds (bounds);";
+			if($sCountry===''){
+                $sScript .= "map.fitBounds (bounds);";
+            }
 			$sScript .= "</script>";
 
 			return $sScript;
@@ -605,7 +633,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
             if($iOrganisationID){
                 $sOrganisationWhere.=' AND organisation_id = '.$iOrganisationID;
             }
-			$oProjectURLs = $wpdb->get_results("SELECT organisation_id,prefix,data_url FROM $sTableName WHERE STATUS = '1'".$sOrganisationWhere);
+			$oProjectURLs = $wpdb->get_results("SELECT organisation_id,rsr_keywords,prefix,data_url FROM $sTableName WHERE STATUS = '1'".$sOrganisationWhere);
 			return $oProjectURLs;
 		}
 
@@ -628,17 +656,17 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 				$iAffectedPostId = $wpdb->insert_id;
                 
 			} else {
-
-				$wpdb->query("UPDATE $sPostTableName SET
-						'post_date' = " . $aPosts['post_date'] . ",
-						'post_date_gmt' = " . $aPosts['post_date_gmt'] . ",
-						'post_title' = " . $aPosts['post_title'] . ",
-						'post_content' = " . $aPosts['post_content'] . ",
-						'post_name' = " . $aPosts['post_name'] . ",
-						'post_type' = " . $aPosts['post_type'] . ",
-						'post_modified' = " . $aPosts['post_modified'] . ",
-						'post_modified_gmt' = " . $aPosts['post_modified_gmt'] . "
-						 WHERE ID = $iPostToUpdate");
+                $wpdb->update($sPostTableName,$aPosts,array('ID'=>$iPostToUpdate));
+//				$wpdb->query("UPDATE $sPostTableName SET
+//						'post_date' = " . $aPosts['post_date'] . ",
+//						'post_date_gmt' = " . $aPosts['post_date_gmt'] . ",
+//						'post_title' = " . $aPosts['post_title'] . ",
+//						'post_content' = " . $aPosts['post_content'] . ",
+//						'post_name' = " . $aPosts['post_name'] . ",
+//						'post_type' = " . $aPosts['post_type'] . ",
+//						'post_modified' = " . $aPosts['post_modified'] . ",
+//						'post_modified_gmt' = " . $aPosts['post_modified_gmt'] . "
+//						 WHERE ID = $iPostToUpdate");
 			}
             
 			return $iAffectedPostId;
@@ -664,7 +692,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
         }
         public function readProjectUpdatesFromDbForTabs(){
             global $wpdb;
-            $sQuery = "SELECT wpul.post_id FROM ".$wpdb->prefix.self::TBL_PROJUPDATES." wpul";
+            $sQuery = "SELECT wpul.post_id FROM ".$wpdb->prefix.self::TBL_PROJUPDATES." wpul ORDER BY wpul.post_id DESC";
             //var_dump($sQuery);
             $oPostIDs = $wpdb->get_results($sQuery,ARRAY_A);
             $aIDs = array();
@@ -761,6 +789,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 				'meta_value' => $sFilename
 			);
             $sPostMetaTableName = $sPrefix . 'postmeta';
+            $wpdb->delete($sPostMetaTableName, array('post_id'=>$iPostId,'meta_key'=>'enclosure'));
             $wpdb->insert($sPostMetaTableName, $aAttachmentData);
             //var_dump(update_post_meta($iPostId,'enclosure',$sFilename));
         }
@@ -846,72 +875,18 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                                 'thumbnail')
                             ) 
                         );
-//            register_post_type('local alliances', 
-//              array(	
-//                'label' => 'Local alliances',
-//                  'description' => '',
-//                  'public' => true,
-//                  'show_ui' => true,
-//                  'show_in_menu' => true,
-//                  'show_in_nav_menus' => true,
-//                  'has_archive'=>true,
-//                  'capability_type' => 'post',
-//                  'rewrite' => array('slug' => 'local-alliances'),
-//                  'query_var' => true,
-//                  'exclude_from_search' => false,
-//                  'supports' => array(
-//                      'title',
-//                      'editor',
-//                      'excerpt',
-//                      'trackbacks',
-//                      'custom-fields',
-//                      'comments',
-//                      'revisions',
-//                      'thumbnail',
-//                      'author',
-//                      'taxonomy',
-//                      'page-attributes'),
-//                  'labels' => array (
-//                  'name' => 'Local alliances',
-//                  'singular_name' => 'Local alliance',
-//                  'menu_name' => 'Local alliances',
-//                  'add_new' => 'Add Local alliance',
-//                  'add_new_item' => 'Add New Local alliance',
-//                  'edit' => 'Edit',
-//                  'edit_item' => 'Edit Local alliance',
-//                  'new_item' => 'New Local alliance',
-//                  'view' => 'View Local alliance',
-//                  'view_item' => 'View Local alliance',
-//                  'search_items' => 'Search Local alliances',
-//                  'not_found' => 'No Local alliances Found',
-//                  'not_found_in_trash' => 'No Local alliances Found in Trash',
-//                  'parent' => 'Parent Local alliance'
-//                )
-//                  ) 
-//              );
-//            
-//            register_post_type('vacancies', array(	'label' => 'Vacancies','description' => '','public' => true,'show_ui' => true,'show_in_menu' => true,'capability_type' => 'post','hierarchical' => false,'rewrite' => array('slug' => 'vacancies'),'query_var' => true,'exclude_from_search' => false,'supports' => array('title','editor','excerpt','trackbacks','custom-fields','comments','revisions','thumbnail','author','page-attributes',),'labels' => array (
-//              'name' => 'Vacancies',
-//              'singular_name' => 'vacancy',
-//              'menu_name' => 'Vacancies',
-//              'add_new' => 'Add vacancy',
-//              'add_new_item' => 'Add New vacancy',
-//              'edit' => 'Edit',
-//              'edit_item' => 'Edit vacancy',
-//              'new_item' => 'New vacancy',
-//              'view' => 'View vacancy',
-//              'view_item' => 'View vacancy',
-//              'search_items' => 'Search Vacancies',
-//              'not_found' => 'No Vacancies Found',
-//              'not_found_in_trash' => 'No Vacancies Found in Trash',
-//              'parent' => 'Parent vacancy',
-//            ),) );
+
             
             
         }  
         public static function getProjectCountries(){
             global $wpdb;
             $aCountries = $wpdb->get_results('SELECT country FROM '.$wpdb->prefix.'projects GROUP BY country');
+            return $aCountries;
+        }
+        public static function getProjectCountriesForMetabox(){
+            global $wpdb;
+            $aCountries = $wpdb->get_results('SELECT country FROM '.$wpdb->prefix.'project_locations GROUP BY country');
             return $aCountries;
         }
 
@@ -938,7 +913,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
           echo '<label for="apc_country_select">';
                _e("Select the qountry which project updates should be displayed");
           echo '</label><br />';
-          $aProjectData = self::getProjectCountries();
+          $aProjectData = self::getProjectCountriesForMetabox();
           echo '<select id="apc_country_select" name="apc_country_select" >';
           echo '<option value="none">none</option>';
           foreach($aProjectData AS $aProject){

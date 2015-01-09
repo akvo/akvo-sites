@@ -6,7 +6,7 @@ do_action( 'ai1ec_feeds_before' );
 	<ul class="nav nav-tabs">
 		<?php $ai1ec_importer_plugin_helper->render_tab_headers() ?>
 	</ul>
-	<div class="tab-content">
+	<div class="tab-content ai1ec-boxed-tabs">
 		<?php $ai1ec_importer_plugin_helper->render_tab_contents() ?>
 	</div>
 </div>

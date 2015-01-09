@@ -1,0 +1,87 @@
+/* Fixes for WordPress Styles that interfere with Twitter Bootstrap Styles */
+.cAWPRContentWrapper input[type="text"]{
+	-moz-box-sizing: inherit;
+}
+.cAWPRContentWrapper select {
+	height: 30px;
+	padding: 4px 6px;
+}
+.cAWPRContentWrapper div.error {
+	background-color: transparent;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+.cAWPRContentWrapper .control-group .checkbox {
+	background-color: transparent;
+}
+.cAWPRContentWrapper .control-group.error {
+	margin-bottom: 10px;
+}
+.cAWPRContentWrapper li {
+	margin-bottom: 0;
+}
+.cAWPRContentWrapper .error a {
+	text-decoration: none;
+}
+
+.table th.text-center,
+.table td.text-center {
+	text-align: center;
+}
+
+.cClearBoth {
+	clear: both;
+}
+div.blockMsg {
+	width: 30%;
+
+	margin: 0 auto;
+	padding: 16px;
+
+	top: 35%;
+	left: 35%;
+
+	border: 0;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+
+	-webkit-box-shadow: 0 0 5px #999999;
+	-moz-box-shadow: 0 0 5px #999999;
+	box-shadow: 0 0 5px #999999;
+
+	color: #FFFFFF;
+	background-color: #000000;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+    -moz-opacity: .50;
+    opacity: .50
+}
+
+.cCheckboxToggle .toggle {
+	width: 70px;
+	margin-bottom: 10px;
+}
+
+#iDivRegistrantDetailContainer .row-fluid .span3.text-right {
+	font-style: italic;
+}
+#iDivRegistrantDetailContainer .row-fluid .span9 {
+	font-weight: bold;
+}
+
+
+
+
+.cAWPRContentWrapper .cDivZendFormWrapper .cDivRadioButtonContainer {
+}
+.cAWPRContentWrapper .cDivZendFormWrapper .cDivRadioButtonContainer .controls > label {
+	float: left;
+	margin-right: 16px;
+}
+.cAWPRContentWrapper .cDivZendFormWrapper .cDivRadioButtonContainer .controls > label > input[type=radio] {
+	margin: 0;
+	margin-right: 8px;
+}

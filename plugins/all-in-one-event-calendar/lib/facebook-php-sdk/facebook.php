@@ -35,7 +35,7 @@ class WP_Facebook_Ai1ec extends WP_BaseFacebook_Ai1ec
    * @see WP_BaseFacebook::__construct in facebook.php
    */
   public function __construct($config) {
-    
+
     parent::__construct($config);
   }
 

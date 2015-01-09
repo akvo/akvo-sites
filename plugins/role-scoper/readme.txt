@@ -3,8 +3,8 @@ Contributors: kevinB
 Donate link: http://agapetry.net/news/introducing-role-scoper/#role-scoper-download
 Tags: restrict, access, permissions, cms, user, members, admin, category, categories, pages, posts, page, Post, privacy, private, attachment, files, rss, feed
 Requires at least: 3.0
-Tested up to: 3.4.1
-Stable Tag: 1.3.57
+Tested up to: 3.5.1
+Stable Tag: 1.3.61
 
 CMS-like permissions for reading and editing. Content-specific restrictions and roles supplement/override WordPress roles. User groups optional.
 
@@ -111,6 +111,31 @@ Yes, at this point I plan to keep Role Scoper compatible with upcoming WP versio
 8. [View more screenshots](http://agapetry.net/news/introducing-role-scoper/)
 
 == Changelog ==
+
+= 1.3.61 - 26 Apr 2013 =
+* Fixed : If a custom post type is hierarchical, non-Administrators could not create new post if "Lock Top Pages" enabled for any roles
+* Fixed : RS roles were ineffective in some situations
+* Fixed : Assignment of term to a Media item did not cause it to be included in get_terms query results
+* Fixed : Multisite - Database error under some configurations when deleting or removing a user
+* Fixed : Multisite - Database error under some configurations when viewing user profile
+* Fixed? : PHP warning "mysql_real_escape_string() expects parameter 1 to be string" on post creation / update, under some configurations
+* Fixed : PHP warnings on activation
+* Lang : Dropped Italian translation due to reported inaccuracy
+
+= 1.3.60 - 23 Jan 2013 =
+* Fixed : Non-Administrators could not edit posts unless create_posts capability is defined for post type and included in their role (since 1.3.58)
+
+= 1.3.59 - 14 Dec 2012 =
+* Fixed : Could not add/edit media library items on WP 3.5 (since 1.3.58)
+
+= 1.3.58 - 12 Dec 2012 =
+* Compat : WP 3.5 - Custom posts could not be created or edited when post type enabled for RS filtering
+* Compat : WP 3.5 - edit_posts capability was required to access Edit menu for any post type
+* Compat : WP 3.5 - Support usage of the new create_posts capability (new checkbox in Roles > Options > Features > Content Maintenance)
+* Fixed : Posts were unreadable if associated with a taxonomy which has no terms, under some configurations
+* Fixed : RS Roles assigned to [Anonymous] group were ineffective
+* Fixed : XML-RPC post editing by users who are not sitewide Editors failed or caused categories to be dropped
+* Fixed : Multisite: when activated on a single site but not network activated, some RS options could not be edited
 
 = 1.3.57 - 10 Oct 2012 =
 * Fixed : Fatal error on first-time installation (Call to undefined function cr_role_caps)

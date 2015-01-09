@@ -108,8 +108,13 @@ class Ai1ec_Router
 		if ( false !== strpos( $base, '?' ) ) {
 			return $this;
 		}
-		$base   = '(?:.+/)?' . $base;
-		$regexp = $base . '(\/[a-z0-9\-_:\/]+|\/?$)';
+		$base       = '(?:.+/)?' . $base;
+		$named_args = str_replace(
+			'[:DS:]',
+			preg_quote( Ai1ec_Uri::DIRECTION_SEPARATOR ),
+			'[a-z][a-z0-9\-_[:DS:]\/]*[:DS:][a-z0-9\-_[:DS:]\/]'
+		);
+		$regexp     = $base . '(\/' . $named_args . ')';
 		$clean_base = trim( $this->_calendar_base, '/' );
 		$clean_site = trim( $this->get_site_url(), '/' );
 		if ( 0 === strcmp( $clean_base, $clean_site ) ) {

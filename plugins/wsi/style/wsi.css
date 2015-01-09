@@ -1,0 +1,76 @@
+.plugin_title {
+	color: #7FFF00;
+	font-weight: bold;
+}
+.plugin_number {
+	color: red;
+	font-weight: bold;
+	font-size: 20px;
+}
+.little_cross {
+	height:20px;
+	margin-bottom:-4px;
+}
+.esc_button {
+	height:20px;
+	margin-bottom:-4px;	
+}
+
+#tabs {
+	width:750px;
+}
+
+#tabs img {
+	margin-bottom: -4px;
+	margin-right: 6px;
+}
+
+#splash_color_demo {
+	border-radius:4px;
+	margin: 0px 5px;
+	height:20px;
+	width:20px;
+	border:1px solid black;
+}
+
+#display_info {
+	margin-left:190px;
+}
+
+#display_feedback {
+	margin-left:230px;
+}
+
+#display_buyMeABeer {
+	margin-left:270px;
+}
+
+#display_reset {
+	margin-left:310px;
+}
+
+#display_info, #display_feedback, #display_reset, #display_buyMeABeer {
+	margin-top:5px;
+	position: absolute;	
+}
+
+#github_img1, #github_img2 {
+	float: right;
+}
+
+#github_img1 {
+	margin: -4px -15px 0 0;	
+}
+
+#github_img2 {
+	display: none;
+	margin: -4px -141px 0 0;
+}
+
+#info_img, #feedback_img, #buyMeABeer_img {
+	cursor: pointer;
+}
+
+.warning {
+	font-weight:bold;
+}

@@ -43,6 +43,9 @@ h1,h2,.sidebar-box h2 {
 	
 font-weight: normal !important;
 }
+.post-wrapper > div{
+    margin-bottom:15px;
+}
 h2{
 line-height:25px;	 
 }
@@ -183,6 +186,9 @@ border-radius: 5px;
 .cLiBlogPost{
     background-color:#EEE;
 }
+.cDivBlogPostTitle{
+    height:52px;
+}
 /*tabs*/
 #iDivTabType {
 	width: 120px;
@@ -297,6 +303,9 @@ list-style: none;
     margin-top:10px;
     font-style: italic;
     float:right;
+}
+#iDivPoweredBy #iDivPoweredByText a{
+    color:#303030;
 }
 #iDivPoweredBy #iDivPoweredByImage{
     float:right;

@@ -13,6 +13,24 @@ class Ai1ec_Utility_Array
 {
 
 	/**
+	 * opt_explode method
+	 *
+	 * Optionally explode given value, i.e. perform explosion only if
+	 * given value is not an array.
+	 *
+	 * @param char         $separator Entities separator value
+	 * @param string|array $input     Allegedly string, but might be an array
+	 *
+	 * @return array List of values
+	 */
+	static public function opt_explode( $separator, $input ) {
+		if ( ! is_array( $input ) ) {
+			$input = explode( $separator, $input );
+		}
+		return $input;
+	}
+
+	/**
 	 * Merge two arrays recursively maintaining key type as long as possible
 	 *
 	 * Method similar to array_merge_recursive, although it does not cast non

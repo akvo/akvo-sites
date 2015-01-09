@@ -125,7 +125,7 @@ class SG_iCal_VEvent {
 		if( isset($this->previous_tz) ) {
 			date_default_timezone_set($this->previous_tz);
 		}
-
+		
 		$this->data = SG_iCal_Line::Remove_Line($data);
 	}
 

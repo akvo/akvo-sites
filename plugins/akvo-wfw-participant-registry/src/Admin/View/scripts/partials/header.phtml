@@ -1,0 +1,24 @@
+<?php
+if (isset($aContent['page-config'])) {
+?>
+<script type="text/javascript">var oPageConfig = <?php echo json_encode($aContent['page-config']); ?>;</script>
+<?php
+}
+?>
+<div class="container-fluid cAWPRContentWrapper">
+	<div class="row-fluid">
+		<div class="page-header">
+			<h1>Participant Registry&nbsp;<small>schools that have registered</small></h1>
+		</div>
+	</div>
+</div>
+<?php
+if (isset($aContent['redirect'])) {
+	$mRedirect = $aContent['redirect'];
+?>
+<script type="text/javascript">
+var AkvoWfWParticipantRegistryRedirect = '<?php echo $mRedirect; ?>';
+</script>
+<?php
+}
+?>

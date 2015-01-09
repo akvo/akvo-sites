@@ -1,17 +1,14 @@
 <?php
-//
-//  class-ai1ec-events-controller.php
-//  all-in-one-event-calendar
-//
-//  Created by The Seed Studio on 2011-07-13.
-//
 
 /**
- * Ai1ec_Events_Controller class
+ * Controller class for events.
  *
- * @package Controllers
- * @author time.ly
- **/
+ * @author     Timely Network Inc
+ * @since      2011.07.13
+ *
+ * @package    AllInOneEventCalendar
+ * @subpackage AllInOneEventCalendar.App.Controller
+ */
 class Ai1ec_Events_Controller {
 	/**
 	 * _instance class variable
@@ -41,7 +38,105 @@ class Ai1ec_Events_Controller {
 	 * Constructor
 	 *
 	 **/
-	private function __construct() { }
+	private function __construct( ) {
+		if ( basename( $_SERVER['SCRIPT_NAME'] ) == 'post.php' ) {
+			add_action( 'admin_action_editpost', array( $this, 'admin_init_post' ) );
+		}
+	}
+
+	/**
+	 * admin_init_post method
+	 *
+	 * Bind to admin_action_editpost action to override default save
+	 * method when user is editing single instance.
+	 * New post is created with some fields unset.
+	 */
+	public function admin_init_post( ) {
+		global $ai1ec_events_helper;
+		if (
+			isset( $_POST['ai1ec_instance_id'] ) &&
+			isset( $_POST['action'] ) &&
+			'editpost' === $_POST['action']
+		) {
+			$old_post_id = $_POST['post_ID'];
+			$instance_id = $_POST['ai1ec_instance_id'];
+			$post_id = $this->_create_duplicate_post( );
+			if ( false !== $post_id ) {
+				$created_event = new Ai1ec_Event( $post_id );
+				$ai1ec_events_helper->add_exception_date(
+					$old_post_id,
+					$created_event->getStart()
+				);
+				$ai1ec_events_helper->delete_event_instance_cache(
+					$old_post_id,
+					$instance_id
+				);
+				$location = add_query_arg(
+					'message',
+					1,
+					get_edit_post_link( $post_id, 'url' )
+				);
+				wp_redirect( apply_filters(
+						'redirect_post_location',
+						$location,
+						$post_id
+				) );
+				exit( );
+			}
+		}
+	}
+
+	/**
+	 * Callback on post untrashing
+	 *
+	 * @param int $post_id ID of post being untrashed
+	 *
+	 * @return void Method does not return
+	 */
+	public function untrashed_post( $post_id ) {
+		try {
+			$ai1ec_event = new Ai1ec_Event( $post_id );
+			if (
+				isset( $ai1ec_event->post ) &&
+				! empty( $ai1ec_event->recurrence_rules )
+			) { // untrash child event
+				global $ai1ec_events_helper;
+				$children = $ai1ec_events_helper
+					->get_child_event_objects( $ai1ec_event->post_id, true );
+				foreach ( $children as $child ) {
+					wp_untrash_post( $child->post_id );
+				}
+			}
+		} catch ( Ai1ec_Event_Not_Found $exception ) {
+			// ignore - not an event
+		}
+	}
+
+	/**
+	 * Callback on post trashing
+	 *
+	 * @param int $post_id ID of post being trashed
+	 *
+	 * @return void Method does not return
+	 */
+	public function trashed_post( $post_id ) {
+		try {
+			$ai1ec_event = new Ai1ec_Event( $post_id );
+			if (
+				isset( $ai1ec_event->post ) &&
+				! empty( $ai1ec_event->recurrence_rules )
+			) { // trash child event
+				global $ai1ec_events_helper;
+				$children = $ai1ec_events_helper
+					->get_child_event_objects( $ai1ec_event->post_id );
+				foreach ( $children as $child ) {
+					wp_trash_post( $child->post_id );
+				}
+			}
+		} catch ( Ai1ec_Event_Not_Found $exception ) {
+			// ignore - not an event
+		}
+	}
 
 	/**
 	 * delete_hook function
@@ -57,88 +152,76 @@ class Ai1ec_Events_Controller {
 	function delete_post( $pid ) {
 		global $wpdb, $ai1ec_importer_plugin_helper;
 
-		$sql = "SELECT
-							ID
-						FROM
-							$wpdb->posts
-						WHERE
-							ID = %d AND
-							post_type = '" . AI1EC_POST_TYPE . "'";
+		$pid = (int)$pid;
+		$sql = '
+			SELECT
+				ID
+			FROM
+				' . $wpdb->posts . '
+			WHERE
+				ID        = ' . $pid . ' AND
+				post_type = \'' . AI1EC_POST_TYPE . '\'';
 
 		// is this post an event?
-		if( $wpdb->get_var( $wpdb->prepare( $sql, $pid ) ) ) {
-			// We need to pass an event object to the importer plugins to clean up.
-			$ai1ec_event = new Ai1ec_Event( $pid );
-			$ai1ec_importer_plugin_helper->handle_post_event( $ai1ec_event, 'delete' );
-			$table_name = $wpdb->prefix . 'ai1ec_events';
-			$sql = "DELETE FROM
-								$table_name
-							WHERE
-								post_id = %d";
-			// delete from ai1ec_events
-			$wpdb->query( $wpdb->prepare( $sql, $pid ) );
+		if ( $wpdb->get_var( $sql ) ) {
+			try {
+				// We need to pass an event object to the importer plugins
+				// to clean up.
+				$ai1ec_event = new Ai1ec_Event( $pid );
+				if (
+					isset( $ai1ec_event->post ) &&
+					! empty( $ai1ec_event->recurrence_rules )
+				) { // delete child event
+					global $ai1ec_events_helper;
+					$children = $ai1ec_events_helper->get_child_event_objects(
+						$ai1ec_event->post_id,
+						true
+					);
+					foreach ( $children as $child ) {
+						wp_delete_post( $child->post_id, true );
+					}
+				}
+				$ai1ec_importer_plugin_helper->handle_post_event(
+					$ai1ec_event,
+					'delete'
+				);
+				$table_name = $wpdb->prefix . 'ai1ec_events';
+				$sql = '
+					DELETE FROM
+						' . $table_name . '
+					WHERE
+						post_id = ' . $pid;
+				// delete from ai1ec_events
+				$wpdb->query( $sql );
 
-			$table_name = $wpdb->prefix . 'ai1ec_event_instances';
-			$sql = "DELETE FROM
-								$table_name
-							WHERE
-								post_id = %d";
-			// delete from ai1ec_event_instances
-			return $wpdb->query( $wpdb->prepare( $sql, $pid ) );
+				$table_name = $wpdb->prefix . 'ai1ec_event_instances';
+				$sql = '
+					DELETE FROM
+						' . $table_name . '
+					WHERE
+						post_id = ' . $pid;
+				// delete from ai1ec_event_instances
+				return $wpdb->query( $sql );
+			} catch ( Ai1ec_Event_Not_Found $exception ) {
+				/**
+				 * Possible reason, why event `delete` is triggered, albeit
+				 * no details are found corresponding to it - the WordPress
+				 * is not transactional - it uses no means, to ensure, that
+				 * everything is deleted once and forever and thus it could
+				 * happen so, that partial records are left in DB.
+				 */
+				return true; // already deleted
+			}
 		}
 		return true;
 	}
-	/**
-	 * init function
-	 *
-	 * This function is executed when admin_head hook is called.
-	 * Adds CSS and JS files.
-	 *
-	 * @return void
-	 **/
-	public function init()
-	{
-		global $ai1ec_view_helper;
-		// Initialize dashboard view
-		if( is_admin() ) {
-			// =======
-			// = CSS =
-			// =======
-			// include autocomplete style
-			$ai1ec_view_helper->admin_enqueue_style( 'autocomplete', 'jquery.autocomplete.css' );
-			// include colorpicker style
-			$ai1ec_view_helper->admin_enqueue_style( 'colorpicker', 'colorpicker.css' );
-			// include add new event style
-			$ai1ec_view_helper->admin_enqueue_style( 'ai1ec_add_new_event', 'add_new_event.css' );
-			// include datepicker style
-			$ai1ec_view_helper->admin_enqueue_style( 'ai1ec_datepicker', 'datepicker.css' );
-			// include plugins style
-			$ai1ec_view_helper->admin_enqueue_style( 'ai1ec_plugins_common', 'plugins/plugins-common.css' );
-		}
-		// Initialize front-end view
-		else
-		{
-			// =======
-			// = CSS =
-			// =======
-			$ai1ec_view_helper->theme_enqueue_style( 'ai1ec-general', 'style.css' );
-			$ai1ec_view_helper->theme_enqueue_style( 'ai1ec-event', 'event.css' );
-			// Load the print style only if the parameter print is set to true.
-			if( isset( $_GET['print'] ) && $_GET['print'] === 'true' ) {
-				$ai1ec_view_helper->theme_enqueue_style( 'ai1ec-print', 'print.css' );
-			}
-		}
-
-	}
 
 	/**
-	 * meta_box_view function
-	 *
-	 * Add Events Calculator box to the Add New Event page
+	 * Add Event Details meta box to the Add/Edit Event screen in the dashboard.
 	 *
 	 * @return void
-	 **/
-	function meta_box_view() {
+	 */
+	public function meta_box_view() {
 		global $ai1ec_view_helper,
 		       $ai1ec_events_helper,
 		       $post,
@@ -146,10 +229,16 @@ class Ai1ec_Events_Controller {
 		       $ai1ec_settings,
 		       $ai1ec_importer_plugin_helper;
 
+		$empty_event = new Ai1ec_Event();
+
 		// ==================
 		// = Default values =
 		// ==================
+		// ATTENTION - When adding new fields to the event remember that you must
+		// also set up the duplicate-controller.
+		// TODO: Fix this duplication.
 		$all_day_event    = '';
+		$instant_event    = '';
 		$start_timestamp  = '';
 		$end_timestamp    = '';
 		$show_map         = false;
@@ -163,6 +252,7 @@ class Ai1ec_Events_Controller {
 		$contact_name     = '';
 		$contact_phone    = '';
 		$contact_email    = '';
+		$contact_url      = '';
 		$cost             = '';
 		$rrule            = '';
 		$rrule_text       = '';
@@ -175,21 +265,45 @@ class Ai1ec_Events_Controller {
 		$longitude        = '';
 		$latitude         = '';
 		$coordinates      = '';
+		$ticket_url       = '';
 
-		try
-	 	{
-			$event = new Ai1ec_Event( $post->ID );
+		$instance_id = false;
+		if ( isset( $_REQUEST['instance'] ) ) {
+			$instance_id = absint( $_REQUEST['instance'] );
+		}
+		$parent_event_id = $ai1ec_events_helper->event_parent( $post->ID );
+		if ( $instance_id ) {
+			add_filter(
+				'print_scripts_array',
+				array( $ai1ec_view_helper, 'disable_autosave' )
+			);
+		}
+
+		try {
+			$excpt = NULL;
+			try {
+				$event = new Ai1ec_Event( $post->ID, $instance_id );
+			} catch ( Ai1ec_Event_Not_Found $excpt ) {
+				global $ai1ec_localization_helper;
+				$translatable_id = $ai1ec_localization_helper
+					->get_translatable_id();
+				if ( false !== $translatable_id ) {
+					$event = new Ai1ec_Event( $translatable_id, $instance_id );
+				}
+			}
+			if ( NULL !== $excpt ) {
+				throw $excpt;
+			}
 
 			// Existing event was found. Initialize form values with values from
 			// event object.
-
-			$all_day_event    = $event->allday ? 'checked="checked"' : '';
-
+			$all_day_event    = $event->allday ? 'checked' : '';
+			$instant_event    = $event->instant_event ? 'checked' : '';
 
 			$start_timestamp  = $ai1ec_events_helper->gmt_to_local( $event->start );
 			$end_timestamp 	  = $ai1ec_events_helper->gmt_to_local( $event->end );
 
-			$multi_day        = $event->multiday;
+			$multi_day        = $event->get_multiday();
 
 			$show_map         = $event->show_map;
 			$google_map       = $show_map ? 'checked="checked"' : '';
@@ -214,47 +328,70 @@ class Ai1ec_Events_Controller {
 			$contact_name     = $event->contact_name;
 			$contact_phone    = $event->contact_phone;
 			$contact_email    = $event->contact_email;
+			$contact_url      = $event->contact_url;
 			$cost             = $event->cost;
+			$ticket_url       = $event->ticket_url;
 			$rrule            = empty( $event->recurrence_rules ) ? '' : $ai1ec_events_helper->ics_rule_to_local( $event->recurrence_rules );
 			$exrule           = empty( $event->exception_rules )  ? '' : $ai1ec_events_helper->ics_rule_to_local( $event->exception_rules );
-			$exdate           = empty( $event->exception_dates )  ? '' : $ai1ec_events_helper->exception_dates_to_local( $event->exception_dates );
+			$exdate           = empty( $event->exception_dates )  ? '' :  $ai1ec_events_helper->exception_dates_to_local( $event->exception_dates );
 			$repeating_event  = empty( $rrule )  ? false : true;
 			$exclude_event    = empty( $exrule ) ? false : true;
 			$facebook_status  = $event->facebook_status;
 
-			if( $repeating_event )
-				$rrule_text = $ai1ec_events_helper->rrule_to_text( $rrule );
+			if ( $repeating_event ) {
+				$rrule_text = ucfirst( $ai1ec_events_helper->rrule_to_text( $rrule ) );
+			}
 
-			if( $exclude_event )
-				$exrule_text = $ai1ec_events_helper->rrule_to_text( $exrule );
+			if ( $exclude_event ) {
+				$exrule_text = ucfirst( $ai1ec_events_helper->rrule_to_text( $exrule ) );
+			}
 		}
-		catch( Ai1ec_Event_Not_Found $e ) {
+		catch ( Ai1ec_Event_Not_Found $e ) {
 			// Event does not exist.
 			// Leave form fields undefined (= zero-length strings)
 			$event = null;
 		}
 
-		// Time zone
-		$timezone = get_option( 'gmt_offset' );
-		$timezone = sprintf( '(GMT%+d:%02d)', intval( $timezone ), ( abs( $timezone ) * 60 ) % 60 );
+		// Time zone; display if set.
+		$timezone = '';
+		$timezone_string = Ai1ec_Meta::get_option( 'timezone_string' );
+		if ( $timezone_string ) {
+			$timezone = $ai1ec_events_helper->get_gmt_offset();
+			$timezone = sprintf(
+				__( 'GMT%+d:%02d', AI1EC_PLUGIN_NAME ),
+				intval( $timezone ),
+				( abs( $timezone ) * 60 ) % 60
+			);
+		}
+
+		// This will store each of the accordion tabs' markup, and passed as an
+		// argument to the final view.
+		$boxes = array();
 
 		// ===============================
 		// = Display event time and date =
 		// ===============================
 		$args = array(
-			'all_day_event'   => $all_day_event,
-			'start_timestamp' => $start_timestamp,
-			'end_timestamp'   => $end_timestamp,
-			'repeating_event' => $repeating_event,
-			'rrule'           => $rrule,
-			'rrule_text'      => $rrule_text,
-			'exclude_event'   => $exclude_event,
-			'exrule'          => $exrule,
-			'exrule_text'     => $exrule_text,
-			'timezone'        => $timezone,
-			'exdate'          => $exdate
+			'all_day_event'      => $all_day_event,
+			'instant_event'      => $instant_event,
+			'start_timestamp'    => $start_timestamp,
+			'end_timestamp'      => $end_timestamp,
+			'repeating_event'    => $repeating_event,
+			'rrule'              => $rrule,
+			'rrule_text'         => $rrule_text,
+			'exclude_event'      => $exclude_event,
+			'exrule'             => $exrule,
+			'exrule_text'        => $exrule_text,
+			'timezone'           => $timezone,
+			'timezone_string'    => $timezone_string,
+			'exdate'             => $exdate,
+			'parent_event_id'    => $parent_event_id,
+			'instance_id'        => $instance_id,
 		);
-		$ai1ec_view_helper->display_admin( 'box_time_and_date.php', $args );
+		$boxes[] = $ai1ec_view_helper->get_admin_view(
+			'box_time_and_date.php',
+			$args
+		);
 
 		// =================================================
 		// = Display event location details and Google map =
@@ -273,15 +410,23 @@ class Ai1ec_Events_Controller {
 			'latitude'         => $latitude,
 			'coordinates'      => $coordinates,
 		);
-		$ai1ec_view_helper->display_admin( 'box_event_location.php', $args );
+		$boxes[] = $ai1ec_view_helper->get_admin_view(
+			'box_event_location.php',
+			$args
+		);
 
 		// ======================
 		// = Display event cost =
 		// ======================
 		$args = array(
-			'cost' => $cost
+			'cost'       => $cost,
+			'ticket_url' => $ticket_url,
+			'event'      => $empty_event,
 		);
-		$ai1ec_view_helper->display_admin( 'box_event_cost.php', $args );
+		$boxes[] = $ai1ec_view_helper->get_admin_view(
+			'box_event_cost.php',
+			$args
+		);
 
 		// =========================================
 		// = Display organizer contact information =
@@ -290,25 +435,69 @@ class Ai1ec_Events_Controller {
 			'contact_name'    => $contact_name,
 			'contact_phone'   => $contact_phone,
 			'contact_email'   => $contact_email,
+			'contact_url'     => $contact_url,
+			'event'           => $empty_event,
 		);
-		$ai1ec_view_helper->display_admin( 'box_event_contact.php', $args );
-
-		if( $ai1ec_settings->show_publish_button ) {
-			$args = array();
-			$post_type = $post->post_type;
-			$post_type_object = get_post_type_object( $post_type );
-			if( current_user_can( $post_type_object->cap->publish_posts ) )
-				$args["button_value"] = is_null( $event ) ? __( 'Publish', AI1EC_PLUGIN_NAME ) : __( 'Update', AI1EC_PLUGIN_NAME );
-			else
-				$args["button_value"] = __( 'Submit for Review', AI1EC_PLUGIN_NAME );
-
-			$ai1ec_view_helper->display_admin( 'box_publish_button.php', $args );
-		}
+		$boxes[] = $ai1ec_view_helper->get_admin_view(
+			'box_event_contact.php',
+			$args
+		);
 
 		/*
 			TODO Display Eventbrite ticketing
 			$ai1ec_view_helper->display( 'box_eventbrite.php' );
 		*/
+
+		// ==================
+		// = Publish button =
+		// ==================
+		$publish_button = '';
+		if ( $ai1ec_settings->show_publish_button ) {
+			$args             = array();
+			$post_type        = $post->post_type;
+			$post_type_object = get_post_type_object( $post_type );
+			if ( current_user_can( $post_type_object->cap->publish_posts ) ) {
+				$args['button_value'] = is_null( $event )
+					? __( 'Publish', AI1EC_PLUGIN_NAME )
+					: __( 'Update', AI1EC_PLUGIN_NAME );
+			} else {
+				$args['button_value'] = __( 'Submit for Review', AI1EC_PLUGIN_NAME );
+			}
+
+			$publish_button = $ai1ec_view_helper->get_admin_view(
+				'box_publish_button.php',
+				$args
+			);
+		}
+
+		// ==========================
+		// = Parent/Child relations =
+		// ==========================
+		if ( $event ) {
+			$parent   = $ai1ec_events_helper
+				->get_parent_event( $event->post_id );
+			if ( $parent ) {
+				try {
+					$parent = new Ai1ec_Event( $parent );
+				} catch ( Ai1ec_Event_Not_Found $exception ) { // ignore
+					$parent = NULL;
+				}
+			}
+			$children = $ai1ec_events_helper
+				->get_child_event_objects( $event->post_id );
+			$args    = compact( 'parent', 'children' );
+			$boxes[] = $ai1ec_view_helper->get_admin_view(
+				'box_event_children.php',
+				$args
+			);
+		}
+
+		// Display the final view of the meta box.
+		$args = array(
+			'boxes'          => $boxes,
+			'publish_button' => $publish_button,
+		);
+		$ai1ec_view_helper->display_admin( 'add_new_event_meta_box.php', $args );
 	}
 
 	/**
@@ -316,10 +505,11 @@ class Ai1ec_Events_Controller {
 	 *
 	 * Saves meta post data
 	 *
-	 * @param int $post_id Post ID
+	 * @param  int    $post_id Post ID
+	 * @param  object $post    Post object
 	 *
-	 * @return void
-	 **/
+	 * @return object|null     Saved Ai1ec_Event object if successful, else null
+	 */
 	function save_post( $post_id, $post ) {
 		global $wpdb, $ai1ec_events_helper, $ai1ec_importer_plugin_helper;
 
@@ -331,8 +521,9 @@ class Ai1ec_Events_Controller {
 			return;
 		}
 
-		if( isset( $post->post_status ) && $post->post_status == 'auto-draft' )
-		return;
+		if( isset( $post->post_status ) && $post->post_status == 'auto-draft' ) {
+			return;
+		}
 
 		// verify if this is not inline-editing
 		if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'inline-save' ) {
@@ -344,23 +535,32 @@ class Ai1ec_Events_Controller {
 			return;
 		}
 
+
+		// LABEL:magicquotes
+		// remove WordPress `magical` slashes - we work around it ourselves
+		$_POST = stripslashes_deep( $_POST );
+
+
 		$all_day          = isset( $_POST['ai1ec_all_day_event'] )    ? 1                                             : 0;
+		$instant_event    = isset( $_POST['ai1ec_instant_event'] )    ? 1                                             : 0;
 		$start_time       = isset( $_POST['ai1ec_start_time'] )       ? $_POST['ai1ec_start_time']                    : '';
 		$end_time         = isset( $_POST['ai1ec_end_time'] )         ? $_POST['ai1ec_end_time']                      : '';
-		$venue            = isset( $_POST['ai1ec_venue'] )            ? stripslashes( $_POST['ai1ec_venue'] )         : '';
-		$address          = isset( $_POST['ai1ec_address'] )          ? stripslashes( $_POST['ai1ec_address'] )       : '';
-		$city             = isset( $_POST['ai1ec_city'] )             ? stripslashes( $_POST['ai1ec_city'] )          : '';
-		$province         = isset( $_POST['ai1ec_province'] )         ? stripslashes( $_POST['ai1ec_province'] )      : '';
-		$postal_code      = isset( $_POST['ai1ec_postal_code'] )      ? stripslashes( $_POST['ai1ec_postal_code'] )   : '';
-		$country          = isset( $_POST['ai1ec_country'] )          ? stripslashes( $_POST['ai1ec_country'] )       : '';
+		$venue            = isset( $_POST['ai1ec_venue'] )            ? $_POST['ai1ec_venue']                         : '';
+		$address          = isset( $_POST['ai1ec_address'] )          ? $_POST['ai1ec_address']                       : '';
+		$city             = isset( $_POST['ai1ec_city'] )             ? $_POST['ai1ec_city']                          : '';
+		$province         = isset( $_POST['ai1ec_province'] )         ? $_POST['ai1ec_province']                      : '';
+		$postal_code      = isset( $_POST['ai1ec_postal_code'] )      ? $_POST['ai1ec_postal_code']                   : '';
+		$country          = isset( $_POST['ai1ec_country'] )          ? $_POST['ai1ec_country']                       : '';
 		$google_map       = isset( $_POST['ai1ec_google_map'] )       ? 1                                             : 0;
-		$cost             = isset( $_POST['ai1ec_cost'] )             ? stripslashes( $_POST['ai1ec_cost'] )          : '';
-		$contact_name     = isset( $_POST['ai1ec_contact_name'] )     ? stripslashes( $_POST['ai1ec_contact_name'] )  : '';
-		$contact_phone    = isset( $_POST['ai1ec_contact_phone'] )    ? stripslashes( $_POST['ai1ec_contact_phone'] ) : '';
-		$contact_email    = isset( $_POST['ai1ec_contact_email'] )    ? stripslashes( $_POST['ai1ec_contact_email'] ) : '';
+		$cost             = isset( $_POST['ai1ec_cost'] )             ? $_POST['ai1ec_cost']                          : '';
+		$ticket_url       = isset( $_POST['ai1ec_ticket_url'] )       ? $_POST['ai1ec_ticket_url']                    : '';
+		$contact_name     = isset( $_POST['ai1ec_contact_name'] )     ? $_POST['ai1ec_contact_name']                  : '';
+		$contact_phone    = isset( $_POST['ai1ec_contact_phone'] )    ? $_POST['ai1ec_contact_phone']                 : '';
+		$contact_email    = isset( $_POST['ai1ec_contact_email'] )    ? $_POST['ai1ec_contact_email']                 : '';
+		$contact_url      = isset( $_POST['ai1ec_contact_url'] )      ? $_POST['ai1ec_contact_url']                   : '';
 		$show_coordinates = isset( $_POST['ai1ec_input_coordinates'] )? 1                                             : 0;
-		$longitude        = isset( $_POST['ai1ec_longitude'] )        ? stripslashes( $_POST['ai1ec_longitude'] )     : '';
-		$latitude         = isset( $_POST['ai1ec_latitude'] )         ? stripslashes( $_POST['ai1ec_latitude'] )      : '';
+		$longitude        = isset( $_POST['ai1ec_longitude'] )        ? $_POST['ai1ec_longitude']                     : '';
+		$latitude         = isset( $_POST['ai1ec_latitude'] )         ? $_POST['ai1ec_latitude']                      : '';
 
 		$rrule  = null;
 		$exrule = null;
@@ -389,10 +589,15 @@ class Ai1ec_Events_Controller {
 			$event = new Ai1ec_Event();
 			$event->post_id = $post_id;
 		}
+		// If the events is marked as instant, make it last 30 minutes
+		if( $instant_event ) {
+			$end_time = $start_time + 1800;
+		}
 
 		$event->start               = $ai1ec_events_helper->local_to_gmt( $start_time );
 		$event->end                 = $ai1ec_events_helper->local_to_gmt( $end_time );
 		$event->allday              = $all_day;
+		$event->instant_event       = $instant_event;
 		$event->venue               = $venue;
 		$event->address             = $address;
 		$event->city                = $city;
@@ -401,26 +606,30 @@ class Ai1ec_Events_Controller {
 		$event->country             = $country;
 		$event->show_map            = $google_map;
 		$event->cost                = $cost;
+		$event->ticket_url          = $ticket_url;
 		$event->contact_name        = $contact_name;
 		$event->contact_phone       = $contact_phone;
 		$event->contact_email       = $contact_email;
+		$event->contact_url         = $contact_url;
 		$event->recurrence_rules    = $rrule;
 		$event->exception_rules     = $exrule;
 		$event->exception_dates     = $exdate;
 		$event->show_coordinates    = $show_coordinates;
 		$event->longitude           = trim( $longitude ) !== '' ? (float) $longitude : NULL;
 		$event->latitude            = trim( $latitude ) !== '' ? (float) $latitude : NULL;
-		// if we are not saving a draft, give the event to the plugins
-		if( $post->post_status !== 'draft' ) {
+
+		// if we are not saving a draft, give the event to the plugins. Also do not pass events that are imported from facebook
+		if( $post->post_status !== 'draft' && $event->facebook_status !== Ai1ecFacebookConnectorPlugin::FB_IMPORTED_EVENT ) {
 			$ai1ec_importer_plugin_helper->handle_post_event( $event, 'save' );
 		}
-
-
 		$event->save( ! $is_new );
 
 		$ai1ec_events_helper->delete_event_cache( $post_id );
 		$ai1ec_events_helper->cache_event( $event );
-		return;
+		// LABEL:magicquotes
+		// restore `magic` WordPress quotes to maintain compatibility
+		$_POST = add_magic_quotes( $_POST );
+		return $event;
 	}
 
 	/**
@@ -446,7 +655,11 @@ class Ai1ec_Events_Controller {
 			8 => sprintf( __( 'Event submitted. <a target="_blank" href="%s">Preview event</a>', AI1EC_PLUGIN_NAME ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 			9 => sprintf( __( 'Event scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview event</a>', AI1EC_PLUGIN_NAME ),
 				// translators: Publish box date format, see http://php.net/date
-				date_i18n( __( 'M j, Y @ G:i', AI1EC_PLUGIN_NAME ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+				Ai1ec_Time_Utility::date_i18n(
+					__( 'M j, Y @ G:i', AI1EC_PLUGIN_NAME ),
+					strtotime( $post->post_date )
+				),
+				esc_url( get_permalink($post_ID) ) ),
 			10 => sprintf( __( 'Event draft updated. <a target="_blank" href="%s">Preview event</a>', AI1EC_PLUGIN_NAME ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 		);
 
@@ -466,11 +679,47 @@ class Ai1ec_Events_Controller {
 	function event_content( $content )
 	{
 		global $ai1ec_events_helper;
-		if( get_post_type() == AI1EC_POST_TYPE ) {
+		if( get_post_type() === AI1EC_POST_TYPE ) {
 			$event = $ai1ec_events_helper->get_event( get_the_ID() );
 			$content = $this->get_view( $event, $content );
 		}
 		return $content;
+	}
+
+	/**
+	 * Create the html for the event to be sent thorugh jsonp
+	 *
+	 * @return string
+	 */
+	public function event_content_jsonp( Ai1ec_Abstract_Query $request ) {
+		global $ai1ec_events_helper;
+		$event   = $ai1ec_events_helper->get_event( get_the_ID() );
+		$event->set_request( $request );
+		$title   = apply_filters(
+			'the_title',
+			$event->post->post_title,
+			$event->post_id
+		);
+		$content = $this->get_view(
+			$event,
+			wpautop(
+				apply_filters( 'the_content', $event->post->post_content )
+			)
+		);
+		$article = <<<HTML
+	<article>
+		<header>
+			<h1>
+				$title
+			</h1>
+		</header>
+		<div class="entry-content">
+			$content
+		</div>
+	</article>
+HTML;
+
+		return $article;
 	}
 
 	/**
@@ -486,8 +735,9 @@ class Ai1ec_Events_Controller {
 		global $ai1ec_view_helper,
 		       $ai1ec_events_helper;
 
-		if( get_post_type() != AI1EC_POST_TYPE )
+		if ( get_post_type() != AI1EC_POST_TYPE ) {
 			return $text;
+		}
 
 		$event = new Ai1ec_Event( get_the_ID() );
 
@@ -497,10 +747,11 @@ class Ai1ec_Events_Controller {
 
 		// Re-apply any filters to the post content that normally would have been
 		// applied if it weren't for our interference (below).
-		echo
-		 	shortcode_unautop( wpautop(
-				$ai1ec_events_helper->trim_excerpt( $event->post->post_content )
-			) );
+		echo shortcode_unautop( wpautop(
+				$ai1ec_events_helper->trim_excerpt(
+					apply_filters( 'the_content', $event->post->post_content )
+				)
+		) );
 
 		$page_content = ob_get_contents();
 		ob_end_clean();
@@ -516,16 +767,14 @@ class Ai1ec_Events_Controller {
 	 *
 	 * @return void
 	 **/
-	function event_excerpt_noautop( $content )
-	{
-		if( get_post_type() != AI1EC_POST_TYPE )
+	function event_excerpt_noautop( $content ) {
+		if ( get_post_type() != AI1EC_POST_TYPE ) {
 			return wpautop( $content );
+		}
 		return $content;
 	}
 
 	/**
-	 * get_view function
-	 *
 	 * Returns the appropriate output to prepend to an event post, depending on
 	 * WP loop context.
 	 *
@@ -533,7 +782,7 @@ class Ai1ec_Events_Controller {
 	 * @param string $content     The post's original content
 	 *
 	 * @return string             The event data markup to prepend to the post content
-	 **/
+	 */
 	function get_view( &$event, &$content )
 	{
 		global $ai1ec_view_helper;
@@ -557,89 +806,95 @@ class Ai1ec_Events_Controller {
 	}
 
 	/**
-	 * single_view function
-	 *
 	 * Outputs event-specific details as HTML to be prepended to post content
 	 * when displayed as a single page.
 	 *
 	 * @param Ai1ec_Event $event  The event being displayed
-	 *
-	 * @return void
-	 **/
-	function single_view( &$event )
-	{
+	 */
+	function single_view( $event ) {
 		global $ai1ec_view_helper,
 		       $ai1ec_calendar_helper,
 		       $ai1ec_settings;
 
 		$subscribe_url = AI1EC_EXPORT_URL . "&ai1ec_post_ids=$event->post_id";
 		$subscribe_url = str_replace( 'webcal://', 'http://', $subscribe_url );
-
 		$args = array(
-			'event'                   => &$event,
-			'recurrence'              => $event->recurrence_html,
-			'exclude'                 => $event->exclude_html,
-			'categories'              => $event->categories_html,
-			'tags'                    => $event->tags_html,
-			'location'                => nl2br( $event->location ),
+			'event'                   => $event,
+			'recurrence'              => $event->get_recurrence_html(),
+			'exclude'                 => $event->get_exclude_html(),
+			'categories'              => $event->get_categories_html(),
+			'tags'                    => $event->get_tags_html(),
+			'location'                => nl2br(
+				esc_html( $event->get_location() )
+			),
 			'map'                     => $this->get_map_view( $event ),
-			'contact'                 => $event->contact_html,
-			'calendar_url'            => $ai1ec_calendar_helper->get_calendar_url( $event ),
+			'contact'                 => $event->get_contact_html(),
+			'back_to_calendar'        => $event->get_back_to_calendar_button_html(),
 			'subscribe_url'           => $subscribe_url,
+			'edit_instance_url'       => NULL,
+			'edit_instance_text'      => NULL,
 			'google_url'              => 'http://www.google.com/calendar/render?cid=' . urlencode( $subscribe_url ),
 			'show_subscribe_buttons'  => ! $ai1ec_settings->turn_off_subscription_buttons
 		);
+		if (
+			! empty( $args['recurrence'] ) &&
+			! empty( $event->instance_id ) &&
+			current_user_can( 'edit_ai1ec_events' )
+		) {
+			$args['edit_instance_url'] = admin_url(
+				'post.php?post=' . $event->post_id .
+				'&action=edit&instance=' . $event->instance_id
+			);
+			$args['edit_instance_text'] = sprintf(
+				__( 'Edit this occurrence (%s)', AI1EC_PLUGIN_NAME ),
+				$event->get_short_start_date()
+			);
+		}
 		$ai1ec_view_helper->display_theme( 'event-single.php', $args );
 	}
 
 	/**
-	 * multi_view function
-	 *
 	 * Outputs event-specific details as HTML to be prepended to post content
-	 * when displayed in a loop alongside other posts.
+	 * when displayed in a loop alongside other event posts.
 	 *
 	 * @param Ai1ec_Event $event  The event being displayed
-	 *
-	 * @return void
-	 **/
-	function multi_view( &$event )
-	{
+	 */
+	function multi_view( $event ) {
 		global $ai1ec_view_helper,
 		       $ai1ec_calendar_helper;
 
-		$location = str_replace( "\n", ', ', rtrim( $event->location ) );
+		$location = esc_html(
+			str_replace( "\n", ', ', rtrim( $event->get_location() ) )
+		);
 
 		$args = array(
-			'event' => &$event,
-			'recurrence' => $event->recurrence_html,
-			'categories' => $event->categories_html,
-			'tags' => $event->tags_html,
-			'location' => $location,
-			'contact' => $event->contact_html,
-			'calendar_url' => $ai1ec_calendar_helper->get_calendar_url( $event ),
+			'event'              => $event,
+			'recurrence'         => $event->get_recurrence_html(),
+			'categories'         => $event->get_categories_html(),
+			'tags'               => $event->get_tags_html(),
+			'location'           => $location,
+			'contact'            => $event->get_contact_html(),
+			'calendar_url'       => $ai1ec_calendar_helper->get_calendar_url(),
 		);
 		$ai1ec_view_helper->display_theme( 'event-multi.php', $args );
 	}
 
 	/**
-	 * excerpt_view function
-	 *
 	 * Outputs event-specific details as HTML to be prepended to post content
 	 * when displayed in an excerpt format.
 	 *
 	 * @param Ai1ec_Event $event  The event being displayed
-	 *
-	 * @return void
-	 **/
-	function excerpt_view( &$event )
-	{
+	 */
+	function excerpt_view( $event ) {
 		global $ai1ec_view_helper,
 		       $ai1ec_calendar_helper;
 
-		$location = str_replace( "\n", ', ', rtrim( $event->location ) );
+		$location = esc_html(
+			str_replace( "\n", ', ', rtrim( $event->get_location() ) )
+		);
 
 		$args = array(
-			'event'    => &$event,
+			'event'    => $event,
 			'location' => $location,
 		);
 		$ai1ec_view_helper->display_theme( 'event-excerpt.php', $args );
@@ -752,25 +1007,102 @@ class Ai1ec_Events_Controller {
 	  $wpdb->insert( $table_name, array( 'term_id' => $term_id, 'term_color' => $tag_color_value ), array( '%d', '%s' ) );
 	}
 
+	/**
+	 * edited_events_categories method
+	 *
+	 * A callback method, triggered when `event_categories' are being edited
+	 *
+	 * @param int $term_id ID of term (category) being edited
+	 *
+	 * @return void Method does not return
+	 */
 	function edited_events_categories( $term_id ) {
-	  global $wpdb;
-	  $tag_color_value = '';
-	  if( isset( $_POST["tag-color-value"] ) && ! empty( $_POST["tag-color-value"] ) ) {
-	    $tag_color_value = $_POST["tag-color-value"];
-	  }
+		global $wpdb;
+		$tag_color_value = '';
+		if (
+			isset( $_POST['tag-color-value'] ) &&
+			! empty( $_POST['tag-color-value'] )
+		) {
+			$tag_color_value = $_POST['tag-color-value'];
+		}
 
-	  $table_name = $wpdb->prefix . 'ai1ec_event_category_colors';
-	  $term = $wpdb->get_var( $wpdb->prepare( "SELECT term_id FROM {$table_name} WHERE term_id = %d", $term_id ) );
+		$table_name = $wpdb->prefix . 'ai1ec_event_category_colors';
+		$term       = $wpdb->get_row( $wpdb->prepare(
+				'SELECT term_id, term_color' .
+				' FROM ' . $table_name .
+				' WHERE term_id = %d',
+				$term_id
+		) );
 
-	  if( is_null( $term ) ) {
-	    // term doesn't exist, create it
-	    $wpdb->insert( $table_name, array( 'term_id' => $term_id, 'term_color' => $tag_color_value ), array( '%d', '%s' ) );
-	  } else {
-	    // term exist, update it
-	    $wpdb->update( $table_name, array( 'term_color' => $tag_color_value ), array( 'term_id' => $term_id ), array( '%s' ), array( '%d' ) );
-	  }
-
-
+		if ( NULL === $term ) { // term does not exist, create it
+			$wpdb->insert(
+				$table_name,
+				array(
+					'term_id'    => $term_id,
+					'term_color' => $tag_color_value,
+				),
+				array(
+					'%d',
+					'%s',
+				)
+			);
+		} else { // term exist, update it
+			if ( NULL === $tag_color_value ) {
+				$tag_color_value = $term->term_color;
+			}
+			$wpdb->update(
+				$table_name,
+				array( 'term_color' => $tag_color_value ),
+				array( 'term_id'    => $term_id ),
+				array( '%s' ),
+				array( '%d' )
+			);
+		}
 	}
+
+	/**
+	 * _create_duplicate_post method
+	 *
+	 * Create copy of event by calling {@uses wp_insert_post} function.
+	 * Using 'post_parent' to add hierarchy.
+	 *
+	 * @param array $data Event instance data to copy
+	 *
+	 * @return int|bool New post ID or false on failure
+	 **/
+	protected function _create_duplicate_post( ) {
+		global $ai1ec_events_helper;
+		if ( ! isset( $_POST['post_ID'] ) ) {
+			return false;
+		}
+		$clean_fields = array(
+			'ai1ec_repeat'      => NULL,
+			'ai1ec_rrule'       => '',
+			'ai1ec_exrule'      => '',
+			'ai1ec_exdate'      => '',
+			'post_ID'           => NULL,
+			'post_name'         => NULL,
+			'ai1ec_instance_id' => NULL,
+		);
+		$old_post_id = $_POST['post_ID'];
+		$instance_id = $_POST['ai1ec_instance_id'];
+		foreach ( $clean_fields as $field => $to_value ) {
+			if ( NULL === $to_value ) {
+				unset( $_POST[$field] );
+			} else {
+				$_POST[$field] = $to_value;
+			}
+		}
+		$_POST   = _wp_translate_postdata( false, $_POST );
+		$_POST['post_parent'] = $old_post_id;
+		$post_id = wp_insert_post( $_POST );
+		$ai1ec_events_helper->event_parent(
+			$post_id,
+			$old_post_id,
+			$instance_id
+		);
+		return $post_id;
+	}
+
 }
 // END class

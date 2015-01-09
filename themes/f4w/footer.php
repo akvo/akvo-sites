@@ -21,7 +21,7 @@
                         </a>
                     </div>
                     <div id="iDivPoweredByText">
-                        Copyright Football For Water. All rights reserved.
+                         <a href="/licensing-and-copyrights">Copyright</a>. Some rights reserved.
                     </div>
                     
                 </div>

@@ -41,18 +41,7 @@ class slickr_flickr_api_photo {
 
   /* Function that removes all quotes */
   function cleanup($s = null) {
-    return $s?str_replace("\n", "<br/>",$this->handle_quotes($s)):false;
-  }
-  
-  function handle_quotes($s='',$recurring=0) {
-  	if ($s && ($recurring < 4) && (substr_count($s,'"') >= 2)) {
-		$pattern = '/(.*)\"(.*)\"(.*)/';
-		$replace = '${1}&ldquo;${2}&rdquo;${3}';
-		$s = preg_replace($pattern, $replace, $s);  		
-		return $this->handle_quotes($s,$recurring+1);
-  	} else {
-		return str_replace('"', '&quot;', $s); 
-  	}
+    return $s?str_replace("\n", "<br/>",$s):false;
   }
 
   /* Function that returns the correctly sized photo URL. */

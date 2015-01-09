@@ -34,7 +34,9 @@ class Ai1ec_Agenda_Widget extends WP_Widget {
 
 		$default = array(
 			'title'                  => __( 'Upcoming Events', AI1EC_PLUGIN_NAME ),
+			'events_seek_type'       => 'events',
 			'events_per_page'        => 10,
+			'days_per_page'          => 10,
 			'show_subscribe_buttons' => true,
 			'show_calendar_button'   => true,
 			'hide_on_calendar_page'  => true,
@@ -56,7 +58,9 @@ class Ai1ec_Agenda_Widget extends WP_Widget {
 		// Generate unique IDs and NAMEs of all needed form fields
 		$fields = array(
 			'title'                  => array('value'   => $instance['title']),
+			'events_seek_type'       => array('value'   => $instance['events_seek_type']),
 			'events_per_page'        => array('value'   => $instance['events_per_page']),
+			'days_per_page'          => array('value'   => $instance['days_per_page']),
 			'show_subscribe_buttons' => array('value'   => $instance['show_subscribe_buttons']),
 			'show_calendar_button'   => array('value'   => $instance['show_calendar_button']),
 			'hide_on_calendar_page'  => array('value'   => $instance['hide_on_calendar_page']),
@@ -103,11 +107,22 @@ class Ai1ec_Agenda_Widget extends WP_Widget {
 		// Save existing data as a base to modify with new data
 		$instance = $old_instance;
 		$instance['title']                  = strip_tags( $new_instance['title'] );
-		$instance['events_per_page']        = intval( $new_instance['events_per_page'] );
-		if( $instance['events_per_page'] < 1 ) $instance['events_per_page'] = 1;
+		$instance['events_per_page']        = Ai1ec_Number_Utility::index(
+			$new_instance['events_per_page'],
+			1,
+			1
+		);
+		$instance['days_per_page']          = Ai1ec_Number_Utility::index(
+			$new_instance['days_per_page'],
+			1,
+			1
+		);
+		$instance['events_seek_type']       = $this->_valid_seek_type(
+			$new_instance['events_seek_type']
+		);
 		$instance['show_subscribe_buttons'] = $new_instance['show_subscribe_buttons'] ? true : false;
-		$instance['show_calendar_button']   = $new_instance['show_calendar_button'] ? true : false;
-		$instance['hide_on_calendar_page']  = $new_instance['hide_on_calendar_page'] ? true : false;
+		$instance['show_calendar_button']   = $new_instance['show_calendar_button']   ? true : false;
+		$instance['hide_on_calendar_page']  = $new_instance['hide_on_calendar_page']  ? true : false;
 
 		// For limits, set the limit to False if no IDs were selected, or set the respective IDs to empty if "limit by" was unchecked
 		$instance['limit_by_cat'] = false;
@@ -162,7 +177,12 @@ class Ai1ec_Agenda_Widget extends WP_Widget {
 		global $ai1ec_view_helper,
 		       $ai1ec_events_helper,
 		       $ai1ec_calendar_helper,
-		       $ai1ec_settings;
+		       $ai1ec_settings,
+		       $ai1ec_themes_controller;
+
+		if ( $ai1ec_themes_controller->frontend_outdated_themes_notice() ) {
+			return;
+		}
 
 		$defaults = array(
 			'hide_on_calendar_page'  => true,
@@ -170,12 +190,15 @@ class Ai1ec_Agenda_Widget extends WP_Widget {
 			'event_tag_ids'          => array(),
 			'event_post_ids'         => array(),
 			'events_per_page'        => 10,
+			'days_per_page'          => 10,
+			'events_seek_type'       => 'events',
 		);
 		$instance = wp_parse_args( $instance, $defaults );
 
 		if( $instance['hide_on_calendar_page'] &&
-		    is_page( $ai1ec_settings->calendar_page_id ) )
+		    is_page( $ai1ec_settings->calendar_page_id ) ) {
 			return;
+		}
 
 		// Add params to the subscribe_url for filtering by Limits (category, tag)
 		$subscribe_filter  = '';
@@ -184,7 +207,9 @@ class Ai1ec_Agenda_Widget extends WP_Widget {
 		$subscribe_filter .= $instance['event_post_ids'] ? '&ai1ec_post_ids=' . join( ',', $instance['event_post_ids'] ) : '';
 
 		// Get localized time
-		$timestamp = $ai1ec_events_helper->gmt_to_local( time() );
+		$timestamp = $ai1ec_events_helper->gmt_to_local(
+			Ai1ec_Time_Utility::current_time()
+		);
 
 		// Set $limit to the specified category/tag
 		$limit = array(
@@ -194,9 +219,32 @@ class Ai1ec_Agenda_Widget extends WP_Widget {
 		              );
 
 		// Get events, then classify into date array
+		// JB: apply seek check here
+		$seek_days  = ( 'days' === $instance['events_seek_type'] );
+		$seek_count = $instance['events_per_page'];
+		$last_day   = false;
+		if ( $seek_days ) {
+			$seek_count = $instance['days_per_page'] * 5;
+			$last_day   = strtotime(
+				'+' . $instance['days_per_page'] . ' days'
+			);
+		}
 		$event_results = $ai1ec_calendar_helper->get_events_relative_to(
-			$timestamp, $instance['events_per_page'], 0, $limit );
-		$dates = $ai1ec_calendar_helper->get_agenda_date_array( $event_results['events'] );
+			$timestamp,
+			$seek_count,
+			0,
+			$limit
+		);
+		if ( $seek_days ) {
+			foreach ( $event_results['events'] as $ek => $event ) {
+				if ( $event->start >= $last_day ) {
+					unset( $event_results['events'][$ek] );
+				}
+			}
+		}
+
+		$dates = $ai1ec_calendar_helper->get_agenda_like_date_array( $event_results['events'] );
+
 
 		$args['title']                  = $instance['title'];
 		$args['show_subscribe_buttons'] = $instance['show_subscribe_buttons'];
@@ -204,9 +252,27 @@ class Ai1ec_Agenda_Widget extends WP_Widget {
 		$args['dates']                  = $dates;
 		$args['show_location_in_title'] = $ai1ec_settings->show_location_in_title;
 		$args['show_year_in_agenda_dates'] = $ai1ec_settings->show_year_in_agenda_dates;
-		$args['calendar_url']           = $ai1ec_calendar_helper->get_calendar_url( null, $limit );
+		$args['calendar_url']           = $ai1ec_calendar_helper->get_calendar_url( $limit );
 		$args['subscribe_url']          = AI1EC_EXPORT_URL . $subscribe_filter;
 
 		$ai1ec_view_helper->display_theme( 'agenda-widget.php', $args );
 	}
+
+	/**
+	 * _valid_seek_type method
+	 *
+	 * Return valid seek type for given user input (selection).
+	 *
+	 * @param string $value User selection for seek type
+	 *
+	 * @return string Seek type to use
+	 */
+	protected function _valid_seek_type( $value ) {
+		static $list = array( 'events', 'days' );
+		if ( ! in_array( $value, $list ) ) {
+			return (string)reset( $list );
+		}
+		return $value;
+	}
+
 }

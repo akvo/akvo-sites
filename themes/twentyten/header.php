@@ -50,6 +50,9 @@
 	 */
 	wp_head();
 ?>
+<script type="text/javascript">
+//document.location.href="http://www.akvo.org";
+</script>
 </head>
 
 <body <?php body_class(); ?>>

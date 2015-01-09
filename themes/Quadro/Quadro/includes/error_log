@@ -1,1 +1,0 @@
-[13-Nov-2012 19:40:55] PHP Fatal error:  Call to undefined function get_categories() in /home/akvokomi/public_html/wp-content/themes/Quadro/includes/tabs.php on line 10

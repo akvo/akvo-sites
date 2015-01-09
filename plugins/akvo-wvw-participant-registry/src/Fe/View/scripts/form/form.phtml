@@ -1,0 +1,23 @@
+<?php
+if (isset($aContent['form_error']) && !is_null($aContent['form_error'])) {
+?>
+<div class="cDivOverallFormError">
+	<?php echo $aContent['form_error']; ?>
+</div>
+<?php
+}
+if(isset($aContent['form_valid']) && !is_null($aContent['form_valid'])){
+    echo $aContent['form_valid'];
+}else{
+?>
+<script type="text/javascript">
+ var RecaptchaOptions = {
+    theme : 'clean'
+ };
+ </script>
+<?php
+if (isset($aContent['form'])) {
+	echo $aContent['form'];
+}
+}
+?>

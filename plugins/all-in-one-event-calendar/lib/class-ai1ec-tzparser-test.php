@@ -32,6 +32,7 @@ class Ai1ec_Tzparser_Test
 		return array(
 			'Europe/Vilnius',
 			'America/New York' => 'America/New_York',
+			'US/Eastern'       => 'America/New_York',
 		);
 	}
 

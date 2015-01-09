@@ -12,7 +12,8 @@
  * @package Helpers
  * @author time.ly
  **/
-class Ai1ec_Platform_Helper {
+class Ai1ec_Platform_Helper
+{
 	/**
 	 * Class instance.
 	 *
@@ -48,11 +49,23 @@ class Ai1ec_Platform_Helper {
 	function modify_roles() {
 		global $ai1ec_settings;
 
-		// Modify capabilities of most roles; remove roles if in platform mode, or
-		// add them back if not.
-		$action = $ai1ec_settings->event_platform_active ? 'remove_cap' : 'add_cap';
-		foreach( array( 'administrator', 'editor', 'author', 'contributor' ) as $role_name ) {
+		// Modify capabilities of most roles; remove roles if in platform mode,
+		// or add them back if not.
+		$action    = $ai1ec_settings->event_platform_active
+		             ? 'remove_cap'
+		             : 'add_cap';
+		$role_list = array(
+			'administrator',
+			'editor',
+			'author',
+			'contributor'
+		);
+		foreach ( $role_list as $role_name ) {
 			$role = get_role( $role_name );
+
+			if ( NULL === $role || ! ( $role instanceof WP_Role ) ) {
+				continue;
+			}
 
 			switch( $role_name ) {
 				case 'administrator':
@@ -66,9 +79,11 @@ class Ai1ec_Platform_Helper {
 					$role->$action( 'export' );
 					$role->$action( 'import' );
 					$role->$action( 'install_plugins' );
-					$role->$action( 'install_themes' );
+					// The admin must always be able to update themes
+					$role->add_cap( 'install_themes' );
 					$role->$action( 'manage_options' );
 					$role->$action( 'switch_themes' );
+
 				case 'editor':
 					$role->$action( 'delete_others_pages' );
 					$role->$action( 'delete_others_posts' );
@@ -87,10 +102,12 @@ class Ai1ec_Platform_Helper {
 					$role->$action( 'publish_pages' );
 					$role->$action( 'read_private_pages' );
 					$role->$action( 'read_private_posts' );
+
 				case 'author':
 					$role->$action( 'delete_published_posts' );
 					$role->$action( 'edit_published_posts' );
 					$role->$action( 'publish_posts' );
+
 				case 'contributor':
 					$role->$action( 'edit_posts' );
 					$role->$action( 'delete_posts' );
@@ -232,7 +249,12 @@ class Ai1ec_Platform_Helper {
 		echo "\n\t".'<div class="versions">';
 
 		// Check if search engines are blocked.
-		if ( !is_network_admin() && !is_user_admin() && current_user_can('manage_options') && '1' != get_option('blog_public') ) {
+		if (
+			! is_network_admin() &&
+			! is_user_admin() &&
+			current_user_can('manage_options') &&
+			'1' != Ai1ec_Meta::get_option( 'blog_public' )
+		) {
 			$title = apply_filters('privacy_on_link_title', __('Your site is asking search engines not to index its content') );
 			$content = apply_filters('privacy_on_link_text', __('Search Engines Blocked') );
 
@@ -287,7 +309,7 @@ class Ai1ec_Platform_Helper {
 			'feeds_allowed' => current_user_can( 'manage_ai1ec_options' ),
 			'settings_allowed' => current_user_can( 'manage_ai1ec_options' ),
 			'add_url' => admin_url( 'post-new.php?post_type=' . AI1EC_POST_TYPE ),
-			'edit_url' => admin_url( 'edit.php?post_type=' . AI1EC_POST_TYPE ),
+			'edit_url' => admin_url( AI1EC_ADMIN_BASE_URL ),
 			'categories_url' => admin_url( 'edit-tags.php?taxonomy=events_categories&post_type=' . AI1EC_POST_TYPE ),
 			'themes_url' => admin_url( AI1EC_THEME_SELECTION_BASE_URL ),
 			'feeds_url' => admin_url( AI1EC_FEED_SETTINGS_BASE_URL ),
@@ -301,10 +323,9 @@ class Ai1ec_Platform_Helper {
 	 */
 	function ai1ec_general_settings_before() {
 		?>
-		<div class="blogname-container">
+		<div class="blogname-container clearfix">
 		  <label class="textinput" for="blogname"><?php _e( 'Site Title' ); ?>:</label>
-		  <div class="alignleft"><input name="blogname" type="text" id="blogname" value="<?php form_option('blogname'); ?>" class="regular-text" /></div>
-		  <br class="clear" />
+		  <div class="pull-left"><input name="blogname" type="text" id="blogname" value="<?php form_option('blogname'); ?>" class="regular-text" /></div>
 		</div>
 		<?php
 	}
@@ -316,7 +337,8 @@ class Ai1ec_Platform_Helper {
 	 * @param array $params Settings that were saved in key => value structure
 	 */
 	function ai1ec_save_settings( $settings_page, $params ) {
-		if( $settings_page == 'settings' ) {
+		// When you activate the platfrom mode for the first time, the field is not present so do not save.
+		if( $settings_page === 'settings' && isset( $_POST['blogname'] ) ) {
 			// Do essentially the same thing WP does when it saves the blog name.
 			$value = trim($params['blogname']);
 			$value = stripslashes_deep($value);

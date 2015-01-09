@@ -1,0 +1,385 @@
+<?php
+$sWrapperId = '';
+$sTemporaryWrapperId = $this->element->getParameter('wrapper_id');
+
+if (is_null($sTemporaryWrapperId)) {
+	$sFormId = $this->element->getAttrib('id');
+	if ($sFormId != '') {
+		$sWrapperId = 'iDivWrapperFor' . $sFormId;
+	}
+} else {
+	$sWrapperId = $sTemporaryWrapperId;
+}
+
+$sWrapperAttributes = '';
+$sWrapperAttributes .= ' id="' . $sWrapperId . '"';
+$sWrapperAttributes .= ' class="cDivZendFormWrapper"';
+
+$sRequiredHtml = '<span class="cSpanFormElementRequired">*</span>';
+$sErrorClass = ' cError';
+?>
+
+<div<?php echo $sWrapperAttributes; ?>>
+	<div id="iDivFormResponseContainer"></div>
+	<form class="cFormParticipantRegistryRegistration"<?php include 'partials/form_attributes.phtml'; ?>>
+
+		<fieldset>
+
+			<div class="cDivFormHeading">
+				Organisation information
+			</div>
+
+		<div class="cDivFormSection cDivFormSectionLeft">
+
+<?php
+$sNameErrorClass = '';
+$sNameErrorHtml = '';
+$aNameErrors = $this->element->textName->getErrors();
+if (!empty($aNameErrors)) {
+	$aErrorMessages = $this->element->textName->getMessages();
+	$sNameErrorClass = $sErrorClass;
+	$sNameErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sNameErrorClass; ?>">
+				<label class="cLabelFormElement" for="textName">
+					<?php echo $this->element->textName->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textName; ?>
+				<?php echo $sNameErrorHtml; ?>
+			</div>
+<?php
+$sOrganisationNameErrorClass = '';
+$sOrganisationNameErrorHtml = '';
+$aOrganisationNameErrors = $this->element->textSupportOrganisation->getErrors();
+if (!empty($aOrganisationNameErrors)) {
+	$aErrorMessages = $this->element->textSupportOrganisation->getMessages();
+	$sOrganisationNameErrorClass = $sErrorClass;
+	$sOrganisationNameErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sOrganisationNameErrorClass; ?>">
+				<label class="cLabelFormElement" for="textSupportOrganisation">
+					<?php echo $this->element->textSupportOrganisation->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textSupportOrganisation; ?>
+				<?php echo $sOrganisationNameErrorHtml; ?>
+			</div>
+<?php
+$sContactNameErrorClass = '';
+$sContactNameErrorHtml = '';
+$aContactNameErrors = $this->element->textContactName->getErrors();
+if (!empty($aContactNameErrors)) {
+	$aErrorMessages = $this->element->textContactName->getMessages();
+	$sContactNameErrorClass = $sErrorClass;
+	$sContactNameErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sContactNameErrorClass; ?>">
+				<label class="cLabelFormElement" for="textContactName">
+					<?php echo $this->element->textContactName->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textContactName; ?>
+				<?php echo $sContactNameErrorHtml; ?>
+			</div>
+<?php
+$sEmailErrorClass = '';
+$sEmailErrorHtml = '';
+$aEmailErrors = $this->element->textEmail->getErrors();
+if (!empty($aEmailErrors)) {
+	$aErrorMessages = $this->element->textEmail->getMessages();
+	$sEmailErrorClass = $sErrorClass;
+	$sEmailErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sEmailErrorClass; ?>">
+				<label class="cLabelFormElement" for="textEmail">
+					<?php echo $this->element->textEmail->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textEmail; ?>
+				<?php echo $sEmailErrorHtml; ?>
+			</div>
+<?php
+$sEmailErrorClass = '';
+$sEmailErrorHtml = '';
+$aEmailErrors = $this->element->textConfirmEmail->getErrors();
+if (!empty($aEmailErrors)) {
+	$aErrorMessages = $this->element->textConfirmEmail->getMessages();
+	$sEmailErrorClass = $sErrorClass;
+	$sEmailErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sEmailErrorClass; ?>">
+				<label class="cLabelFormElement" for="textConfirmEmail">
+					<?php echo $this->element->textConfirmEmail->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textConfirmEmail; ?>
+				<?php echo $sEmailErrorHtml; ?>
+			</div>           
+
+            
+
+
+
+
+
+
+		</div>
+
+		<div class="cDivFormSection cDivFormSectionRight">
+<?php
+$sCountryErrorClass = '';
+$sCountryErrorHtml = '';
+$aCountryErrors = $this->element->textCountry->getErrors();
+if (!empty($aCountryErrors)) {
+	$aErrorMessages = $this->element->textCountry->getMessages();
+	$sCountryErrorClass = $sErrorClass;
+	$sCountryErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sCountryErrorClass; ?>">
+				<label class="cLabelFormElement" for="textCountry">
+					<?php echo $this->element->textCountry->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textCountry; ?>
+				<?php echo $sCountryErrorHtml; ?>
+			</div>
+
+<?php
+$sAddressErrorClass = '';
+$sAddressErrorHtml = '';
+$aAddressErrors = $this->element->textAddress1->getErrors();
+if (!empty($aAddressErrors)) {
+	$aErrorMessages = $this->element->textAddress1->getMessages();
+	$sAddressErrorClass = $sErrorClass;
+	$sAddressErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sAddressErrorClass; ?>">
+				<label class="cLabelFormElement" for="textAddress1">
+					<?php echo $this->element->textAddress1->getLabel(); ?><?php echo $sRequiredHtml; ?>
+				</label>
+				<?php echo $this->element->textAddress1; ?>
+				<?php echo $sAddressErrorHtml; ?>
+			</div>
+<?php
+$sAddressErrorClass = '';
+$sAddressErrorHtml = '';
+$aAddressErrors = $this->element->textAddress2->getErrors();
+if (!empty($aAddressErrors)) {
+	$aErrorMessages = $this->element->textAddress2->getMessages();
+	$sAddressErrorClass = $sErrorClass;
+	$sAddressErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sAddressErrorClass; ?>">
+				<label class="cLabelFormElement" for="textAddress2">
+					<?php echo $this->element->textAddress2->getLabel(); ?>
+				</label>
+				<?php echo $this->element->textAddress2; ?>
+				<?php echo $sAddressErrorHtml; ?>
+			</div>
+<?php
+$sAddressErrorClass = '';
+$sAddressErrorHtml = '';
+$aAddressErrors = $this->element->textAddress3->getErrors();
+if (!empty($aAddressErrors)) {
+	$aErrorMessages = $this->element->textAddress3->getMessages();
+	$sAddressErrorClass = $sErrorClass;
+	$sAddressErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+			<div class="cDivFormSectionElementBlock<?php echo $sAddressErrorClass; ?>">
+				<label class="cLabelFormElement" for="textAddress3">
+					<?php echo $this->element->textAddress3->getLabel(); ?>
+				</label>
+				<?php echo $this->element->textAddress3; ?>
+				<?php echo $sAddressErrorHtml; ?>
+			</div>
+
+		</div>
+
+        </fieldset>
+
+		<fieldset>
+
+			<div class="cDivFormHeading">
+				Walking for Water Event
+			</div>
+
+			
+
+			<div class="cDivFormSection cDivFormSectionLeft">
+
+<?php
+$sTotalStudentsErrorClass = '';
+$sTotalStudentsErrorHtml = '';
+$aTotalStudentsErrors = $this->element->textTotalStudents->getErrors();
+if (!empty($aTotalStudentsErrors)) {
+	$aErrorMessages = $this->element->textTotalStudents->getMessages();
+	$sTotalStudentsErrorClass = $sErrorClass;
+	$sTotalStudentsErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sTotalStudentsErrorClass; ?>">
+					<label class="cLabelFormElement" for="textTotalStudents">
+						<?php echo $this->element->textTotalStudents->getLabel(); ?><?php echo $sRequiredHtml; ?>
+					</label>
+					<?php echo $this->element->textTotalStudents; ?>
+					<?php echo $sTotalStudentsErrorHtml; ?>
+				</div>
+<?php
+$sTotalSchoolsErrorClass = '';
+$sTotalSchoolsErrorHtml = '';
+$aTotalSchoolsErrors = $this->element->textTotalSchools->getErrors();
+if (!empty($aTotalSchoolsErrors)) {
+	$aErrorMessages = $this->element->textTotalSchools->getMessages();
+	$sTotalSchoolsErrorClass = $sErrorClass;
+	$sTotalSchoolsErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sTotalSchoolsErrorClass; ?>">
+					<label class="cLabelFormElement" for="textTotalSchools">
+						<?php echo $this->element->textTotalSchools->getLabel(); ?><?php echo $sRequiredHtml; ?>
+					</label>
+					<?php echo $this->element->textTotalSchools; ?>
+					<?php echo $sTotalSchoolsErrorHtml; ?>
+				</div>
+
+			</div>
+
+
+			<div class="cDivFormSection cDivFormSectionRight">
+
+<?php
+$sSupportPointErrorClass = '';
+$sSupportPointErrorHtml = '';
+$aSupportPointErrors = $this->element->selectProject->getErrors();
+if (!empty($aSupportPointErrors)) {
+	$aErrorMessages = $this->element->selectProject->getMessages();
+	$sSupportPointErrorClass = $sErrorClass;
+	$sSupportPointErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sSupportPointErrorClass; ?>">
+					<label class="cLabelFormElement" for="selectProject">
+						<?php echo $this->element->selectProject->getLabel(); ?><?php echo $sRequiredHtml; ?>
+					</label>
+					<?php echo $this->element->selectProject; ?>
+					<?php echo $sSupportPointErrorHtml; ?>
+				</div>
+
+			
+
+<?php
+$sWalkDateErrorClass = '';
+$sWalkDateErrorHtml = '';
+$aWalkDateErrors = $this->element->textWalkDate->getErrors();
+if (!empty($aWalkDateErrors)) {
+	$aErrorMessages = $this->element->textWalkDate->getMessages();
+	$sWalkDateErrorClass = $sErrorClass;
+	$sWalkDateErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sWalkDateErrorClass; ?>">
+					<label class="cLabelFormElement" for="textWalkDate">
+						<?php echo $this->element->textWalkDate->getLabel(); ?>
+					</label>
+					<?php echo $this->element->textWalkDate; ?>
+					<?php echo $sWalkDateErrorHtml; ?>
+				</div>
+
+			</div>
+
+		</fieldset>
+
+		
+
+		<fieldset>
+
+			
+
+			<div class="cDivFormSection cDivFormSectionLeft">
+
+<?php
+$sCommentsErrorClass = '';
+$sCommentsErrorHtml = '';
+$aCommentsErrors = $this->element->textComments->getErrors();
+if (!empty($aCommentsErrors)) {
+	$aErrorMessages = $this->element->textComments->getMessages();
+	$sCommentsErrorClass = $sErrorClass;
+	$sCommentsErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock<?php echo $sCommentsErrorClass; ?>">
+					<label class="cLabelFormElement" for="textComments">
+						<?php echo $this->element->textComments->getLabel(); ?>
+					</label>
+					<?php echo $this->element->textComments; ?>
+					<?php echo $sCommentsErrorHtml; ?>
+				</div>
+
+			</div>
+
+			<div class="cDivFormSection cDivFormSectionRight">
+
+<?php
+$sAgreeErrorClass = '';
+$sAgreeErrorHtml = '';
+$aAgreeErrors = $this->element->checkboxAgree->getErrors();
+if (!empty($aAgreeErrors)) {
+	$aErrorMessages = $this->element->checkboxAgree->getMessages();
+	$sAgreeErrorClass = $sErrorClass;
+	$sAgreeErrorHtml = include 'partials/form_element_error_list.phtml';
+}
+?>
+				<div class="cDivFormSectionElementBlock cDivFormSectionElementBlockCheckbox<?php echo $sAgreeErrorClass; ?>">
+					<?php echo $this->element->checkboxAgree; ?>
+					<label class="cLabelFormElement" for="checkboxAgree">
+						<?php echo $this->element->checkboxAgree->getLabel(); ?><?php echo $sRequiredHtml; ?>
+					</label>
+					<?php echo $sAgreeErrorHtml; ?>
+				</div>
+
+
+			</div>
+
+
+		</fieldset>
+
+
+		<fieldset>
+
+			<div class="cDivFormHeading">
+				Anti-spam test. First enter the visible text, then click 'submit'.<?php echo $sRequiredHtml; ?>
+			</div>
+<?php
+
+
+$bShowRecaptcha = $this->element->getParameter('show_recaptcha');
+if (isset($bShowRecaptcha) && $bShowRecaptcha) {
+
+	$oRecaptcha = \KwgPress\Recaptcha::getInstance();
+	$sRecaptchaError = $oRecaptcha->error();
+	switch ($sRecaptchaError) {
+		case \KwgPress\Recaptcha::ERROR_INCORRECT_CAPTCHA:
+			$sRecaptchaError = 'Your CAPTCHA input was invalid. Please try again.';
+			break;
+	}
+	if (isset($sRecaptchaError) && !is_null($sRecaptchaError)) {
+?>
+			<div class="cDivReCaptchaError">
+				<?php echo $sRecaptchaError; ?>
+			</div>
+<?php
+	}
+	$oRecaptcha->render();
+}
+?>
+
+		</fieldset>
+
+		<?php echo $this->element->submitSubmit; ?>
+
+	</form>
+</div>

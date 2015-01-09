@@ -79,7 +79,7 @@ DESCRIPTION: Two-column fixed layout with one sidebar right of content
 #secondary {
 	float: right;
 	overflow: hidden;
-	width: 220px;
+	width: 150px;
 }
 #secondary {
 	clear: right;

@@ -14,7 +14,7 @@ class Ai1ecFacebookConnectorPlugin extends Ai1ec_Connector_Plugin {
 	const FB_VALID_APP_ID         = 'valid-app-id';
 	const FB_LOGGED_TIMEZONE      = 'facebook-logged-timezone';
 	// The permissions requred for the app.
-	const FB_SCOPE                          = 'user_events,friends_events,user_groups,manage_pages,create_event';
+	const FB_SCOPE                          = 'user_events,friends_events,user_groups,manage_pages,create_event,user_photos';
 	// The name of the plugin table
 	const FB_DB_TABLE                       = 'ai1ec_facebook_users';
 	// The plugin cron version
@@ -300,7 +300,7 @@ class Ai1ecFacebookConnectorPlugin extends Ai1ec_Connector_Plugin {
 				user_name varchar(255) NOT NULL,
 				user_pic varchar(255) NOT NULL,
 				subscribed tinyint(1) NOT NULL DEFAULT '0',
-				type varchar(20) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+				type varchar(20) NOT NULL,
 				tag varchar(255) NOT NULL DEFAULT '',
 				category int(11) NOT NULL DEFAULT '0',
 				comments_enabled tinyint(1) NOT NULL DEFAULT '1',
@@ -945,7 +945,6 @@ class Ai1ecFacebookConnectorPlugin extends Ai1ec_Connector_Plugin {
 		) {
 			$display_map = 1;
 		}
-
 		// Handle when the user wants to subscribe to his events
 		if( isset( $_POST['ai1ec_facebook_subscribe_yours'] ) ) {
 			// Get the user from session
@@ -1076,7 +1075,7 @@ class Ai1ecFacebookConnectorPlugin extends Ai1ec_Connector_Plugin {
 		$fgoc->set_type( $type );
 		try {
 			// Update the subscription status.
-			$fgoc->update_subscription_status( TRUE, $category, $tag );
+			$fgoc->update_subscription_status( true );
 			$this->_information_message[] = $fgoc->refresh_events();
 		} catch ( Ai1ec_Facebook_Db_Exception $e ) {
 			$this->_error_messages = array_merge( $this->_error_messages, $e->get_error_messages() );

@@ -1,17 +1,14 @@
 <?php
-//
-//  class-ai1ec-events-helper.php
-//  all-in-one-event-calendar
-//
-//  Created by The Seed Studio on 2011-07-13.
-//
 
 /**
- * Ai1ec_Events_Helper class
+ * Helper class for events.
  *
- * @package Helpers
- * @author time.ly
- **/
+ * @author     Timely Network Inc
+ * @since      2011.07.13
+ *
+ * @package    AllInOneEventCalendar
+ * @subpackage AllInOneEventCalendar.App.Helper
+ */
 class Ai1ec_Events_Helper {
 	/**
 	 * _instance class variable
@@ -94,10 +91,14 @@ class Ai1ec_Events_Helper {
 		$query = "SELECT post_id FROM {$table_name} " .
 			"WHERE ical_feed_url = %s " .
 			"AND ical_uid = %s " .
-			"AND start = FROM_UNIXTIME( %d ) " .
+			"AND start = %s " .
 			( $has_recurrence ? 'AND NOT ' : 'AND ' ) .
 			"( recurrence_rules IS NULL OR recurrence_rules = '' )";
-		$args = array( $feed, $uid, $start );
+		$args = array(
+			$feed,
+			$uid,
+			Ai1ec_Time_Utility::to_mysql_date( $start ),
+		);
 		if( ! is_null( $exclude_post_id ) ) {
 			$query .= 'AND post_id <> %d';
 			$args[] = $exclude_post_id;
@@ -123,6 +124,240 @@ class Ai1ec_Events_Helper {
 	}
 
 	/**
+	 * delete_event_instance_cache function
+	 *
+	 * Delete cache of event instance
+	 *
+	 * @param int $post_id     Event post ID
+	 * @param int $instance_id Event instance ID
+	 *
+	 * @return bool Success
+	 **/
+	public function delete_event_instance_cache( $post_id, $instance_id ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'ai1ec_event_instances';
+		$query      = 'DELETE FROM `' . $table_name .
+			'` WHERE `post_id` = %d AND `id` = %d';
+		$statement  = $wpdb->prepare( $query, $post_id, $instance_id );
+		return $wpdb->query( $statement );
+	}
+
+	/**
+	 * get the last day of a recurring event
+	 *
+	 * @param int $post_id
+	 */
+	public function get_final_instance_of_recurring_event( $post_id ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'ai1ec_event_instances';
+		$query = "SELECT end from $table_name WHERE post_id = %d ORDER BY end DESC limit 1";
+		$statement  = $wpdb->prepare( $query, $post_id );
+		$record     = $wpdb->get_var( $statement );
+		if ( ! empty( $record ) ) {
+			$record = Ai1ec_Time_Utility::from_mysql_date( $record );
+		}
+		return $record;
+	}
+
+	/**
+	 * when using BYday you need an array of arrays.
+	 * This function create valid arrays that keep into account the presence
+	 * of a week number beofre the day
+	 *
+	 * @param string $val
+	 * @return array
+	 */
+	private function create_byday_array( $val ) {
+		$week = substr( $val, 0, 1 );
+		if( is_numeric( $week ) ) {
+			return array( $week, 'DAY' => substr( $val, 1 ) );
+		} else {
+			return array( 'DAY' => $val );
+		}
+	}
+
+	/**
+	 * Parse a `recurrence rule' into an array that can be used to calculate
+	 * recurrence instances.
+	 *
+	 * @see http://kigkonsult.se/iCalcreator/docs/using.html#EXRULE
+	 *
+	 * @param string $rule
+	 * @return array
+	 */
+	private function build_recurrence_rules_array( $rule ) {
+		$rules     = array();
+		$rule_list = explode( ';', $rule );
+		foreach ( $rule_list as $single_rule ) {
+			if ( false === strpos( $single_rule, '=' ) ) {
+				continue;
+			}
+			list( $key, $val ) = explode( '=', $single_rule );
+			$key               = strtoupper( $key );
+			switch ( $key ) {
+				case 'BYDAY':
+					$rules['BYDAY'] = array();
+					foreach ( explode( ',', $val ) as $day ) {
+						$rule_map = $this->create_byday_array( $day );
+						$rules['BYDAY'][] = $rule_map;
+						if (
+							preg_match( '/FREQ=(MONTH|YEAR)LY/i', $rule ) &&
+							1 === count( $rule_map )
+						) {
+							// monthly/yearly "last" recurrences need day name
+							$rules['BYDAY']['DAY'] = substr(
+								$rule_map['DAY'],
+								-2
+							);
+						}
+					}
+					break;
+
+				case 'BYMONTHDAY':
+				case 'BYMONTH':
+					if ( false === strpos( $val, ',' ) ) {
+						$rules[$key] = $val;
+					} else {
+						$rules[$key] = explode( ',', $val );
+					}
+					break;
+
+				default:
+					$rules[$key] = $val;
+			}
+		}
+		return $rules;
+	}
+
+	/**
+	 * regenerate_events_cache method
+	 *
+	 * Calling this method will force all events instances to be regenerated.
+	 *
+	 * @return bool Success
+	 */
+	public function regenerate_events_cache() {
+		global $wpdb;
+		$table     = $wpdb->prefix . 'ai1ec_events';
+		$sql_query = 'UPDATE ' . $table . ' SET force_regenerate = 1';
+		if ( is_wp_error( $wpdb->query( $sql_query ) ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * regenerate_pending method
+	 *
+	 * Callback method, that takes some events pending regeneration and
+	 * processes them. It is usually run from cron.
+	 *
+	 * @return int Number of events regenerated
+	 */
+	public function regenerate_pending() {
+		$pending = $this->get_pending_regeneration();
+		foreach ( $pending as $event ) {
+			$this->delete_event_cache( $event->post_id );
+			$this->cache_event( $event );
+			$this->toggle_regenerate_status( $event->post_id, 0 );
+		}
+		return count( $pending );
+	}
+
+	/**
+	 * register_regeneration_hook method
+	 *
+	 * Initiation method, that writes new hook, if necessary, and registers
+	 * cron action {@see self::regenerate_pending} to be run from cron.
+	 *
+	 * @return bool Success
+	 */
+	public function register_regeneration_hook() {
+		$hook    = 'ai1ec_events_regeneration';
+		$option  = $hook . '_version';
+		$version = 's.2.0.0';
+		if ( Ai1ec_Meta::get_option( $option ) !== $version ) {
+			wp_clear_scheduled_hook( $hook );
+			wp_schedule_event(
+				Ai1ec_Time_Utility::current_time(),
+				'hourly',
+				$hook
+			);
+			update_option( $option, $version );
+		}
+		add_action( $hook, array( $this, 'regenerate_pending' ) );
+		return true;
+	}
+
+	/**
+	 * get_pending_regeneration method
+	 *
+	 * Get events, that needs to be regenerated.
+	 *
+	 * @param int $limit Number of events to fetch [optional=100]
+	 *
+	 * @return array List of `Ai1ec_Event` objects, that need to be regenerated
+	 */
+	public function get_pending_regeneration( $limit = 100 ) {
+		global $wpdb;
+		$limit     = Ai1ec_Number_Utility::index( $limit, 1, 50 );
+		$table     = $wpdb->prefix . 'ai1ec_events';
+		$sql_query = 'SELECT post_id FROM ' . $table .
+			' WHERE force_regenerate = 1 LIMIT ' . $limit;
+		$event_ids = $wpdb->get_col( $sql_query );
+		$events    = array();
+		foreach ( $event_ids as $id ) {
+			try {
+				$events[$id] = new Ai1ec_Event( $id );
+			} catch ( Ai1ec_Event_Not_Found $excpt ) {
+				$this->toggle_regenerate_status( $id, 0 );
+			}
+		}
+		return $events;
+	}
+
+	/**
+	 * toggle_regenerate_status method
+	 *
+	 * Change event regeneration requirement status.
+	 *
+	 * @param int $post_id ID of event, to change regeneration status for
+	 * @param int $status  Target status, to change to [optional=1]
+	 *
+	 * @return bool Success
+	 */
+	public function toggle_regenerate_status( $post_id, $status = 1 ) {
+		global $wpdb;
+		$post_id   = absint( $post_id );
+		$status    = Ai1ec_Number_Utility::db_bool( $status );
+		$sql_query = 'UPDATE ' . $wpdb->prefix . 'ai1ec_events ' .
+			'SET force_regenerate = %d WHERE post_id = %d';
+		$sql_query = $wpdb->prepare( $sql_query, $status, $post_id );
+		if ( is_wp_error( $wpdb->query( $sql_query ) ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * regenerate_events_cache_on_tz method
+	 *
+	 * Callback method, to be triggered, when `timezone_string` option is
+	 * updated. Hooked on action `update_option_timezone_string`.
+	 *
+	 * @param string $new_tz Timezone that is coming to action
+	 * @param string $old_tz Former timezone name
+	 *
+	 * @return bool Whereas regeneration is (will be) triggered
+	 */
+	public function regenerate_events_cache_on_tz( $new_tz, $old_tz ) {
+		if ( (string)$new_tz === (string)$old_tz ) {
+			return false;
+		}
+		return $this->regenerate_events_cache();
+	}
+
+	/**
 	 * cache_event function
 	 *
 	 * Creates a new entry in the cache table for each date that the event appears
@@ -145,44 +380,62 @@ class Ai1ec_Events_Helper {
 		$evs = array();
 		$e	 = array(
 			'post_id' => $event->post_id,
-			'start' 	=> $event->start,
-			'end'   	=> $event->end,
+			'start'   => $event->start,
+			'end'     => $event->end,
 		);
 		$duration = $event->getDuration();
 
-		// Timestamp of today's date + 10 years
-		$tif = gmmktime() + 315569260; //315 569 260 = 10 years in seconds
+		// Timestamp of today + 3 years
+		$tif = Ai1ec_Time_Utility::current_time( true ) + 94608000; //94 608 000 = 3 years in seconds
 		// Always cache initial instance
 		$evs[] = $e;
 
 		$_start = $event->start;
 		$_end   = $event->end;
 
-		if( $event->recurrence_rules )
-		{
-			$count 	= 0;
+		if ( $event->recurrence_rules ) {
 			$start  = $event->start;
-			$exrule = array();
+			$wdate = $startdate = iCalUtilityFunctions::_timestamp2date( $_start, 6 );
+			$enddate = iCalUtilityFunctions::_timestamp2date( $tif, 6 );
+			$exclude_dates = array();
+			$recurrence_dates = array();
 			if( $event->exception_rules ) {
-				$exrule = $this->generate_dates_array_from_ics_rule( $start, $event->exception_rules );
+				// creat an array for the rules
+				$exception_rules = $this->build_recurrence_rules_array( $event->exception_rules );
+				$exception_rules = iCalUtilityFunctions::_setRexrule( $exception_rules );
+				$result = array();
+				// The first array is the result and it is passed by reference
+				iCalUtilityFunctions::_recur2date(
+					$exclude_dates,
+					$exception_rules,
+					$wdate,
+					$startdate,
+					$enddate
+				);
 			}
-			$freq 	= $event->getFrequency( $exrule );
-
-			$freq->firstOccurrence();
-			while( ( $next = $freq->nextOccurrence( $start ) ) > 0 && $count < 1000 )
-			{
-				$count++;
-				$start      = $next;
-				$e['start'] = $start;
-				$e['end'] 	= $start + $duration;
+			$recurrence_rules = $this->build_recurrence_rules_array( $event->recurrence_rules );
+			$recurrence_rules = iCalUtilityFunctions::_setRexrule( $recurrence_rules );
+			iCalUtilityFunctions::_recur2date(
+				$recurrence_dates,
+				$recurrence_rules,
+				$wdate,
+				$startdate,
+				$enddate
+			);
+			// Add the instances
+			foreach ( $recurrence_dates as $date => $bool ) {
+				// The arrays are in the form timestamp => true so an isset call is what we need
+				if( isset( $exclude_dates[$date] ) ) {
+					continue;
+				}
+				$e['start'] = $date;
+				$e['end'] 	= $date + $duration;
 				$excluded   = false;
 
-				// if event's start date is 10 years in the future, stop the cache at this point
-				if( $start > $tif ) break;
 
 				// Check if exception dates match this occurence
 				if( $event->exception_dates ) {
-					if( $this->date_match_exdates( $start, $event->exception_dates ) )
+					if( $this->date_match_exdates( $date, $event->exception_dates ) )
 						$excluded = true;
 				}
 
@@ -192,14 +445,7 @@ class Ai1ec_Events_Helper {
 			}
 		}
 
-		// Make entries unique (sometimes recurrence generator creates duplicates?)
-		$evs_unique = array();
-		foreach( $evs as $ev ) {
-			$evs_unique[ md5( serialize( $ev ) ) ] = $ev;
-		}
-
-		foreach( $evs_unique as $e )
-		{
+		foreach( $evs as $e ) {
 			// Find out if this event instance is already accounted for by an
 			// overriding 'RECURRENCE-ID' of the same iCalendar feed (by comparing the
 			// UID, start date, recurrence). If so, then do not create duplicate
@@ -213,6 +459,7 @@ class Ai1ec_Events_Helper {
 						$event->post_id
 					)
 				: null;
+
 
 			// If no other instance was found
 			if( is_null( $matching_event_id ) )
@@ -286,12 +533,14 @@ class Ai1ec_Events_Helper {
 		 // Return the start/end times to GMT zone
 		 $event['start'] = $this->local_to_gmt( $event['start'] ) + date( 'Z', $event['start'] );
 		 $event['end']   = $this->local_to_gmt( $event['end'] )   + date( 'Z', $event['end'] );
+		 $event['start'] = Ai1ec_Time_Utility::to_mysql_date( $event['start'] );
+		 $event['end']   = Ai1ec_Time_Utility::to_mysql_date( $event['end'] );
 
 		 $wpdb->query(
 			 $wpdb->prepare(
 				 "INSERT INTO {$wpdb->prefix}ai1ec_event_instances " .
-				 "       ( post_id,  start,               end                 ) " .
-				 "VALUES ( %d,       FROM_UNIXTIME( %d ), FROM_UNIXTIME( %d ) )",
+				 "       ( post_id,  start,  end ) " .
+				 "VALUES ( %d,       %s,     %s  )",
 				 $event
 			 )
 		 );
@@ -355,6 +604,102 @@ class Ai1ec_Events_Helper {
 				// Cache last day
 				$this->insert_event_in_cache_table( array( 'post_id' => $e['post_id'], 'start' => $event_start, 'end' => $event_end ) );
 		}
+
+	/**
+	 * event_parent method
+	 *
+	 * Get/set event parent
+	 *
+	 * @param int $event_id    ID of checked event
+	 * @param int $parent_id   ID of new parent [optional=NULL, acts as getter]
+	 * @param int $instance_id ID of old instance id
+	 *
+	 * @return int|bool Value depends on mode:
+	 *     Getter: {@see self::get_parent_event()} for details
+	 *     Setter: true on success.
+	 */
+	public function event_parent( $event_id, $parent_id = NULL, $instance_id = NULL ) {
+		$meta_key = '_ai1ec_event_parent';
+		if ( NULL === $parent_id ) {
+			return $this->get_parent_event( $event_id );
+		}
+		$meta_value = json_encode( array(
+				'created'  => Ai1ec_Time_Utility::current_time(),
+				'instance' => $instance_id,
+		) );
+		return add_post_meta( $event_id, $meta_key, $meta_value, true );
+	}
+
+	/**
+	 * Get parent ID for given event
+	 *
+	 * @param int $current_id Current event ID
+	 *
+	 * @return int|bool ID of parent event or bool(false)
+	 */
+	public function get_parent_event( $current_id ) {
+		static $parents = NULL;
+		if ( NULL === $parents ) {
+			$parents = Ai1ec_Memory_Utility::instance( __METHOD__ );
+		}
+		$current_id = (int)$current_id;
+		if ( NULL === ( $parent_id = $parents->get( $current_id ) ) ) {
+			global $wpdb;
+			$query      = '
+				SELECT parent.ID, parent.post_status
+				FROM
+					' . $wpdb->posts . ' AS child
+					INNER JOIN ' . $wpdb->posts . ' AS parent
+						ON ( parent.ID = child.post_parent )
+				WHERE child.ID = ' . $current_id;
+			$parent     = $wpdb->get_row( $query );
+			if (
+				empty( $parent ) ||
+				'trash' === $parent->post_status
+			) {
+				$parent_id = false;
+			} else {
+				$parent_id = $parent->ID;
+			}
+			$parents->set( $current_id, $parent_id );
+			unset( $query );
+		}
+		return $parent_id;
+	}
+
+	/**
+	 * Returns a list of modified (children) event objects
+	 *
+	 * @param int  $parent_id     ID of parent event
+	 * @param bool $include_trash Includes trashed when `true` [optional=false]
+	 *
+	 * @return array List (might be empty) of Ai1ec_Event objects
+	 */
+	public function get_child_event_objects(
+		$parent_id,
+		$include_trash = false
+	) {
+		global $wpdb;
+		$parent_id = (int)$parent_id;
+		$sql_query = 'SELECT ID FROM ' . $wpdb->posts .
+			' WHERE post_parent = ' . $parent_id;
+		$childs    = (array)$wpdb->get_col( $sql_query );
+		$objects = array();
+		foreach ( $childs as $child_id ) {
+			try {
+				$instance = new Ai1ec_Event( $child_id );
+				if (
+					$include_trash ||
+					'trash' !== $instance->post->post_status
+				) {
+					$objects[$child_id] = $instance;
+				}
+			} catch ( Ai1ec_Event_Not_Found $exception ) {
+				// ignore
+			}
+		}
+		return $objects;
+	}
 
 	/**
 	 * Returns the various preset recurrence options available (e.g.,
@@ -480,9 +825,10 @@ class Ai1ec_Events_Helper {
 
 		if( ! $count ) $count = 100;
 		?>
-			<input type="range" name="<?php echo $name ?>" id="<?php echo $name ?>" min="1" max="<?php echo $max ?>"
-				<?php if( $count ) echo 'value="' . $count . '"' ?> />
-		<?php
+<input type="range" name="<?php echo $name ?>" id="<?php echo $name ?>"
+	min="1" max="<?php echo $max ?>"
+	<?php if( $count ) echo 'value="' . $count . '"' ?> />
+<?php
 		return ob_get_clean();
 	}
 
@@ -496,14 +842,16 @@ class Ai1ec_Events_Helper {
 	function create_select_element( $name, $options = array(), $selected = false, $disabled_keys = array() ) {
 		ob_start();
 		?>
-		<select name="<?php echo $name ?>" id="<?php echo $name ?>">
+<select name="<?php echo $name ?>" id="<?php echo $name ?>">
 			<?php foreach( $options as $key => $val ): ?>
-				<option value="<?php echo $key ?>" <?php echo $key === $selected ? 'selected="selected"' : '' ?><?php echo in_array( $key, $disabled_keys ) ? 'disabled="disabled"' : '' ?>>
+				<option value="<?php echo $key ?>"
+		<?php echo $key === $selected ? 'selected="selected"' : '' ?>
+		<?php echo in_array( $key, $disabled_keys ) ? 'disabled="disabled"' : '' ?>>
 					<?php echo $val ?>
 				</option>
 			<?php endforeach ?>
 		</select>
-		<?php
+<?php
 		return ob_get_clean();
 	}
 
@@ -554,16 +902,19 @@ class Ai1ec_Events_Helper {
 	function create_list_element( $name, $options = array(), $selected = array() ) {
 		ob_start();
 		?>
-		<ul class="ai1ec_date_select <?php echo $name?>" id="<?php echo $name?>">
+<ul class="ai1ec_date_select <?php echo $name?>" id="<?php echo $name?>">
 			<?php foreach( $options as $key => $val ): ?>
-				<li<?php echo in_array( $key, $selected ) ? 'class="ai1ec_selected"' : '' ?>>
+				<li
+		<?php echo in_array( $key, $selected ) ? 'class="ai1ec_selected"' : '' ?>>
 					<?php echo $val ?>
-					<input type="hidden" name="<?php echo $name . '_' . $key ?>" value="<?php echo $key ?>" />
-				</li>
+					<input type="hidden" name="<?php echo $name . '_' . $key ?>"
+		value="<?php echo $key ?>" />
+	</li>
 			<?php endforeach ?>
 		</ul>
-		<input type="hidden" name="<?php echo $name ?>" value="<?php echo implode( ',', $selected ) ?>" />
-		<?php
+<input type="hidden" name="<?php echo $name ?>"
+	value="<?php echo implode( ',', $selected ) ?>" />
+<?php
 		return ob_get_clean();
 	}
 
@@ -660,7 +1011,7 @@ class Ai1ec_Events_Helper {
 	 **/
 	function row_weekly( $visible = false, $count = 1, $selected = array() ) {
 		global $ai1ec_view_helper, $wp_locale;
-		$start_of_week = get_option( 'start_of_week', 1 );
+		$start_of_week = Ai1ec_Meta::get_option( 'start_of_week', 1 );
 
 		$options = array();
 		// get days from start_of_week until the last day
@@ -724,7 +1075,7 @@ class Ai1ec_Events_Helper {
 	 **/
 	function row_monthly( $visible = false, $count = 1, $ai1ec_monthly_each = 0, $ai1ec_monthly_on_the = 0, $month = array(), $first = false, $second = false ) {
 		global $ai1ec_view_helper, $wp_locale;
-		$start_of_week = get_option( 'start_of_week', 1 );
+		$start_of_week = Ai1ec_Meta::get_option( 'start_of_week', 1 );
 
 		$options_wd = array();
 		// get days from start_of_week until the last day
@@ -740,8 +1091,12 @@ class Ai1ec_Events_Helper {
 		// get options like 1st/2nd/3rd for "day number"
 		$options_dn = array( 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5 );
 		foreach( $options_dn as $_dn ) {
-			$options_dn[ $_dn ] = date_i18n( "jS", strtotime( $_dn . "-01-1998 12:00:00" ) );
+			$options_dn[$_dn] = Ai1ec_Time_Utility::date_i18n(
+				'jS',
+				strtotime( $_dn . '-01-1998 12:00:00' )
+			);
 		}
+		$options_dn['-1'] = __( 'last', AI1EC_PLUGIN_NAME );
 
 		$args = array(
 		 'visible'              => $visible,
@@ -802,10 +1157,10 @@ class Ai1ec_Events_Helper {
 	 *                            ['tag_ids']   => non-associatative array of tag IDs
 	 *                            ['post_ids']  => non-associatative array of post IDs
 	 *
-	 * @return array Matching events
+	 * @return array Matching events #'
 	 **/
 	function get_matching_events( $start = false, $end = false, $filter = array() ) {
-		global $wpdb, $ai1ec_calendar_helper;
+		global $wpdb, $ai1ec_calendar_helper, $ai1ec_localization_helper;
 
 		// holds event_categories sql
 		$c_sql = '';
@@ -826,31 +1181,37 @@ class Ai1ec_Events_Helper {
 		// = Generating start date sql =
 		// =============================
 		if( $start !== false ) {
-			$start_where_sql = "AND (e.start >= FROM_UNIXTIME( %d ) OR e.recurrence_rules != '')";
-			$args[] = $start;
+			$start_where_sql = "AND (e.start >= %s OR e.recurrence_rules != '')";
+			$args[] = Ai1ec_Time_Utility::to_mysql_date( $start );
 		}
 
 		// ===========================
 		// = Generating end date sql =
 		// ===========================
 		if( $end !== false ) {
-			$end_where_sql = "AND (e.end <= FROM_UNIXTIME( %d ) OR e.recurrence_rules != '')";
-			$args[] = $end;
+			$end_where_sql = "AND (e.end <= %s OR e.recurrence_rules != '')";
+			$args[] = Ai1ec_Time_Utility::to_mysql_date( $end );
 		}
+
+		$wpml_join_particle  = $ai1ec_localization_helper
+			->get_wpml_table_join();
+		$wpml_where_particle = $ai1ec_localization_helper
+			->get_wpml_table_where();
 
 		// Get the Join (filter_join) and Where (filter_where) statements based on $filter elements specified
 		$ai1ec_calendar_helper->_get_filter_sql( $filter );
-
 		$query = $wpdb->prepare(
-			"SELECT *, e.post_id, UNIX_TIMESTAMP( e.start ) as start, UNIX_TIMESTAMP( e.end ) as end, e.allday, e.recurrence_rules, e.exception_rules,
+			"SELECT *, e.post_id, e.start as start, e.end as end, e.allday, e.recurrence_rules, e.exception_rules,
 				e.recurrence_dates, e.exception_dates, e.venue, e.country, e.address, e.city, e.province, e.postal_code,
 				e.show_map, e.contact_name, e.contact_phone, e.contact_email, e.cost, e.ical_feed_url, e.ical_source_url,
 				e.ical_organizer, e.ical_contact, e.ical_uid " .
 			"FROM $wpdb->posts " .
 				"INNER JOIN {$wpdb->prefix}ai1ec_events AS e ON e.post_id = ID " .
+				$wpml_join_particle .
 				$filter['filter_join'] .
 			"WHERE post_type = '" . AI1EC_POST_TYPE . "' " .
 				"AND post_status = 'publish' " .
+				$wpml_where_particle .
 				$filter['filter_where'] .
 				$start_where_sql .
 				$end_where_sql,
@@ -859,7 +1220,9 @@ class Ai1ec_Events_Helper {
 		$events = $wpdb->get_results( $query, ARRAY_A );
 
 		foreach( $events as &$event ) {
-			try{
+			$event['start'] = Ai1ec_Time_Utility::from_mysql_date( $event['start'] );
+			$event['end']   = Ai1ec_Time_Utility::from_mysql_date( $event['end'] );
+			try {
 				$event = new Ai1ec_Event( $event );
 			} catch( Ai1ec_Event_Not_Found $n ) {
 				unset( $event );
@@ -915,10 +1278,11 @@ class Ai1ec_Events_Helper {
 	 * @return string
 	 **/
 	function get_short_time( $timestamp, $convert_from_gmt = true ) {
-		$time_format = get_option( 'time_format', 'g:ia' );
-		if( $convert_from_gmt )
+		$time_format = Ai1ec_Meta::get_option( 'time_format', 'g:i a' );
+		if( $convert_from_gmt ) {
 			$timestamp = $this->gmt_to_local( $timestamp );
-		return date_i18n( $time_format, $timestamp, true );
+		}
+		return Ai1ec_Time_Utility::date_i18n( $time_format, $timestamp, true );
 	}
 
 	/**
@@ -933,41 +1297,41 @@ class Ai1ec_Events_Helper {
 	 * @return string
 	 **/
 	function get_short_date( $timestamp, $convert_from_gmt = true ) {
-		if( $convert_from_gmt )
+		if ( $convert_from_gmt ) {
 			$timestamp = $this->gmt_to_local( $timestamp );
-		return date_i18n( 'M j', $timestamp, true );
+		}
+		return Ai1ec_Time_Utility::date_i18n( 'M j', $timestamp, true );
 	}
 
 	/**
-	 * Return the  for use in JS functions to extend multiday bars;
+	 * Return the value used in JS functions to extend multiday bars;
 	 * this is also converted to the local timezone.
+	 *
+	 * @param int  $end_timestamp    Event's end date
+	 * @param bool $convert_from_gmt Whether to convert from GMT time to local
+	 *
+	 * @return string
+	 **/
+	function get_multiday_end_day( $end_timestamp, $convert_from_gmt = true ) {
+		if( $convert_from_gmt )
+			$end_timestamp = $this->gmt_to_local( $end_timestamp );
+		return Ai1ec_Time_Utility::date_i18n( 'd', $end_timestamp, true );
+	}
+
+	/**
+	 * Returns a short-format time. DEPRECATED: Use get_short_time() instead.
 	 *
 	 * @param int $timestamp
 	 * @param bool $convert_from_gmt Whether to convert from GMT time to local
 	 *
 	 * @return string
-	 **/
-	function get_multiday_end_day( $timestamp, $convert_from_gmt = true ) {
-		if( $convert_from_gmt )
-			$timestamp = $this->gmt_to_local( $timestamp );
-		return date_i18n( 'd', $timestamp, true );
-	}
-
-	/**
-	 * get_medium_time function
-	 *
-	 * Format a medium-length time for use in other views (e.g., Agenda);
-	 * this is also converted to the local timezone.
-	 *
-	 * @param int $timestamp
-	 *
-	 * @return string
-	 **/
+	 */
 	function get_medium_time( $timestamp, $convert_from_gmt = true ) {
-		$time_format = get_option( 'time_format', 'g:ia' );
-		if( $convert_from_gmt )
-			$timestamp = $this->gmt_to_local( $timestamp );
-		return date_i18n( $time_format, $timestamp, true );
+		trigger_error(
+			__( 'Ai1ec_Events_Helper::get_medium_time() is deprecated.', AI1EC_PLUGIN_NAME ),
+			E_USER_WARNING
+		);
+		return $this->get_short_time( $timestamp, $convert_from_gmt );
 	}
 
 	/**
@@ -982,11 +1346,15 @@ class Ai1ec_Events_Helper {
 	 * @return string
 	 **/
 	function get_long_time( $timestamp, $convert_from_gmt = true ) {
-		$date_format = get_option( 'date_format', 'D, F j' );
-		$time_format = get_option( 'time_format', 'g:i' );
-		if( $convert_from_gmt )
+		$meta        = Ai1ec_Meta::instance( 'Option' );
+		$date_format = $meta->get( 'date_format', NULL, 'l, M j, Y' );
+		$time_format = $meta->get( 'time_format', NULL, 'g:i a' );
+		if ( $convert_from_gmt ) {
 			$timestamp = $this->gmt_to_local( $timestamp );
-		return date_i18n( $date_format, $timestamp, true ) . ' @ ' . date_i18n( $time_format, $timestamp, true );
+		}
+		return Ai1ec_Time_Utility::date_i18n( $date_format, $timestamp, true ) .
+			' @ ' .
+			Ai1ec_Time_Utility::date_i18n( $time_format, $timestamp, true );
 	}
 
 	/**
@@ -1001,10 +1369,11 @@ class Ai1ec_Events_Helper {
 	 * @return string
 	 **/
 	function get_long_date( $timestamp, $convert_from_gmt = true ) {
-		$date_format = get_option( 'date_format', 'D, F j' );
-		if( $convert_from_gmt )
+		$date_format = Ai1ec_Meta::get_option( 'date_format', 'l, M j, Y' );
+		if ( $convert_from_gmt ) {
 			$timestamp = $this->gmt_to_local( $timestamp );
-		return date_i18n( $date_format, $timestamp, true );
+		}
+		return Ai1ec_Time_Utility::date_i18n( $date_format, $timestamp, true );
 	}
 
 	/**
@@ -1017,15 +1386,37 @@ class Ai1ec_Events_Helper {
 	 * @return int
 	 **/
 	function gmt_to_local( $timestamp ) {
-		$offset = get_option( 'gmt_offset' );
-		$tz     = get_option( 'timezone_string', 'America/Los_Angeles' );
+		return Ai1ec_Time_Utility::gmt_to_local( $timestamp );
+	}
 
-		$offset = $this->get_timezone_offset( 'UTC', $tz, $timestamp );
+	/**
+	 * get_local_timezone method
+	 *
+	 * Get applicable timezone name.
+	 * First attempt is to check current user prefference.
+	 * If that fails - global timezone offset is checked.
+	 * If no timezone is used - {@see $default} is assumed.
+	 *
+	 * @param string $default Fallback timezone name [optional=America/Los_Angeles]
+	 *
+	 * @return string Timezone identifier
+	 */
+	public function get_local_timezone( $default = 'America/Los_Angeles' ) {
+		return Ai1ec_Time_Utility::get_local_timezone( $default );
+	}
 
-		if( ! $offset )
-			$offset = get_option( 'gmt_offset' ) * 3600;
-
-		return $timestamp + $offset;
+	/**
+	 * get_gmt_offset method
+	 *
+	 * Local wrapper to {@see get_option( 'gmt_offset' )} to incorporate
+	 * user-specific timezone selections.
+	 *
+	 * @uses self::get_local_timezone() To get effective timezone string
+	 *
+	 * @return float Timezone offset from GMT
+	 */
+	public function get_gmt_offset() {
+		return Ai1ec_Time_Utility::get_gmt_offset();
 	}
 
 	/**
@@ -1038,15 +1429,7 @@ class Ai1ec_Events_Helper {
 	 * @return int
 	 **/
 	function local_to_gmt( $timestamp ) {
-		$offset = get_option( 'gmt_offset' );
-		$tz     = get_option( 'timezone_string', 'America/Los_Angeles' );
-
-		$offset = $this->get_timezone_offset( 'UTC', $tz, $timestamp );
-
-		if( ! $offset )
-			$offset = get_option( 'gmt_offset' ) * 3600;
-
-		return $timestamp - $offset;
+		return Ai1ec_Time_Utility::local_to_gmt( $timestamp );
 	}
 
 	/**
@@ -1061,54 +1444,22 @@ class Ai1ec_Events_Helper {
 	 * @return int
 	 **/
 	function get_timezone_offset( $remote_tz, $origin_tz = null, $timestamp = false ) {
-		// set timestamp to time now
-		if( $timestamp == false ) {
-			$timestamp = gmmktime();
-		}
-
-		if( $origin_tz === null ) {
-			if( ! is_string( $origin_tz = date_default_timezone_get() ) ) {
-				return false; // A UTC timestamp was returned -- bail out!
-			}
-		}
-
-		try {
-			$origin_dtz = new DateTimeZone( $origin_tz );
-			$remote_dtz = new DateTimeZone( $remote_tz );
-
-			// if DateTimeZone fails, throw exception
-			if( $origin_dtz == false || $remote_dtz == false )
-				throw new Exception( 'DateTimeZone class failed' );
-
-			$origin_dt  = new DateTime( gmdate( 'Y-m-d H:i:s', $timestamp ), $origin_dtz );
-			$remote_dt  = new DateTime( gmdate( 'Y-m-d H:i:s', $timestamp ), $remote_dtz );
-
-			// if DateTime fails, throw exception
-			if( $origin_dt == false || $remote_dt == false )
-				throw new Exception( 'DateTime class failed' );
-
-			$offset = $origin_dtz->getOffset( $origin_dt ) - $remote_dtz->getOffset( $remote_dt );
-		} catch( Exception $e ) {
-			return false;
-		}
-
-		return $offset;
+		return Ai1ec_Time_Utility::get_timezone_offset(
+			$remote_tz,
+			$origin_tz,
+			$timestamp
+		);
 	}
 
 	/**
 	 * A GMT-version of PHP getdate().
 	 *
 	 * @param int $timestamp  UNIX timestamp
+	 *
 	 * @return array          Same result as getdate(), but based in GMT time.
-	 **/
+	 */
 	function gmgetdate( $timestamp = null ) {
-		if( ! $timestamp ) $timestamp = time();
-		$bits = explode( ',', gmdate( 's,i,G,j,w,n,Y,z,l,F,U', $timestamp ) );
-		$bits = array_combine(
-			array( 'seconds', 'minutes', 'hours', 'mday', 'wday', 'mon', 'year', 'yday', 'weekday', 'month', 0 ),
-			$bits
-		);
-		return $bits;
+		return Ai1ec_Time_Utility::gmgetdate( $timestamp );
 	}
 
 	/**
@@ -1122,6 +1473,29 @@ class Ai1ec_Events_Helper {
 	 **/
 	function time_to_gmt( $timestamp ) {
 		return strtotime( gmdate( 'M d Y H:i:s', $timestamp ) );
+	}
+
+	/**
+	 * date_to_gmdatestamp function
+	 *
+	 * Converts date (date-time) to GMT date expressed as UNIX timestamp
+	 *
+	 * @param int $input_time Local timestamp
+	 *
+	 * @return int Timestamp date representation in GMT zone
+	 **/
+	function date_to_gmdatestamp( $input_time ) {
+		$time  = $this->gmt_to_local( $input_time );
+		$time  = $this->gmgetdate( $time );
+		$stamp = gmmktime(
+			0,             // hour
+			0,             // minute
+			0,             // second
+			$time['mon'],  // month
+			$time['mday'], // day-of-month
+			$time['year']  // year
+		);
+		return $stamp;
 	}
 
 	/**
@@ -1164,7 +1538,7 @@ class Ai1ec_Events_Helper {
 
 		$lang = $this->get_lang();
 
-		return "http://www.google.com/maps?f=q&hl=" . $lang . "&source=embed&q=" . urlencode( $location );
+		return "https://www.google.com/maps?f=q&hl=" . $lang . "&source=embed&q=" . urlencode( $location );
 	}
 
 	/**
@@ -1213,6 +1587,11 @@ class Ai1ec_Events_Helper {
 	{
 		$raw_excerpt = $text;
 
+		$text = preg_replace(
+			'#<\s*script[^>]*>.+<\s*/\s*script\s*>#x',
+			'',
+			$text
+		);
 		$text = strip_shortcodes( $text );
 
 		$text = str_replace(']]>', ']]&gt;', $text);
@@ -1282,14 +1661,27 @@ class Ai1ec_Events_Helper {
 	 * Returns the color of the Event Category having the given term ID.
 	 *
 	 * @param int $term_id The ID of the Event Category
-	 * @return string
+	 *
+	 * @return string Color to use
+	 *
+	 * @staticvar Ai1ec_Memory_Utility $colors Cached entries instance
 	 */
 	function get_category_color( $term_id ) {
-		global $wpdb;
+		static $colors = NULL;
+		if ( ! isset( $colors ) ) {
+			$colors = Ai1ec_Memory_Utility::instance( __METHOD__ );
+		}
+		$term_id = (int)$term_id;
+		if ( NULL === ( $color = $colors->get( $term_id ) ) ) {
+			global $wpdb;
 
-		$term_id = (int) $term_id;
-		$table_name = $wpdb->prefix . 'ai1ec_event_category_colors';
-		$color = $wpdb->get_var( $wpdb->prepare( "SELECT term_color FROM {$table_name} WHERE term_id = %d", $term_id ) );
+			$color = (string)$wpdb->get_var(
+				'SELECT term_color FROM ' . $wpdb->prefix .
+				'ai1ec_event_category_colors' . ' WHERE term_id = ' .
+				$term_id
+			);
+			$colors->set( $term_id, $color );
+		}
 		return $color;
 	}
 
@@ -1304,10 +1696,12 @@ class Ai1ec_Events_Helper {
 	 **/
 	function get_category_color_square( $term_id ) {
 		$color = $this->get_category_color( $term_id );
-		$cat = get_term( $term_id, 'events_categories' );
-		if( ! is_null( $color ) && ! empty( $color ) )
-			return '<div class="ai1ec-category-color" style="background:' . $color . '" rel="tooltip" title="' . esc_attr( $cat->name ) . '"></div>';
-
+		if( NULL !== $color && ! empty( $color ) ) {
+			$cat = get_term( $term_id, 'events_categories' );
+			return '<span class="ai1ec-color-swatch ai1ec-tooltip-trigger" ' .
+				'style="background:' . $color . '" title="' .
+				esc_attr( $cat->name ) . '"></span>';
+		}
 		return '';
 	}
 
@@ -1388,9 +1782,9 @@ class Ai1ec_Events_Helper {
 			$c2_p2 = hexdec( substr( $color2, 2, 2 ) );
 			$c2_p3 = hexdec( substr( $color2, 4, 2 ) );
 
-			$m_p1 = dechex( round( $c1_p1 * 0.3 + $c2_p1 * 0.7 ) );
-			$m_p2 = dechex( round( $c1_p2 * 0.3 + $c2_p2 * 0.7 ) );
-			$m_p3 = dechex( round( $c1_p3 * 0.3 + $c2_p3 * 0.7 ) );
+			$m_p1 = dechex( round( $c1_p1 * 0.5 + $c2_p1 * 0.5 ) );
+			$m_p2 = dechex( round( $c1_p2 * 0.5 + $c2_p2 * 0.5 ) );
+			$m_p3 = dechex( round( $c1_p3 * 0.5 + $c2_p3 * 0.5 ) );
 
 			return '#' . $m_p1 . $m_p2 . $m_p3;
 		}
@@ -1399,8 +1793,8 @@ class Ai1ec_Events_Helper {
 	}
 
 	/**
-	 * Returns an opacity-faded version of the event's category color in rgba
-	 * format.
+	 * Returns the rgba() format of the event's category color, with '%s' in place
+	 * of the opacity (to be substituted by sprintf).
 	 *
 	 * @param int $term_id The Event Category's term ID
 	 *
@@ -1412,7 +1806,7 @@ class Ai1ec_Events_Helper {
 			$p1 = hexdec( substr( $color, 1, 2 ) );
 			$p2 = hexdec( substr( $color, 3, 2 ) );
 			$p3 = hexdec( substr( $color, 5, 2 ) );
-			return "rgba($p1, $p2, $p3, 0.3)";
+			return "rgba($p1, $p2, $p3, %s)";
 		}
 
 		return '';
@@ -1456,14 +1850,15 @@ class Ai1ec_Events_Helper {
 		);
 
 		?>
-		<select name="ai1ec_end" id="ai1ec_end">
+<select name="ai1ec_end" id="ai1ec_end">
 			<?php foreach( $options as $key => $val ): ?>
-				<option value="<?php echo $key ?>" <?php if( $key === $selected ) echo 'selected="selected"' ?>>
+				<option value="<?php echo $key ?>"
+		<?php if( $key === $selected ) echo 'selected="selected"' ?>>
 					<?php echo $val ?>
 				</option>
 			<?php endforeach ?>
 		</select>
-		<?php
+<?php
 
 		$output = ob_get_contents();
 		ob_end_clean();
@@ -1472,13 +1867,13 @@ class Ai1ec_Events_Helper {
 	}
 
 	/**
-	 * rrule_to_text function
+	 * Return given recurrence data as text.
 	 *
-	 *
+	 * @param  string  $rrule   Recurrence rule
 	 *
 	 * @return string
-	 **/
-	function rrule_to_text( $rrule = '') {
+	 */
+	function rrule_to_text( $rrule = '' ) {
 		$txt = '';
 		$rc = new SG_iCal_Recurrence( new SG_iCal_Line( 'RRULE:' . $rrule ) );
 		switch( $rc->getFreq() ) {
@@ -1508,10 +1903,12 @@ class Ai1ec_Events_Helper {
 	}
 
 	/**
-	 * exdate_to_text function
+	 * Return given exception dates as text.
+	 *
+	 * @param  array   $exception_dates Dates to translate
 	 *
 	 * @return string
-	 **/
+	 */
 	function exdate_to_text( $exception_dates ) {
 		$dates_to_add = array();
 		foreach( explode( ",", $exception_dates ) as $_exdate ) {
@@ -1542,35 +1939,36 @@ class Ai1ec_Events_Helper {
 	}
 
 	/**
-	 * ics_rule_to function
+	 * Parse ICS rule representation and clean it
+	 *
+	 * @param string $rule   Recurrence rule to convert
+	 * @param bool   $to_gmt Conversion direction
 	 *
 	 * @return void
-	 **/
+	 */
 	private function ics_rule_to( $rule, $to_gmt = false ) {
 		$rc = new SG_iCal_Recurrence( new SG_iCal_Line( 'RRULE:' . $rule ) );
-		if( $until = $rc->getUntil() ) {
-			if( ! is_int( $until ) ) {
+		if ( $until = $rc->getUntil() ) {
+			if ( ! is_int( $until ) ) {
 				$until = strtotime( $until );
 			}
-			if( $to_gmt ) {
-				$until = $this->local_to_gmt( $until );
-			} else {
-				$until = $this->gmt_to_local( $until );
-			}
 
-			$until = gmdate( "Ymd\THis\Z", $until );
+			$until      = gmdate( "Ymd\THis\Z", $until );
 			$rule_props = explode( ';', $rule );
-			$_rule = array();
-			foreach( $rule_props as $property ) {
+			$_rule      = array();
+			foreach ( $rule_props as $property ) {
 				// don't apply any logic to empty properties
-				if( empty( $property ) ) {
+				if ( empty( $property ) ) {
 					$_rule[] = $property;
 					continue;
 				}
 				$name_and_value = explode( '=', $property );
-				if( isset( $name_and_value[0] ) && strtolower( $name_and_value[0] ) == 'until' ) {
-					if( isset( $name_and_value[1] ) ) {
-						$_rule[] = "UNTIL=" . $until;
+				if (
+					isset( $name_and_value[0] ) &&
+					'until' === strtolower( $name_and_value[0] )
+				) {
+					if ( isset( $name_and_value[1] ) ) {
+						$_rule[] = 'UNTIL=' . $until;
 					}
 				} else {
 					$_rule[] = $property;
@@ -1597,6 +1995,33 @@ class Ai1ec_Events_Helper {
 	 **/
 	function exception_dates_to_gmt( $exception_dates ) {
 		return $this->exception_dates_to( $exception_dates, true );
+	}
+
+	/**
+	 * add_exception_date method
+	 *
+	 * Add exception (date) to event.
+	 *
+	 * @param int   $post_id Event edited post ID
+	 * @param mixed $date    Parseable date representation to exclude
+	 *
+	 * @return bool Success
+	 */
+	public function add_exception_date( $post_id, $date ) {
+		if ( ! is_int( $date ) && ! ctype_digit( $date ) ) {
+			$date = strtotime( $date );
+		}
+		$event        = new Ai1ec_Event( $post_id );
+		$dates_list   = explode( ',', $event->exception_dates );
+		if ( empty( $dates_list[0] ) ) {
+			unset( $dates_list[0] );
+		}
+		$dates_list[] = gmdate(
+			'Ymd\THis\Z',
+			$this->local_to_gmt( $date )
+		);
+		$event->exception_dates = implode( ',', $dates_list );
+		return $event->save( true );
 	}
 
 	/**
@@ -1692,10 +2117,20 @@ class Ai1ec_Events_Helper {
 					}
 				} elseif( $rc->getByDay() ) {
 					$_days = '';
-					foreach( $rc->getByDay() as $d ) {
-						$_dnum  = substr( $d, 0, 1);
-						$_day   = substr( $d, 1, 3 );
-						$dnum   = ' ' . date_i18n( "jS", strtotime( $_dnum . '-01-1998 12:00:00' ) );
+					foreach ( $rc->getByDay() as $d ) {
+						if ( ! preg_match( '|^((-?)\d+)([A-Z]{2})$|', $d, $matches ) ) {
+							continue;
+						}
+						$_dnum  = $matches[1];
+						$_day   = $matches[3];
+						if ( '-' === $matches[2] ) {
+							$dnum = ' ' . __( 'last', AI1EC_PLUGIN_NAME );
+						} else {
+							$dnum   = ' ' . Ai1ec_Time_Utility::date_i18n(
+								'jS',
+								strtotime( $_dnum . '-01-1998 12:00:00' )
+							);
+						}
 						$day    = $this->get_weekday_by_id( $_day, true );
 						$_days .= ' ' . $wp_locale->weekday[$day];
 					}
@@ -1755,59 +2190,60 @@ class Ai1ec_Events_Helper {
 	}
 
 	/**
-	 * _get_interval function
+	 * Returns the textual representation of the given recurrence frequency and
+	 * interval, with result stored in $txt.
 	 *
 	 * @internal
 	 *
 	 * @return void
-	 **/
+	 */
 	function _get_interval( &$txt, $freq, $interval ) {
 		switch( $freq ) {
 			case 'daily':
 				// check if interval is set
 				if( ! $interval || $interval == 1 ) {
-					$txt = __( 'Daily', AI1EC_PLUGIN_NAME );
+					$txt = __( 'daily', AI1EC_PLUGIN_NAME );
 				} else {
 					if( $interval == 2 ) {
-						$txt = __( 'Every other day', AI1EC_PLUGIN_NAME );
+						$txt = __( 'every other day', AI1EC_PLUGIN_NAME );
 					} else {
-						$txt = sprintf( __( 'Every %d days', AI1EC_PLUGIN_NAME ), $interval );
+						$txt = sprintf( __( 'every %d days', AI1EC_PLUGIN_NAME ), $interval );
 					}
 				}
 				break;
 			case 'weekly':
 				// check if interval is set
 				if( ! $interval || $interval == 1 ) {
-					$txt = __( 'Weekly', AI1EC_PLUGIN_NAME );
+					$txt = __( 'weekly', AI1EC_PLUGIN_NAME );
 				} else {
 					if( $interval == 2 ) {
-						$txt = __( 'Every other week', AI1EC_PLUGIN_NAME );
+						$txt = __( 'every other week', AI1EC_PLUGIN_NAME );
 					} else {
-						$txt = sprintf( __( 'Every %d weeks', AI1EC_PLUGIN_NAME ), $interval );
+						$txt = sprintf( __( 'every %d weeks', AI1EC_PLUGIN_NAME ), $interval );
 					}
 				}
 				break;
 			case 'monthly':
 				// check if interval is set
 				if( ! $interval || $interval == 1 ) {
-					$txt = __( 'Monthly', AI1EC_PLUGIN_NAME );
+					$txt = __( 'monthly', AI1EC_PLUGIN_NAME );
 				} else {
 					if( $interval == 2 ) {
-						$txt = __( 'Every other month', AI1EC_PLUGIN_NAME );
+						$txt = __( 'every other month', AI1EC_PLUGIN_NAME );
 					} else {
-						$txt = sprintf( __( 'Every %d months', AI1EC_PLUGIN_NAME ), $interval );
+						$txt = sprintf( __( 'every %d months', AI1EC_PLUGIN_NAME ), $interval );
 					}
 				}
 				break;
 			case 'yearly':
 				// check if interval is set
 				if( ! $interval || $interval == 1 ) {
-					$txt = __( 'Yearly', AI1EC_PLUGIN_NAME );
+					$txt = __( 'yearly', AI1EC_PLUGIN_NAME );
 				} else {
 					if( $interval == 2 ) {
-						$txt = __( 'Every other year', AI1EC_PLUGIN_NAME );
+						$txt = __( 'every other year', AI1EC_PLUGIN_NAME );
 					} else {
-						$txt = sprintf( __( 'Every %d years', AI1EC_PLUGIN_NAME ), $interval );
+						$txt = sprintf( __( 'every %d years', AI1EC_PLUGIN_NAME ), $interval );
 					}
 				}
 				break;
@@ -1824,64 +2260,78 @@ class Ai1ec_Events_Helper {
 	 * @return void
 	 **/
 	function _ending_sentence( &$txt, &$rc ) {
-		if( $until = $rc->getUntil() ) {
-			if( ! is_int( $until ) )
+		if ( $until = $rc->getUntil() ) {
+			if ( ! is_int( $until ) ) {
 				$until = strtotime( $until );
-			$txt .= ' ' . sprintf( __( 'until %s', AI1EC_PLUGIN_NAME ), date_i18n( get_option( 'date_format' ), $until, true ) );
+			}
+			$txt .= ' ' . sprintf(
+				__( 'until %s', AI1EC_PLUGIN_NAME ),
+				Ai1ec_Time_Utility::date_i18n(
+					Ai1ec_Meta::get_option( 'date_format' ),
+					$until,
+					true
+				)
+			);
+		} else if ( $count = $rc->getCount() ) {
+			$txt .= ' ' . sprintf(
+				__( 'for %d occurrences', AI1EC_PLUGIN_NAME ),
+				$count
+			);
+		} else {
+			$txt .= ', ' . __( 'forever', AI1EC_PLUGIN_NAME );
 		}
-		else if( $count = $rc->getCount() )
-			$txt .= ' ' . sprintf( __( 'for %d occurrences', AI1EC_PLUGIN_NAME ), $count );
-		else
-			$txt .= ' - ' . __( 'forever', AI1EC_PLUGIN_NAME );
 	}
 
 	/**
-	 * undocumented function
-	 *
-	 *
+	 * Convert a recurrence rule to text to display it on screen
 	 *
 	 * @return void
 	 **/
 	function convert_rrule_to_text() {
 		$error = false;
+		$message = '';
 		// check to see if RRULE is set
-		if( isset( $_REQUEST["rrule"] ) ) {
-
+		if ( isset( $_REQUEST["rrule"] ) ) {
 			// check to see if rrule is empty
-			if( empty( $_REQUEST["rrule"] ) ) {
+			if ( empty( $_REQUEST["rrule"] ) ) {
 				$error = true;
-				$message = 'Recurrence rule cannot be empty!';
+				$message = __( 'Recurrence rule cannot be empty.', AI1EC_PLUGIN_NAME );
 			} else {
 				// convert rrule to text
-				$message = $this->rrule_to_text( $_REQUEST["rrule"] );
+				$message = ucfirst( $this->rrule_to_text( $_REQUEST["rrule"] ) );
 			}
-
 		} else {
 			$error = true;
-			$message = 'Recurrence rule is not provided!';
+			$message = __( 'Recurrence rule was not provided.', AI1EC_PLUGIN_NAME );
 		}
-
 		$output = array(
 			"error" 	=> $error,
-			"message"	=> stripslashes( $message )
+			"message"	=> get_magic_quotes_gpc() ? stripslashes( $message ) : $message,
 		);
 
 		echo json_encode( $output );
 		exit();
 	}
 
-	/**
-	 * post_type_link function
-	 *
-	 *
-	 *
-	 * @return void
-	 **/
-	function post_type_link( $permalink, $post, $leavename ) {
-		global $ai1ec_app_helper;
+	private function add_count_to_rrule_if_not_present( $rrule ) {
+		if( false === strpos( 'COUNT', $rrule ) ) {
+			$rrule .= "COUNT={$this->max_number_of_cache_entries};";
+		}
+		return $rrule;
+	}
 
+	/**
+	 * Filters AI1EC_POST_TYPE permalinks by appending [?&]instance_id= to it.
+	 *
+	 * @param string  $permalink Original permalink
+	 * @param object  $post      Associated post object
+	 * @param unknown $leavename Unknown
+	 *
+	 * @return string
+	 */
+	function post_type_link( $permalink, $post, $leavename ) {
 		if( $post->post_type == AI1EC_POST_TYPE ) {
-			$delimiter = $ai1ec_app_helper->get_param_delimiter_char( $permalink );
+			$delimiter = Ai1ec_Href_Helper::get_param_delimiter_char( $permalink );
 			return $permalink . $delimiter . 'instance_id=';
 		}
 
@@ -1901,7 +2351,7 @@ class Ai1ec_Events_Helper {
 		$post_id = (int) $_REQUEST["post_id"];
 		$count   = 100;
 		$end     = null;
-		$until   = gmmktime();
+		$until   = Ai1ec_Time_Utility::current_time( true );
 
 		// try getting the event
 		try {
@@ -1967,11 +2417,100 @@ class Ai1ec_Events_Helper {
 	}
 
 	/**
-	 * shortcode function
+	 * shortcode method
 	 *
-	 * @return void
+	 * Generate replacement content for [ai1ec] shortcode.
+	 *
+	 * @param array	 $atts	  Attributes provided on shortcode
+	 * @param string $content Tag internal content (shall be empty)
+	 * @param string $tag	  Used tag name (must be 'ai1ec' always)
+	 *
+	 * @staticvar $call_count Used to restrict to single calendar per page
+	 *
+	 * @return string Replacement for shortcode entry
 	 **/
-	function shortcode( $atts, $content = "" ) { }
+	function shortcode( $atts, $content = '', $tag = 'ai1ec' ) {
+		static $call_count = 0;
+		global $ai1ec_settings,
+		       $ai1ec_app_helper;
+		$view_names = $ai1ec_app_helper->view_names();
+
+		++$call_count;
+		if ( $call_count > 1 ) { // not implemented
+			return false; // so far process only first request
+		}
+		$view = $ai1ec_settings->default_calendar_view;
+		$categories = $tags = $post_ids = array();
+		if ( isset( $atts['view'] ) ) {
+			if ( 'ly' === substr( $atts['view'], -2 ) ) {
+				$atts['view'] = substr( $atts['view'], 0, -2 );
+			}
+			if ( ! isset( $view_names[$atts['view']] ) ) {
+				return false;
+			}
+			$view = $atts['view'];
+		}
+
+		$mappings = array(
+			'cat_name' => 'categories',
+			'cat_id'   => 'categories',
+			'tag_name' => 'tags',
+			'tag_id'   => 'tags',
+			'post_id'  => 'post_ids',
+		);
+		foreach ( $mappings as $att_name => $type ) {
+			if ( ! isset( $atts[$att_name] ) ) {
+				continue;
+			}
+			$raw_values = explode( ',', $atts[$att_name] );
+			foreach ( $raw_values as $argument ) {
+				if ( 'post_id' === $att_name ) {
+					if ( ( $argument = (int)$argument ) > 0 ) {
+						$post_ids[] = $argument;
+					}
+				} else {
+					if ( ! is_numeric( $argument ) ) {
+						$search_val = trim( $argument );
+						$argument   = false;
+						foreach ( array( 'name', 'slug' ) as $field ) {
+							$record = get_term_by(
+								$field,
+								$search_val,
+								'events_' . $type
+							);
+							if ( false !== $record ) {
+								$argument = $record;
+								break;
+							}
+						}
+						unset( $search_val, $record, $field );
+						if ( false === $argument ) {
+							continue;
+						}
+						$argument = (int)$argument->term_id;
+					} else {
+						if ( ( $argument = (int)$argument ) <= 0 ) {
+							continue;
+						}
+					}
+					${$type}[] = $argument;
+				}
+			}
+		}
+		$query = array(
+			'ai1ec_cat_ids'	 => implode( ',', $categories ),
+			'ai1ec_tag_ids'	 => implode( ',', $tags ),
+			'ai1ec_post_ids' => implode( ',', $post_ids ),
+			'action'         => $view,
+			'request_type'   => 'jsonp',
+			'shortcode'      => 'true'
+		);
+		if( isset( $atts['exact_date'] ) ) {
+			$query['exact_date'] = $atts['exact_date'];
+		}
+
+		return $this->_get_view_and_restore_globals( $query );
+	}
 
 	/**
 	 * get_week_start_day_offset function
@@ -1987,6 +2526,31 @@ class Ai1ec_Events_Helper {
 		global $ai1ec_settings;
 
 		return - ( 7 - ( $ai1ec_settings->week_start_day - $wday ) ) % 7;
+	}
+
+	/**
+	 * _get_view_and_restore_globals method
+	 *
+	 * Set global request ($_REQUEST) variables, call rendering routines
+	 * and reset $_REQUEST afterwards.
+	 *
+	 * @uses do_action				To launch
+	 *	'ai1ec_load_frontend_js' action
+	 *
+	 * @param array $arguments Arguments to set for rendering
+	 *
+	 * @return string Rendered view
+	 */
+	protected function _get_view_and_restore_globals( $arguments ) {
+		global $ai1ec_calendar_controller, $ai1ec_app_controller, $ai1ec_settings;
+
+		$request = Ai1ec_Routing_Factory::create_argument_parser_instance( $arguments );
+		$page_content = $ai1ec_calendar_controller->get_calendar_page( $request );
+
+		// Load requirejs for the calendar
+		do_action( 'ai1ec_load_frontend_js', true );
+
+		return $page_content;
 	}
 }
 // END class

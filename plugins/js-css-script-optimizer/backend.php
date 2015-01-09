@@ -148,16 +148,32 @@ class evScriptOptimizerBackend {
     function options_tab_basic() { ?>
         <table class="form-table">
             <tr valign="top">
+                <th scope="row"><?php _e('Enable plugin', 'spacker'); ?></th>
+                <td>
+					<input name="spacker[enable-plugin]" type="hidden" value="0" />
+                    <input name="spacker[enable-plugin]" type="checkbox" id="enable-plugin" value="1" <?php if (evScriptOptimizer::$options['enable-plugin']) echo 'checked'; ?> />
+                    <label for="enable-plugin"><?php _e('Enable <sup>new</sup>', 'spacker'); ?></label>
+                </td>
+            </tr>
+            <tr valign="top">
                 <td colspan="2">
                     <h3><?php _e('JavaScript output options'); ?></h3>
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row"><?php _e('For self-hosted only', 'spacker'); ?></th>
+                <th scope="row"><?php _e('Strict ordering', 'spacker'); ?></th>
+                <td>
+					<input name="spacker[strict-ordering-beta]" type="hidden" value="0" />
+                    <input name="spacker[strict-ordering-beta]" type="checkbox" id="strict-ordering-beta" value="1" <?php if (evScriptOptimizer::$options['strict-ordering-beta']) echo 'checked'; ?> />
+                    <label for="strict-ordering-beta"><?php _e('Better compatibility with other plugins <sup>betta</sup>', 'spacker'); ?></label>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row"><?php _e('Ignore external JavaScript', 'spacker'); ?></th>
                 <td>
 					<input name="spacker[only-selfhosted-js]" type="hidden" value="0" />
                     <input name="spacker[only-selfhosted-js]" type="checkbox" id="only-selfhosted-js" value="1" <?php if (evScriptOptimizer::$options['only-selfhosted-js']) echo 'checked'; ?> />
-                    <label for="only-selfhosted-js"><?php _e('Ignore external JavaScript', 'spacker'); ?></label>
+                    <label for="only-selfhosted-js"><?php _e('For self-hosted only', 'spacker'); ?></label>
                 </td>
             </tr>
             <tr valign="top">
@@ -213,9 +229,9 @@ class evScriptOptimizerBackend {
             <tr valign="top">
                 <th scope="row"><?php _e('Combine CSS', 'spacker'); ?></th>
                 <td>
-					<input name="spacker[combining-css]" type="hidden" value="0" />
-                    <input name="spacker[combining-css]" type="checkbox" id="combining-css" value="1" <?php if (evScriptOptimizer::$options['combining-css']) echo 'checked'; ?> />
-                    <label for="combining-css"><?php _e('Combine all CSS scripts into the single file', 'spacker'); ?></label>
+					<input name="spacker[combine-css]" type="hidden" value="0" />
+                    <input name="spacker[combine-css]" type="checkbox" id="combine-css" value="1" <?php if (evScriptOptimizer::$options['combine-css']) echo 'checked'; ?> />
+                    <label for="combine-css"><?php _e('Combine all CSS scripts into the single file', 'spacker'); ?></label>
                 </td>
             </tr>
             <tr valign="top">
@@ -243,7 +259,7 @@ class evScriptOptimizerBackend {
                     var ch = spacker_css_el.checked;
 
                     document.getElementById('only-selfhosted-css').disabled = ! ch;
-                    document.getElementById('combining-css').disabled = ! ch;
+                    document.getElementById('combine-css').disabled = ! ch;
                     document.getElementById('packing-css').disabled = ! ch;
                     document.getElementById('exclude-css').disabled = ! ch;
                 }
@@ -380,6 +396,7 @@ class evScriptOptimizerBackend {
         <div class="block-content">
             <h3>Plugin Features</h3>
             <ul>
+                <li>WPMU / Network support</li>
                 <li>Combine several scripts into the single file (to minimize http requests)</li>
                 <li>Pack scripts using Dean Edwards's JavaScript Packer</li>
                 <li>You can move all JavaScripts to the bottom</li>

@@ -1,3 +1,0 @@
-[14-Nov-2012 18:01:29] PHP Warning:  join() [<a href='function.join'>function.join</a>]: Invalid arguments passed in /home/akvokomi/public_html/wp-content/themes/Quadro/includes/tabs.php on line 10
-[15-Nov-2012 21:23:05] PHP Warning:  array_search() expects parameter 2 to be array, null given in /home/akvokomi/public_html/wp-content/themes/Quadro/includes/tabs.php on line 10
-[16-Nov-2012 02:51:57] PHP Warning:  array_search() expects parameter 2 to be array, null given in /home/akvokomi/public_html/wp-content/themes/Quadro/includes/tabs.php on line 10

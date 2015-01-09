@@ -401,6 +401,14 @@ border-radius: 5px;
     padding:20px;
 
 }
+#sidebar > div.widget_sp_image{
+    background: none;
+    padding:0px;
+    width:100%;
+}
+#sidebar > div.widget_sp_image h2{
+    display:none;
+}
 .post-wrapper{
     background-color: #FFF;
     margin-bottom:15px;
@@ -489,6 +497,9 @@ margin-right:9px;
     font-style: italic;
     float:right;
 	text-align:right;
+}
+#iDivPoweredBy #iDivPoweredByText a{
+    color:#555;
 }
 #iDivPoweredBy #iDivPoweredByImage{
     float:right;

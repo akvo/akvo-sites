@@ -5,126 +5,133 @@
 <?php endif; ?>
 
 <div class="timely ai1ec-agenda-widget-view">
+<div class="clearfix">
 
 	<?php if( ! $dates ): ?>
 		<p class="ai1ec-no-results">
 			<?php _e( 'There are no upcoming events.', AI1EC_PLUGIN_NAME ); ?>
 		</p>
 	<?php else: ?>
-		<ol>
+		<div>
 			<?php foreach( $dates as $timestamp => $date_info ): ?>
-				<li class="ai1ec-date <?php if( isset( $date_info['today'] ) && $date_info['today'] ) echo 'ai1ec-today'; ?>">
-					<div class="ai1ec-date-title">
-						<div class="ai1ec-month"><?php echo date_i18n( 'M', $timestamp, true ); ?></div>
-						<div class="ai1ec-day"><?php echo date_i18n( 'j', $timestamp, true ); ?></div>
-						<div class="ai1ec-weekday"><?php echo date_i18n( 'D', $timestamp, true ); ?></div>
-						<?php if ( $show_year_in_agenda_dates ): ?>
-							<div class="ai1ec-year"><?php echo date_i18n( 'Y', $timestamp, true ) ?></div>
+				<div class="ai1ec-date
+					<?php if ( ! empty( $date_info['today'] ) ) echo 'ai1ec-today'; ?>">
+					<a class="ai1ec-date-title ai1ec-load-view" href="<?php echo $date_info['href']; ?>">
+						<div class="ai1ec-month"><?php echo Ai1ec_Time_Utility::date_i18n( 'M', $timestamp, true ); ?></div>
+						<div class="ai1ec-day"><?php echo Ai1ec_Time_Utility::date_i18n( 'j', $timestamp, true ); ?></div>
+						<div class="ai1ec-weekday"><?php echo Ai1ec_Time_Utility::date_i18n( 'D', $timestamp, true ); ?></div>
+						<?php if ( $show_year_in_agenda_dates ) : ?>
+							<div class="ai1ec-year"><?php echo Ai1ec_Time_Utility::date_i18n( 'Y', $timestamp, true ) ?></div>
 						<?php endif; ?>
-					</div>
-					<ol class="ai1ec-date-events">
+					</a><!--/.ai1ec-date-title-->
+					<div class="ai1ec-date-events">
 						<?php foreach( $date_info['events'] as $category ): ?>
 							<?php foreach( $category as $event ): ?>
-								<li class="ai1ec-event
+								<div class="ai1ec-event
 									ai1ec-event-id-<?php echo $event->post_id; ?>
 									ai1ec-event-instance-id-<?php echo $event->instance_id; ?>
 									<?php if( $event->allday ) echo 'ai1ec-allday'; ?>">
 
-									<?php // Insert post ID for use by JavaScript filtering later ?>
-									<input type="hidden" class="ai1ec-post-id" value="<?php echo $event->post_id; ?>" />
-
 									<a href="<?php echo esc_attr( get_permalink( $event->post_id ) ) . $event->instance_id; ?>"
-										class="ai1ec-popup-summary-parent">
-										<?php if( ! $event->allday ): ?>
+										class="ai1ec-popup-trigger">
+										<?php if ( $event->allday ): ?>
+											<span class="ai1ec-allday-badge">
+												<?php _e( 'all-day', AI1EC_PLUGIN_NAME ) ?>
+											</span>
+										<?php else : ?>
 											<span class="ai1ec-event-time">
-												<?php echo esc_html( $event->start_time ); ?></span>
+												<?php echo esc_html( $event->get_start_time() ); ?>
 											</span>
 										<?php endif; ?>
 										<span class="ai1ec-event-title">
-											<?php echo esc_html( apply_filters( 'the_title', $event->post->post_title ) ); ?>
+											<?php echo esc_html( apply_filters( 'the_title', $event->post->post_title, $event->post_id ) ); ?>
 											<?php if ( $show_location_in_title && isset( $event->venue ) && $event->venue != '' ): ?>
-												<span class="ai1ec-event-location"><?php echo sprintf( __( '@ %s', AI1EC_PLUGIN_NAME ), $event->venue ); ?></span>
+												<span class="ai1ec-event-location"><?php echo sprintf( __( '@ %s', AI1EC_PLUGIN_NAME ), esc_html( $event->venue ) ); ?></span>
 											<?php endif; ?>
 										</span>
-										<?php if( $event->allday ): ?>
-											<span class="ai1ec-allday-label">
-												<?php _e( 'All Day', AI1EC_PLUGIN_NAME ) ?>
-											</span>
-										<?php endif; ?>
-										<?php if( $event->category_colors ): ?>
-											<span class="ai1ec-category-colors"><?php echo $event->category_colors; ?></span>
-										<?php endif; ?>
 
-										<div class="ai1ec-popup-summary-wrap">
-											<div class="ai1ec-popup-summary">
+									</a><!--/.ai1ec-popup-trigger-->
+									<div class="ai1ec-popup hide">
+										<?php if( $event->get_category_colors() ): ?>
+											<div class="ai1ec-color-swatches"><?php echo $event->get_category_colors(); ?></div>
+										<?php endif ?>
 
-												<?php if( $event->category_colors ): ?>
-												  <div class="ai1ec-category-colors"><?php echo $event->category_colors ?></div>
-												<?php endif ?>
+										<span class="ai1ec-popup-title popover-title">
+											<a href="<?php echo esc_attr( get_permalink( $event->post_id ) ) . $event->instance_id ?>">
+												<?php if ( function_exists( 'mb_strimwidth' ) ) : ?>
+													<?php echo esc_html( apply_filters( 'the_title', mb_strimwidth( $event->post->post_title, 0, 35, '...' ), $event->post_id ) );
+												else : ?>
+													<?php $read_more = strlen( $event->post->post_title ) > 35 ? '...' : ''; ?>
+													<?php echo esc_html( apply_filters( 'the_title', substr( $event->post->post_title, 0, 35 ) . $read_more, $event->post_id ) );
+												endif;
+											?></a>
+											<?php if ( $show_location_in_title && isset( $event->venue ) && $event->venue != '' ): ?>
+												<span class="ai1ec-event-location"><?php echo esc_html( sprintf( __( '@ %s', AI1EC_PLUGIN_NAME ), $event->venue ) ); ?></span>
+											<?php endif; ?>
+										</span><!--/.span.ai1ec-popup-title-->
+										<?php edit_post_link(
+											'<i class="icon-pencil"></i> ' . __( 'Edit', AI1EC_PLUGIN_NAME ),
+											'', '', $event->post_id
+										); ?>
 
-												<span class="ai1ec-popup-title">
-												  <?php if( function_exists( 'mb_strimwidth' ) ) : ?>
-												    <?php echo esc_html( mb_strimwidth( apply_filters( 'the_title', $event->post->post_title ), 0, 35, '...' ) ) ?></span>
-												  <?php else : ?>
-												    <?php $read_more = strlen( apply_filters( 'the_title', $event->post->post_title ) ) > 35 ? '...' : '' ?>
-													<?php echo esc_html( substr( apply_filters( 'the_title', $event->post->post_title ), 0, 35 ) . $read_more );  ?>
-												  <?php endif; ?>
-													<?php if ( $show_location_in_title && isset( $event->venue ) && $event->venue != '' ): ?>
-														<span class="ai1ec-event-location"><?php echo esc_html( sprintf( __( '@ %s', AI1EC_PLUGIN_NAME ), $event->venue ) ); ?></span>
-													<?php endif; ?>
-												</span>
-												<?php if( ! $event->allday ): ?>
-													<div class="ai1ec-event-time"><?php echo esc_html( $event->short_start_time ) ?></div>
-												<?php endif ?>
-												<?php if( $event->allday ): ?>
-													<div><small><?php esc_html_e( '(all-day)', AI1EC_PLUGIN_NAME ) ?></small></div>
-												<?php endif ?>
+										<div class="ai1ec-event-time"><?php echo $event->get_timespan_html( 'short' ); ?></div>
 
-												<?php if( $event->post_excerpt ): ?>
-													<p class="ai1ec-popup-excerpt"><?php echo esc_html( $event->post_excerpt ) ?></p>
-												<?php endif ?>
+										<?php // Event avatar ?>
+										<?php
+											echo $event->get_event_avatar(
+												array(
+													'post_thumbnail',
+													'content_img',
+													'location_avatar',
+													'category_avatar',
+												)
+											);
+										?>
 
-											</div><!-- .ai1ec-popup-summary -->
-										</div><!-- .ai1ec-popup-summary-wrap -->
+										<?php if ( $event->get_post_excerpt() ): ?>
+											<div class="ai1ec-popup-excerpt"><?php echo esc_html( $event->get_post_excerpt() ) ?></div>
+										<?php endif ?>
+									</div><!-- .ai1ec-popup -->
 
-									</a>
-
-								</li>
+								</div>
 							<?php endforeach; ?>
 						<?php endforeach; ?>
-					</ol>
-				</li>
+					</div>
+				</div><!--/.ai1ec-date-->
 			<?php endforeach; ?>
-		</ol>
+		</div>
 	<?php endif; ?>
 
-  <?php if( $show_calendar_button || $show_subscribe_buttons ): ?>
-    <p>
-    	<?php if( $show_calendar_button ): ?>
-    		<a class="btn btn-mini pull-right ai1ec-calendar-link" href="<?php echo $calendar_url; ?>">
-    			<?php _e( 'View Calendar', AI1EC_PLUGIN_NAME ); ?>
-          <i class="icon-arrow-right"></i>
-    		</a>
-    	<?php endif; ?>
+	<?php if( $show_calendar_button || $show_subscribe_buttons ): ?>
+		<p>
+			<?php if( $show_calendar_button ): ?>
+				<a class="btn btn-mini pull-right ai1ec-calendar-link" href="<?php echo $calendar_url; ?>">
+					<?php _e( 'View Calendar', AI1EC_PLUGIN_NAME ); ?>
+					<i class="icon-arrow-right"></i>
+				</a>
+			<?php endif; ?>
 
-    	<?php if( $show_subscribe_buttons ): ?>
-    		<span class="ai1ec-subscribe-buttons pull-left">
-    			<a class="btn btn-mini ai1ec-subscribe"
-    				href="<?php echo $subscribe_url; ?>"
-    				title="<?php _e( 'Subscribe to this calendar using your favourite calendar program (iCal, Outlook, etc.)', AI1EC_PLUGIN_NAME ); ?>" />
-    				<?php _e( '✔ Subscribe', AI1EC_PLUGIN_NAME ); ?>
-    			</a>
-    			<a class="btn btn-mini ai1ec-subscribe-google" target="_blank"
-    				href="http://www.google.com/calendar/render?cid=<?php echo urlencode( str_replace( 'webcal://', 'http://', $subscribe_url ) ); ?>"
-    				title="<?php _e( 'Subscribe to this calendar in your Google Calendar', AI1EC_PLUGIN_NAME ); ?>" />
-    				<img src="<?php echo $this->get_theme_img_url( 'google-calendar.png' ); ?>" />
-    				<?php _e( 'Add to Google', AI1EC_PLUGIN_NAME ); ?>
-    			</a>
-    		</span>
-    	<?php endif; ?>
-    </p>
-  <?php endif; ?>
+			<?php if( $show_subscribe_buttons ): ?>
+				<span class="ai1ec-subscribe-buttons pull-left btn-group">
+					<a class="btn btn-mini ai1ec-subscribe ai1ec-tooltip-trigger"
+						href="<?php echo $subscribe_url; ?>" data-placement="bottom"
+						title="<?php _e( 'Subscribe to this calendar in your personal calendar (iCal, Outlook, etc.)', AI1EC_PLUGIN_NAME ); ?>" />
+						<i class="icon-plus"></i>
+						<?php _e( 'Add', AI1EC_PLUGIN_NAME ); ?>
+					</a>
+					<a class="btn btn-mini ai1ec-subscribe-google ai1ec-tooltip-trigger"
+						target="_blank" data-placement="bottom"
+						href="http://www.google.com/calendar/render?cid=<?php echo urlencode( str_replace( 'webcal://', 'http://', $subscribe_url ) ); ?>"
+						title="<?php _e( 'Subscribe to this calendar in your Google Calendar', AI1EC_PLUGIN_NAME ); ?>" />
+						<i class="icon-google-plus icon-large"></i>
+						<?php _e( 'Add', AI1EC_PLUGIN_NAME ); ?>
+					</a>
+				</span>
+			<?php endif; ?>
+		</p>
+	<?php endif; ?>
 
-</div>
+</div><!--/.clearfix-->
+</div><!--/.ai1ec-agenda-widget-view-->
 
 <?php echo $args['after_widget']; ?>

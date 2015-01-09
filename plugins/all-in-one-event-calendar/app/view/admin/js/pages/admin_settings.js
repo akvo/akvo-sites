@@ -1,3 +1,1 @@
-require(
-		[ "scripts/admin_settings" ]
-);
+timely.require(["scripts/admin_settings"]);

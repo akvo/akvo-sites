@@ -8,6 +8,12 @@ class slickr_flickr_public {
 	static private $jquery_data; //cache all jquery and write in one chunk
 	
 	static private $galleria_themes; //galleria themes
+
+	static private $is_present = false; //is there a galleria, gallery or slideshow on this page? 		
+
+	static public function note_active() {
+		self::$is_present = true;
+	}
 		
 	static public function add_jquery($line) {
 		self::$jquery_data[]= $line;
@@ -19,7 +25,7 @@ class slickr_flickr_public {
 
 	static function start_show() {
 		$in_footer = SlickrFlickrUtils::scripts_in_footer();
-		if ($in_footer && (count(self::$jquery_data)==0)) return;
+		if ($in_footer && ! self::$is_present) return;
 		echo ('<script type="text/javascript">'."\r\n");
     	self::load_galleria_theme($in_footer);
     	echo ('jQuery.noConflict(); jQuery(document).ready(function() {'."\r\n");
@@ -37,11 +43,9 @@ class slickr_flickr_public {
 			else
 				$theme = $in_footer ? '' : SlickrFlickrUtils::get_option('galleria_theme');
 			if (!empty($theme)) {
-				if ('classic'==$theme) 
-    	    		$themepath = SLICKR_FLICKR_PLUGIN_URL. '/galleria/themes/classic/galleria.classic.js';
-				else  //premium themes are located outside the plugin folder
-    	    		$themepath = site_url( SlickrFlickrUtils::get_option('galleria_themes_folder'). '/' . 
-    	    			$theme .'/galleria.'. $theme . '.min.js');
+				$themepath = sprintf('%2$s/%1$s/galleria.%1$s.min.js', $theme, 
+					'classic'==$theme ? (SLICKR_FLICKR_PLUGIN_URL. '/galleria/themes') :
+						site_url( SlickrFlickrUtils::get_option('galleria_themes_folder')) );
     	    	echo 'Galleria.loadTheme("'.$themepath.'");'."\r\n";  //load galleria theme
 			}
 		}
@@ -85,7 +89,7 @@ class slickr_flickr_public {
         		break;
 			}
 		    default: {
-				$gversion = '1.2.8';
+				$gversion = '1.2.9';
 				$gscript = $gfolder . 'galleria-'.$gversion.'.min.js';
 		    	wp_enqueue_script($gname, $gscript, array('jquery'), $gversion, $footer_scripts); //enqueue loading of core galleria script
     		    break;
@@ -100,7 +104,7 @@ class slickr_flickr_public {
 
 	static function dequeue_redundant_scripts() {
 		if (count(self::$galleria_themes)==0) wp_dequeue_script('galleria'); 
-		if (count(self::$jquery_data)==0) {  
+		if (! self::$is_present) {  
 			wp_dequeue_script('slickr-flickr'); 
 			wp_dequeue_script('slickr-flickr-lightbox');
 		}
@@ -111,6 +115,7 @@ class slickr_flickr_public {
 		return $disp->show($attr);
 	}
 }
+
 add_action('init', array('slickr_flickr_public','init'));
 add_shortcode('slickr-flickr', array('slickr_flickr_public','display'));
 add_filter('widget_text', 'do_shortcode', 11);

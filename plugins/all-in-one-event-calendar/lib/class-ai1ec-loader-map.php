@@ -527,6 +527,14 @@
       1 => AI1EC_PATH . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'utility' . DIRECTORY_SEPARATOR . 'class-ai1ec-filesystem-utility.php',
     ),
   ),
+  'Ai1ec_Frequency_Utility' => 
+  array (
+    0 => 
+    array (
+      0 => '0',
+      1 => AI1EC_PATH . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'utility' . DIRECTORY_SEPARATOR . 'class-ai1ec-frequency-utility.php',
+    ),
+  ),
   'Ai1ec_Generic_Html_Tag' => 
   array (
     0 => 
@@ -573,6 +581,14 @@
     array (
       0 => '0',
       1 => AI1EC_PATH . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'utility' . DIRECTORY_SEPARATOR . 'class-ai1ec-html-utility.php',
+    ),
+  ),
+  'Ai1ec_Http_Utility' => 
+  array (
+    0 => 
+    array (
+      0 => '0',
+      1 => AI1EC_PATH . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'utility' . DIRECTORY_SEPARATOR . 'class-ai1ec-http-utility.php',
     ),
   ),
   'Ai1ec_Importer' => 
@@ -855,6 +871,14 @@
       1 => AI1EC_PATH . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR . 'class-ai1ec-rss-feed-controller.php',
     ),
   ),
+  'Ai1ec_Scheduling_Utility' => 
+  array (
+    0 => 
+    array (
+      0 => '0',
+      1 => AI1EC_PATH . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'utility' . DIRECTORY_SEPARATOR . 'class-ai1ec-scheduling-utility.php',
+    ),
+  ),
   'Ai1ec_Script_Wordpress_Adapter' => 
   array (
     0 => 
@@ -901,6 +925,14 @@
     array (
       0 => '0',
       1 => AI1EC_PATH . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'class-ai1ec-settings-helper.php',
+    ),
+  ),
+  'Ai1ec_Shutdown_Utility' => 
+  array (
+    0 => 
+    array (
+      0 => '0',
+      1 => AI1EC_PATH . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'utility' . DIRECTORY_SEPARATOR . 'class-ai1ec-shutdown-utility.php',
     ),
   ),
   'Ai1ec_Singleton_Restriction' => 

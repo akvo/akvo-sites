@@ -48,6 +48,7 @@
  * @param per_page -> photos per page 
  * @param page -> page number  
  * @param restrict -> filter results based on orientation  
+ * @param scripts_in_footer -> true or false - default is false 
 */
 class SlickrFlickrUtils {
 
@@ -99,6 +100,8 @@ class SlickrFlickrUtils {
     	'descriptions' => '',
     	'ptags' => '',
     	'flickr_link' => '',
+    	'flickr_link_title' => 'Click to see the photo on Flickr',
+    	'flickr_link_target' => '',
     	'link' => '',
     	'target' => '_self',
     	'attribution' => '',

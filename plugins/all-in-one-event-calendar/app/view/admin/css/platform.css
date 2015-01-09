@@ -59,3 +59,14 @@
   -o-transform: none;
   transform: none;
 }
+
+/*
+For supporting browsers, add CSS to hide the duplicate menu items under Events
+menu so that FOUC issue isn't as severe (but this only ameliorates the issue).
+This is taken care of better via JS anyway.
+*/
+#menu-posts-ai1ec_event a[href$="all-in-one-event-calendar-themes"],
+#menu-posts-ai1ec_event a[href$="all-in-one-event-calendar-edit-css"],
+#menu-posts-ai1ec_event a[href$="all-in-one-event-calendar-settings"] {
+	display: none;
+}

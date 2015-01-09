@@ -78,8 +78,8 @@ class Ai1ec_Settings_Helper {
 		$selected_title = '';
 		?>
 		<select class="inputwidth" name="<?php echo $field_name; ?>"
-		        id="<?php echo $field_name; ?>"
-		        class="wafp-dropdown wafp-pages-dropdown">
+						id="<?php echo $field_name; ?>"
+						class="wafp-dropdown wafp-pages-dropdown">
 			<?php if( ! empty( $auto_page ) ) { ?>
 				<option value="__auto_page:<?php echo $auto_page; ?>">
 					<?php _e( '- Auto-Create New Page -', AI1EC_PLUGIN_NAME ); ?>
@@ -102,9 +102,10 @@ class Ai1ec_Settings_Helper {
 		if( is_numeric( $selected_page_id ) && $selected_page_id > 0 ) {
 			$permalink = get_permalink( $selected_page_id );
 			?>
-			<div><a href="<?php echo $permalink ?>" target="_blank">
-				<?php printf( __( 'View "%s" »', AI1EC_PLUGIN_NAME ), $selected_title ) ?>
-			</a></div>
+			<p><a href="<?php echo $permalink ?>" target="_blank">
+				<?php printf( __( 'View "%s"', AI1EC_PLUGIN_NAME ), $selected_title ) ?>
+				<i class="icon-arrow-right"></i>
+			</a></p>
 			<?php
 		}
 		return ob_get_clean();
@@ -141,7 +142,8 @@ class Ai1ec_Settings_Helper {
 	 * @return void
 	 **/
 	function get_view_options( $view = null ) {
-		global $ai1ec_settings;
+		global $ai1ec_settings,
+		       $ai1ec_app_helper;
 
 		ob_start();
 		?>
@@ -153,7 +155,7 @@ class Ai1ec_Settings_Helper {
 						<td>Enabled</td>
 						<td>Default</td>
 					</tr>
-					<?php foreach ( Ai1ec_Settings::$view_names as $key => $name ) {
+					<?php foreach ( $ai1ec_app_helper->view_names() as $key => $name ) {
 						$this_view_bool = 'view_' . $key . '_enabled';
 						$is_view_enabled = $ai1ec_settings->$this_view_bool;
 						?>
@@ -218,25 +220,26 @@ class Ai1ec_Settings_Helper {
 	* @return string
 	**/
 	function get_date_format_dropdown( $view = null ) {
-		ob_start();
-		?>
-		<select name="input_date_format">
-			<option value="def" <?php echo $view == 'def' ? 'selected' : '' ?>>
-				<?php _e( 'Default (d/m/y)', AI1EC_PLUGIN_NAME ) ?>
-			</option>
-			<option value="us" <?php echo $view == 'us' ? 'selected' : '' ?>>
-				<?php _e( 'US (m/d/y)', AI1EC_PLUGIN_NAME ) ?>
-			</option>
-			<option value="iso" <?php echo $view == 'iso' ? 'selected' : '' ?>>
-				<?php _e( 'ISO 8601 (y-m-d)', AI1EC_PLUGIN_NAME ) ?>
-			</option>
-			<option value="dot" <?php echo $view == 'dot' ? 'selected' : '' ?>>
-				<?php _e( 'Dotted (m.d.y)', AI1EC_PLUGIN_NAME ) ?>
-			</option>
+		$formats = array(
+			'def' => __( 'Default (d/m/yyyy)', AI1EC_PLUGIN_NAME ),
+			'us' => __( 'US (m/d/yyyy)', AI1EC_PLUGIN_NAME ),
+			'iso' => __( 'ISO 8601 (yyyy-m-d)', AI1EC_PLUGIN_NAME ),
+			'dot' => __( 'Dotted (m.d.yyyy)', AI1EC_PLUGIN_NAME ),
+		);
+		$patterns = Ai1ec_Time_Utility::get_date_patterns();
 
-		</select>
-		<?php
-		return ob_get_clean();
+		$html = '<select name="input_date_format" id="input_date_format">';
+		foreach ( $formats as $key => $label ) {
+			$html .= '<option value="' . $key . '"';
+			$html .= ' data-pattern="' . $patterns[$key] . '"';
+			if ( $view == $key ) {
+				$html .= ' selected="selected"';
+			}
+			$html .= '>' . $label . '</option>';
+		}
+		$html .= '</select>';
+
+		return $html;
 	}
 
 	/**
@@ -271,28 +274,34 @@ class Ai1ec_Settings_Helper {
 	 **/
 	function get_feed_rows() {
 		global $wpdb,
-					 $ai1ec_view_helper;
+		       $ai1ec_view_helper;
 
 		// Select all added feeds
-		$table_name = $wpdb->prefix . 'ai1ec_event_feeds';
-		$sql = "SELECT * FROM {$table_name}";
-		$rows = $wpdb->get_results( $sql );
+		$rows = $wpdb->get_results(
+			'SELECT * FROM ' . $wpdb->prefix . 'ai1ec_event_feeds'
+		);
 
 		ob_start();
-		foreach( $rows as $row ) :
+		$sql = 'SELECT COUNT(*) FROM ' . $wpdb->prefix .
+		       'ai1ec_events WHERE ical_feed_url = %s';
+		foreach ( $rows as $row ) {
 			$feed_category = get_term( $row->feed_category, 'events_categories' );
-			$table_name = $wpdb->prefix . 'ai1ec_events';
-			$sql = "SELECT COUNT(*) FROM {$table_name} WHERE ical_feed_url = '%s'";
-			$events = $wpdb->get_var( $wpdb->prepare( $sql, $row->feed_url ) );
-			$args = array(
-				'feed_url' 			 => $row->feed_url,
-				'event_category' => $feed_category->name,
-				'tags'					 => stripslashes( $row->feed_tags ),
-				'feed_id'				 => $row->feed_id,
-				'events'				 => $events
+			$events        = $wpdb->get_var( $wpdb->prepare( $sql, $row->feed_url ) );
+			$args          = array(
+				'feed_url'            => $row->feed_url,
+				'event_category'      => $feed_category->name,
+				'tags'                => stripslashes( $row->feed_tags ),
+				'feed_id'             => $row->feed_id,
+				'comments_enabled'    => (bool)intval(
+					$row->comments_enabled
+				),
+				'map_display_enabled' => (bool)intval(
+					$row->map_display_enabled
+				),
+				'events'              => $events,
 			);
 			$ai1ec_view_helper->display_admin( 'feed_row.php', $args );
-		endforeach;
+		}
 
 		return ob_get_clean();
 	}
@@ -324,94 +333,188 @@ class Ai1ec_Settings_Helper {
 		return ob_get_clean();
 	}
 
-  /**
-   * Displays the General Settings meta box.
-   *
-   * @return void
-   */
-  function general_settings_meta_box( $object, $box ) {
-    global $ai1ec_view_helper,
-           $ai1ec_settings;
-
-    $calendar_page                  = $this->wp_pages_dropdown(
-      'calendar_page_id',
-      $ai1ec_settings->calendar_page_id,
-      __( 'Calendar', AI1EC_PLUGIN_NAME )
-    );
-    $week_start_day                 = $this->get_week_dropdown( get_option( 'start_of_week' ) );
-    $posterboard_events_per_page    = $ai1ec_settings->posterboard_events_per_page;
-    $agenda_events_per_page         = $ai1ec_settings->agenda_events_per_page;
-    $include_events_in_rss          =
-      '<input type="checkbox" name="include_events_in_rss"
-        id="include_events_in_rss" value="1"'
-        . ( $ai1ec_settings->include_events_in_rss ? ' checked="checked"' : '' )
-        . '/>';
-    $exclude_from_search            = $ai1ec_settings->exclude_from_search ? 'checked=checked' : '';
-    $show_publish_button            = $ai1ec_settings->show_publish_button ? 'checked=checked' : '';
-    $hide_maps_until_clicked        = $ai1ec_settings->hide_maps_until_clicked ? 'checked=checked' : '';
-    $agenda_events_expanded         = $ai1ec_settings->agenda_events_expanded ? 'checked=checked' : '';
-    $turn_off_subscription_buttons  = $ai1ec_settings->turn_off_subscription_buttons ? 'checked=checked' : '';
-    $show_create_event_button       = $ai1ec_settings->show_create_event_button ? 'checked=checked' : '';
-    $inject_categories              = $ai1ec_settings->inject_categories ? 'checked=checked' : '';
-    $geo_region_biasing             = $ai1ec_settings->geo_region_biasing ? 'checked=checked' : '';
-    $input_date_format              = $this->get_date_format_dropdown( $ai1ec_settings->input_date_format );
-    $input_24h_time                 = $ai1ec_settings->input_24h_time ? 'checked=checked' : '';
-    $default_calendar_view          = $this->get_view_options( $ai1ec_settings->default_calendar_view );
-    $timezone_control               = $this->get_timezone_dropdown( $ai1ec_settings->timezone );
-    $disable_autocompletion         = $ai1ec_settings->disable_autocompletion ? 'checked=checked' : '';
-    $show_location_in_title         = $ai1ec_settings->show_location_in_title ? 'checked=checked' : '';
-    $show_year_in_agenda_dates      = $ai1ec_settings->show_year_in_agenda_dates ? 'checked=checked' : '';
-
-    $args = array(
-      'calendar_page'                 => $calendar_page,
-      'default_calendar_view'         => $default_calendar_view,
-      'week_start_day'                => $week_start_day,
-      'posterboard_events_per_page'   => $posterboard_events_per_page,
-      'agenda_events_per_page'        => $agenda_events_per_page,
-      'exclude_from_search'           => $exclude_from_search,
-      'show_publish_button'           => $show_publish_button,
-      'hide_maps_until_clicked'       => $hide_maps_until_clicked,
-      'agenda_events_expanded'        => $agenda_events_expanded,
-      'turn_off_subscription_buttons' => $turn_off_subscription_buttons,
-      'show_create_event_button'      => $show_create_event_button,
-      'inject_categories'             => $inject_categories,
-      'input_date_format'             => $input_date_format,
-      'input_24h_time'                => $input_24h_time,
-      'show_timezone'                 => ! get_option( 'timezone_string' ),
-      'timezone_control'              => $timezone_control,
-      'geo_region_biasing'            => $geo_region_biasing,
-      'disable_autocompletion'	      => $disable_autocompletion,
-      'show_location_in_title'	      => $show_location_in_title,
-      'show_year_in_agenda_dates'     => $show_year_in_agenda_dates,
-    );
-    $ai1ec_view_helper->display_admin( 'box_general_settings.php', $args );
-  }
 
 	/**
-	 * Displays the Advanced Settings meta box.
+	 * Displays the General Settings meta box.
 	 *
 	 * @return void
 	 */
-	function advanced_settings_meta_box( $object, $box ) {
-	  global $ai1ec_view_helper,
+	public function general_settings_meta_box( $object, $box ) {
+		global $ai1ec_view_helper,
 					 $ai1ec_settings;
 
-    $event_platform             = $ai1ec_settings->event_platform_active ? 'checked="checked"' : '';
-    $event_platform_disabled    = AI1EC_EVENT_PLATFORM ? 'disabled="disabled"' : '';
-    $event_platform_strict      = $ai1ec_settings->event_platform_strict ? 'checked="checked"' : '';
+		$calendar_page                  = $this->wp_pages_dropdown(
+			'calendar_page_id',
+			$ai1ec_settings->calendar_page_id,
+			__( 'Calendar', AI1EC_PLUGIN_NAME )
+		);
+		$week_start_day_val             = Ai1ec_Meta::get_option( 'start_of_week' );
+		$week_start_day                 = $this->get_week_dropdown( $week_start_day_val );
+		$exact_date                     = $ai1ec_settings->exact_date;
+		$posterboard_events_per_page    = $ai1ec_settings->posterboard_events_per_page;
+		$posterboard_tile_min_width     = $ai1ec_settings->posterboard_tile_min_width;
+		$agenda_events_per_page         = $ai1ec_settings->agenda_events_per_page;
+		$disable_gzip_compression       = $ai1ec_settings->disable_gzip_compression
+			? 'checked="checked"'
+			: '';
+		$agenda_include_entire_last_day = $ai1ec_settings->agenda_include_entire_last_day
+			? 'checked="checked"'
+			: '';
+		$include_events_in_rss          =
+			'<input type="checkbox" name="include_events_in_rss"' .
+			' id="include_events_in_rss" value="1"' .
+			(
+				$ai1ec_settings->include_events_in_rss
+				? ' checked="checked"'
+				: ''
+			) .
+			'/>';
+		$exclude_from_search            = $ai1ec_settings->exclude_from_search ? 'checked="checked"' : '';
+		$show_publish_button            = $ai1ec_settings->show_publish_button ? 'checked="checked"' : '';
+		$hide_maps_until_clicked        = $ai1ec_settings->hide_maps_until_clicked ? 'checked="checked"' : '';
+		$agenda_events_expanded         = $ai1ec_settings->agenda_events_expanded ? 'checked="checked"' : '';
+		$turn_off_subscription_buttons  = $ai1ec_settings->turn_off_subscription_buttons ? 'checked="checked"' : '';
+		$show_create_event_button       = $ai1ec_settings->show_create_event_button ? 'checked=checked' : '';
+		$inject_categories              = $ai1ec_settings->inject_categories ? 'checked="checked"' : '';
+		$geo_region_biasing             = $ai1ec_settings->geo_region_biasing ? 'checked="checked"' : '';
+		$input_date_format              = $this->get_date_format_dropdown( $ai1ec_settings->input_date_format );
+		$input_24h_time                 = $ai1ec_settings->input_24h_time ? 'checked="checked"' : '';
+		$default_calendar_view          = $this->get_view_options( $ai1ec_settings->default_calendar_view );
+		$timezone_control               = $this->get_timezone_dropdown( $ai1ec_settings->timezone );
+		$disable_autocompletion         = $ai1ec_settings->disable_autocompletion ? 'checked="checked"' : '';
+		$show_location_in_title         = $ai1ec_settings->show_location_in_title ? 'checked="checked"' : '';
+		$show_year_in_agenda_dates      = $ai1ec_settings->show_year_in_agenda_dates ? 'checked="checked"' : '';
+
+		$tax_options         = array(
+			'type'     => 'categories',
+			'selected' => $ai1ec_settings->default_categories,
+		);
+		$default_categories  = $this->taxonomy_selector( $tax_options );
+		$tax_options         = array(
+			'type'     => 'tags',
+			'selected' => $ai1ec_settings->default_tags,
+		);
+		$default_tags        = $this->taxonomy_selector( $tax_options );
+
+		$show_timezone       = $ai1ec_settings->is_timezone_open_for_change();
+
+		$date_format_pattern = Ai1ec_Time_Utility::get_date_pattern_by_key(
+			$ai1ec_settings->input_date_format
+		);
+
+		$skip_in_the_loop_check         = $ai1ec_settings->skip_in_the_loop_check ? 'checked="checked"' : '';
+		$event_platform                 = $ai1ec_settings->event_platform_active ? 'checked="checked"' : '';
+		$event_platform_disabled        = AI1EC_EVENT_PLATFORM ? 'disabled="disabled"' : '';
+		$event_platform_strict          = $ai1ec_settings->event_platform_strict ? 'checked="checked"' : '';
 
 		$args = array(
-      'calendar_css_selector'   => $ai1ec_settings->calendar_css_selector,
-      'event_platform'          => $event_platform,
-      'event_platform_disabled' => $event_platform_disabled,
-      'event_platform_strict'   => $event_platform_strict,
-      'display_event_platform'  => is_super_admin(),
-	  );
-	  $ai1ec_view_helper->display_admin( 'box_advanced_settings.php', $args );
+			'calendar_page'                  => $calendar_page,
+			'default_calendar_view'          => $default_calendar_view,
+			'week_start_day_val'             => $week_start_day_val,
+			'week_start_day'                 => $week_start_day,
+			'default_categories'             => $default_categories,
+			'default_tags'                   => $default_tags,
+			'exact_date'                     => $exact_date,
+			'posterboard_events_per_page'    => $posterboard_events_per_page,
+			'posterboard_tile_min_width'     => $posterboard_tile_min_width,
+			'agenda_events_per_page'         => $agenda_events_per_page,
+			'agenda_include_entire_last_day' => $agenda_include_entire_last_day,
+			'exclude_from_search'            => $exclude_from_search,
+			'show_publish_button'            => $show_publish_button,
+			'show_create_event_button'       => $show_create_event_button,
+			'hide_maps_until_clicked'        => $hide_maps_until_clicked,
+			'agenda_events_expanded'         => $agenda_events_expanded,
+			'turn_off_subscription_buttons'  => $turn_off_subscription_buttons,
+			'inject_categories'              => $inject_categories,
+			'input_date_format'              => $input_date_format,
+			'input_24h_time'                 => $input_24h_time,
+			'show_timezone'                  => $show_timezone,
+			'timezone_control'               => $timezone_control,
+			'geo_region_biasing'             => $geo_region_biasing,
+			'disable_autocompletion'         => $disable_autocompletion,
+			'show_location_in_title'         => $show_location_in_title,
+			'show_year_in_agenda_dates'      => $show_year_in_agenda_dates,
+			'date_format_pattern'            => $date_format_pattern,
+			'calendar_css_selector'          => $ai1ec_settings->calendar_css_selector,
+			'skip_in_the_loop_check'         => $skip_in_the_loop_check,
+			'event_platform'                 => $event_platform,
+			'event_platform_disabled'        => $event_platform_disabled,
+			'event_platform_strict'          => $event_platform_strict,
+			'display_event_platform'         => is_super_admin(),
+			'disable_gzip_compression'       => $disable_gzip_compression,
+		);
+		$ai1ec_view_helper->display_admin( 'box_general_settings.php', $args );
+	}
+
+
+	/**
+	 * taxonomy_selector method
+	 *
+	 * Get HTML selector for AI1EC custom taxonomy object.
+	 *
+	 * @param string|array $options Name of taxonomy (categories/tags) or list
+	 *     of options to customize selector.
+	 *
+	 * @return string HTML to use for selection
+	 */
+	public function taxonomy_selector( $options = array() ) {
+		$type = 'categories';
+		if ( ! is_array( $options ) ) {
+			$type    = (string)$options;
+			$options = array();
+		} elseif ( isset( $options['type'] ) ) {
+			$type    = $options['type'];
+		}
+		$options = array_merge( array(
+			'taxonomy'     => 'events_' . $type,
+			'hierarchical' => true,
+			'id'           => 'default_' . $type,
+			'name'         => 'default_' . $type,
+			'class'        => 'inputwidth',
+			'selected'     => array(),
+			'show_count'   => true,
+			'multiple'     => true,
+		), $options );
+		if (
+			$options['multiple'] &&
+			'[]' !== substr( $options['name'], -2 )
+		) {
+			$options['name'] .= '[]';
+		}
+		if ( ! is_array( $options['selected'] ) ) {
+			$options['selected'] = array( (int)$options['selected'] );
+		}
+		$taxonomy_items = get_categories( $options );
+		if ( empty( $taxonomy_items ) ) {
+			return NULL;
+		}
+		$result_html	= "\t" . '<select name="' . $options['name'] . '"' .
+			( ($options['multiple']) ? ' multiple="multiple"' : '') .
+			' id="' . $options['id'] . '" class="' .
+			$options['class'] . '">' . "\n";
+		$option_format  = "\t\t" . '<option value="%s"%s>%s</option>' . "\n";
+		foreach ( $taxonomy_items as $taxonomy ) {
+			$selected = '';
+			if ( in_array( $taxonomy->term_id, $options['selected'] ) ) {
+				$selected = ' selected="selected"';
+			}
+			$display = $taxonomy->name;
+			if ( $options['show_count'] ) {
+				$display .= '&nbsp;&nbsp;(' . $taxonomy->count . ')';
+			}
+			$result_html .= sprintf(
+				$option_format,
+				$taxonomy->term_id,
+				$selected,
+				$display
+			);
+		}
+		$result_html .= "\t" . '</select>';
+		return $result_html;
 	}
 
 	/**
-   * Renders the contents of the Calendar Feeds meta box.
+	 * Renders the contents of the Calendar Feeds meta box.
 	 *
 	 * @return void
 	 */
@@ -427,29 +530,41 @@ class Ai1ec_Settings_Helper {
 	 * @return void
 	 */
 	function support_meta_box( $object, $box ) {
-		global $ai1ec_view_helper;
+		global $ai1ec_view_helper,
+		       $ai1ec_events_helper;
 		include_once( ABSPATH . WPINC . '/feed.php' );
 		// Initialize new feed
 		$newsItems = array();
 		$feed      = fetch_feed( AI1EC_RSS_FEED );
-		$newsItems = is_wp_error( $feed ) ? array() : $feed->get_items();
-		$ai1ec_view_helper->display_admin( 'box_support.php', array( 'news' => $newsItems ) );
+		$newsItems = is_wp_error( $feed ) ? array() : $feed->get_items( 0, 5 );
+		$support_box_js = sprintf(
+			AI1EC_SUPPORTBOX_JS,
+			AI1EC_VERSION,
+			$ai1ec_events_helper->get_lang()
+		);
+		$ai1ec_view_helper->display_admin(
+			'box_support.php',
+			array(
+				'news'           => $newsItems,
+				'support_box_js' => $support_box_js
+			)
+		);
 	}
 
-  /**
-   * This is called when the settings page is loaded, so that any additional
-   * custom meta boxes can be added by other plugins, themes, etc.
-   *
-   * @return void
-   */
-  function add_settings_meta_boxes(){
-    global $ai1ec_settings;
-    do_action( 'add_meta_boxes', $ai1ec_settings->settings_page );
-  }
+	/**
+	 * This is called when the settings page is loaded, so that any additional
+	 * custom meta boxes can be added by other plugins, themes, etc.
+	 *
+	 * @return void
+	 */
+	function add_settings_meta_boxes(){
+		global $ai1ec_settings;
+		do_action( 'add_meta_boxes', $ai1ec_settings->settings_page );
+	}
 
 	/**
 	 * This is called when the feeds page is loaded, so that any additional
-   * custom meta boxes can be added by other plugins, themes, etc.
+	 * custom meta boxes can be added by other plugins, themes, etc.
 	 *
 	 * @return void
 	 */

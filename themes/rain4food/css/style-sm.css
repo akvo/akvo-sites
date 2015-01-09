@@ -1,0 +1,15 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 31, 2014, 11:25:07 AM
+    Author     : eveline
+*/
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .navbar-inverse .navbar-nav > li {
+        margin-right: 0px;
+    }
+}

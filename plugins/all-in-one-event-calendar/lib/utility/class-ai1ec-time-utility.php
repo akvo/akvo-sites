@@ -610,9 +610,14 @@ class Ai1ec_Time_Utility
 		$this->_gmtdates     = Ai1ec_Memory_Utility::instance(
 			__CLASS__ . '/gmt_dates'
 		);
+		// we require PHP v.5.2.0 minimum, but let's leave this
+		// check in place, for the sake of general truthfulness
+		$gmt_time = ( version_compare( PHP_VERSION, '5.1.0' ) >= 0 )
+			? time()
+			: gmmktime();
 		$this->_current_time = array(
 			(int)$_SERVER['REQUEST_TIME'],
-			gmmktime(),
+			$gmt_time,
 		);
 		$this->_time_i18n    = new Ai1ec_Time_I18n_Utility();
 	}

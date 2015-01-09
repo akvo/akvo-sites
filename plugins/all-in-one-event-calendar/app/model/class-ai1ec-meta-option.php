@@ -13,6 +13,18 @@ class Ai1ec_Meta_Option extends Ai1ec_Meta
 {
 
 	/**
+	 * Check if current user should see notice about update (if any)
+	 *
+	 * @return bool Availability of update
+	 */
+	public function is_visible_update() {
+		if ( ! $this->get( 'ai1ec_update_available', NULL, false ) ) {
+			return false;
+		}
+		return current_user_can( 'update_plugins' );
+	}
+
+	/**
 	 * _fetch method
 	 *
 	 * Fetch actual option using WP interface.

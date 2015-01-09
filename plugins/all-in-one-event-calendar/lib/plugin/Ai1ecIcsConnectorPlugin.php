@@ -72,7 +72,7 @@ class Ai1ecIcsConnectorPlugin extends Ai1ec_Connector_Plugin {
 			$table_name = $wpdb->prefix . 'ai1ec_event_feeds';
 			$sql = "CREATE TABLE $table_name (
 				feed_id bigint(20) NOT NULL AUTO_INCREMENT,
-				feed_url varchar(255) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+				feed_url varchar(255) NOT NULL,
 				feed_category bigint(20) NOT NULL,
 				feed_tags varchar(255) NOT NULL,
 				comments_enabled tinyint(1) NOT NULL DEFAULT '1',

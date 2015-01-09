@@ -16,7 +16,11 @@
             <?php endif; ?>
                 <div id="iDivPoweredBy">
                     <div id="iDivPoweredByText">
-                        Content Copyright RAIN. All rights reserved.
+                        <?php
+                        $sLng = ICL_LANGUAGE_CODE;
+                        $sCopyrightsSlug = ($sLng==='fr') ? 'fr/licensing-and-copyrights' : 'licensing-and-copyrights';
+                        ?>
+                         <a href="/<?php echo $sCopyrightsSlug;?>">Copyright</a>. Some rights reserved.
                     </div>
                     <div id="iDivPoweredByImage">
                         <a href="http://akvo.org">
@@ -33,3 +37,20 @@
 
 <?php get_template_part('includes/scripts'); ?>
 <?php wp_footer(); ?>
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+  _paq.push(["setCookieDomain", "*.rain4food.net"]);
+  _paq.push(["trackPageView"]);
+  _paq.push(["enableLinkTracking"]);
+
+  (function() {
+    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://analytics.akvo.org/";
+    _paq.push(["setTrackerUrl", u+"piwik.php"]);
+    _paq.push(["setSiteId", "13"]);
+    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Piwik Code -->

@@ -13,9 +13,7 @@ class Ai1ec_Wp_Uri_Helper
 {
 
 	/**
-	 * get_pagebase method
-	 *
-	 * Given URI - extract pagebase value, as used in `index.php?pagebase={arg}`
+	 * Given a URI, extracts pagebase value, as used in `index.php?pagebase={arg}`
 	 * when matching rewrites.
 	 * It may, optionally, provide arguments from URI to append to query string.
 	 * This is indicated via setting {@see $qsa} to non-`false` value.
@@ -41,8 +39,8 @@ class Ai1ec_Wp_Uri_Helper
 	}
 
 	/**
-	 * Get the calendar pagebase with the full url but without the language
-	 * 
+	 * Gets the calendar pagebase with the full url but without the language.
+	 *
 	 * @param string $uri
 	 * @param string $lang
 	 * @return string
@@ -59,4 +57,25 @@ class Ai1ec_Wp_Uri_Helper
 		}
 		return $uri;
 	}
+
+	/**
+	 * Gets the currently requested URL.
+	 *
+	 * @return string Canonical URL, that is currently requested
+	 */
+	static public function get_current_url() {
+		$page_url = 'http';
+		if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ) {
+			$page_url .= 's';
+		}
+		$page_url .= '://';
+		if ( $_SERVER['SERVER_PORT'] !== '80' ) {
+			$page_url .= $_SERVER['SERVER_NAME'] . ':' .
+				$_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
+		} else {
+			$page_url .= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+		}
+		return $page_url;
+	}
+
 }

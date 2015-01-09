@@ -32,14 +32,12 @@ class slickr_flickr_photo {
     $this->orientation = $this->height > $this->width ? "portrait" : "landscape" ;
 
     $enclosure = $item->get_enclosure(0);
-
+    
     $this->original = $enclosure==null ? $photo['url'] : $enclosure->get_link();
-
     $this->description = $enclosure==null ? "" : html_entity_decode($enclosure->get_description());
-    if ($this->description == "") {
-        if (preg_match_all('/<p>([^"]*)<\/p>([^>]*)/i', $data, $m)) $this->description = "<p>".$m[1][0]."</p>";
-        }
-    $this->description = $this->cleanup($this->description);
+    if (empty($this->description) && preg_match_all('!<p>(.+?)</p>!sim',$data,$m,PREG_PATTERN_ORDER)) 
+    	$this->description = "<p>".$m[1][2]."</p>";
+	//$this->description = $this->cleanup($this->description);
   }
 
   function get_url() { return $this->url; }
@@ -54,19 +52,9 @@ class slickr_flickr_photo {
 
   /* Function that removes all quotes */
   function cleanup($s = null) {
-    return $s?$this->handle_quotes($s):false;
+    return $s?str_replace("\n", "<br/>",$s):false;
   }
   
-  function handle_quotes($s='',$recurring=0) {
-  	if ($s && ($recurring < 4) && (substr_count($s,'"') >= 2)) {
-		$pattern = '/(.*)\"(.*)\"(.*)/';
-		$replace = '${1}&ldquo;${2}&rdquo;${3}';
-		$s = preg_replace($pattern, $replace, $s);  		
-		return $this->handle_quotes($s,$recurring+1);
-  	} else {
-		return str_replace('"', '&quot;', $s); 
-  	}
-  }
   /* Function that returns the correctly sized photo URL. */
   function resize($size) {
 

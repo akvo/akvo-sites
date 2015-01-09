@@ -23,109 +23,130 @@ class Ai1ec_Settings {
 	private static $_instance = NULL;
 
 	/**
-	 * Class variable (constant, really) to associate views with their names.
+	 * Class variable to list default categories
 	 *
 	 * @var array
 	 */
-	public static $view_names = NULL;
+	public static $default_categories = NULL;
+
+	/**
+	 * Class variable to list default tags
+	 *
+	 * @var array
+	 */
+	public static $default_tags = NULL;
 
 	/**
 	 * posterboard_events_per_page class variable
 	 *
 	 * @var int
 	 **/
-	var $posterboard_events_per_page;
+	public $posterboard_events_per_page;
 
 	/**
-	 * calendar_page_id class variable
+	 * posterboard_tile_min_width class variable
 	 *
 	 * @var int
 	 **/
-	var $calendar_page_id;
+	public $posterboard_tile_min_width;
+
+	/**
+	 * calendar_page_id class publiciable
+	 *
+	 * @var int
+	 **/
+	public $calendar_page_id;
 
 	/**
 	 * default_calendar_view class variable
 	 *
 	 * @var string
 	 **/
-	var $default_calendar_view;
+	public $default_calendar_view;
 
 	/**
 	 * view_month_enabled class variable
 	 *
 	 * @var string
 	 **/
-	var $view_month_enabled;
+	public $view_month_enabled;
 
 	/**
 	 * view_week_enabled class variable
 	 *
 	 * @var string
 	 **/
-	var $view_week_enabled;
+	public $view_week_enabled;
 
 	/**
 	 * view_oneday_enabled class variable
 	 *
 	 * @var string
 	 **/
-	var $view_oneday_enabled;
+	public $view_oneday_enabled;
 
 	/**
 	 * view_agenda_enabled class variable
 	 *
 	 * @var string
 	 **/
-	var $view_agenda_enabled;
+	public $view_agenda_enabled;
 
 	/**
 	 * week_start_day class variable
 	 *
 	 * @var int
 	 **/
-	var $week_start_day;
+	public $week_start_day;
 
 	/**
 	 * agenda_events_per_page class variable
 	 *
 	 * @var int
 	 **/
-	var $agenda_events_per_page;
+	public $agenda_events_per_page;
+
+	/**
+	 * agenda_include_entire_last_day class variable
+	 *
+	 * @var int
+	 **/
+	public $agenda_include_entire_last_day;
 
 	/**
 	 * calendar_css_selector class variable
 	 *
 	 * @var string
 	 **/
-	var $calendar_css_selector;
+	public $calendar_css_selector;
 
 	/**
 	 * include_events_in_rss class variable
 	 *
 	 * @var bool
 	 **/
-	var $include_events_in_rss;
+	public $include_events_in_rss;
 
 	/**
 	 * allow_publish_to_facebook class variable
 	 *
 	 * @var bool
 	 **/
-	var $allow_publish_to_facebook;
+	public $allow_publish_to_facebook;
 
 	/**
 	 * facebook_credentials class variable
 	 *
 	 * @var array
 	 **/
-	var $facebook_credentials;
+	public $facebook_credentials;
 
 	/**
 	 * user_role_can_create_event class variable
 	 *
 	 * @var bool
 	 **/
-	var $user_role_can_create_event;
+	public $user_role_can_create_event;
 
 	/**
 	 * cron_freq class variable
@@ -134,14 +155,14 @@ class Ai1ec_Settings {
 	 *
 	 * @var string
 	 **/
-	var $cron_freq;
+	public $cron_freq;
 
 	/**
 	 * timezone class variable
 	 *
 	 * @var string
 	 **/
-	var $timezone;
+	public $timezone;
 
 	/**
 	 * exclude_from_search class variable
@@ -149,7 +170,7 @@ class Ai1ec_Settings {
 	 * Whether to exclude events from search results
 	 * @var bool
 	 **/
-	var $exclude_from_search;
+	public $exclude_from_search;
 
 	/**
 	 * show_publish_button class variable
@@ -159,28 +180,7 @@ class Ai1ec_Settings {
 	 *
 	 * @var bool
 	 **/
-	var $show_publish_button;
-
-	/**
-	 * hide_maps_until_clicked class variable
-	 *
-	 * When this setting is on, instead of showing the Google Map,
-	 * show a dotted-line box containing the text "Click to view map",
-	 * and when clicked, this box is replaced by the Google Map.
-	 *
-	 * @var bool
-	 **/
-	var $hide_maps_until_clicked;
-
-	/**
-	 * agenda_events_expanded class variable
-	 *
-	 * When this setting is on, events are expanded
-	 * in agenda view
-	 *
-	 * @var bool
-	 **/
-	var $agenda_events_expanded;
+	public $show_publish_button;
 
 	/**
 	 * show_create_event_button class variable
@@ -193,6 +193,34 @@ class Ai1ec_Settings {
 	var $show_create_event_button;
 
 	/**
+	 * if specified, the calendar will use it as a starting date instead of the current day.
+	 *
+	 * @var string
+	 **/
+	public $exact_date;
+
+	/**
+	 * hide_maps_until_clicked class variable
+	 *
+	 * When this setting is on, instead of showing the Google Map,
+	 * show a dotted-line box containing the text "Click to view map",
+	 * and when clicked, this box is replaced by the Google Map.
+	 *
+	 * @var bool
+	 **/
+	public $hide_maps_until_clicked;
+
+	/**
+	 * agenda_events_expanded class variable
+	 *
+	 * When this setting is on, events are expanded
+	 * in agenda view
+	 *
+	 * @var bool
+	 **/
+	public $agenda_events_expanded;
+
+	/**
 	 * turn_off_subscription_buttons class variable
 	 *
 	 * Hides "Subscribe"/"Add to Calendar" and same Google buttons in calendar and
@@ -200,7 +228,7 @@ class Ai1ec_Settings {
 	 *
 	 * @var bool
 	 **/
-	var $turn_off_subscription_buttons;
+	public $turn_off_subscription_buttons;
 
 	/**
 	 * inject_categories class variable
@@ -210,7 +238,7 @@ class Ai1ec_Settings {
 	 *
 	 * @var bool
 	 **/
-	var $inject_categories;
+	public $inject_categories;
 
 	/**
 	 * input_date_format class variable
@@ -220,7 +248,7 @@ class Ai1ec_Settings {
 	 *
 	 * @var string
 	 **/
-	var $input_date_format;
+	public $input_date_format;
 
 	/**
 	 * input_24h_time class variable
@@ -229,17 +257,17 @@ class Ai1ec_Settings {
 	 *
 	 * @var bool
 	 **/
-	var $input_24h_time;
+	public $input_24h_time;
 
 	/**
-	* settings_page class variable
-	*
-	* Stores a reference to the settings page added using the
-	* add_submenu_page function.
-	*
-	* @var object
-	*/
-	var $settings_page;
+	 * settings_page class variable
+	 *
+	 * Stores a reference to the settings page added using the
+	 * add_submenu_page function.
+	 *
+	 * @var object
+	 */
+	public $settings_page;
 
 	/**
 	 * feeds_page class variable
@@ -249,8 +277,15 @@ class Ai1ec_Settings {
 	 *
 	 * @var object
 	 */
-	var $feeds_page;
+	public $feeds_page;
 
+	/**
+	 * Stores a reference to the less_variables page added using the
+	 * add_submenu_page function.
+	 *
+	 * @var object
+	 */
+	public $less_variables_page;
 	/**
 	 * geo_region_biasing class variable
 	 *
@@ -260,28 +295,28 @@ class Ai1ec_Settings {
 	 *
 	 * @var bool
 	 **/
-	var $geo_region_biasing;
+	public $geo_region_biasing;
 
 	/**
 	 * Whether to display data collection notice on the admin side.
 	 *
 	 * @var bool
 	 */
-	var $show_data_notification;
+	public $show_data_notification;
 
 	/**
 	 * Whether to display the introductory video notice.
 	 *
 	 * @var bool
 	 */
-	var $show_intro_video;
+	public $show_intro_video;
 
 	/**
 	 * Whether to collect event data for Timely.
 	 *
 	 * @var bool
 	 */
-	var $allow_statistics;
+	public $allow_statistics;
 
 	/**
 	 * Turn this blog into an events-only platform (this setting is overridden by
@@ -289,14 +324,14 @@ class Ai1ec_Settings {
 	 *
 	 * @var bool
 	 */
-	var $event_platform;
+	public $event_platform;
 
 	/**
 	 * Enable "strict" event platform mode for this blog.
 	 *
 	 * @var bool
 	 */
-	var $event_platform_strict;
+	public $event_platform_strict;
 
 	/**
 	 * Holds the configuration options of the various plugins.
@@ -306,25 +341,37 @@ class Ai1ec_Settings {
 	var $plugins_options;
 
 	/**
-	 * disable_autocompletion class variable
+	 * Disable Google Maps autocomplete functionality on add/edit event forms.
+	 * (FYI: this does NOT disable autocompletion in general, like Select2.)
 	 *
 	 * @var bool
-	 **/
-	var $disable_autocompletion;
+	 */
+	public $disable_autocompletion;
 
 	/**
 	 * Show location name in event title in various calendar views.
 	 *
 	 * @var bool
 	 */
-	var $show_location_in_title;
+	public $show_location_in_title;
 
 	/**
 	 * Show year in agenda date labels.
 	 *
 	 * @var bool
 	 */
-	var $show_year_in_agenda_dates;
+	public $show_year_in_agenda_dates;
+
+	/**
+	 * Skip in_the_loop() check when displaying calendar page to make plugin
+	 * compatible with certain themes.
+	 */
+	public $skip_in_the_loop_check;
+
+	/**
+	 * @var bool Disable GZIP compression for JS/CSS
+	 */
+	public $disable_gzip_compression;
 
 	/**
 	 * __construct function
@@ -336,14 +383,43 @@ class Ai1ec_Settings {
 	}
 
 	/**
+	 * term_deletion method
+	 *
+	 * Action to be triggered on `delete_term`.
+	 *
+	 * @param int    $term_id  ID of term being deleted
+	 * @param int    $tax_id   ID of taxonomy, which this term belonged to
+	 * @param string $taxonomy Name of taxonomy, which this term belonged to
+	 *
+	 * @return void Method does not return
+	 */
+	public function term_deletion( $term_id, $tax_id, $taxonomy ) {
+		$changed = false;
+		foreach ( $this->default_categories as $key => $cat_id ) {
+			if ( $cat_id == $term_id ) {
+				unset( $this->default_categories[$key] );
+				$changed = true;
+			}
+		}
+		foreach ( $this->default_tags as $key => $tag_id ) {
+			if ( $tag_id == $term_id ) {
+				unset( $this->default_tags[$key] );
+				$changed = true;
+			}
+		}
+		if ( $changed ) {
+			$this->save_only_settings_object();
+		}
+	}
+
+	/**
 	 * get_instance function
 	 *
 	 * Return singleton instance
 	 *
-	 * @return object
+	 * @return Ai1ec_Settings
 	 **/
-	static function get_instance()
- 	{
+	static function get_instance() {
 		if( self::$_instance === NULL ) {
 			// if W3TC is enabled, we have to empty the cache
 			// before requesting it
@@ -351,7 +427,7 @@ class Ai1ec_Settings {
 				wp_cache_delete( 'alloptions', 'options' );
 			}
 			// get the settings from the database
-			self::$_instance = get_option( 'ai1ec_settings' );
+			self::$_instance = Ai1ec_Meta::get_option( 'ai1ec_settings' );
 
 			// if there are no settings in the database
 			// save default values for the settings
@@ -368,21 +444,30 @@ class Ai1ec_Settings {
 	}
 
 	/**
-	* Magic get function. Returns correct value of event_platform based on
-	* whether it was defined.
-	*
-	* @param string $name Property name
-	*
-	* @return mixed Property value
-	**/
+	 * is_timezone_open_for_change method
+	 *
+	 * Check if it is allowed to change timezone.
+	 * It is *yes* (`bool(true)`) if WordPress timezone string was not set.
+	 *
+	 * @return bool True if timezone may be modified
+	 */
+	static public function is_timezone_open_for_change() {
+		return ( ! get_option( 'timezone_string' ) );
+	}
+
+	/**
+	 * Magic get function. Returns handy dynamic settings (not stored in DB).
+	 *
+	 * @param string $name Property name
+	 *
+	 * @return mixed Property value
+	 */
 	public function __get( $name ) {
-	global $post, $more, $ai1ec_events_helper;
-
-		switch( $name ) {
-
-		  case 'event_platform_active':
-		    return AI1EC_EVENT_PLATFORM || $this->event_platform;
-		    break;
+		switch ( $name ) {
+			// Returns whether Event Platform mode is active (OR of constant value and
+			// current setting).
+			case 'event_platform_active':
+				return AI1EC_EVENT_PLATFORM || $this->event_platform;
 		}
 	}
 
@@ -407,8 +492,10 @@ class Ai1ec_Settings {
 	function save() {
 		update_option( 'ai1ec_settings', $this );
 		update_option( 'start_of_week', $this->week_start_day );
-		update_option( 'ai1ec_cron_version', get_option( 'ai1ec_cron_version' ) + 1 );
-		update_option( 'timezone_string', $this->timezone );
+		update_option( 'ai1ec_cron_version', Ai1ec_Meta::get_option( 'ai1ec_cron_version' ) + 1 );
+		if ( $this->is_timezone_open_for_change() ) {
+			update_option( 'timezone_string', $this->timezone );
+		}
 	}
 
 	/**
@@ -419,56 +506,60 @@ class Ai1ec_Settings {
 	 * @return void
 	 **/
 	function set_defaults() {
-		self::$view_names = array(
-			'posterboard' => __( 'Posterboard', AI1EC_PLUGIN_NAME ),
-			'month' => __( 'Month', AI1EC_PLUGIN_NAME ),
-			'week' => __( 'Week', AI1EC_PLUGIN_NAME ),
-			'oneday' => __( 'Day', AI1EC_PLUGIN_NAME ),
-			'agenda' => __( 'Agenda', AI1EC_PLUGIN_NAME ),
-		);
-
 		$defaults = array(
-			'calendar_page_id'              => 0,
-			'default_calendar_view'         => 'posterboard',
-			'view_names'                    => self::$view_names,
-			'view_posterboard_enabled'      => TRUE,
-			'view_month_enabled'            => TRUE,
-			'view_week_enabled'             => TRUE,
-			'view_oneday_enabled'           => TRUE,
-			'view_agenda_enabled'           => TRUE,
-			'calendar_css_selector'         => '',
-			'week_start_day'                => get_option( 'start_of_week' ),
-			'posterboard_events_per_page'   => 30,
-			'agenda_events_per_page'        => get_option( 'posts_per_page' ),
-			'agenda_events_expanded'        => FALSE,
-			'include_events_in_rss'         => FALSE,
-			'allow_publish_to_facebook'     => FALSE,
-			'facebook_credentials'          => NULL,
-			'user_role_can_create_event'    => NULL,
-			'show_publish_button'           => FALSE,
-			'hide_maps_until_clicked'       => FALSE,
-			'exclude_from_search'           => FALSE,
-			'show_create_event_button'      => FALSE,
-			'turn_off_subscription_buttons' => FALSE,
-			'inject_categories'             => FALSE,
-			'input_date_format'             => 'def',
-			'input_24h_time'                => FALSE,
-			'cron_freq'                     => 'daily',
-			'timezone'                      => get_option( 'timezone_string' ),
-			'geo_region_biasing'            => FALSE,
-			'show_data_notification'        => TRUE,
-			'show_intro_video'              => TRUE,
-			'allow_statistics'              => TRUE,
-			'event_platform'                => FALSE,
-			'event_platform_strict'         => FALSE,
-			'plugins_options'               => array(),
-			'disable_autocompletion'        => FALSE,
-			'show_location_in_title'        => TRUE,
-			'show_year_in_agenda_dates'     => FALSE,
+			'calendar_page_id'               => 0,
+			'default_calendar_view'          => 'posterboard',
+			'default_categories'             => array(),
+			'default_tags'                   => array(),
+			'view_posterboard_enabled'       => TRUE,
+			'view_month_enabled'             => TRUE,
+			'view_week_enabled'              => TRUE,
+			'view_oneday_enabled'            => TRUE,
+			'view_agenda_enabled'            => TRUE,
+			'calendar_css_selector'          => '',
+			'week_start_day'                 => Ai1ec_Meta::get_option(
+				'start_of_week'
+			),
+			'exact_date'                     => '',
+			'posterboard_events_per_page'    => 30,
+			'posterboard_tile_min_width'     => 240,
+			'agenda_events_per_page'         => Ai1ec_Meta::get_option(
+				'posts_per_page'
+			),
+			'agenda_include_entire_last_day' => FALSE,
+			'agenda_events_expanded'         => FALSE,
+			'include_events_in_rss'          => FALSE,
+			'allow_publish_to_facebook'      => FALSE,
+			'facebook_credentials'           => NULL,
+			'user_role_can_create_event'     => NULL,
+			'show_publish_button'            => FALSE,
+			'hide_maps_until_clicked'        => FALSE,
+			'exclude_from_search'            => FALSE,
+			'show_create_event_button'       => FALSE,
+			'turn_off_subscription_buttons'  => FALSE,
+			'inject_categories'              => FALSE,
+			'input_date_format'              => 'def',
+			'input_24h_time'                 => FALSE,
+			'cron_freq'                      => 'daily',
+			'timezone'                       => Ai1ec_Meta::get_option(
+				'timezone_string'
+			),
+			'geo_region_biasing'             => FALSE,
+			'show_data_notification'         => TRUE,
+			'show_intro_video'               => TRUE,
+			'allow_statistics'               => TRUE,
+			'event_platform'                 => FALSE,
+			'event_platform_strict'          => FALSE,
+			'plugins_options'                => array(),
+			'disable_autocompletion'         => FALSE,
+			'show_location_in_title'         => TRUE,
+			'show_year_in_agenda_dates'      => FALSE,
+			'skip_in_the_loop_check'         => false,
+			'disable_gzip_compression'       => false,
 		);
 
-		foreach( $defaults as $key => $default ) {
-			if( ! isset( $this->$key ) ) {
+		foreach ( $defaults as $key => $default ) {
+			if ( ! isset( $this->$key ) ) {
 				$this->$key = $default;
 			}
 		}
@@ -478,117 +569,196 @@ class Ai1ec_Settings {
 	}
 
 	/**
-	 * Updates field values with corresponding values found in $params
-	 * associative array.
+	 * update method
 	 *
-   * @param string $settings_page Which settings page is being updated.
-	 * @param array $params Assoc. array of new settings, e.g. from $_REQUEST.
+	 * Route request, according to {$settings_page} to underlying interface
+	 * method, which validates fields. May raise deprecation notice at some
+	 * time in the future, as call shall be altered, actually.
 	 *
-	 * @return void
+	 * @param string $settings_page Which settings page is being updated.
+	 * @param array  $params        Assoc. array of new settings
+	 *
+	 * @return bool Success
 	 */
 	function update( $settings_page, $params ) {
-    switch ($settings_page) {
-      // ==================
-      // = Settings page. =
-      // ==================
-      case 'settings':
-        $field_names = array(
-          'default_calendar_view',
-          'calendar_css_selector',
-          'week_start_day',
-          'posterboard_events_per_page',
-          'agenda_events_per_page',
-          'input_date_format',
-          'allow_events_posting_facebook',
-          'facebook_credentials',
-          'user_role_can_create_event',
-          'timezone',
-        );
-        $checkboxes = array(
-          'view_posterboard_enabled',
-          'view_month_enabled',
-          'view_week_enabled',
-          'view_oneday_enabled',
-          'view_agenda_enabled',
-          'agenda_events_expanded',
-          'include_events_in_rss',
-          'show_publish_button',
-          'hide_maps_until_clicked',
-          'exclude_from_search',
-          'show_create_event_button',
-          'turn_off_subscription_buttons',
-          'inject_categories',
-          'input_24h_time',
-          'geo_region_biasing',
-          'disable_autocompletion',
-          'show_location_in_title',
-          'show_year_in_agenda_dates',
-        );
+		static $known_pages = array(
+			'settings' => true,
+			'feeds'    => true,
+		);
 
-        // Only super-admins have the power to change Event Platform mode.
-        if( is_super_admin() ) {
-          $checkboxes[] = 'event_platform';
-          $checkboxes[] = 'event_platform_strict';
-        }
-        // Save the settings for the plugins.
-        global $ai1ec_importer_plugin_helper;
-        $ai1ec_importer_plugin_helper->save_plugins_settings( $params );
-
-        // Assign parameters to settings.
-        foreach( $field_names as $field_name ) {
-          if( isset( $params[$field_name] ) ) {
-            $this->$field_name = $params[$field_name];
-          }
-        }
-        foreach( $checkboxes as $checkbox ) {
-          $this->$checkbox = isset( $params[$checkbox] ) ? TRUE : FALSE;
-        }
-
-        // Validate specific parameters.
-        $this->posterboard_events_per_page = intval( $this->posterboard_events_per_page );
-        if( $this->posterboard_events_per_page <= 0 ) {
-          $this->posterboard_events_per_page = 1;
-        }
-        $this->agenda_events_per_page = intval( $this->agenda_events_per_page );
-        if( $this->agenda_events_per_page <= 0 ) {
-          $this->agenda_events_per_page = 1;
-        }
-
-        // Update special parameters.
-    		$this->update_page( 'calendar_page_id', $params );
-        break;
-
-      // ===============
-      // = Feeds page. =
-      // ===============
-      case 'feeds':
-        // Assign parameters to settings.
-        if( isset( $params['cron_freq'] ) ) {
-          $this->cron_freq = $params['cron_freq'];
-        }
-        break;
-    }
+		if ( ! isset( $known_pages[$settings_page] ) ) {
+			return false;
+		}
+		return $this->{'update_' . $settings_page}( $params );
 	}
 
-  /**
-   * Update setting of show_data_notification - whether to display data
-   * collection notice on the admin side.
-   *
-   * @param  boolean $value The new setting for show_data_notification.
-   * @return void
-   */
+	/**
+	 * update_settings method
+	 *
+	 * Handle settings page submit.
+	 *
+	 * @param array $params User supplied settings options
+	 *
+	 * @return bool Success
+	 */
+	public function update_settings( array $params ) {
+		// Default values to use for fields if none provided.
+		$field_defaults = array(
+			'default_categories' => array(),
+			'default_tags'       => array(),
+		);
+
+		$field_names = array(
+			'default_categories',
+			'default_tags',
+			'default_calendar_view',
+			'calendar_css_selector',
+			'week_start_day',
+			'exact_date',
+			'posterboard_events_per_page',
+			'posterboard_tile_min_width',
+			'agenda_events_per_page',
+			'input_date_format',
+			'allow_events_posting_facebook',
+			'facebook_credentials',
+			'user_role_can_create_event',
+			'timezone',
+		);
+
+		$checkboxes = array(
+			'view_posterboard_enabled',
+			'view_month_enabled',
+			'view_week_enabled',
+			'view_oneday_enabled',
+			'view_agenda_enabled',
+			'agenda_include_entire_last_day',
+			'agenda_events_expanded',
+			'include_events_in_rss',
+			'show_publish_button',
+			'show_create_event_button',
+			'hide_maps_until_clicked',
+			'exclude_from_search',
+			'turn_off_subscription_buttons',
+			'inject_categories',
+			'input_24h_time',
+			'geo_region_biasing',
+			'disable_autocompletion',
+			'show_location_in_title',
+			'show_year_in_agenda_dates',
+			'skip_in_the_loop_check',
+			'disable_gzip_compression',
+		);
+		// Only super-admins have the power to change Event Platform mode.
+		if ( is_super_admin() ) {
+			$checkboxes[] = 'event_platform';
+			$checkboxes[] = 'event_platform_strict';
+		}
+
+		// =====================================
+		// = Save the settings for the plugins =
+		// =====================================
+
+		global $ai1ec_importer_plugin_helper;
+		$ai1ec_importer_plugin_helper->save_plugins_settings( $params );
+
+		// =================================
+		// = Assign parameters to settings =
+		// =================================
+
+		foreach ( $field_names as $field_name ) {
+			if ( isset( $params[$field_name] ) ) {
+				$this->$field_name = stripslashes_deep( $params[$field_name] );
+			} elseif ( isset( $field_defaults[$field_name] ) ) {
+				$this->$field_name = $field_defaults[$field_name];
+			}
+		}
+		foreach ( $checkboxes as $checkbox ) {
+			$this->$checkbox = isset( $params[$checkbox] ) ? true : false;
+		}
+
+		// ================================
+		// = Validate specific parameters =
+		// ================================
+
+
+		// Posterboard events per page
+		$this->posterboard_events_per_page = intval(
+			$this->posterboard_events_per_page
+		);
+		if ( $this->posterboard_events_per_page <= 0 ) {
+			$this->posterboard_events_per_page = 1;
+		}
+
+		// Posterboard tile minimum width
+		$this->posterboard_tile_min_width = intval(
+			$this->posterboard_tile_min_width
+		);
+		if ( $this->posterboard_tile_min_width <= 0 ) {
+			$this->posterboard_tile_min_width = 1;
+		}
+
+		// Agenda events per page
+		$this->agenda_events_per_page = intval(
+			$this->agenda_events_per_page
+		);
+		if ( $this->agenda_events_per_page <= 0 ) {
+			$this->agenda_events_per_page = 1;
+		}
+
+		// Calendar default start date
+		$exact_date_valid = Ai1ec_Validation_Utility::validate_date(
+			$this->exact_date, $this->input_date_format
+		);
+		if ( false === $exact_date_valid ) {
+			$this->exact_date = '';
+		}
+
+		// =============================
+		// = Update special parameters =
+		// =============================
+
+		$this->update_page( 'calendar_page_id', $params );
+
+		return true;
+	}
+
+	/**
+	 * update_feeds method
+	 *
+	 * Update feed checking frequence.
+	 *
+	 * @param array $params Arguments passed from user input
+	 *
+	 * @return bool Success
+	 */
+	public function update_feeds( array $params ) {
+		// Assign parameters to settings.
+		if ( ! isset( $params['cron_freq'] ) ) {
+			return false;
+		}
+		$this->cron_freq = $params['cron_freq'];
+		return true;
+	}
+
+	/**
+	 * Update setting of show_data_notification - whether to display data
+	 * collection notice on the admin side.
+	 *
+	 * @param  boolean $value The new setting for show_data_notification.
+	 * @return void
+	 */
 	function update_notification( $value = FALSE ) {
 		$this->show_data_notification = $value;
 		update_option( 'ai1ec_settings', $this );
 	}
 
-  /**
-   * Update setting of show_intro_video - whether to display the
-   * intro video notice on the admin side.
-   *
-   * @param  boolean $value The new setting for show_intro_video.
-   * @return void
-   */
+	/**
+	 * Update setting of show_intro_video - whether to display the
+	 * intro video notice on the admin side.
+	 *
+	 * @param  boolean $value The new setting for show_intro_video.
+	 * @return void
+	 */
 	function update_intro_video( $value = FALSE ) {
 		$this->show_intro_video = $value;
 		update_option( 'ai1ec_settings', $this );
@@ -608,8 +778,8 @@ class Ai1ec_Settings {
 	 **/
 	function update_page( $field_name, &$params ) {
 		if( ! is_numeric( $params[$field_name] ) &&
-		    preg_match( '#^__auto_page:(.*?)$#', $params[$field_name], $matches ) )
-	 	{
+				preg_match( '#^__auto_page:(.*?)$#', $params[$field_name], $matches ) )
+		{
 			$this->$field_name = $params[$field_name] = $this->auto_add_page( $matches[1] );
 		} else {
 			$this->$field_name = (int) $params[$field_name];

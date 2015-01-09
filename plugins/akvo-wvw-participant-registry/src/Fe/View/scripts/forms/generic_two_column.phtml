@@ -1,0 +1,240 @@
+<?php
+$sFormActionsHtml = '';
+
+$sWrapperId = '';
+$sTemporaryWrapperId = $this->element->getParameter('wrapper_id');
+
+if (is_null($sTemporaryWrapperId)) {
+	$sFormId = $this->element->getAttrib('id');
+	if ($sFormId != '') {
+		$sWrapperId = 'iDivWrapperFor' . $sFormId;
+	}
+} else {
+	$sWrapperId = $sTemporaryWrapperId;
+}
+
+$sWrapperAttributes = '';
+$sWrapperAttributes .= ' id="' . $sWrapperId . '"';
+$sWrapperAttributes .= ' class="cDivZendFormWrapper"';
+
+?>
+<div<?php echo $sWrapperAttributes; ?>>
+	<div id="iDivFormResponseContainer"></div>
+	<form class="form-horizontal"<?php include 'partials/form_attributes.phtml'; ?>>
+		<?php // echo $this->csrfHash($this); ?>
+		<?php
+		foreach($this->element as $oElement) {
+			if ($oElement instanceof Zend_Form_Element_Hash) {
+				// Ignore CSRF Hash Element as it is handled by the csrfHash View Helper above
+				continue;
+			}
+
+			if ($oElement instanceof Zend_Form_Element_Submit) {
+
+				$sFormActionsHtml .= $oElement->__toString();
+
+				$sDescription = $oElement->getDescription();
+				if ($sDescription != '') {
+					$sFormActionsHtml .= $sDescription;
+				}
+
+			} elseif ($oElement instanceof Zend_Form_Element_Hash || $oElement instanceof Zend_Form_Element_Hidden) {
+
+				echo $oElement;
+
+			} elseif ($oElement instanceof Kwgl_Form_Element_UploadifyFile) {
+
+				$bShowBelow = true;
+
+				if ($oElement->hasErrors()) {
+					$bHasError = true;
+					$sControlGroupErrorClass = ' error';
+				} else {
+					$bHasError = true;
+					$sControlGroupErrorClass = '';
+				}
+
+				$bFirst = true;
+				// Compile Errors
+				$sErrorsHtml = '';
+				foreach ($oElement->getMessages() as $sError) {
+					if ($bFirst) {
+						$bFirst = false;
+					} else {
+						echo ', ';
+					}
+					$sErrorsHtml .= $sError;
+				}
+
+				$sDescription = $oElement->getDescription();
+				$sLabelClass = '';
+				$sTooltipAttributes = '';
+				$sTooltipIcon = '';
+				if ($sDescription != '') {
+					$sLabelClass = ' cFormDescriptionTooltip';
+					$sTooltipAttributes = ' title="' . $sDescription . '"';
+					$sTooltipIcon = '<i class="icon icon-question-sign"></i>&nbsp; ';
+				}
+
+				$sUploadifyFileNameId = 'iSpanUploadifyFileNameHolderFor' . $oElement->getName();
+				$sUploadifyProgressId = 'iDivUploadifyProgressFor' . $oElement->getName();
+
+				$sUploadifyFileNameForSpan = '';
+				if ($this->element->getParameter($sUploadifyFileNameId) != '') {
+					$sUploadifyFileNameForSpan = '<i class="icon icon-picture"></i> <a href="' . $this->element->getParameter($sUploadifyFileNameId) . '" target="_blank">Image</a>&nbsp;&nbsp;&nbsp;( <span class="text-error cSpanRemoveFile" id="iSpanRemoveFileFor' . $oElement->getName() . '"><i class="icon icon-remove"></i>&nbsp;' . Kwgl_Language::translate('btn_remove') . '</span> )';
+				}
+
+				?>
+
+					<div class="control-group<?php echo $sControlGroupErrorClass; ?>">
+						<label class="control-label<?php echo $sLabelClass; ?>" for="<?php echo $oElement->getName(); ?>"<?php echo $sTooltipAttributes; ?>><?php echo $sTooltipIcon; ?><?php echo $oElement->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $oElement; ?>
+							<span id="<?php echo $sUploadifyFileNameId; ?>" class="cSpanUploadifyFileName"><?php echo $sUploadifyFileNameForSpan; ?></span>
+							<div class="cClearBoth"></div>
+							<div id="<?php echo $sUploadifyProgressId; ?>" class="progress progress-info progress-striped cDivUploadifyProgress hide">
+								<div class="bar" style=""></div>
+							</div>
+							<div class="cClearBoth"></div>
+							<div class="help-block"><?php echo $sErrorsHtml; ?></div>
+						</div>
+					</div>
+
+				<?php
+
+			} elseif ($oElement instanceof Kwgl_Form_Element_JasnyFile) {
+
+				$bShowBelow = true;
+
+				if ($oElement->hasErrors()) {
+					$bHasError = true;
+					$sControlGroupErrorClass = ' error';
+				} else {
+					$bHasError = true;
+					$sControlGroupErrorClass = '';
+				}
+
+				$bFirst = true;
+				// Compile Errors
+				$sErrorsHtml = '';
+				foreach ($oElement->getMessages() as $sError) {
+					if ($bFirst) {
+						$bFirst = false;
+					} else {
+						echo ', ';
+					}
+					$sErrorsHtml .= $sError;
+				}
+
+				$sDescription = $oElement->getDescription();
+				$sLabelClass = '';
+				$sTooltipAttributes = '';
+				$sTooltipIcon = '';
+				if ($sDescription != '') {
+					$sLabelClass = ' cFormDescriptionTooltip';
+					$sTooltipAttributes = ' title="' . $sDescription . '"';
+					$sTooltipIcon = '<i class="icon icon-question-sign"></i>&nbsp; ';
+				}
+
+				?>
+
+					<div class="control-group<?php echo $sControlGroupErrorClass; ?>">
+						<label class="control-label<?php echo $sLabelClass; ?>" for="<?php echo $oElement->getName(); ?>"<?php echo $sTooltipAttributes; ?>><?php echo $sTooltipIcon; ?><?php echo $oElement->getLabel(); ?></label>
+						<div class="controls">
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+								<div class="input-append">
+									<div class="uneditable-input span3">
+										<i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
+									</div>
+									<span class="btn btn-file">
+										<span class="fileupload-new">Select file</span>
+										<span class="fileupload-exists">Change</span>
+										<?php echo $oElement; ?>
+									</span>
+									<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+								</div>
+							</div>
+							<div class="cClearBoth"></div>
+							<div class="help-block"><?php echo $sErrorsHtml; ?></div>
+						</div>
+					</div>
+
+				<?php
+
+			} else {
+
+				$bShowBelow = false;
+				// Check Type
+				if ($oElement instanceof Zend_Form_Element_Textarea) {
+					$bShowBelow = true;
+				} elseif ($oElement instanceof Zend_Form_Element_Select) {
+					$bShowBelow = true;
+				} else {
+
+				}
+
+				if ($oElement->hasErrors()) {
+					$bHasError = true;
+					$sControlGroupErrorClass = ' error';
+				} else {
+					$bHasError = true;
+					$sControlGroupErrorClass = '';
+				}
+
+				$bFirst = true;
+				// Compile Errors
+				$sErrorsHtml = '';
+				foreach ($oElement->getMessages() as $sError) {
+					if ($bFirst) {
+						$bFirst = false;
+					} else {
+						echo ', ';
+					}
+					$sErrorsHtml .= $sError;
+				}
+
+				$sDescription = $oElement->getDescription();
+				$sLabelClass = '';
+				$sTooltipAttributes = '';
+				$sTooltipIcon = '';
+				if ($sDescription != '') {
+					$sLabelClass = ' cFormDescriptionTooltip';
+					$sTooltipAttributes = ' title="' . $sDescription . '"';
+					$sTooltipIcon = '<i class="icon icon-question-sign"></i>&nbsp; ';
+				}
+
+				?>
+					<div class="control-group<?php echo $sControlGroupErrorClass; ?>">
+						<label class="control-label<?php echo $sLabelClass; ?>" for="<?php echo $oElement->getName(); ?>"<?php echo $sTooltipAttributes; ?>><?php echo $sTooltipIcon; ?><?php echo $oElement->getLabel(); ?></label>
+						<div class="controls">
+							<?php echo $oElement; ?>
+				<?php
+				if ($bHasError) {
+					if ($bShowBelow) {
+				?>
+							<div class="cClearBoth"></div>
+							<div class="help-block"><?php echo $sErrorsHtml; ?></div>
+				<?php
+					} else {
+				?>
+							<span class="help-inline"><?php echo $sErrorsHtml; ?></span>
+				<?php
+					}
+				}
+				?>
+						</div>
+					</div>
+				<?php
+			}
+		}
+
+		$bShowRecaptcha = $this->element->getParameter('show_recapthca');
+		if (isset($bShowRecaptcha) && $bShowRecaptcha) {
+			\KwgPress\Recaptcha::getInstance()->render();
+		}
+		?>
+		<div class="form-actions">
+			<?php echo $sFormActionsHtml; ?>
+		</div>
+	</form>
+</div>

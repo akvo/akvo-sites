@@ -2,10 +2,26 @@
 	<label for="<?php echo $title['id'] ?>"><?php _e( 'Title:', AI1EC_PLUGIN_NAME ) ?></label>
 	<input class="widefat" id="<?php echo $title['id'] ?>" name="<?php echo $title['name'] ?>" type="text" value="<?php echo $title['value'] ?>" />
 </p>
+
 <p>
-	<label for="<?php echo $events_per_page['id'] ?>"><?php _e( 'Number of events to show:', AI1EC_PLUGIN_NAME ) ?></label>
+	<input type="radio" id="<?php echo $events_seek_type['id']; ?>_events" name="<?php echo $events_seek_type['name']; ?>" value="events"<?php
+	if ( 'events' === $events_seek_type['value'] ) {
+		echo ' checked="checked"';
+	}
+	?> />
+	<label for="<?php echo $events_seek_type['id']; ?>_events"><?php _e( 'Number of events to show:', AI1EC_PLUGIN_NAME ) ?></label>
 	<input id="<?php echo $events_per_page['id'] ?>" name="<?php echo $events_per_page['name'] ?>" type="text" size="3" value="<?php echo $events_per_page['value'] ?>" />
 </p>
+<p>
+	<input type="radio" id="<?php echo $events_seek_type['id']; ?>_days" name="<?php echo $events_seek_type['name']; ?>" value="days"<?php
+	if ( 'days' === $events_seek_type['value'] ) {
+		echo ' checked="checked"';
+	}
+	?> />
+	<label for="<?php echo $events_seek_type['id']; ?>_days"><?php _e( 'Number of days to show:', AI1EC_PLUGIN_NAME ) ?></label>
+	<input id="<?php echo $days_per_page['id'] ?>" name="<?php echo $days_per_page['name'] ?>" type="text" size="3" value="<?php echo $days_per_page['value'] ?>" />
+</p>
+
 <p class="ai1ec-limit-by-container">
 	Limit to:
 	<br />

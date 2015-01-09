@@ -2,273 +2,16 @@
 /**
  * Plugin Name: All-in-One Event Calendar by Timely
  * Plugin URI: http://time.ly/
- * Description: A calendar system with month, week, day, agenda, posterboard views, upcoming events widget, color-coded categories, recurrence, and import/export of .ics feeds.
- * Author: Timely
+ * Description: A calendar system with posterboard, month, week, day, agenda views, upcoming events widget, color-coded categories, recurrence, and import/export of .ics feeds.
+ * Author: Timely Network Inc
  * Author URI: http://time.ly/
- * Version: 1.8.3-premium
+ * Version: 1.10.9-standard
  */
+
 @set_time_limit( 0 );
 @ini_set( 'memory_limit',           '256M' );
 @ini_set( 'max_input_time',         '-1' );
-
-// ===============
-// = Plugin Name =
-// ===============
-define( 'AI1EC_PLUGIN_NAME',        'all-in-one-event-calendar' );
-
-// ===================
-// = Plugin Basename =
-// ===================
-define( 'AI1EC_PLUGIN_BASENAME',    plugin_basename( __FILE__ ) );
-
-// ==================
-// = Plugin Version =
-// ==================
-define( 'AI1EC_VERSION',            '1.8.3-premium' );
-
-// ====================
-// = Database Version =
-// ====================
-define( 'AI1EC_DB_VERSION',         112 );
-// ==========================
-// = Bundled themes version =
-// ==========================
-define( 'AI1EC_THEMES_VERSION',     6 );
-
-// ================
-// = Cron Version =
-// ================
-define( 'AI1EC_CRON_VERSION',       103 );
-define( 'AI1EC_N_CRON_VERSION',     101 );
-define( 'AI1EC_N_CRON_FREQ',        'daily' );
-define( 'AI1EC_U_CRON_VERSION',     105 );
-define( 'AI1EC_U_CRON_FREQ',        'hourly' );
-define( 'AI1EC_UPDATES_URL',        'http://time.ly/latest-version.json' );
-
-// ===============
-// = Plugin Path =
-// ===============
-define( 'AI1EC_PATH',               dirname( __FILE__ ) );
-
-// ===================
-// = CSS Folder name =
-// ===================
-define( 'AI1EC_CSS_FOLDER',         'css' );
-
-// ==================
-// = JS Folder name =
-// ==================
-define( 'AI1EC_JS_FOLDER',          'js' );
-
-// =====================
-// = Image folder name =
-// =====================
-define( 'AI1EC_IMG_FOLDER',         'img' );
-
-// ============
-// = Lib Path =
-// ============
-define( 'AI1EC_LIB_PATH',           AI1EC_PATH . '/lib' );
-
-// =================
-// = Language Path =
-// =================
-define( 'AI1EC_LANGUAGE_PATH',      AI1EC_PLUGIN_NAME . '/language' );
-
-// ============
-// = App Path =
-// ============
-define( 'AI1EC_APP_PATH',           AI1EC_PATH . '/app' );
-
-// ===================
-// = Controller Path =
-// ===================
-define( 'AI1EC_CONTROLLER_PATH',    AI1EC_APP_PATH . '/controller' );
-
-// ==============
-// = Model Path =
-// ==============
-define( 'AI1EC_MODEL_PATH',         AI1EC_APP_PATH . '/model' );
-
-// =============
-// = View Path =
-// =============
-define( 'AI1EC_VIEW_PATH',          AI1EC_APP_PATH . '/view' );
-
-// ====================
-// = Admin Theme Path =
-// ====================
-define( 'AI1EC_ADMIN_THEME_PATH',   AI1EC_VIEW_PATH . '/admin' );
-
-// ==================
-// = Admin theme CSS path =
-// ==================
-define( 'AI1EC_ADMIN_THEME_CSS_PATH', AI1EC_ADMIN_THEME_PATH . '/' . AI1EC_CSS_FOLDER );
-
-// =======================
-// = Admin theme JS path =
-// =======================
-define( 'AI1EC_ADMIN_THEME_JS_PATH', AI1EC_ADMIN_THEME_PATH . '/' . AI1EC_JS_FOLDER );
-
-// ========================
-// = Admin theme IMG path =
-// ========================
-define( 'AI1EC_ADMIN_THEME_IMG_PATH', AI1EC_ADMIN_THEME_PATH . '/' . AI1EC_IMG_FOLDER );
-
-// ===============
-// = Helper Path =
-// ===============
-define( 'AI1EC_HELPER_PATH',        AI1EC_APP_PATH . '/helper' );
-
-// ==================
-// = Exception Path =
-// ==================
-define( 'AI1EC_EXCEPTION_PATH',     AI1EC_APP_PATH . '/exception' );
-
-// ==============
-// = Plugin Url =
-// ==============
-define( 'AI1EC_URL',                plugins_url( '', __FILE__ ) );
-
-// ==============
-// = Images URL =
-// ==============
-define( 'AI1EC_IMAGE_URL',          AI1EC_URL . '/' . AI1EC_IMG_FOLDER );
-
-// ===========
-// = CSS URL =
-// ===========
-define( 'AI1EC_CSS_URL',            AI1EC_URL . '/' . AI1EC_CSS_FOLDER );
-
-// ==========
-// = JS URL =
-// ==========
-define( 'AI1EC_JS_URL',             AI1EC_URL . '/' . AI1EC_JS_FOLDER );
-
-// ================
-// = Admin JS URL =
-// ================
-define( 'AI1EC_ADMIN_THEME_JS_URL', AI1EC_URL . '/app/view/admin/' . AI1EC_JS_FOLDER );
-
-// =================
-// = Admin CSS URL =
-// =================
-define( 'AI1EC_ADMIN_THEME_CSS_URL', AI1EC_URL . '/app/view/admin/' . AI1EC_CSS_FOLDER );
-
-// =================
-// = Admin IMG URL =
-// =================
-define( 'AI1EC_ADMIN_THEME_IMG_URL', AI1EC_URL . '/app/view/admin/' . AI1EC_IMG_FOLDER );
-
-// =============
-// = POST TYPE =
-// =============
-define( 'AI1EC_POST_TYPE',          'ai1ec_event' );
-
-// =======================================================
-// = THEME SELECTION PAGE BASE URL (wrap in admin_url()) =
-// =======================================================
-define( 'AI1EC_THEME_SELECTION_BASE_URL', 'themes.php?page=' . AI1EC_PLUGIN_NAME . '-themes' );
-
-// ======================================================
-// = INSTALL THEMES PAGE BASE URL (wrap in admin_url()) =
-// ======================================================
-define( 'AI1EC_INSTALL_THEMES_BASE_URL', 'themes.php?page=' . AI1EC_PLUGIN_NAME . '-install-themes' );
-
-// =====================================================
-// = UPDATE THEMES PAGE BASE URL (wrap in admin_url()) =
-// =====================================================
-define( 'AI1EC_UPDATE_THEMES_BASE_URL', 'themes.php?page=' . AI1EC_PLUGIN_NAME . '-update-themes' );
-
-// =====================================================
-// = FEED SETTINGS PAGE BASE URL (wrap in admin_url()) =
-// =====================================================
-define( 'AI1EC_FEED_SETTINGS_BASE_URL', 'edit.php?post_type=' . AI1EC_POST_TYPE . '&page=' . AI1EC_PLUGIN_NAME . '-feeds' );
-
-// ================================================
-// = SETTINGS PAGE BASE URL (wrap in admin_url()) =
-// ================================================
-define( 'AI1EC_SETTINGS_BASE_URL',  'options-general.php?page=' . AI1EC_PLUGIN_NAME . '-settings' );
-
-// ======================
-// = Default Theme Name =
-// ======================
-define( 'AI1EC_DEFAULT_THEME_NAME', 'vortex' );
-
-// =============================
-// = Default Theme folder name =
-// =============================
-define( 'AI1EC_THEMES_FOLDER',      'themes-ai1ec' );
-
-// ========================
-// = AI1EC Theme location =
-// ========================
-define( 'AI1EC_THEMES_ROOT',        WP_CONTENT_DIR . '/' . AI1EC_THEMES_FOLDER );
-
-// ===================
-// = AI1EC Theme URL =
-// ===================
-define( 'AI1EC_THEMES_URL',         WP_CONTENT_URL . '/' . AI1EC_THEMES_FOLDER );
-
-// ======================
-// = Default theme path =
-// ======================
-define( 'AI1EC_DEFAULT_THEME_PATH', AI1EC_THEMES_ROOT . '/' . AI1EC_DEFAULT_THEME_NAME );
-
-// =====================
-// = Default theme url =
-// =====================
-define( 'AI1EC_DEFAULT_THEME_URL',  AI1EC_THEMES_URL . '/' . AI1EC_DEFAULT_THEME_NAME );
-
-// ================
-// = RSS FEED URL =
-// ================
-define( 'AI1EC_RSS_FEED',           'http://time.ly/feed/' );
-
-// ======================================
-// = FAKE CATEGORY ID FOR CALENDAR PAGE =
-// ======================================
-define( 'AI1EC_FAKE_CATEGORY_ID',   -4113473042 ); // Numeric-only 1337-speak of AI1EC_CALENDAR - ID must be numeric
-
-// =============================================
-// = DIRECTORY FOR EVENT IMPORTERS PLUGINS     =
-// =============================================
-
-
-// ======================================
-// = EVENT IMPORTERS PLUGINS PATH       =
-// ======================================
-define( 'AI1EC_IMPORT_PLUGIN_PATH',     AI1EC_APP_PATH . DIRECTORY_SEPARATOR . 'plugins' );
-// ========================================
-// = EVENT IMPORTERS PLUGINS INCLUDE PATH =
-// ========================================
-define( 'AI1EC_IMPORT_PLUGIN_INC_PATH', AI1EC_IMPORT_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'inc');
-// ========================================
-// = FACEBOOK PLUGIN INCLUDE PATH         =
-// ========================================
-define( 'AI1EC_FACEBOOK_PLUGIN_INC_PATH', AI1EC_IMPORT_PLUGIN_INC_PATH . DIRECTORY_SEPARATOR . 'facebook');
-// ==============
-// = SCRIPT URL =
-// ==============
-$ai1ec_script_url = get_option( 'home' ) . '/?plugin=' . AI1EC_PLUGIN_NAME;
-define( 'AI1EC_SCRIPT_URL',         $ai1ec_script_url );
-
-// ====================================================
-// = Convert http:// to webcal:// in AI1EC_SCRIPT_URL =
-// =  (webcal:// protocol does not support https://)  =
-// ====================================================
-$tmp = str_replace( 'http://', 'webcal://', AI1EC_SCRIPT_URL );
-
-// ==============
-// = EXPORT URL =
-// ==============
-define( 'AI1EC_EXPORT_URL',         $tmp . "&controller=ai1ec_exporter_controller&action=export_events&cb=" . rand() );
-
-// ====================
-// = SPECIAL SETTINGS =
-// ====================
-
-// Set AI1EC_EVENT_PLATFORM to TRUE to turn WordPress into an events-only
+// Define AI1EC_EVENT_PLATFORM as TRUE to turn WordPress into an events-only
 // platform. For a multi-site install, setting this to TRUE is equivalent to a
 // super-administrator selecting the
 //   "Turn this blog into an events-only platform" checkbox
@@ -277,65 +20,59 @@ define( 'AI1EC_EXPORT_URL',         $tmp . "&controller=ai1ec_exporter_controlle
 // administrative functions unrelated to events and the calendar (except to
 // super-administrators), and sets default WordPress settings appropriate for
 // pure event management.
-define( 'AI1EC_EVENT_PLATFORM',     FALSE );
-// Use alternative cron Version to bypass problems in wp_remot_* calls
-if( ! defined( 'ALTERNATE_WP_CRON' ) ) {
-	define( 'ALTERNATE_WP_CRON', true );
-}
-// ====================================
-// = Include iCal parsers and helpers =
-// ====================================
-if( version_compare( PHP_VERSION, '5.3.0' ) >= 0 ) {
-	// Parser that requires PHP v5.3.0 or up
-	require_once( AI1EC_LIB_PATH . '/iCalcreator-2.12/iCalcreator.class.php' );
-} else {
-	// Parser that works on PHP versions below 5.3.0
-	require_once( AI1EC_LIB_PATH . '/iCalcreator-2.10/iCalcreator.class.php' );
-	require_once( AI1EC_LIB_PATH . '/iCalcreator-2.10/iCalUtilityFunctions.class.php' );
-}
-require_once( AI1EC_LIB_PATH . '/SG_iCal.php' );
-require_once( AI1EC_LIB_PATH . '/helpers/SG_iCal_Line.php' );
-require_once( AI1EC_LIB_PATH . '/helpers/SG_iCal_Duration.php' );
-require_once( AI1EC_LIB_PATH . '/helpers/SG_iCal_Freq.php' );
-require_once( AI1EC_LIB_PATH . '/helpers/SG_iCal_Recurrence.php' );
-require_once( AI1EC_LIB_PATH . '/helpers/SG_iCal_Parser.php' );
-require_once( AI1EC_LIB_PATH . '/helpers/SG_iCal_Query.php' );
-require_once( AI1EC_LIB_PATH . '/helpers/SG_iCal_Factory.php' );
-// include our global functions
-require_once( AI1EC_LIB_PATH . '/global-functions.php' );
-
-// ===============================
-// = The autoload function =
-// ===============================
-function ai1ec_autoload( $class_name )
-{
-	// Convert class name to filename format.
-	$class_name = strtr( strtolower( $class_name ), '_', '-' );
-	$paths = array(
-		AI1EC_CONTROLLER_PATH,
-		AI1EC_MODEL_PATH,
-		AI1EC_HELPER_PATH,
-		AI1EC_EXCEPTION_PATH,
-		AI1EC_LIB_PATH,
-		AI1EC_VIEW_PATH,
-		AI1EC_ADMIN_THEME_PATH,
-		get_option( 'ai1ec_current_theme_path', AI1EC_DEFAULT_THEME_PATH ),
-		AI1EC_DEFAULT_THEME_PATH,
-		AI1EC_IMPORT_PLUGIN_PATH,
-		AI1EC_IMPORT_PLUGIN_INC_PATH,
-		AI1EC_FACEBOOK_PLUGIN_INC_PATH
-	);
-
-	// remove duplicates from the paths array
-	$paths = array_unique( $paths );
-
-	// Search each path for the class.
-	foreach( $paths as $path ) {
-		if( file_exists( "$path/class-$class_name.php" ) )
-			require_once( "$path/class-$class_name.php" );
+if( isset( $_GET['ai1ec_doing_ajax'] ) ) {
+	// Stop the cron ( or at least try )
+	if( ! defined( 'DOING_AJAX' ) ) {
+		define( 'DOING_AJAX', true );
 	}
 }
-spl_autoload_register( 'ai1ec_autoload' );
+/**
+ * Include configuration files and define constants
+ */
+$ai1ec_base_path = dirname( __FILE__ );
+foreach ( array( 'constants-local.php', 'constants.php' ) as $file ) {
+	if ( file_exists( $ai1ec_base_path . DIRECTORY_SEPARATOR . $file ) ) {
+		include_once $ai1ec_base_path . DIRECTORY_SEPARATOR . $file;
+	}
+}
+if ( ! function_exists( 'ai1ec_initiate_constants' ) ) {
+	return trigger_error(
+		'File \'constants.php\' defining \'ai1ec_initiate_constants\' function must be present.',
+		E_USER_WARNING
+	);
+}
+ai1ec_initiate_constants();
+
+require_once AI1EC_LIB_PATH . DIRECTORY_SEPARATOR . 'global-functions.php';
+
+require_once AI1EC_LIB_PATH . DIRECTORY_SEPARATOR . 'class-ai1ec-loader.php' ;
+spl_autoload_register( array( 'Ai1ec_Loader', 'autoload' ) );
+
+
+global $ai1ec_themes_controller;
+$ai1ec_themes_controller    = Ai1ec_Themes_Controller::get_instance();
+// get the active theme from the the theme controllor
+$active_theme = $ai1ec_themes_controller->active_template_path();
+// Are we in preview_mode?
+$preview_mode = false;
+// If we are previewing the theme, use the theme passed in the url
+if( isset( $_GET['preview'] ) && isset( $_GET['ai1ec_stylesheet'] ) ) {
+	Ai1ec_Less_Factory::set_preview_mode( true );
+	$active_theme = $_GET['ai1ec_stylesheet'];
+	$preview_mode = true;
+}
+// Start_up the factories
+Ai1ec_Less_Factory::set_active_theme_path( AI1EC_THEMES_ROOT . DIRECTORY_SEPARATOR . $active_theme );
+Ai1ec_Less_Factory::set_default_theme_path( AI1EC_DEFAULT_THEME_PATH );
+Ai1ec_Less_Factory::set_default_theme_url( AI1EC_DEFAULT_THEME_URL );
+// ==================================
+// = Add the hook to render the css =
+// ==================================
+if( isset( $_GET[Ai1ec_Css_Controller::GET_VARIBALE_NAME] ) ) {
+	$css_controller = Ai1ec_Less_Factory::create_css_controller_instance();
+	$css_controller->render_css();
+	exit(0);
+}
 
 // ================================================
 // = Disable updates checking for premium version =
@@ -359,6 +96,23 @@ add_filter( 'http_request_args', 'ai1ec_disable_updates', 5, 2 );
 global $ai1ec_settings;
 
 $ai1ec_settings = Ai1ec_Settings::get_instance();
+// If GZIP is causing JavaScript failure following query
+// parameter disable compression, until reversing change
+// is made. Causative issue: AIOEC-1192.
+if ( isset( $_REQUEST['ai1ec_disable_gzip_compression'] ) ) {
+	$ai1ec_settings->disable_gzip_compression = true;
+	$ai1ec_settings->save();
+}
+// This is a fix for AIOEC-73. I need to set those values as soon as possible so that
+// the platofrom controller has the fresh data and can act accordingly
+// I do not trigger the save action at this point because there are too many things going on
+// there and i might break things
+if ( isset( $_POST['ai1ec_save_settings'] ) ) {
+	$ai1ec_settings->event_platform = isset( $_POST['event_platform'] );
+	$ai1ec_settings->event_platform_strict = isset( $_POST['event_platform_strict'] );
+}
+// Set up the Routing Factory
+Ai1ec_Routing_Factory::set_ai1ec_settings( $ai1ec_settings );
 
 // ================================
 // = Initialize and setup HELPERS =
@@ -371,6 +125,7 @@ global $ai1ec_view_helper,
        $ai1ec_importer_helper,
        $ai1ec_exporter_helper,
        $ai1ec_platform_helper,
+       $ai1ec_localization_helper,
        $ai1ec_importer_plugin_helper;
 
 $ai1ec_view_helper            = Ai1ec_View_Helper::get_instance();
@@ -381,7 +136,15 @@ $ai1ec_events_helper          = Ai1ec_Events_Helper::get_instance();
 $ai1ec_importer_helper        = Ai1ec_Importer_Helper::get_instance();
 $ai1ec_exporter_helper        = Ai1ec_Exporter_Helper::get_instance();
 $ai1ec_platform_helper        = Ai1ec_Platform_Helper::get_instance();
+$ai1ec_localization_helper    = Ai1ec_Localization_Helper::get_instance();
 $ai1ec_importer_plugin_helper = Ai1ec_Importer_Plugin_Helper::get_instance();
+
+if (
+	'admin-ajax.php' === basename( $_SERVER['SCRIPT_NAME'] ) &&
+	isset( $_REQUEST['lang'] )
+) {
+	$ai1ec_localization_helper->set_language( $_REQUEST['lang'] );
+}
 
 // ====================================
 // = Initialize and setup CONTROLLERS =
@@ -392,21 +155,63 @@ global $ai1ec_app_controller,
        $ai1ec_calendar_controller,
        $ai1ec_importer_controller,
        $ai1ec_exporter_controller,
-       $ai1ec_themes_controller,
        $ai1ec_platform_controller,
-  	   $ai1ec_duplicate_controller;
+       $ai1ec_duplicate_controller;
 
 $ai1ec_settings_controller  = Ai1ec_Settings_Controller::get_instance();
 $ai1ec_events_controller    = Ai1ec_Events_Controller::get_instance();
 $ai1ec_calendar_controller  = Ai1ec_Calendar_Controller::get_instance();
 $ai1ec_importer_controller  = Ai1ec_Importer_Controller::get_instance();
 $ai1ec_exporter_controller  = Ai1ec_Exporter_Controller::get_instance();
-$ai1ec_themes_controller    = Ai1ec_Themes_Controller::get_instance();
 $ai1ec_platform_controller  = Ai1ec_Platform_Controller::get_instance();
 $ai1ec_duplicate_controller = Ai1ec_Duplicate_Controller::get_instance();
 
 
+// Initialize other global classes
+global $ai1ec_requirejs_controller,
+       $ai1ec_rss_feed,
+       $ai1ec_tax_meta_class;
+// Create the instance of the class that handles javascript loading
+$ai1ec_requirejs_controller = new Ai1ec_Requirejs_Controller();
+// Inject settings
+$ai1ec_requirejs_controller->set_settings( $ai1ec_settings );
+// Inject calendar controller
+$ai1ec_requirejs_controller->set_events_helper( $ai1ec_events_helper );
+// Se the themes controller
+$ai1ec_requirejs_controller->set_ai1ec_themes_controller( $ai1ec_themes_controller );
+
+/**
+ * Configure your meta box
+ */
+$config = array(
+	// meta box id, unique per meta box
+	'id'             => 'demo_meta_box',
+	// meta box title
+	'title'          => 'Demo Meta Box',
+	// taxonomy name, accept categories, post_tag and custom taxonomies
+	'pages'          => array( 'events_categories' ),
+	// where the meta box appear: normal (default), advanced, side; optional
+	'context'        => 'normal',
+	// list of meta fields (can be added by field arrays)
+	'fields'         => array(),
+	// Use local or hosted images (meta box images for add/remove)
+	// 'local_images' => false,
+	// change path if used with theme set to true, false for a plugin or anything
+	// else for a custom path(default false).
+	'use_with_theme' => false
+);
+/*
+ * Initiate your meta box
+*/
+$ai1ec_tax_meta_class = new Ai1ec_Tax_Meta_Class( $config );
+
+$ai1ec_rss_feed = new Ai1ec_Rss_Feed_Controller();
 // ==========================================================================
 // = All app initialization is done in Ai1ec_App_Controller::__construct(). =
 // ==========================================================================
-$ai1ec_app_controller      = Ai1ec_App_Controller::get_instance();
+$ai1ec_app_controller = Ai1ec_App_Controller::get_instance( $preview_mode );
+
+// =============================================================================
+// = Delay router initialization until permalinks are set | see App_Controller =
+// =============================================================================
+global $ai1ec_router;

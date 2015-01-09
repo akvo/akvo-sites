@@ -7,6 +7,78 @@
 //
 
 /**
+ * Named function to return `false`
+ *
+ * Used to distinguish from `__return_false` provided by WordPress
+ *
+ * @return bool Always return false
+ */
+function ai1ec_return_false() {
+	return false;
+}
+
+/**
+ * Method to stop script execution
+ *
+ * @param int|string $code Exit value, expected int [optional=0]
+ *
+ * @return mixed Returns {$code}, unless `ai1ec_stop` filter returns false
+ */
+function ai1ec_stop( $code = 0 ) {
+	if ( ! apply_filters( 'ai1ec_stop', true ) ) {
+		echo $code;
+		return $code;
+	}
+	exit( $code );
+}
+
+/**
+ * Check if given post is Ai1EC event
+ *
+ * @param stdClass $post Instance of WP_Post class
+ *
+ * @return bool True if it is Ai1EC
+ */
+function is_ai1ec_post( $post ) {
+	return (
+		is_object( $post ) &&
+		isset( $post->post_type  ) &&
+		AI1EC_POST_TYPE === $post->post_type
+	);
+}
+
+if ( ! function_exists( 'pr' ) ):
+/**
+ * pr function
+ *
+ * Debug output of variable.
+ * Print variable information (using var_dump for {@see empty()} values
+ * and print_r otherwise) optionally preceeded by {$title}.
+ *
+ * @param mixed  $arg   Variable to output (print)
+ * @param string $title Title to preceed the variable information
+ *
+ * @return void Method does not return
+ */
+function pr( $arg, $title = null )
+{
+	if ( WP_DEBUG ) {
+		if ( $title ) {
+			echo '<strong style="font-family:fixed;font-size:1.6em">',
+				$title, '</strong>';
+		}
+		echo '<pre>';
+		if ( empty( $arg ) ) {
+			var_dump( $arg );
+		} else {
+			print_r( $arg );
+		}
+		echo '</pre>';
+	}
+}
+endif;
+
+/**
  * url_get_contents function
  *
  * @param string $url URL 
@@ -57,4 +129,40 @@ function is_curl_available() {
 	}
 	
 	return true;
+}
+
+/**
+ * ai1ec_utf8 function
+ *
+ * Encode value as safe UTF8 - discarding unrecognized characters.
+ * NOTE: objects will be cast as array.
+ *
+ * @uses iconv               To change encoding
+ * @uses mb_convert_encoding To change encoding if `iconv` is not available
+ *
+ * @param mixed $input Value to encode
+ *
+ * @return mixed UTF8 encoded value
+ *
+ * @throws Exception If no trans-coding method is available
+ */
+function ai1ec_utf8( $input ) {
+	if ( NULL === $input ) {
+		return NULL;
+	}
+	if ( is_scalar( $input ) ) {
+		if ( function_exists( 'iconv' ) ) {
+			return iconv( 'UTF-8', 'UTF-8//IGNORE', $input );
+		}
+		if ( function_exists( 'mb_convert_encoding' ) ) {
+			return mb_convert_encoding( $input, 'UTF-8' );
+		}
+		throw new Exception(
+			'Either `iconv` or `mb_convert_encoding` must be available.'
+		);
+	}
+	if ( ! is_array( $input ) ) {
+		$input = (array)$input;
+	}
+	return array_map( 'ai1ec_utf8', $input );
 }

@@ -2,21 +2,21 @@
 # This file is distributed under the same license as the All-in-One Event Calendar by Timely package.
 msgid ""
 msgstr ""
-"Project-Id-Version: All-in-One Event Calendar by Timely 1.9.5-standard\n"
+"Project-Id-Version: All-in-One Event Calendar by Timely 1.10.9-standard\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/all-in-one-event-calendar\n"
-"POT-Creation-Date: 2013-03-14 12:16:51+00:00\n"
+"POT-Creation-Date: 2013-10-26 16:15:31+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2013-03-14 14:16+0200\n"
+"PO-Revision-Date: 2013-10-26 19:15+0300\n"
 "Last-Translator: Timely <support@time.ly>\n"
 "Language-Team:\n"
 
-#: app/controller/class-ai1ec-app-controller.php:315
+#: app/controller/class-ai1ec-app-controller.php:331
 msgid "Category Image"
 msgstr "Category Image"
 
-#: app/controller/class-ai1ec-app-controller.php:316
+#: app/controller/class-ai1ec-app-controller.php:332
 msgid ""
 "Assign an optional image to the category. Recommended size: square, minimum "
 "400&times;400 pixels."
@@ -31,49 +31,49 @@ msgstr "Calendar Feeds"
 
 #: app/controller/class-ai1ec-app-controller.php:584
 #: app/controller/class-ai1ec-app-controller.php:585
-#: app/controller/class-ai1ec-app-controller.php:592
+#: app/controller/class-ai1ec-app-controller.php:593
 msgid "Calendar Themes"
 msgstr "Calendar Themes"
 
-#: app/controller/class-ai1ec-app-controller.php:605
-#: app/controller/class-ai1ec-app-controller.php:606
+#: app/controller/class-ai1ec-app-controller.php:607
+#: app/controller/class-ai1ec-app-controller.php:608
 msgid "Theme Options"
 msgstr "Theme Options"
 
-#: app/controller/class-ai1ec-app-controller.php:612
+#: app/controller/class-ai1ec-app-controller.php:615
 #: app/helper/pages/class-ai1ec-less-variables-editing-page.php:35
 #: app/helper/pages/class-ai1ec-less-variables-editing-page.php:39
 msgid "Calendar Theme Options"
 msgstr "Calendar Theme Options"
 
-#: app/controller/class-ai1ec-app-controller.php:624
-#: app/controller/class-ai1ec-app-controller.php:625
+#: app/controller/class-ai1ec-app-controller.php:628
+#: app/controller/class-ai1ec-app-controller.php:629
 msgid "Settings"
 msgstr "Settings"
 
-#: app/controller/class-ai1ec-app-controller.php:632
+#: app/controller/class-ai1ec-app-controller.php:637
 #: app/helper/class-ai1ec-platform-helper.php:128
 #: app/helper/class-ai1ec-settings-helper.php:349
 msgid "Calendar"
 msgstr "Calendar"
 
-#: app/controller/class-ai1ec-app-controller.php:646
-#: app/controller/class-ai1ec-app-controller.php:647
+#: app/controller/class-ai1ec-app-controller.php:653
+#: app/controller/class-ai1ec-app-controller.php:654
 msgid "Upgrade"
 msgstr "Upgrade"
 
-#: app/controller/class-ai1ec-app-controller.php:659
-#: app/controller/class-ai1ec-app-controller.php:660
-msgid "Upgrade to Pro"
-msgstr "Upgrade to Pro"
+#: app/controller/class-ai1ec-app-controller.php:667
+#: app/controller/class-ai1ec-app-controller.php:668
+msgid "Upgrade Calendar to Pro"
+msgstr "Upgrade Calendar to Pro"
 
-#: app/controller/class-ai1ec-app-controller.php:809
-#: app/controller/class-ai1ec-app-controller.php:856
+#: app/controller/class-ai1ec-app-controller.php:881
+#: app/controller/class-ai1ec-app-controller.php:989
 msgid "You do not have sufficient permissions to update plugins for this site."
 msgstr ""
 "You do not have sufficient permissions to update plugins for this site."
 
-#: app/controller/class-ai1ec-app-controller.php:817
+#: app/controller/class-ai1ec-app-controller.php:889
 msgid ""
 "Download package is needed and was not supplied. Visit <a href=\"http://time."
 "ly/\" target=\"_blank\">time.ly</a> to download the newest version of the "
@@ -83,31 +83,39 @@ msgstr ""
 "ly/\" target=\"_blank\">time.ly</a> to download the newest version of the "
 "plugin."
 
-#: app/controller/class-ai1ec-app-controller.php:886
+#: app/controller/class-ai1ec-app-controller.php:914
+msgid "Color"
+msgstr "Color"
+
+#: app/controller/class-ai1ec-app-controller.php:916
+msgid "Image"
+msgstr "Image"
+
+#: app/controller/class-ai1ec-app-controller.php:1019
 msgid "The license key you entered is not valid. Please try again."
 msgstr "The license key you entered is not valid. Please try again."
 
-#: app/controller/class-ai1ec-app-controller.php:889
+#: app/controller/class-ai1ec-app-controller.php:1022
 msgid "A system error has occurred. Please try again."
 msgstr "A system error has occurred. Please try again."
 
-#: app/controller/class-ai1ec-app-controller.php:896
+#: app/controller/class-ai1ec-app-controller.php:1029
 msgid "All-in-One Event Calendar: Error processing license key"
 msgstr "All-in-One Event Calendar: Error processing license key"
 
-#: app/controller/class-ai1ec-calendar-controller.php:538
+#: app/controller/class-ai1ec-calendar-controller.php:543
 msgid "Week of %s"
 msgstr "Week of %s"
 
-#: app/controller/class-ai1ec-calendar-controller.php:540
+#: app/controller/class-ai1ec-calendar-controller.php:545
 msgid "F j"
 msgstr "F j"
 
-#: app/controller/class-ai1ec-calendar-controller.php:545
+#: app/controller/class-ai1ec-calendar-controller.php:550
 msgid "g a"
 msgstr "g a"
 
-#: app/controller/class-ai1ec-css-controller.php:168
+#: app/controller/class-ai1ec-css-controller.php:170
 msgid ""
 "The LESS file compiled correctly but there was an error while saving the "
 "generated CSS to persistence."
@@ -115,23 +123,23 @@ msgstr ""
 "The LESS file compiled correctly but there was an error while saving the "
 "generated CSS to persistence."
 
-#: app/controller/class-ai1ec-css-controller.php:169
+#: app/controller/class-ai1ec-css-controller.php:171
 msgid "An error ocurred while updating CSS"
 msgstr "An error ocurred while updating CSS"
 
-#: app/controller/class-ai1ec-css-controller.php:177
+#: app/controller/class-ai1ec-css-controller.php:179
 msgid "<p>The message returned was: <em>%s</em></p>"
 msgstr "<p>The message returned was: <em>%s</em></p>"
 
-#: app/controller/class-ai1ec-css-controller.php:180
+#: app/controller/class-ai1ec-css-controller.php:182
 msgid "An error occurred while compiling LESS files"
 msgstr "An error occurred while compiling LESS files"
 
-#: app/controller/class-ai1ec-css-controller.php:251
+#: app/controller/class-ai1ec-css-controller.php:253
 msgid "Theme options were updated successfully. <a href='%s'>Visit site</a>"
 msgstr "Theme options were updated successfully. <a href='%s'>Visit site</a>"
 
-#: app/controller/class-ai1ec-css-controller.php:261
+#: app/controller/class-ai1ec-css-controller.php:263
 msgid ""
 "Theme options were successfully reset to their default values. <a "
 "href='%s'>Visit site</a>"
@@ -144,8 +152,8 @@ msgid "Make new copy of event"
 msgstr "Make new copy of event"
 
 #: app/controller/class-ai1ec-duplicate-controller.php:103
-#: app/controller/class-ai1ec-duplicate-controller.php:476
-#: app/controller/class-ai1ec-duplicate-controller.php:477
+#: app/controller/class-ai1ec-duplicate-controller.php:509
+#: app/controller/class-ai1ec-duplicate-controller.php:512
 msgid "Clone"
 msgstr "Clone"
 
@@ -167,7 +175,7 @@ msgstr "No post to duplicate has been supplied!"
 msgid "Copy creation failed, could not find original:"
 msgstr "Copy creation failed, could not find original:"
 
-#: app/controller/class-ai1ec-duplicate-controller.php:414
+#: app/controller/class-ai1ec-duplicate-controller.php:437
 msgid ""
 "<p>The event <strong>%s</strong> was cloned succesfully. <a href=\"%s\">Edit "
 "cloned event</a></p>"
@@ -175,52 +183,56 @@ msgstr ""
 "<p>The event <strong>%s</strong> was cloned succesfully. <a href=\"%s\">Edit "
 "cloned event</a></p>"
 
-#: app/controller/class-ai1ec-events-controller.php:380
+#: app/controller/class-ai1ec-events-controller.php:361
+msgid "GMT%+d:%02d"
+msgstr "GMT%+d:%02d"
+
+#: app/controller/class-ai1ec-events-controller.php:461
 msgid "Publish"
 msgstr "Publish"
 
-#: app/controller/class-ai1ec-events-controller.php:381
+#: app/controller/class-ai1ec-events-controller.php:462
 msgid "Update"
 msgstr "Update"
 
-#: app/controller/class-ai1ec-events-controller.php:383
+#: app/controller/class-ai1ec-events-controller.php:464
 msgid "Submit for Review"
 msgstr "Submit for Review"
 
-#: app/controller/class-ai1ec-events-controller.php:542
+#: app/controller/class-ai1ec-events-controller.php:647
 msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Event updated. <a href=\"%s\">View event</a>"
 
-#: app/controller/class-ai1ec-events-controller.php:543
+#: app/controller/class-ai1ec-events-controller.php:648
 msgid "Custom field updated."
 msgstr "Custom field updated."
 
-#: app/controller/class-ai1ec-events-controller.php:544
+#: app/controller/class-ai1ec-events-controller.php:649
 msgid "Custom field deleted."
 msgstr "Custom field deleted."
 
-#: app/controller/class-ai1ec-events-controller.php:545
+#: app/controller/class-ai1ec-events-controller.php:650
 msgid "Event updated."
 msgstr "Event updated."
 
 #. translators: %s: date and time of the revision
-#: app/controller/class-ai1ec-events-controller.php:547
+#: app/controller/class-ai1ec-events-controller.php:652
 msgid "Event restored to revision from %s"
 msgstr "Event restored to revision from %s"
 
-#: app/controller/class-ai1ec-events-controller.php:548
+#: app/controller/class-ai1ec-events-controller.php:653
 msgid "Event published. <a href=\"%s\">View event</a>"
 msgstr "Event published. <a href=\"%s\">View event</a>"
 
-#: app/controller/class-ai1ec-events-controller.php:549
+#: app/controller/class-ai1ec-events-controller.php:654
 msgid "Event saved."
 msgstr "Event saved."
 
-#: app/controller/class-ai1ec-events-controller.php:550
+#: app/controller/class-ai1ec-events-controller.php:655
 msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 
-#: app/controller/class-ai1ec-events-controller.php:551
+#: app/controller/class-ai1ec-events-controller.php:656
 msgid ""
 "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
 "\">Preview event</a>"
@@ -229,16 +241,16 @@ msgstr ""
 "\">Preview event</a>"
 
 #. translators: Publish box date format, see http:php.net/date
-#: app/controller/class-ai1ec-events-controller.php:554
+#: app/controller/class-ai1ec-events-controller.php:659
 msgid "M j, Y @ G:i"
 msgstr "M j, Y @ G:i"
 
-#: app/controller/class-ai1ec-events-controller.php:558
+#: app/controller/class-ai1ec-events-controller.php:663
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 
-#: app/controller/class-ai1ec-events-controller.php:742
+#: app/controller/class-ai1ec-events-controller.php:849
 msgid "Edit this occurrence (%s)"
 msgstr "Edit this occurrence (%s)"
 
@@ -254,19 +266,19 @@ msgstr ""
 "Imports events created using The Events Calendar plugin into the All-in-One "
 "Event Calendar"
 
-#: app/controller/class-ai1ec-requirejs-controller.php:384
+#: app/controller/class-ai1ec-requirejs-controller.php:379
 msgid "Select at least one user/group/page to subscribe to."
 msgstr "Select at least one user/group/page to subscribe to."
 
-#: app/controller/class-ai1ec-requirejs-controller.php:385
+#: app/controller/class-ai1ec-requirejs-controller.php:380
 msgid "An unexpected error occurred. Try reloading the page."
 msgstr "An unexpected error occurred. Try reloading the page."
 
-#: app/controller/class-ai1ec-requirejs-controller.php:386
+#: app/controller/class-ai1ec-requirejs-controller.php:381
 msgid "No subscriptions yet!"
 msgstr "No subscriptions yet!"
 
-#: app/controller/class-ai1ec-requirejs-controller.php:387
+#: app/controller/class-ai1ec-requirejs-controller.php:382
 msgid ""
 "Please select no more than ten users/groups/pages at a time to avoid "
 "overloading Facebook requests."
@@ -274,19 +286,19 @@ msgstr ""
 "Please select no more than ten users/groups/pages at a time to avoid "
 "overloading Facebook requests."
 
-#: app/controller/class-ai1ec-requirejs-controller.php:389
+#: app/controller/class-ai1ec-requirejs-controller.php:384
 msgid "This feed is already being imported."
 msgstr "This feed is already being imported."
 
-#: app/controller/class-ai1ec-requirejs-controller.php:390
+#: app/controller/class-ai1ec-requirejs-controller.php:385
 msgid "Please enter a valid iCalendar URL."
 msgstr "Please enter a valid iCalendar URL."
 
-#: app/controller/class-ai1ec-requirejs-controller.php:391
+#: app/controller/class-ai1ec-requirejs-controller.php:386
 msgid "Please enter a valid e-mail address."
 msgstr "Please enter a valid e-mail address."
 
-#: app/controller/class-ai1ec-requirejs-controller.php:407
+#: app/controller/class-ai1ec-requirejs-controller.php:402
 msgid ""
 "Please enter a valid latitude. A valid latitude is comprised between +90 and "
 "-90."
@@ -294,39 +306,39 @@ msgstr ""
 "Please enter a valid latitude. A valid latitude is comprised between +90 and "
 "-90."
 
-#: app/controller/class-ai1ec-requirejs-controller.php:408
+#: app/controller/class-ai1ec-requirejs-controller.php:403
 msgid ""
 "Please enter a valid longitude. A valid longitude is comprised between +180 "
 "and -180."
 msgstr ""
 "Please enter a valid longitude. A valid longitude is comprised between +180 "
 "and -180."
+
+#: app/controller/class-ai1ec-requirejs-controller.php:404
+msgid ""
+"When the \"Input coordinates\" checkbox is checked, \"Latitude\" is a "
+"required field."
+msgstr ""
+"When the \"Input coordinates\" checkbox is checked, \"Latitude\" is a "
+"required field."
+
+#: app/controller/class-ai1ec-requirejs-controller.php:405
+msgid ""
+"When the \"Input coordinates\" checkbox is checked, \"Longitude\" is a "
+"required field."
+msgstr ""
+"When the \"Input coordinates\" checkbox is checked, \"Longitude\" is a "
+"required field."
 
 #: app/controller/class-ai1ec-requirejs-controller.php:409
-msgid ""
-"When the \"Input coordinates\" checkbox is checked, \"Latitude\" is a "
-"required field."
-msgstr ""
-"When the \"Input coordinates\" checkbox is checked, \"Latitude\" is a "
-"required field."
-
-#: app/controller/class-ai1ec-requirejs-controller.php:410
-msgid ""
-"When the \"Input coordinates\" checkbox is checked, \"Longitude\" is a "
-"required field."
-msgstr ""
-"When the \"Input coordinates\" checkbox is checked, \"Longitude\" is a "
-"required field."
-
-#: app/controller/class-ai1ec-requirejs-controller.php:414
 msgid "This setting cannot be changed in Event Platform mode."
 msgstr "This setting cannot be changed in Event Platform mode."
 
-#: app/controller/class-ai1ec-requirejs-controller.php:419
+#: app/controller/class-ai1ec-requirejs-controller.php:414
 msgid "You must specify both an app ID and app secret to connect to Facebook."
 msgstr "You must specify both an app ID and app secret to connect to Facebook."
 
-#: app/controller/class-ai1ec-requirejs-controller.php:421
+#: app/controller/class-ai1ec-requirejs-controller.php:416
 msgid ""
 "The URL you have entered seems to be invalid. Please remember that URLs must "
 "start with either 'http://' or 'https://'."
@@ -334,7 +346,7 @@ msgstr ""
 "The URL you have entered seems to be invalid. Please remember that URLs must "
 "start with either 'http://' or 'https://'."
 
-#: app/controller/class-ai1ec-requirejs-controller.php:422
+#: app/controller/class-ai1ec-requirejs-controller.php:417
 msgid ""
 "Both the <em>calendar URL</em> and <em>e-mail address</em> fields are "
 "required."
@@ -342,7 +354,7 @@ msgstr ""
 "Both the <em>calendar URL</em> and <em>e-mail address</em> fields are "
 "required."
 
-#: app/controller/class-ai1ec-requirejs-controller.php:423
+#: app/controller/class-ai1ec-requirejs-controller.php:418
 msgid ""
 "Are you sure you want to reset your theme options to their default values?"
 msgstr ""
@@ -859,303 +871,305 @@ msgstr ""
 msgid "<p>To set up the plugin:</p>"
 msgstr "<p>To set up the plugin:</p>"
 
-#: app/helper/class-ai1ec-app-helper.php:917
+#: app/helper/class-ai1ec-app-helper.php:914
 msgid "All-in-One Event Calendar Update"
 msgstr "All-in-One Event Calendar Update"
 
-#: app/helper/class-ai1ec-app-helper.php:926
+#: app/helper/class-ai1ec-app-helper.php:923
 msgid "Upgrade now"
 msgstr "Upgrade now"
 
-#: app/helper/class-ai1ec-app-helper.php:946
+#: app/helper/class-ai1ec-app-helper.php:943
 msgid "Event"
 msgid_plural "Events"
 msgstr[0] "Event"
 msgstr[1] "Events"
 
-#: app/helper/class-ai1ec-app-helper.php:958
+#: app/helper/class-ai1ec-app-helper.php:955
 msgid "Event Category"
 msgid_plural "Event Categories"
 msgstr[0] "Event Category"
 msgstr[1] "Event Categories"
 
-#: app/helper/class-ai1ec-app-helper.php:970
+#: app/helper/class-ai1ec-app-helper.php:967
 msgid "Event Tag"
 msgid_plural "Event Tags"
 msgstr[0] "Event Tag"
 msgstr[1] "Event Tags"
 
-#: app/helper/class-ai1ec-app-helper.php:1052
+#: app/helper/class-ai1ec-app-helper.php:1049
 msgid "Posterboard"
 msgstr "Posterboard"
 
-#: app/helper/class-ai1ec-app-helper.php:1053
+#: app/helper/class-ai1ec-app-helper.php:1050
 msgid "Month"
 msgstr "Month"
 
-#: app/helper/class-ai1ec-app-helper.php:1054
+#: app/helper/class-ai1ec-app-helper.php:1051
 msgid "Week"
 msgstr "Week"
 
-#: app/helper/class-ai1ec-app-helper.php:1055
+#: app/helper/class-ai1ec-app-helper.php:1052
 msgid "Day"
 msgstr "Day"
 
-#: app/helper/class-ai1ec-app-helper.php:1056
+#: app/helper/class-ai1ec-app-helper.php:1053
 msgid "Agenda"
 msgstr "Agenda"
 
-#: app/helper/class-ai1ec-events-helper.php:519
-#: app/helper/class-ai1ec-events-helper.php:541
+#: app/helper/class-ai1ec-events-helper.php:717
+#: app/helper/class-ai1ec-events-helper.php:739
 msgid "No repeat"
 msgstr "No repeat"
 
-#: app/helper/class-ai1ec-events-helper.php:520
-#: app/helper/class-ai1ec-events-helper.php:542
+#: app/helper/class-ai1ec-events-helper.php:718
+#: app/helper/class-ai1ec-events-helper.php:740
 msgid "Every day"
 msgstr "Every day"
 
-#: app/helper/class-ai1ec-events-helper.php:521
-#: app/helper/class-ai1ec-events-helper.php:543
+#: app/helper/class-ai1ec-events-helper.php:719
+#: app/helper/class-ai1ec-events-helper.php:741
 msgid "Every week"
 msgstr "Every week"
 
-#: app/helper/class-ai1ec-events-helper.php:522
-#: app/helper/class-ai1ec-events-helper.php:544
+#: app/helper/class-ai1ec-events-helper.php:720
+#: app/helper/class-ai1ec-events-helper.php:742
 msgid "Every month"
 msgstr "Every month"
 
-#: app/helper/class-ai1ec-events-helper.php:523
-#: app/helper/class-ai1ec-events-helper.php:545
+#: app/helper/class-ai1ec-events-helper.php:721
+#: app/helper/class-ai1ec-events-helper.php:743
 msgid "Every year"
 msgstr "Every year"
 
-#: app/helper/class-ai1ec-events-helper.php:525
-#: app/helper/class-ai1ec-events-helper.php:547
+#: app/helper/class-ai1ec-events-helper.php:723
+#: app/helper/class-ai1ec-events-helper.php:745
 msgid "Custom..."
 msgstr "Custom..."
 
-#: app/helper/class-ai1ec-events-helper.php:671
+#: app/helper/class-ai1ec-events-helper.php:869
 msgid "first"
 msgstr "first"
 
-#: app/helper/class-ai1ec-events-helper.php:672
+#: app/helper/class-ai1ec-events-helper.php:870
 msgid "second"
 msgstr "second"
 
-#: app/helper/class-ai1ec-events-helper.php:673
+#: app/helper/class-ai1ec-events-helper.php:871
 msgid "third"
 msgstr "third"
 
-#: app/helper/class-ai1ec-events-helper.php:674
+#: app/helper/class-ai1ec-events-helper.php:872
 msgid "fourth"
 msgstr "fourth"
 
-#: app/helper/class-ai1ec-events-helper.php:676
+#: app/helper/class-ai1ec-events-helper.php:874
+#: app/helper/class-ai1ec-events-helper.php:1099
+#: app/helper/class-ai1ec-events-helper.php:2127
 msgid "last"
 msgstr "last"
 
-#: app/helper/class-ai1ec-events-helper.php:681
+#: app/helper/class-ai1ec-events-helper.php:879
 msgid "Sunday"
 msgstr "Sunday"
 
-#: app/helper/class-ai1ec-events-helper.php:682
+#: app/helper/class-ai1ec-events-helper.php:880
 msgid "Monday"
 msgstr "Monday"
 
-#: app/helper/class-ai1ec-events-helper.php:683
+#: app/helper/class-ai1ec-events-helper.php:881
 msgid "Tuesday"
 msgstr "Tuesday"
 
-#: app/helper/class-ai1ec-events-helper.php:684
+#: app/helper/class-ai1ec-events-helper.php:882
 msgid "Wednesday"
 msgstr "Wednesday"
 
-#: app/helper/class-ai1ec-events-helper.php:685
+#: app/helper/class-ai1ec-events-helper.php:883
 msgid "Thursday"
 msgstr "Thursday"
 
-#: app/helper/class-ai1ec-events-helper.php:686
+#: app/helper/class-ai1ec-events-helper.php:884
 msgid "Friday"
 msgstr "Friday"
 
-#: app/helper/class-ai1ec-events-helper.php:687
+#: app/helper/class-ai1ec-events-helper.php:885
 msgid "Saturday"
 msgstr "Saturday"
 
-#: app/helper/class-ai1ec-events-helper.php:689
+#: app/helper/class-ai1ec-events-helper.php:887
 msgid "day"
 msgstr "day"
 
-#: app/helper/class-ai1ec-events-helper.php:690
+#: app/helper/class-ai1ec-events-helper.php:888
 msgid "weekday"
 msgstr "weekday"
 
-#: app/helper/class-ai1ec-events-helper.php:691
+#: app/helper/class-ai1ec-events-helper.php:889
 msgid "weekend day"
 msgstr "weekend day"
 
-#: app/helper/class-ai1ec-events-helper.php:760
-#: app/helper/class-ai1ec-events-helper.php:777
+#: app/helper/class-ai1ec-events-helper.php:958
+#: app/helper/class-ai1ec-events-helper.php:975
 #: app/helper/class-ai1ec-settings-helper.php:261
 #: app/view/admin/box_repeat.php:2
 msgid "Daily"
 msgstr "Daily"
 
-#: app/helper/class-ai1ec-events-helper.php:761
-#: app/helper/class-ai1ec-events-helper.php:778
+#: app/helper/class-ai1ec-events-helper.php:959
+#: app/helper/class-ai1ec-events-helper.php:976
 #: app/view/admin/box_repeat.php:3
 msgid "Weekly"
 msgstr "Weekly"
 
-#: app/helper/class-ai1ec-events-helper.php:762
-#: app/helper/class-ai1ec-events-helper.php:779
+#: app/helper/class-ai1ec-events-helper.php:960
+#: app/helper/class-ai1ec-events-helper.php:977
 #: app/view/admin/box_repeat.php:4
 msgid "Monthly"
 msgstr "Monthly"
 
-#: app/helper/class-ai1ec-events-helper.php:763
-#: app/helper/class-ai1ec-events-helper.php:780
+#: app/helper/class-ai1ec-events-helper.php:961
+#: app/helper/class-ai1ec-events-helper.php:978
 #: app/view/admin/box_repeat.php:5
 msgid "Yearly"
 msgstr "Yearly"
 
-#: app/helper/class-ai1ec-events-helper.php:802
+#: app/helper/class-ai1ec-events-helper.php:1000
 msgid "day(s)"
 msgstr "day(s)"
 
-#: app/helper/class-ai1ec-events-helper.php:831
+#: app/helper/class-ai1ec-events-helper.php:1029
 msgid "week(s)"
 msgstr "week(s)"
 
-#: app/helper/class-ai1ec-events-helper.php:904
+#: app/helper/class-ai1ec-events-helper.php:1103
 msgid "month(s)"
 msgstr "month(s)"
 
-#: app/helper/class-ai1ec-events-helper.php:927
+#: app/helper/class-ai1ec-events-helper.php:1126
 msgid "year(s)"
 msgstr "year(s)"
 
-#: app/helper/class-ai1ec-events-helper.php:1132
+#: app/helper/class-ai1ec-events-helper.php:1331
 msgid "Ai1ec_Events_Helper::get_medium_time() is deprecated."
 msgstr "Ai1ec_Events_Helper::get_medium_time() is deprecated."
 
-#: app/helper/class-ai1ec-events-helper.php:1641
+#: app/helper/class-ai1ec-events-helper.php:1847
 msgid "Never"
 msgstr "Never"
 
-#: app/helper/class-ai1ec-events-helper.php:1642
+#: app/helper/class-ai1ec-events-helper.php:1848
 msgid "After"
 msgstr "After"
 
-#: app/helper/class-ai1ec-events-helper.php:1643
+#: app/helper/class-ai1ec-events-helper.php:1849
 #: app/view/admin/box_repeat.php:28
 msgid "On date"
 msgstr "On date"
 
-#: app/helper/class-ai1ec-events-helper.php:1866
-#: app/helper/class-ai1ec-events-helper.php:1875
-#: app/helper/class-ai1ec-events-helper.php:1883
+#: app/helper/class-ai1ec-events-helper.php:2073
+#: app/helper/class-ai1ec-events-helper.php:2082
+#: app/helper/class-ai1ec-events-helper.php:2090
 msgctxt "Recurrence editor - weekly tab"
 msgid "on"
 msgstr "on"
 
-#: app/helper/class-ai1ec-events-helper.php:1871
-#: app/helper/class-ai1ec-events-helper.php:1900
-#: app/helper/class-ai1ec-events-helper.php:1941
+#: app/helper/class-ai1ec-events-helper.php:2078
+#: app/helper/class-ai1ec-events-helper.php:2107
+#: app/helper/class-ai1ec-events-helper.php:2155
 msgid "and"
 msgstr "and"
 
-#: app/helper/class-ai1ec-events-helper.php:1896
-#: app/helper/class-ai1ec-events-helper.php:1903
-#: app/helper/class-ai1ec-events-helper.php:1909
-#: app/helper/class-ai1ec-events-helper.php:1923
+#: app/helper/class-ai1ec-events-helper.php:2103
+#: app/helper/class-ai1ec-events-helper.php:2110
+#: app/helper/class-ai1ec-events-helper.php:2116
+#: app/helper/class-ai1ec-events-helper.php:2137
 msgctxt "Recurrence editor - monthly tab"
 msgid "on"
 msgstr "on"
 
-#: app/helper/class-ai1ec-events-helper.php:1896
-#: app/helper/class-ai1ec-events-helper.php:1903
-#: app/helper/class-ai1ec-events-helper.php:1909
+#: app/helper/class-ai1ec-events-helper.php:2103
+#: app/helper/class-ai1ec-events-helper.php:2110
+#: app/helper/class-ai1ec-events-helper.php:2116
 msgid "of the month"
 msgstr "of the month"
 
-#: app/helper/class-ai1ec-events-helper.php:1936
-#: app/helper/class-ai1ec-events-helper.php:1944
-#: app/helper/class-ai1ec-events-helper.php:1951
+#: app/helper/class-ai1ec-events-helper.php:2150
+#: app/helper/class-ai1ec-events-helper.php:2158
+#: app/helper/class-ai1ec-events-helper.php:2165
 msgctxt "Recurrence editor - yearly tab"
 msgid "on"
 msgstr "on"
 
-#: app/helper/class-ai1ec-events-helper.php:1991
+#: app/helper/class-ai1ec-events-helper.php:2205
 msgid "daily"
 msgstr "daily"
 
-#: app/helper/class-ai1ec-events-helper.php:1994
+#: app/helper/class-ai1ec-events-helper.php:2208
 msgid "every other day"
 msgstr "every other day"
 
-#: app/helper/class-ai1ec-events-helper.php:1996
+#: app/helper/class-ai1ec-events-helper.php:2210
 msgid "every %d days"
 msgstr "every %d days"
 
-#: app/helper/class-ai1ec-events-helper.php:2003
+#: app/helper/class-ai1ec-events-helper.php:2217
 msgid "weekly"
 msgstr "weekly"
 
-#: app/helper/class-ai1ec-events-helper.php:2006
+#: app/helper/class-ai1ec-events-helper.php:2220
 msgid "every other week"
 msgstr "every other week"
 
-#: app/helper/class-ai1ec-events-helper.php:2008
+#: app/helper/class-ai1ec-events-helper.php:2222
 msgid "every %d weeks"
 msgstr "every %d weeks"
 
-#: app/helper/class-ai1ec-events-helper.php:2015
+#: app/helper/class-ai1ec-events-helper.php:2229
 msgid "monthly"
 msgstr "monthly"
 
-#: app/helper/class-ai1ec-events-helper.php:2018
+#: app/helper/class-ai1ec-events-helper.php:2232
 msgid "every other month"
 msgstr "every other month"
 
-#: app/helper/class-ai1ec-events-helper.php:2020
+#: app/helper/class-ai1ec-events-helper.php:2234
 msgid "every %d months"
 msgstr "every %d months"
 
-#: app/helper/class-ai1ec-events-helper.php:2027
+#: app/helper/class-ai1ec-events-helper.php:2241
 msgid "yearly"
 msgstr "yearly"
 
-#: app/helper/class-ai1ec-events-helper.php:2030
+#: app/helper/class-ai1ec-events-helper.php:2244
 msgid "every other year"
 msgstr "every other year"
 
-#: app/helper/class-ai1ec-events-helper.php:2032
+#: app/helper/class-ai1ec-events-helper.php:2246
 msgid "every %d years"
 msgstr "every %d years"
 
-#: app/helper/class-ai1ec-events-helper.php:2054
+#: app/helper/class-ai1ec-events-helper.php:2268
 msgid "until %s"
 msgstr "until %s"
 
-#: app/helper/class-ai1ec-events-helper.php:2063
+#: app/helper/class-ai1ec-events-helper.php:2277
 msgid "for %d occurrences"
 msgstr "for %d occurrences"
 
-#: app/helper/class-ai1ec-events-helper.php:2067
+#: app/helper/class-ai1ec-events-helper.php:2281
 msgid "forever"
 msgstr "forever"
 
-#: app/helper/class-ai1ec-events-helper.php:2084
+#: app/helper/class-ai1ec-events-helper.php:2298
 msgid "Recurrence rule cannot be empty."
 msgstr "Recurrence rule cannot be empty."
 
-#: app/helper/class-ai1ec-events-helper.php:2091
+#: app/helper/class-ai1ec-events-helper.php:2305
 msgid "Recurrence rule was not provided."
 msgstr "Recurrence rule was not provided."
 
-#: app/helper/class-ai1ec-events-helper.php:2168
+#: app/helper/class-ai1ec-events-helper.php:2382
 msgid "times"
 msgstr "times"
 
@@ -1250,9 +1264,13 @@ msgstr "Hourly"
 msgid "Twice Daily"
 msgstr "Twice Daily"
 
-#: app/helper/class-ai1ec-view-helper.php:661
-msgid "instance of"
-msgstr "instance of"
+#: app/helper/class-ai1ec-view-helper.php:687
+msgid "Edit &#8220;%s&#8221;"
+msgstr "Edit &#8220;%s&#8221;"
+
+#: app/helper/class-ai1ec-view-helper.php:694
+msgid "Base Event"
+msgstr "Base Event"
 
 #: app/helper/pages/class-ai1ec-less-variables-editing-page.php:68
 msgid "General"
@@ -1294,7 +1312,7 @@ msgstr "Save Options"
 msgid "Reset to defaults"
 msgstr "Reset to defaults"
 
-#: app/model/class-ai1ec-database.php:71
+#: app/model/class-ai1ec-database.php:298
 msgid ""
 "Database update has failed. Please make sure, that database user, defined in "
 "<em>wp-config.php</em> has permissions, to make changes (<strong>ALTER "
@@ -1304,38 +1322,38 @@ msgstr ""
 "<em>wp-config.php</em> has permissions, to make changes (<strong>ALTER "
 "TABLE</strong>) to the database."
 
-#: app/model/class-ai1ec-database.php:75
+#: app/model/class-ai1ec-database.php:302
 msgid "Plug-in disabled due to unrecoverable database update error"
 msgstr "Plug-in disabled due to unrecoverable database update error"
 
-#: app/model/class-ai1ec-event.php:580 app/model/class-ai1ec-event.php:605
+#: app/model/class-ai1ec-event.php:720 app/model/class-ai1ec-event.php:750
 msgctxt "Event time separator"
 msgid " @ "
 msgstr " @ "
 
-#: app/model/class-ai1ec-event.php:592
+#: app/model/class-ai1ec-event.php:732
 msgctxt "Event start/end separator"
 msgid " – "
 msgstr " – "
 
-#: app/model/class-ai1ec-event.php:619
-#: themes-ai1ec/vortex/agenda-widget.php:38
+#: app/model/class-ai1ec-event.php:764
+#: themes-ai1ec/vortex/agenda-widget.php:39
 msgid "all-day"
 msgstr "all-day"
 
-#: app/model/class-ai1ec-event.php:1059
+#: app/model/class-ai1ec-event.php:1215
 msgid "E-mail"
 msgstr "E-mail"
 
-#: app/model/class-ai1ec-event.php:1065
+#: app/model/class-ai1ec-event.php:1221
 msgid "Event website"
 msgstr "Event website"
 
-#: app/model/class-ai1ec-event.php:1105
+#: app/model/class-ai1ec-event.php:1261
 msgid ", and "
 msgstr ", and "
 
-#: app/model/class-ai1ec-event.php:1424
+#: app/model/class-ai1ec-event.php:1580
 msgid "Back to Calendar"
 msgstr "Back to Calendar"
 
@@ -1386,6 +1404,26 @@ msgstr "Show <strong>Subscribe</strong> buttons"
 #: app/view/admin/agenda-widget-form.php:84
 msgid "Hide this widget on calendar page"
 msgstr "Hide this widget on calendar page"
+
+#: app/view/admin/box_event_children.php:12
+msgid "Base recurrence event"
+msgstr "Base recurrence event"
+
+#: app/view/admin/box_event_children.php:14
+msgid "Modified recurrence events"
+msgstr "Modified recurrence events"
+
+#: app/view/admin/box_event_children.php:22
+msgid "Edit parent:"
+msgstr "Edit parent:"
+
+#: app/view/admin/box_event_children.php:27
+msgid "Modified Events"
+msgstr "Modified Events"
+
+#: app/view/admin/box_event_children.php:31
+msgid "Edit:"
+msgstr "Edit:"
 
 #: app/view/admin/box_event_contact.php:5
 msgid "Organizer contact info"
@@ -1550,115 +1588,123 @@ msgid "Send an Invoice"
 msgstr "Send an Invoice"
 
 #: app/view/admin/box_general_settings.php:4
-#: app/view/admin/box_general_settings.php:12
+#: app/view/admin/box_general_settings.php:21
 msgid "Viewing Events"
 msgstr "Viewing Events"
 
 #: app/view/admin/box_general_settings.php:5
-#: app/view/admin/box_general_settings.php:199
+#: app/view/admin/box_general_settings.php:208
 msgid "Adding/Editing Events"
 msgstr "Adding/Editing Events"
 
 #: app/view/admin/box_general_settings.php:6
-#: app/view/admin/box_general_settings.php:240
+#: app/view/admin/box_general_settings.php:249
 msgid "Advanced Settings"
 msgstr "Advanced Settings"
 
-#: app/view/admin/box_general_settings.php:15
+#: app/view/admin/box_general_settings.php:13
+msgid ""
+"If the form below is not working please follow <a href=\"%s\">this link</a>."
+msgstr ""
+"If the form below is not working please follow <a href=\"%s\">this link</a>."
+
+#: app/view/admin/box_general_settings.php:24
 msgid "Calendar page:"
 msgstr "Calendar page:"
 
-#: app/view/admin/box_general_settings.php:21
+#: app/view/admin/box_general_settings.php:30
 msgid "Timezone:"
 msgstr "Timezone:"
 
-#: app/view/admin/box_general_settings.php:27
+#: app/view/admin/box_general_settings.php:36
 msgid "Week starts on"
 msgstr "Week starts on"
 
-#: app/view/admin/box_general_settings.php:32
+#: app/view/admin/box_general_settings.php:41
 msgid "Available views:"
 msgstr "Available views:"
 
-#: app/view/admin/box_general_settings.php:39
+#: app/view/admin/box_general_settings.php:48
 msgid "Preselected calendar filters:"
 msgstr "Preselected calendar filters:"
 
-#: app/view/admin/box_general_settings.php:41
+#: app/view/admin/box_general_settings.php:50
 msgid ""
 "To clear, hold ⌘/<abbr class=\"initialism\">CTRL</abbr> and click selection."
 msgstr ""
 "To clear, hold ⌘/<abbr class=\"initialism\">CTRL</abbr> and click selection."
 
-#: app/view/admin/box_general_settings.php:47
+#: app/view/admin/box_general_settings.php:56
 #: themes-ai1ec/vortex/agenda.php:76 themes-ai1ec/vortex/event-multi.php:61
 #: themes-ai1ec/vortex/event-single.php:100
 msgid "Categories:"
 msgstr "Categories:"
 
-#: app/view/admin/box_general_settings.php:53 app/view/admin/themes.php:29
+#: app/view/admin/box_general_settings.php:62 app/view/admin/themes.php:29
 #: lib/class-ai1ec-themes-list-table.php:358 themes-ai1ec/vortex/agenda.php:85
 #: themes-ai1ec/vortex/event-multi.php:74
 #: themes-ai1ec/vortex/event-single.php:113
 msgid "Tags:"
 msgstr "Tags:"
 
-#: app/view/admin/box_general_settings.php:63
+#: app/view/admin/box_general_settings.php:72
 msgid "Default calendar start date (optional):"
 msgstr "Default calendar start date (optional):"
 
-#: app/view/admin/box_general_settings.php:72
+#: app/view/admin/box_general_settings.php:81
 msgid "Posterboard tile minimum width"
 msgstr "Posterboard tile minimum width"
 
-#: app/view/admin/box_general_settings.php:78
+#: app/view/admin/box_general_settings.php:87
 msgid "px"
 msgstr "px"
 
-#: app/view/admin/box_general_settings.php:82
+#: app/view/admin/box_general_settings.php:91
 msgid "Posterboard pages show at most"
 msgstr "Posterboard pages show at most"
 
-#: app/view/admin/box_general_settings.php:88
 #: app/view/admin/box_general_settings.php:97
+#: app/view/admin/box_general_settings.php:106
 msgid "events"
 msgstr "events"
 
-#: app/view/admin/box_general_settings.php:92
+#: app/view/admin/box_general_settings.php:101
 msgid "Agenda pages show at most"
 msgstr "Agenda pages show at most"
 
-#: app/view/admin/box_general_settings.php:107
-msgid ""
-"In <span %s>Agenda-like views</span>, <strong>include all events from last "
-"day shown</strong>"
-msgstr ""
-"In <span %s>Agenda-like views</span>, <strong>include all events from last "
-"day shown</strong>"
-
-#: app/view/admin/box_general_settings.php:109
-msgid ""
-"These include Agenda view, Posterboard view, and the Upcoming Events widget."
-msgstr ""
-"These include Agenda view, Posterboard view, and the Upcoming Events widget."
-
 #: app/view/admin/box_general_settings.php:116
+msgid ""
+"In <span %s>Agenda-like views</span>, <strong>include all events from last "
+"day shown</strong>"
+msgstr ""
+"In <span %s>Agenda-like views</span>, <strong>include all events from last "
+"day shown</strong>"
+
+#: app/view/admin/box_general_settings.php:118
+msgid ""
+"These include Agenda view, Posterboard view, and the Upcoming Events widget."
+msgstr ""
+"These include Agenda view, Posterboard view, and the Upcoming Events widget."
+
+#: app/view/admin/box_general_settings.php:125
 msgid "Keep all events <strong>expanded</strong> in Agenda view"
 msgstr "Keep all events <strong>expanded</strong> in Agenda view"
 
-#: app/view/admin/box_general_settings.php:121
-msgid "<strong>Show year</strong> in Agenda view date labels"
-msgstr "<strong>Show year</strong> in Agenda view date labels"
+#: app/view/admin/box_general_settings.php:130
+msgid ""
+"<strong>Show year</strong> in Posterboard, Agenda and widget view date labels"
+msgstr ""
+"<strong>Show year</strong> in Posterboard, Agenda and widget view date labels"
 
-#: app/view/admin/box_general_settings.php:126
+#: app/view/admin/box_general_settings.php:135
 msgid "<strong>Show location in event titles</strong> in calendar views"
 msgstr "<strong>Show location in event titles</strong> in calendar views"
 
-#: app/view/admin/box_general_settings.php:131
+#: app/view/admin/box_general_settings.php:140
 msgid "<strong>Exclude</strong> events from search results"
 msgstr "<strong>Exclude</strong> events from search results"
 
-#: app/view/admin/box_general_settings.php:136
+#: app/view/admin/box_general_settings.php:145
 msgid ""
 "Hide <strong>Subscribe</strong>/<strong>Add to Calendar</strong> buttons in "
 "calendar and single event views"
@@ -1666,23 +1712,23 @@ msgstr ""
 "Hide <strong>Subscribe</strong>/<strong>Add to Calendar</strong> buttons in "
 "calendar and single event views"
 
-#: app/view/admin/box_general_settings.php:141
+#: app/view/admin/box_general_settings.php:150
 msgid "Hide <strong>Google Maps</strong> until clicked"
 msgstr "Hide <strong>Google Maps</strong> until clicked"
 
-#: app/view/admin/box_general_settings.php:147
+#: app/view/admin/box_general_settings.php:156
 msgid "Include <strong>event categories</strong> in post category lists"
 msgstr "Include <strong>event categories</strong> in post category lists"
 
-#: app/view/admin/box_general_settings.php:155
+#: app/view/admin/box_general_settings.php:164
 msgid "Alternative methods to embed a calendar"
 msgstr "Alternative methods to embed a calendar"
 
-#: app/view/admin/box_general_settings.php:162
+#: app/view/admin/box_general_settings.php:171
 msgid "With a shortcode"
 msgstr "With a shortcode"
 
-#: app/view/admin/box_general_settings.php:163
+#: app/view/admin/box_general_settings.php:172
 msgid ""
 "Insert one of these shortcodes into your page body to embed the calendar "
 "into any arbitrary WordPress Page:"
@@ -1690,35 +1736,35 @@ msgstr ""
 "Insert one of these shortcodes into your page body to embed the calendar "
 "into any arbitrary WordPress Page:"
 
-#: app/view/admin/box_general_settings.php:165
+#: app/view/admin/box_general_settings.php:174
 msgid "Posterboard view:"
 msgstr "Posterboard view:"
 
-#: app/view/admin/box_general_settings.php:166
+#: app/view/admin/box_general_settings.php:175
 msgid "Month view:"
 msgstr "Month view:"
 
-#: app/view/admin/box_general_settings.php:167
+#: app/view/admin/box_general_settings.php:176
 msgid "Week view:"
 msgstr "Week view:"
 
-#: app/view/admin/box_general_settings.php:168
+#: app/view/admin/box_general_settings.php:177
 msgid "Day view:"
 msgstr "Day view:"
 
-#: app/view/admin/box_general_settings.php:169
+#: app/view/admin/box_general_settings.php:178
 msgid "Agenda view:"
 msgstr "Agenda view:"
 
-#: app/view/admin/box_general_settings.php:170
+#: app/view/admin/box_general_settings.php:179
 msgid "Default view as per settings:"
 msgstr "Default view as per settings:"
 
-#: app/view/admin/box_general_settings.php:173
+#: app/view/admin/box_general_settings.php:182
 msgid "Optional."
 msgstr "Optional."
 
-#: app/view/admin/box_general_settings.php:174
+#: app/view/admin/box_general_settings.php:183
 msgid ""
 "Add options to display a filtered calender. (You can find out category and "
 "tag IDs by inspecting the URL of your filtered calendar page.)"
@@ -1726,75 +1772,75 @@ msgstr ""
 "Add options to display a filtered calender. (You can find out category and "
 "tag IDs by inspecting the URL of your filtered calendar page.)"
 
-#: app/view/admin/box_general_settings.php:177
+#: app/view/admin/box_general_settings.php:186
 msgid "Filter by event category name/slug:"
 msgstr "Filter by event category name/slug:"
 
-#: app/view/admin/box_general_settings.php:177
+#: app/view/admin/box_general_settings.php:186
 msgid "Holidays"
 msgstr "Holidays"
 
-#: app/view/admin/box_general_settings.php:178
+#: app/view/admin/box_general_settings.php:187
 msgid "Filter by event category names/slugs (separate names by comma):"
 msgstr "Filter by event category names/slugs (separate names by comma):"
 
-#: app/view/admin/box_general_settings.php:178
+#: app/view/admin/box_general_settings.php:187
 msgid "Lunar Cycles"
 msgstr "Lunar Cycles"
 
-#: app/view/admin/box_general_settings.php:178
+#: app/view/admin/box_general_settings.php:187
 msgid "zodiac-date-ranges"
 msgstr "zodiac-date-ranges"
 
-#: app/view/admin/box_general_settings.php:179
+#: app/view/admin/box_general_settings.php:188
 msgid "Filter by event category ID:"
 msgstr "Filter by event category ID:"
 
-#: app/view/admin/box_general_settings.php:180
+#: app/view/admin/box_general_settings.php:189
 msgid "Filter by event category IDs (separate IDs by comma):"
 msgstr "Filter by event category IDs (separate IDs by comma):"
 
-#: app/view/admin/box_general_settings.php:182
+#: app/view/admin/box_general_settings.php:191
 msgid "Filter by event tag name/slug:"
 msgstr "Filter by event tag name/slug:"
 
-#: app/view/admin/box_general_settings.php:182
+#: app/view/admin/box_general_settings.php:191
 msgid "tips-and-tricks"
 msgstr "tips-and-tricks"
 
-#: app/view/admin/box_general_settings.php:183
+#: app/view/admin/box_general_settings.php:192
 msgid "Filter by event tag names/slugs (separate names by comma):"
 msgstr "Filter by event tag names/slugs (separate names by comma):"
 
-#: app/view/admin/box_general_settings.php:183
+#: app/view/admin/box_general_settings.php:192
 msgid "creative writing"
 msgstr "creative writing"
 
-#: app/view/admin/box_general_settings.php:183
+#: app/view/admin/box_general_settings.php:192
 msgid "performing arts"
 msgstr "performing arts"
 
-#: app/view/admin/box_general_settings.php:184
+#: app/view/admin/box_general_settings.php:193
 msgid "Filter by event tag ID:"
 msgstr "Filter by event tag ID:"
 
-#: app/view/admin/box_general_settings.php:185
+#: app/view/admin/box_general_settings.php:194
 msgid "Filter by event tag IDs (separate IDs by comma):"
 msgstr "Filter by event tag IDs (separate IDs by comma):"
 
-#: app/view/admin/box_general_settings.php:187
+#: app/view/admin/box_general_settings.php:196
 msgid "Filter by post ID:"
 msgstr "Filter by post ID:"
 
-#: app/view/admin/box_general_settings.php:188
+#: app/view/admin/box_general_settings.php:197
 msgid "Filter by post IDs (separate IDs by comma):"
 msgstr "Filter by post IDs (separate IDs by comma):"
 
-#: app/view/admin/box_general_settings.php:191
+#: app/view/admin/box_general_settings.php:200
 msgid "Warning"
 msgstr "Warning"
 
-#: app/view/admin/box_general_settings.php:192
+#: app/view/admin/box_general_settings.php:201
 msgid ""
 "It is currently not supported to embed more than one calendar in the same "
 "page. Do not attempt to embed the calendar via shortcode in a page that "
@@ -1804,19 +1850,19 @@ msgstr ""
 "page. Do not attempt to embed the calendar via shortcode in a page that "
 "already displays the calendar."
 
-#: app/view/admin/box_general_settings.php:202
+#: app/view/admin/box_general_settings.php:211
 msgid "Input dates in this format:"
 msgstr "Input dates in this format:"
 
-#: app/view/admin/box_general_settings.php:208
+#: app/view/admin/box_general_settings.php:217
 msgid "Use <strong>24h time</strong> in time pickers"
 msgstr "Use <strong>24h time</strong> in time pickers"
 
-#: app/view/admin/box_general_settings.php:213
+#: app/view/admin/box_general_settings.php:222
 msgid "<strong>Disable address autocomplete</strong> function"
 msgstr "<strong>Disable address autocomplete</strong> function"
 
-#: app/view/admin/box_general_settings.php:218
+#: app/view/admin/box_general_settings.php:227
 msgid ""
 "Use the configured <strong>region</strong> (WordPress locale) to bias the "
 "address autocomplete function"
@@ -1824,11 +1870,11 @@ msgstr ""
 "Use the configured <strong>region</strong> (WordPress locale) to bias the "
 "address autocomplete function"
 
-#: app/view/admin/box_general_settings.php:223
+#: app/view/admin/box_general_settings.php:232
 msgid "Display <strong>Publish</strong> at bottom of Edit Event form"
 msgstr "Display <strong>Publish</strong> at bottom of Edit Event form"
 
-#: app/view/admin/box_general_settings.php:228
+#: app/view/admin/box_general_settings.php:237
 msgid ""
 "Show the old <strong>Post Your Event</strong> button above the calendar to "
 "privileged users"
@@ -1836,7 +1882,7 @@ msgstr ""
 "Show the old <strong>Post Your Event</strong> button above the calendar to "
 "privileged users"
 
-#: app/view/admin/box_general_settings.php:231
+#: app/view/admin/box_general_settings.php:240
 msgid ""
 "<a %s>Upgrade to Pro</a> for the new <strong>front-end Post Your Event form</"
 "strong>."
@@ -1844,61 +1890,69 @@ msgstr ""
 "<a %s>Upgrade to Pro</a> for the new <strong>front-end Post Your Event form</"
 "strong>."
 
-#: app/view/admin/box_general_settings.php:245
+#: app/view/admin/box_general_settings.php:254
 msgid "Move calendar into this DOM element:"
 msgstr "Move calendar into this DOM element:"
 
-#: app/view/admin/box_general_settings.php:249
-msgid ""
-"Optional. Use this JavaScript-based shortcut to place the calendar a DOM "
-"element other than the usual page content container if you are unable to "
-"create an appropriate page template for the calendar page. To use, enter a "
-"<a href=\"http://api.jquery.com/category/selectors/\" target=\"_blank"
-"\">jQuery selector</a> that evaluates to a single DOM element. Any existing "
-"markup found within the target will be replaced by the calendar."
-msgstr ""
-"Optional. Use this JavaScript-based shortcut to place the calendar a DOM "
-"element other than the usual page content container if you are unable to "
-"create an appropriate page template for the calendar page. To use, enter a "
-"<a href=\"http://api.jquery.com/category/selectors/\" target=\"_blank"
-"\">jQuery selector</a> that evaluates to a single DOM element. Any existing "
-"markup found within the target will be replaced by the calendar."
-
-#: app/view/admin/box_general_settings.php:255
-msgid ""
-"<strong>Skip <tt>in_the_loop()</tt> check</strong> that protects against "
-"multiple calendar output"
-msgstr ""
-"<strong>Skip <tt>in_the_loop()</tt> check</strong> that protects against "
-"multiple calendar output"
-
 #: app/view/admin/box_general_settings.php:258
 msgid ""
-"Try enabling this option if your calendar does not appear on the calendar "
-"page. It is needed for compatibility with a small number of themes that call "
-"<tt>the_content()</tt> from outside of The Loop. Leave disabled otherwise."
+"Optional. Use this JavaScript-based shortcut to place the calendar a DOM "
+"element other than the usual page content container if you are unable to "
+"create an appropriate page template for the calendar page. To use, enter a "
+"<a href=\"http://api.jquery.com/category/selectors/\" target=\"_blank"
+"\">jQuery selector</a> that evaluates to a single DOM element. Any existing "
+"markup found within the target will be replaced by the calendar."
 msgstr ""
-"Try enabling this option if your calendar does not appear on the calendar "
-"page. It is needed for compatibility with a small number of themes that call "
-"<tt>the_content()</tt> from outside of The Loop. Leave disabled otherwise."
+"Optional. Use this JavaScript-based shortcut to place the calendar a DOM "
+"element other than the usual page content container if you are unable to "
+"create an appropriate page template for the calendar page. To use, enter a "
+"<a href=\"http://api.jquery.com/category/selectors/\" target=\"_blank"
+"\">jQuery selector</a> that evaluates to a single DOM element. Any existing "
+"markup found within the target will be replaced by the calendar."
 
-#: app/view/admin/box_general_settings.php:265
-msgid "Turn this blog into an <strong>events-only platform</strong>"
-msgstr "Turn this blog into an <strong>events-only platform</strong>"
+#: app/view/admin/box_general_settings.php:264
+msgid ""
+"<strong>Skip <tt>in_the_loop()</tt> check</strong> that protects against "
+"multiple calendar output"
+msgstr ""
+"<strong>Skip <tt>in_the_loop()</tt> check</strong> that protects against "
+"multiple calendar output"
 
 #: app/view/admin/box_general_settings.php:267
 msgid ""
+"Try enabling this option if your calendar does not appear on the calendar "
+"page. It is needed for compatibility with a small number of themes that call "
+"<tt>the_content()</tt> from outside of The Loop. Leave disabled otherwise."
+msgstr ""
+"Try enabling this option if your calendar does not appear on the calendar "
+"page. It is needed for compatibility with a small number of themes that call "
+"<tt>the_content()</tt> from outside of The Loop. Leave disabled otherwise."
+
+#: app/view/admin/box_general_settings.php:272
+msgid ""
+"Disable <strong>gzip</strong> compression. Use this option if calendar is "
+"non-responsive. Read <a href=\"%s\">more about</a> the issue."
+msgstr ""
+"Disable <strong>gzip</strong> compression. Use this option if calendar is "
+"non-responsive. Read <a href=\"%s\">more about</a> the issue."
+
+#: app/view/admin/box_general_settings.php:285
+msgid "Turn this blog into an <strong>events-only platform</strong>"
+msgstr "Turn this blog into an <strong>events-only platform</strong>"
+
+#: app/view/admin/box_general_settings.php:287
+msgid ""
 "To deactivate event platform mode, set <code>AI1EC_EVENT_PLATFORM</code> in "
 "<code>all-in-one-event-calendar.php</code> to <code>FALSE</code>."
 msgstr ""
 "To deactivate event platform mode, set <code>AI1EC_EVENT_PLATFORM</code> in "
 "<code>all-in-one-event-calendar.php</code> to <code>FALSE</code>."
 
-#: app/view/admin/box_general_settings.php:274
+#: app/view/admin/box_general_settings.php:294
 msgid "<strong>Strict</strong> event platform mode"
 msgstr "<strong>Strict</strong> event platform mode"
 
-#: app/view/admin/box_general_settings.php:275
+#: app/view/admin/box_general_settings.php:295
 msgid ""
 "Prevents plugins from adding menu items unrelated to calendar/media/user "
 "management"
@@ -1906,7 +1960,7 @@ msgstr ""
 "Prevents plugins from adding menu items unrelated to calendar/media/user "
 "management"
 
-#: app/view/admin/box_general_settings.php:285
+#: app/view/admin/box_general_settings.php:305
 msgid "Please reload this page if settings pane does not appear."
 msgstr "Please reload this page if settings pane does not appear."
 
@@ -1942,7 +1996,7 @@ msgstr "Timely News"
 msgid "view all news"
 msgstr "view all news"
 
-#: app/view/admin/box_support.php:28
+#: app/view/admin/box_support.php:38
 msgid "Follow @_Timely"
 msgstr "Follow @_Timely"
 
@@ -1962,31 +2016,35 @@ msgstr "No end time?"
 msgid "Start date / time"
 msgstr "Start date / time"
 
-#: app/view/admin/box_time_and_date.php:55
+#: app/view/admin/box_time_and_date.php:51
+msgid "(Time zone: %s)"
+msgstr "(Time zone: %s)"
+
+#: app/view/admin/box_time_and_date.php:64
 msgid "End date / time"
 msgstr "End date / time"
 
-#: app/view/admin/box_time_and_date.php:76
+#: app/view/admin/box_time_and_date.php:84
 msgid "Repeat"
 msgstr "Repeat"
 
-#: app/view/admin/box_time_and_date.php:90
+#: app/view/admin/box_time_and_date.php:98
 msgid "Exclude"
 msgstr "Exclude"
 
-#: app/view/admin/box_time_and_date.php:97
+#: app/view/admin/box_time_and_date.php:105
 msgid "Choose a rule for exclusion"
 msgstr "Choose a rule for exclusion"
 
-#: app/view/admin/box_time_and_date.php:103
+#: app/view/admin/box_time_and_date.php:111
 msgid "Exclude dates"
 msgstr "Exclude dates"
 
-#: app/view/admin/box_time_and_date.php:110
+#: app/view/admin/box_time_and_date.php:118
 msgid "Select date range"
 msgstr "Select date range"
 
-#: app/view/admin/box_time_and_date.php:115
+#: app/view/admin/box_time_and_date.php:123
 msgid "Choose specific dates to exclude"
 msgstr "Choose specific dates to exclude"
 
@@ -2297,8 +2355,8 @@ msgid "Remove"
 msgstr "Remove"
 
 #: lib/Tax-meta-class/class-ai1ec-tax-meta-class.php:608
-#: themes-ai1ec/vortex/agenda-widget.php:119
-#: themes-ai1ec/vortex/agenda-widget.php:126
+#: themes-ai1ec/vortex/agenda-widget.php:120
+#: themes-ai1ec/vortex/agenda-widget.php:127
 msgid "Add"
 msgstr "Add"
 
@@ -2597,7 +2655,7 @@ msgstr ""
 msgid "Fetching data for %s has completed succesfully"
 msgstr "Fetching data for %s has completed succesfully"
 
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1085
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1084
 msgid ""
 "Something went wrong with Facebook authentication. Try to log out and then "
 "log in again."
@@ -2605,7 +2663,7 @@ msgstr ""
 "Something went wrong with Facebook authentication. Try to log out and then "
 "log in again."
 
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1089
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1088
 msgid ""
 "Something went wrong when retrieving data from Facebook. Try subscribing to "
 "fewer calendars."
@@ -2613,11 +2671,11 @@ msgstr ""
 "Something went wrong when retrieving data from Facebook. Try subscribing to "
 "fewer calendars."
 
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1139
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1138
 msgid "Linked Facebook event"
 msgstr "Linked Facebook event"
 
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1142
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1141
 msgid ""
 "Would you like to delete the linked Facebook event or keep it? If you choose "
 "to keep it and later you export this event again, a new one will be created."
@@ -2625,28 +2683,28 @@ msgstr ""
 "Would you like to delete the linked Facebook event or keep it? If you choose "
 "to keep it and later you export this event again, a new one will be created."
 
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1143
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1142
 msgid "Unpublish Facebook event?"
 msgstr "Unpublish Facebook event?"
 
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1145
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1144
 msgid "Delete event"
 msgstr "Delete event"
 
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1146
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1145
 msgid "Keep event"
 msgstr "Keep event"
 
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1149
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1148
 msgid "Export event to Facebook?"
 msgstr "Export event to Facebook?"
 
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1188
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1254
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1187
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1253
 msgid "All-in-One Event Calendar Facebook Import Error"
 msgstr "All-in-One Event Calendar Facebook Import Error"
 
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1189
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1188
 msgid ""
 "We couldn't synchronize data with Facebook as we don't have a valid access "
 "token. Try to log out of Facebook from the <strong>Events</strong> &gt; "
@@ -2656,7 +2714,7 @@ msgstr ""
 "token. Try to log out of Facebook from the <strong>Events</strong> &gt; "
 "<strong>Calendar Feeds</strong> screen, then log in again."
 
-#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1255
+#: lib/plugin/Ai1ecFacebookConnectorPlugin.php:1254
 msgid ""
 "We couldn't delete data from Facebook as we don't have a valid access token. "
 "Try to log out of Facebook from the <strong>Events</strong> &gt; "
@@ -2731,15 +2789,15 @@ msgstr ""
 "Try to log out of Facebook from the <strong>Events</strong> &gt; "
 "<strong>Calendar Feeds</strong> screen, then log in again."
 
-#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:447
+#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:469
 msgid "All-in-One Event Calendar Facebook Event Creation Error"
 msgstr "All-in-One Event Calendar Facebook Event Creation Error"
 
-#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:448
+#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:470
 msgid "Something went wrong while creating the event on Facebook."
 msgstr "Something went wrong while creating the event on Facebook."
 
-#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:452
+#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:474
 msgid ""
 "You didn't enter a valid date. Remember that only events which end in the "
 "future can be exported to Facebook."
@@ -2747,19 +2805,19 @@ msgstr ""
 "You didn't enter a valid date. Remember that only events which end in the "
 "future can be exported to Facebook."
 
-#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:471
+#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:493
 msgid "All-in-One Event Calendar Facebook Event Update Error"
 msgstr "All-in-One Event Calendar Facebook Event Update Error"
 
-#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:472
+#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:494
 msgid "Something went wrong while updating the event on Facebook."
 msgstr "Something went wrong while updating the event on Facebook."
 
-#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:495
+#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:517
 msgid "All-in-One Event Calendar Facebook Event Deletion Error"
 msgstr "All-in-One Event Calendar Facebook Event Deletion Error"
 
-#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:496
+#: lib/plugin/inc/facebook/class-ai1ec-facebook-event.php:518
 msgid "Something went wrong while deleting the event from Facebook."
 msgstr "Something went wrong while deleting the event from Facebook."
 
@@ -2775,15 +2833,15 @@ msgstr "Pages"
 msgid "Groups"
 msgstr "Groups"
 
-#: lib/plugin/inc/facebook/class-ai1ec-facebook-graph-object-collection.php:366
+#: lib/plugin/inc/facebook/class-ai1ec-facebook-graph-object-collection.php:367
 msgid "An error message occurred when saving %s data to the db"
 msgstr "An error message occurred when saving %s data to the db"
 
-#: lib/plugin/inc/facebook/class-ai1ec-facebook-graph-object-collection.php:547
+#: lib/plugin/inc/facebook/class-ai1ec-facebook-graph-object-collection.php:564
 msgid "Could not save a new event during Facebook import."
 msgstr "Could not save a new event during Facebook import."
 
-#: lib/plugin/inc/facebook/class-ai1ec-facebook-graph-object-collection.php:717
+#: lib/plugin/inc/facebook/class-ai1ec-facebook-graph-object-collection.php:752
 msgid "Could not update an event post during Facebook import."
 msgstr "Could not update an event post during Facebook import."
 
@@ -3241,35 +3299,35 @@ msgstr "Expand All"
 msgid "There are no upcoming events."
 msgstr "There are no upcoming events."
 
-#: themes-ai1ec/vortex/agenda-widget.php:48
-#: themes-ai1ec/vortex/agenda-widget.php:68 themes-ai1ec/vortex/agenda.php:36
+#: themes-ai1ec/vortex/agenda-widget.php:49
+#: themes-ai1ec/vortex/agenda-widget.php:69 themes-ai1ec/vortex/agenda.php:36
 #: themes-ai1ec/vortex/month.php:67 themes-ai1ec/vortex/oneday.php:37
 #: themes-ai1ec/vortex/oneday.php:58 themes-ai1ec/vortex/oneday.php:166
-#: themes-ai1ec/vortex/oneday.php:188 themes-ai1ec/vortex/posterboard.php:37
+#: themes-ai1ec/vortex/oneday.php:188 themes-ai1ec/vortex/posterboard.php:41
 #: themes-ai1ec/vortex/week.php:38 themes-ai1ec/vortex/week.php:60
 #: themes-ai1ec/vortex/week.php:171 themes-ai1ec/vortex/week.php:193
 msgid "@ %s"
 msgstr "@ %s"
 
-#: themes-ai1ec/vortex/agenda-widget.php:72 themes-ai1ec/vortex/agenda.php:40
+#: themes-ai1ec/vortex/agenda-widget.php:73 themes-ai1ec/vortex/agenda.php:40
 #: themes-ai1ec/vortex/month.php:71 themes-ai1ec/vortex/oneday.php:62
-#: themes-ai1ec/vortex/oneday.php:192 themes-ai1ec/vortex/posterboard.php:24
+#: themes-ai1ec/vortex/oneday.php:192 themes-ai1ec/vortex/posterboard.php:28
 #: themes-ai1ec/vortex/week.php:64 themes-ai1ec/vortex/week.php:197
 msgid "Edit"
 msgstr "Edit"
 
-#: themes-ai1ec/vortex/agenda-widget.php:108
+#: themes-ai1ec/vortex/agenda-widget.php:109
 msgid "View Calendar"
 msgstr "View Calendar"
 
-#: themes-ai1ec/vortex/agenda-widget.php:117
+#: themes-ai1ec/vortex/agenda-widget.php:118
 #: themes-ai1ec/vortex/subscribe-buttons.php:4
 msgid ""
 "Subscribe to this calendar in your personal calendar (iCal, Outlook, etc.)"
 msgstr ""
 "Subscribe to this calendar in your personal calendar (iCal, Outlook, etc.)"
 
-#: themes-ai1ec/vortex/agenda-widget.php:124
+#: themes-ai1ec/vortex/agenda-widget.php:125
 #: themes-ai1ec/vortex/subscribe-buttons.php:15
 msgid "Subscribe to this calendar in your Google Calendar"
 msgstr "Subscribe to this calendar in your Google Calendar"
@@ -3289,14 +3347,14 @@ msgid "Categories"
 msgstr "Categories"
 
 #: themes-ai1ec/vortex/event-excerpt.php:3
-#: themes-ai1ec/vortex/event-feed-description.php:2
+#: themes-ai1ec/vortex/event-feed-description.php:3
 #: themes-ai1ec/vortex/event-multi.php:27
 #: themes-ai1ec/vortex/event-single.php:13
 msgid "When:"
 msgstr "When:"
 
 #: themes-ai1ec/vortex/event-excerpt.php:8
-#: themes-ai1ec/vortex/event-feed-description.php:4
+#: themes-ai1ec/vortex/event-feed-description.php:8
 #: themes-ai1ec/vortex/event-multi.php:49
 #: themes-ai1ec/vortex/event-single.php:74
 msgid "Where:"
@@ -3411,9 +3469,9 @@ msgstr "Clear tag filter"
 msgid "All-in-One Event Calendar by Timely"
 msgstr "All-in-One Event Calendar by Timely"
 
-#. #-#-#-#-#  all-in-one-event-calendar.pot (All-in-One Event Calendar by Timely 1.9.5-standard)  #-#-#-#-#
+#. #-#-#-#-#  all-in-one-event-calendar.pot (All-in-One Event Calendar by Timely 1.10.9-standard)  #-#-#-#-#
 #. Plugin URI of the plugin/theme
-#. #-#-#-#-#  all-in-one-event-calendar.pot (All-in-One Event Calendar by Timely 1.9.5-standard)  #-#-#-#-#
+#. #-#-#-#-#  all-in-one-event-calendar.pot (All-in-One Event Calendar by Timely 1.10.9-standard)  #-#-#-#-#
 #. Author URI of the plugin/theme
 msgid "http://time.ly/"
 msgstr "http://time.ly/"

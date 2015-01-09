@@ -45,19 +45,18 @@ if($post->post_type=='post' || $post->post_type=='news' || $post->post_type=='pa
     
     $sPostLabelImgClass=($post->post_type=='news') ? 'cDivNewsPostImageTag' : 'cDivBlogPostImageTag entry';
 }elseif($post->post_type=='project_update'){
-    $aPostAttachments = AkvoPartnerCommunication::getUpdateImages($post->ID);
     $sCategory = 'project update';
     $sAttachmentLink = null;
-    if ($aPostAttachments) {
-        foreach ($aPostAttachments as $oAttachment) {
-            $sAttachmentLink = wp_get_attachment_url($oAttachment->ID);
-        }
-    }
+    
     $sImgSrc = "";
+    $sAttachmentLink = get_post_meta($post->ID, 'enclosure', true);
+
     if (!is_null($sAttachmentLink)) {
 
         $sImgSrc = str_replace('uploads2012', 'uploads/2012', $sAttachmentLink);
         if(!@getimagesize($sImgSrc))$sImgSrc='';
+        else $sImgSrc = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$sImgSrc.'&w=271&h=167&zc=1&q=100';   
+                                        
     }
     if($sImgSrc==''){
         $sCountry = AkvoPartnerCommunication::readProjectUpdateCountry($post->ID);

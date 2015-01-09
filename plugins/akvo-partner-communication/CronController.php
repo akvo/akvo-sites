@@ -7,6 +7,7 @@
  * @author Uthpala Sandirigama <damsirini.uthpala@gmail.com>
  */
 //echo "yo";
+error_reporting(0);
 require_once '../../../wp-config.php';
 //require_once '/wp-content/plugins/dwa-project-detail-reader/ProjectUpdateLogic.php';
 
@@ -16,32 +17,49 @@ $iOrganisationID = (isset($_GET['id_organisation'])) ? $_GET['id_organisation'] 
 $oAPC = new AkvoPartnerCommunication();
 $iLimit = 100 + (int)date('z') + (int)date('G');
 var_dump($iLimit);
-$sUpdateUrl = "http://rsr.akvo.org/api/v1/project_update/?format=json&limit=".$iLimit."&project__partnerships__organisation=";
-//$sUpdateUrl = "http://www.akvo.org/api/v1/project_update/?format=json&distinct=true&project__partnerships__organisation=";
-echo $sUpdateUrl.'<br />';
-$aPartnerData = $oAPC->readURLsForCronJob($iOrganisationID);
+$sUpdateUrl = "http://rsr.akvo.org/api/v1/project_update/?format=json&limit=".$iLimit."&project__";
 
-//$aSimplifiedArray = $aPartnerData[];
+$aPartnerData = $oAPC->readURLsForCronJob($iOrganisationID);
+$sRuntime = time();
+$sMailMessage = $iOrganisationID.'<br />';
+$sMailMessage = 'runtime:'.  $sRuntime.'<br /><br />';
+error_log($iOrganisationID);
+error_log('runtime:'.  $sRuntime);
 shuffle($aPartnerData);
-//var_dump($aPartnerData); 
-//die();
 foreach ($aPartnerData as $oOrgId) {
-    echo '<h1>'.$oOrgId->organisation_id.'</h1>';
     $iLimit = 1000 + (int)date('z') + (int)date('G');
-	$sUrl = AkvoPartnerCommunication::API_URL_FOR_PROJECTS . $oOrgId->organisation_id. '&limit='.$iLimit;
+    
+    if(isset($oOrgId->rsr_keywords) && $oOrgId->rsr_keywords!==''){
+        echo '<h1>'.$oOrgId->rsr_keywords.' yo</h1>';
+        $sUrlOption = 'keywords__label=' . $oOrgId->rsr_keywords;
+    }else{
+        echo '<h1>'.$oOrgId->organisation_id.'</h1>';
+        $sUrlOption = 'partnerships__organisation=' . $oOrgId->organisation_id;
+    }
+    $sUrl = AkvoPartnerCommunication::API_URL_FOR_PROJECTS . '&' . $sUrlOption. '&limit='.$iLimit;
+   echo $sUrl.'<br />';
 	$sPrefix = $oOrgId->prefix;
 	$aProjectData = $oAPC->readProjectDetails($sUrl);
     
     $oAPC->flushProjectDetails($sPrefix);
-    $oAPC->saveProjectDetails($aProjectData, $sPrefix, $oOrgId->organisation_id);
+    $oAPC->saveProjectDetails($aProjectData, $sPrefix, $sUrlOption);
     $oAPC->saveProjectPartners($aProjectData, $sPrefix);
-    var_dump(count($aProjectData)); 
+    //var_dump(count($aProjectData)); 
 }
+
+///iterate through organisations
 foreach ($aPartnerData as $oOrgId) {
-    echo '<h1>'.$oOrgId->organisation_id.'</h1>';
 	$sPrefix = $oOrgId->prefix;
-	
-    $sUrl = $sUpdateUrl . $oOrgId->organisation_id;
+	$sDuplicates='';
+    if(isset($oOrgId->rsr_keywords) && $oOrgId->rsr_keywords!==''){
+        echo '<h1>'.$oOrgId->rsr_keywords.'</h1>';
+        $sUrlOption = 'keywords__label=' . $oOrgId->rsr_keywords;
+    }else{
+        echo '<h1>'.$oOrgId->organisation_id.'</h1>';
+        $sUrlOption = 'partnerships__organisation=' . $oOrgId->organisation_id;
+    }
+    $sUrl = $sUpdateUrl . $sUrlOption;
+     echo $sUrl.'<br />';
 	$aProjectData = $oAPC->readProjectDetails($sUrl);
 	// Run Query to Fetch all <prefix>_project_updates
 	$aProjectUpdateLog = $oAPC->readProjectUpdatesFromDb($sPrefix);
@@ -57,27 +75,39 @@ foreach ($aPartnerData as $oOrgId) {
 	}
 	$aProjectUpdateKeys = array_keys($aProjectUpdates);
     $aUpdatedThisRun = array();
-	//$aProjectData = array_reverse($aProjectData, true);
-     
-//    die();
-	// Extract all keys (array_keys)
+
+    // Extract all keys (array_keys)
 	foreach ($aProjectData as $oProj) {
 
 		$iAkvoUpdateId = $oProj['id'];
 		$bSave = false;
 		$iPostToUpdate = null;
+        
+        
 		if (in_array($iAkvoUpdateId, $aProjectUpdateKeys)) {
-			// Do a Update if the update time is different
+			// Do an Update if the update time is different
 
 			$oLastUpdatedInDb = new DateTime($aProjectUpdates[$iAkvoUpdateId]['last_updated']);
 			$oLastUpdatedInApi = new DateTime($oProj['time_last_updated']);
 
 			if ($oLastUpdatedInDb < $oLastUpdatedInApi) {
+                $sMailMessage .= 'update id: '.$iAkvoUpdateId.'<br />';
+                $sMailMessage .= 'action: update<br />';
+                error_log('update id: '.$iAkvoUpdateId);
+                error_log('action: update');
 				$bSave = true;
 				$iPostToUpdate = $aProjectUpdates[$iAkvoUpdateId]['post_id'];
-			}
+			}else{
+                //$sMailMessage .= 'action: duplicate<br />';
+                $sDuplicates .= $iAkvoUpdateId.',';
+                
+            }
 		} elseif(!in_array($iAkvoUpdateId, $aUpdatedThisRun)) {
-			$aUpdatedThisRun[]=$iAkvoUpdateId;
+            $sMailMessage .= 'update id: '.$iAkvoUpdateId.'<br />';
+			$sMailMessage .= 'action: insert<br />';
+            error_log('update id: '.$iAkvoUpdateId);
+            error_log('action: insert');
+            $aUpdatedThisRun[]=$iAkvoUpdateId;
 			$bSave = true;
 		}
 
@@ -86,7 +116,6 @@ foreach ($aPartnerData as $oOrgId) {
 			$sProjectId = $oProj['project'];
 			$aProjectId = explode("/", $sProjectId);
 			$iProjectId = $aProjectId[4];
-			//$sImageFile=null;
 			$aPosts = array(
 				'post_date' => date("Y-m-d H:i:s",strtotime($oProj['time'])), //The time post was made.
 				'post_date_gmt' => date("Y-m-d H:i:s",strtotime($oProj['time'])), //The time post was made, in GMT.
@@ -99,29 +128,22 @@ foreach ($aPartnerData as $oOrgId) {
 			);
 
 			if (is_null($iPostToUpdate)) {
-				echo 'yo';
+                $sMailMessage .= 'do insert<br />';
+                error_log('do insert');
+            
                 $iInsertedPostId = $oAPC->saveProjectUpdates($aPosts, $sPrefix);
 				if (!is_null($oProj['photo']) && $oProj['photo'] != '') {
 					// Image Resize and Save
 					$sImageFile = "http://www.akvo.org" . $oProj['photo'];
-					$sImageDest = $oAPC->imageResize($sImageFile);
 
-					//$iInsertedPostId = $oAPC->saveProjectUpdates($aPosts, $sPrefix);
                     echo $iInsertedPostId;
-					$oAPC->saveImageAttachment($sImageDest, $sPrefix, $iInsertedPostId);
 					$oAPC->saveImageMeta($sPrefix,$sImageFile, $iInsertedPostId);
 				} elseif(!is_null($oProj['video'])){
                     $sImageFile = $oAPC->getVideoImageUrl($oProj['video']);
                     if($sImageFile){
-                        $sImageDest = $oAPC->imageResize($sImageFile);
-
-                       //$iInsertedPostId = $oAPC->saveProjectUpdates($aPosts, $sPrefix, $iPostToUpdate);
-
-                       $oAPC->saveImageAttachment($sImageDest, $sPrefix, $iInsertedPostId);
 					$oAPC->saveImageMeta($sPrefix,$sImageFile, $iInsertedPostId);
                     }
                 } else {
-					//$iInsertedPostId = $oAPC->saveProjectUpdates($aPosts, $sPrefix);
 				}
 
 				$aProjectUpdateLogEntryData = array(
@@ -132,31 +154,25 @@ foreach ($aPartnerData as $oOrgId) {
 				);
 				$oAPC->saveProjectUpdateLogEntry($sPrefix, $aProjectUpdateLogEntryData);
 			} else {
-				echo 'no';
-				if (!is_null($oProj['photo']) && $oProj['photo'] != '') {
+				$sMailMessage .= 'do update<br />';
+                error_log('do update');
+            
+                if (!is_null($oProj['photo']) && $oProj['photo'] != '') {
 					// Image Resize and Save
 					$sImageFile = "http://www.akvo.org" . $oProj['photo'];
-					$sImageDest = $oAPC->imageResize($sImageFile);
-
 					$oAPC->saveProjectUpdates($aPosts, $sPrefix, $iPostToUpdate);
-                    $oAPC->saveImageAttachment($sImageDest, $sPrefix, $iPostToUpdate);
 					$oAPC->saveImageMeta($sPrefix,$sImageFile, $iPostToUpdate);
 					
 				} elseif(!is_null($oProj['video'])){
                     $sImageFile = $oAPC->getVideoImageUrl($oProj['video']);
                     if($sImageFile){
-                        $sImageDest = $oAPC->imageResize($sImageFile);
-
                         $oAPC->saveProjectUpdates($aPosts, $sPrefix, $iPostToUpdate);
-
-                        $oAPC->saveImageAttachment($sImageDest, $sPrefix, $iPostToUpdate);
 						$oAPC->saveImageMeta($sPrefix,$sImageFile, $iPostToUpdate);
                     }
                 } else {
 					$oAPC->saveProjectUpdates($aPosts, $sPrefix, $iPostToUpdate);
 				}
 
-				// To Do: Add Project Update Log Entry updating code
 				$iIdToUpdate = $aProjectUpdates[$iAkvoUpdateId]['id'];
 
 				$aProjectUpdateLogEntryData = array(
@@ -167,35 +183,27 @@ foreach ($aPartnerData as $oOrgId) {
 				);
 				$oAPC->saveProjectUpdateLogEntry($sPrefix, $aProjectUpdateLogEntryData, $iIdToUpdate);
 			}
+            $sMailMessage .= '------------<br />';
+            error_log('------------');
 		}
-
-
-
-
-
-
-//
-//		if (is_null($aProjectUpdates)) {
-//			//insert to project updates table
-//			//TODO
-//		} else {
-//			if (array_key_exists($oProj->id, $aProjectUpdates)) {
-//				$oLastUpdatedInDb = new DateTime($aProjectUpdates[$oProj->id]);
-//				$oLastUpdatedInApi = new DateTime(strtotime($oProj->time_last_updated));
-//
-//				if ($oLastUpdatedInDb < $oLastUpdatedInApi) {
-//					//update
-//					$oAPC->updateProjectUpdates($sPrefix, $oProj->id, $aPosts);
-//					//image resize and save
-//					$sImageFile = "http://www.akvo.org" . $oProj['photo'];
-//					$sNewImgName = urlencode($oProj['title']);
-//					$sImageDest = $oAPC->imageResize($sImageFile, $sNewImgName, 100, 100);
-//					$oAPC->saveImageAttachment($sImageDest);
-//				}
-//
-//
-//			}
-//		}
+        
+            
 	}
+    $sMailMessage .= 'duplicates: '.$sDuplicates.'<br />';
+    error_log('duplicates: '.$sDuplicates);
+}
+echo $sMailMessage;
+//add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+//
+////wp_mail( 'eveline@kominski.net', 'Akvo cron log', $sMailMessage );
+//
+//// Reset content-type to avoid conflicts -- http://core.trac.wordpress.org/ticket/23578
+//remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+
+
+
+function set_html_content_type() {
+
+	return 'text/html';
 }
 ?>
