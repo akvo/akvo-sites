@@ -65,7 +65,7 @@ function ifad_waterchannel($atts=null,$content){
     curl_setopt($ch, CURLOPT_URL,"http://www.thewaterchannel.tv/categories/773-water-harvesting");
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS,
-                "limit=0&filter_order=a.created&filter_order_Dir=DESC");
+                "cache_time=1&ssl_verify_peer=1&auto_detect=0&auto_detect_user=0&main_lang=en&debug_mode=0&limitstart=0&display=list");
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $sString = curl_exec ($ch);
@@ -79,10 +79,7 @@ function ifad_waterchannel($atts=null,$content){
     $gallery = '<div class="row">';
     $i=0;
     foreach ($divs as $div) {
-        $aTitle = explode('::', $div->getAttribute('title'),2);
-        if($aTitle[0]===''){
-            continue;
-        }
+        
         $children = $div->childNodes;
         $links = $div->getElementsByTagName('a');
         foreach($links AS $link){
@@ -94,7 +91,12 @@ function ifad_waterchannel($atts=null,$content){
             $images = $link->getElementsByTagName('img');
             foreach($images AS $img){
                 $image = $img->getAttribute('src');
+                $aTitle = explode('::', $img->getAttribute('title'),2);
+                
             }
+            if($aTitle[0]===''){
+                    continue;
+                }
             $image = (substr($image,0,1)==='/') ? 'http://www.thewaterchannel.tv/'.$image : $image;
             $sFirstMov = ($i===0) ? 'http://www.thewaterchannel.tv/media-gallery?task=get.embed&amp;id='.$iId.'&amp;width=560&amp;height=415' : $sFirstMov;
             if($i % 4 === 0){
