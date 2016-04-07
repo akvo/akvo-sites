@@ -58,12 +58,11 @@ $oQueryOndersteund = new WP_Query($aArgsOndersteund);
 			</div>
 			<div id="iDivAddress">
 				<div class="cDivFooterHeader">Walking for water, Aqua for All</div>
-				<div id="iDivAddressText"><p>Koningskade 40 <br/>
-										Postbus 93218 <br/>
-										2509 AE  Den Haag <br/>
-										Nederland <br/>
-										Tel. +31 (0)70 3519 725 <br/>
-										Campaign coördinator: Chris Amsinger <br/><br/>
+				<div id="iDivAddressText"><p>Spaarneplein 2<br/>
+										2515 VK  The Hague <br/>
+										The Netherlands <br/>
+										Tel. +31 (0)70 7200 870 <br/>
+										Campaign co-ordinator: Chris Amsinger <br/><br/>
 										Email info@wandelenvoorwater.nl<br/>
                     <div id="iDivPoweredByImage">
                         <a href="http://akvo.org">
