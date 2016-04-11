@@ -128,6 +128,7 @@ if(! isset($ALLOWED_SITES)){
 		'staticflickr.com',
 		'picasa.com',
 		//'img.youtube.com',
+		'i.ytimg.com',
 		'upload.wikimedia.org',
 		'photobucket.com',
 		'imgur.com',
@@ -135,18 +136,20 @@ if(! isset($ALLOWED_SITES)){
 		'tinypic.com',
 		'akvofoundation.org',
 		'wvw.akvofoundation.org',
-		'akvo.org',
+		'akvo.org',		
+		'rsr.akvo.org',
 		'kominski.nl',
-		'connect4change.nl', 
-		'rain4food.net', 
+		'connect4change.nl',		
+		'rain4food.net',		
 		'akvo.com',
 		'youtube.com',
 		'vimeocdn.com',
 		'cocoasustainability.com',
 		'wandelenvoorwater.nl',
-
 		'wordpress.com',
-		'shout-africa.com'
+		'shout-africa.com',
+		'wash-liberia.org',
+		'walkingforwater.eu'
 	);
 }
 // -------------------------------------------------------------
