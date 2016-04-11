@@ -1,0 +1,196 @@
+body {
+  margin:20px;
+}
+
+.OutoftheBox h1, .OutoftheBox h2, .OutoftheBox h3, .OutoftheBox h4 {
+  color: #007ee5;
+  margin-bottom: 5px;
+}
+
+.OutoftheBox a{
+  color: #007ee5;
+}
+
+.OutoftheBox p{
+  line-height: 1.6em;
+}
+
+.OutoftheBox.files{
+  max-width: 100%;
+}
+
+#OutoftheBox .list .ajax-filelist,
+#OutoftheBox .grid .ajax-filelist{
+  height:150px !important;
+  overflow: scroll;
+  font-size: 100% !important;
+}
+
+.OutoftheBox .entry.file{
+  opacity: .9;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+  filter: alpha(opacity=90);
+}
+.OutoftheBox .footer{
+  padding-top: 10px;
+  border-top: 1px solid #d1d1d1;
+  height: 30px;
+}
+
+.OutoftheBox .inputfield{
+  width: 90%;
+  padding:3px;
+  margin-top: 5px;
+}
+.OutoftheBox .smallinput,
+.OutoftheBox .largeinput{
+  overflow: auto;
+  margin-bottom: 15px;
+}
+
+.OutoftheBox .smallinput div{
+}
+
+.OutoftheBox .smallinput input,
+.OutoftheBox .largeinput input{
+  margin-top: 10px;
+  font-size: 80%;
+  color:#666;
+  border: 1px solid #d1d1d1;
+  width: 150px;
+  padding: 6px 25px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+}
+.OutoftheBox .largeinput input{
+  width: 100%;
+}
+
+.OutoftheBox .input_right{
+  position:relative;
+}
+
+.OutoftheBox .input_right select{
+  position: absolute;
+  right:0;
+  margin-top: 0;
+  padding: 6px;
+  font-size: 110%;
+}
+
+.OutoftheBox .section{
+  padding: 15px;
+  border: 3px solid #DDD;
+  border-radius: 10px;
+}
+
+.OutoftheBox .toggle{
+  border: 1px solid #d1d1d1;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.OutoftheBox .mode-image{
+  float:right;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.OutoftheBox .sorting{
+  overflow: auto;
+}
+.OutoftheBox .sort_fields{
+  float: left;
+  margin-right: 100px;
+}
+
+/*Checkboxes and Radiobuttons */
+.OutoftheBox .radiobuttons-container {
+  margin-bottom: 10px;
+  position:relative;
+}
+
+.OutoftheBox .radiobutton{
+  position:relative;
+  line-height: 30px;
+  height:30px;
+}
+
+.OutoftheBox .checkbox{
+  position: relative;
+  min-height:43px;
+}
+
+.OutoftheBox label{
+  font-weight: bold;
+}
+
+.OutoftheBox .radiobutton label{
+  margin-left: 30px;
+}
+
+div.jquery-checkbox-wrapper {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 0px;
+  right: 17px;
+  z-index: 50;
+}
+
+div.jquery-checkbox-wrapper a.jquery-checkbox {
+  background: transparent url('images/checkbox.png') repeat scroll 0px 0px;
+  display: block;
+  width: 16px;
+  height: 16px;
+  cursor: default;
+  outline: none;
+}
+
+div.jquery-checkbox-wrapper a.jquery-checkbox-on {
+  background-position: 16px 0px;
+}
+
+div.jquery-switch-wrapper {
+  position: absolute;
+  width: 94px;
+  height: 27px;
+  top: 0px;
+  right: 0px;
+  z-index: 50;
+}
+
+div.jquery-switch-wrapper a.jquery-switch {
+  background: transparent url('images/switches.png') repeat scroll 0px 27px;
+  display: block;
+  width: 94px;
+  height: 27px;
+  cursor: default;
+  outline: none;
+}
+
+div.jquery-switch-wrapper a.jquery-switch-on {
+  background-position: 0px 0px;
+}
+
+div.jquery-radiobutton-wrapper {
+  position: absolute;
+  width: 21px;
+  height: 21px;
+  top: 5px;
+  z-index: 50;
+}
+
+div.jquery-radiobutton-wrapper a.jquery-radiobutton {
+  background: transparent url('images/radiobutton.png') repeat scroll 0px 0px;
+  display: block;
+  width: 21px;
+  height: 21px;
+  cursor: default;
+  outline: none;
+}
+
+div.jquery-radiobutton-wrapper a.jquery-radiobutton-on {
+  background-position: 21px 0px;
+}
