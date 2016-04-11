@@ -1,9 +1,10 @@
 jQuery(document).ready(function($){
 
 	if (typeof(AkvoWvWParticipantRegistryRedirect) != 'undefined') {
-
+		
 		setTimeout(function(){
-			window.location = 'admin.php?page='+AkvoWvWParticipantRegistryRedirect;
+			//window.location = 'admin.php?page='+AkvoWvWParticipantRegistryRedirect;
+			window.location = AkvoWvWParticipantRegistryRedirect;
 		}, 3000);
 
 	}

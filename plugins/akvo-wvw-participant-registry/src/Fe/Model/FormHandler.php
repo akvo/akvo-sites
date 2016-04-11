@@ -117,7 +117,13 @@ class FormHandler {
 				$aInsertData['groups_grade_7_8'] = $aFormValues['textGrade78Groups'];
 				$aInsertData['total_students'] = $aFormValues['textTotalStudents'];
 				$aInsertData['support_point'] = $aFormValues['selectSupportPoint'];
-				$aInsertData['date_of_walk'] = date('Y-m-d', strtotime($aFormValues['textWalkDate']));
+
+				if ($aFormValues['textWalkDate'] == '') {
+					$aInsertData['date_of_walk'] = date('Y-m-d');
+				} else {
+					$aInsertData['date_of_walk'] = date('Y-m-d', strtotime($aFormValues['textWalkDate']));
+				}
+
 				$aInsertData['city_of_walk'] = $aFormValues['textWalkCity'];
 				$aInsertData['comments'] = $aFormValues['textComments'];
 				$aInsertData['batch'] = $iBatch;

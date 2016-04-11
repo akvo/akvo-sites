@@ -84,12 +84,12 @@ class Registry {
 
 		$oDaoParticipantRegistry = new AWPRDao\ParticipantRegistry();
 		$aListing = $oDaoParticipantRegistry->fetchByBatch($sBatch, $aOrderBy['column'], $aOrderBy['direction']);
-
+//var_dump($aListing);die();
 		$aUploadsConfig = wp_upload_dir();
 
 		if (count($aListing) > 0) {
 
-			$sFileName = 'ParticipantRegistryExport_' . $sBatch . '.xls';
+			$sFileName = 'ParticipantRegistryExport_'.date('Ymd').'_' . $sBatch .'.xls';
 			$sFilePath = $aUploadsConfig['basedir'] . '/' . $sFileName;
 //			$sFilePath = AkvoWvwParticipantRegistry_Plugin_Dir . '/' . $sFileName;
 			$oXslxWriter = new \KwgPress\Xlsx($sFilePath);

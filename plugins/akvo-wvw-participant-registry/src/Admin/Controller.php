@@ -24,8 +24,11 @@ class Controller {
 		$oRegistrantRemoveController = new Controller\Registrant\Remove();
 		add_action('admin_menu', array($oRegistrantRemoveController, 'initialise'));
 		
-        $oSupportPointController = new Controller\Supportpoint();
-		add_action('admin_menu', array($oSupportPointController, 'initialise'));
+        $oSupportPointDetailController = new Controller\Supportpoint\Detail();
+		add_action('admin_menu', array($oSupportPointDetailController, 'initialise'));
+		
+		$oSupportPointRemoveController = new Controller\Supportpoint\Remove();
+		add_action('admin_menu', array($oSupportPointRemoveController, 'initialise'));
 
 		$this->_initialiseAjax();
 
