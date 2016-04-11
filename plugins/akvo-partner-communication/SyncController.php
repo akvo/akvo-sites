@@ -16,9 +16,13 @@ $aPartnerData = $oAPC->readURLsForCronJob($iOrganisationID);
 $original_blog_id = get_current_blog_id();
 //$aSimplifiedArray = $aPartnerData[];
 shuffle($aPartnerData);
-//var_dump($aPartnerData); 
+
 //die();
 foreach ($aPartnerData as $oOrg) {
+	
+	if($oOrg->organisation_id == '2121') {
+		continue;
+	}
     
     echo '<h1>'.$oOrg->organisation_id.'</h1>';
 	$sPrefix = $oOrg->prefix;
@@ -48,7 +52,7 @@ foreach ($aPartnerData as $oOrg) {
         echo '<h2>'.$iDelete.'</h2>';
         wp_delete_post($aProjectUpdates[$iDelete]['post_id']);
     }
-    var_dump($aNotExisting);
+
     
 }
 switch_to_blog( $original_blog_id );
