@@ -6,7 +6,7 @@
  *
  * @author Uthpala Sandirigama <damsirini.uthpala@gmail.com>
  */
-//echo "yo";
+
 error_reporting(0);
 require_once '../../../wp-config.php';
 //require_once '/wp-content/plugins/dwa-project-detail-reader/ProjectUpdateLogic.php';

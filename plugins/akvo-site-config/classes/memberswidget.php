@@ -38,20 +38,21 @@ class MembersWidget extends WP_Widget {
                 
                 $thumb = get_field('logo');
                 $sLink = get_field('url'); ?>
-        <div style="float:left;">
+				
                 <?php if($thumb <> '') { ?>
+				<div style="float:left;">
                     <div>
                         <a href="<?php echo $sLink; ?>" target="_blank" rel="bookmark" title="<?php the_title(); ?>">
 							<img src="<?php echo $thumb; ?>" />
                         </a>
                     </div>
-                <?php }; ?>
+				</div>
+                <?php } ?>
 <!--                    <div>
                         <a href="<?php echo $sLink; ?>" target="_blank" rel="bookmark" title="<?php the_title(); ?>">
 							<?php the_title(); ?>
 						</a>
-                    </div>-->
-                 </div>   
+                    </div>-->                 
                 <?php  
             }
         }?>

@@ -486,7 +486,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 			
            
             if(count($aPartnerIDs)>0){
-//                echo self::API_URL_FOR_PARTNERS.join(',',$aPartnerIDs).'<br />';
+
                 $sPartners = file_get_contents(self::API_URL_FOR_PARTNERS.join(',',$aPartnerIDs).'&limit=0');
                 $aPartners = json_decode($sPartners,true);
 
