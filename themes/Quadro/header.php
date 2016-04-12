@@ -59,7 +59,8 @@
 
 	<div id="header">
 	    <div id="iDivLogo">
-		<a class="cAlogo" href="<?php bloginfo('url'); ?>"><?php $logo = (get_option('quadro_logo') <> '') ? get_option('quadro_logo') : get_bloginfo('template_directory').'/images/logo.gif'; ?>
+		<a class="cAlogo" href="<?php bloginfo('url'); ?>">
+			<?php $logo = (get_option('quadro_logo') <> '') ? get_option('quadro_logo') : get_bloginfo('template_directory').'/images/logo.gif'; ?>
 			<img src="<?php echo esc_url($logo); ?>" alt="Logo" class="logo"/> <br style="clear:both;" />
 		</a>
 	    </div>

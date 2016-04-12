@@ -138,8 +138,8 @@ function yt_video_func($atts, $content = NULL) {
     ), $atts));
 
     if($channel!==''){
-        $latestvideo = AkvoSiteConfig::getLatestVideo($channel);
-        $link = 'https://www.youtube.com/watch?v='.$latestvideo['id'];
+        $latestvideo = AkvoSiteConfig::getLatestYouTubeVideo('forUsername',$channel);
+        $link = 'https://www.youtube.com/watch?v='.$latestvideo[0]['link'];
     }
     $embed = '';
     if($link!==''){

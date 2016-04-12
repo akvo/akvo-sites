@@ -33,6 +33,7 @@ if($post->post_type=='post'){
     
     $sPostLabelImgClass='cDivBlogPostImageTag';
 }elseif($post->post_type=='project_update'){
+	
     $sAttachmentLink = get_post_meta($post->ID, 'enclosure', true);
 
     if (!is_null($sAttachmentLink)) {
@@ -42,10 +43,16 @@ if($post->post_type=='post'){
         else $sImgSrc = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$sImgSrc.'&w=271&h=167&zc=1&q=100';   
                                         
     }
+	
     if($sImgSrc==''){
+		
         $sCountry = AkvoPartnerCommunication::readProjectUpdateCountry($post->ID);
-        if($sCountry)$sImgSrc = '/wp-content/themes/Quadro/images/countryplaceholders/'.$sCountry.'.jpg';
-    }
+        if($sCountry) {
+			$sImgSrc = '/wp-content/themes/Quadro/images/countryplaceholders/'.strtolower($sCountry).'.jpg';
+		} else {
+			$sImgSrc = '/wp-content/themes/Quadro/images/Akvo_placeholder.png';
+		}
+    }	
     $sPostLabelImgClass='cDivProjUpdateImageTag';
     //get the project Id to read more link (link to akvo.org site)
     $sReadMoreLink = "http://washalliance.akvoapp.org/en/project/";

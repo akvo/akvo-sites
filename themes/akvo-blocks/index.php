@@ -11,20 +11,17 @@
     
 
     <div class="col-xs-12 dmbs-main">
-        <?php 
+        <?php 		
         //display home areas
-        for($i=1;$i<=3;$i++){
-            ?>
+        for($i=1;$i<=3;$i++){ ?>
         <div class="cDivHomeArea cDivHomeArea<?php echo $i; ?>">
             <div class="tag"></div>
             <?php dynamic_sidebar('home-area-'.$i);?>
         </div>
-        
-            <?php
-        }
-        ?><br style="clear:both;" />
+        <?php } ?>
+		<br style="clear:both;" /> 
         <?php
-//                $latestvideo = AkvoSiteConfig::getLatestVideo('RAINfoundation');
+//                $latestvideo = AkvoSiteConfig::getLatestYouTubeVideo('forUsername','RAINfoundation');
 //                $post = (object)$latestvideo;
 //                get_template_part('includes/entry');
                 global $wpdb;
@@ -34,7 +31,7 @@
                 <?php
                 $post = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix."posts WHERE post_type='post' AND post_status='publish' ORDER BY post_date DESC");
                 get_template_part('includes/entry');
-                
+                 
                 // Restore original Query & Post Data
 		wp_reset_query();
 		wp_reset_postdata();

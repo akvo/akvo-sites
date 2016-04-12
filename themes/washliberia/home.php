@@ -15,8 +15,8 @@
             <?php endif; ?>
 			
                 <?php 
-//                $latestvideo = AkvoSiteConfig::getLatestVideo('MarsSustainability'); 
-//                $post = (object)$latestvideo;
+//                $aLatestvideo = AkvoSiteConfig::getLatestYouTubeVideo('forUsername', 'MarsSustainability');
+//                $post = (object)$latestvideo[0];
                 $args['post_type']='post';
                 $aExclude=get_category_ids(array('vacancies'));
 				$args['category__not_in']=$aExclude;

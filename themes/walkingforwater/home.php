@@ -22,20 +22,17 @@
                 $post = $updates[0];
                 get_template_part('includes/entry');
 
-
-                $latestvideo = AkvoSiteConfig::getLatestVideo('UCzzt85MtSWR6jVOJnurMsaw');
-                $post = (object)$latestvideo;
+				$latestvideo = AkvoSiteConfig::getLatestYouTubeVideo('id', 'UCzzt85MtSWR6jVOJnurMsaw');
+                $post = (object)$latestvideo[0];
                 get_template_part('includes/entry');
 
                 ?><div style="clear: both;"></div><?php
                 $post = $updates[1];
                 get_template_part('includes/entry');
                 
-                
-                $latestvideo = AkvoSiteConfig::getSecondLatestVideo('UCzzt85MtSWR6jVOJnurMsaw');
-                if($latestvideo){
-                $post = (object)$latestvideo;
-                get_template_part('includes/entry');
+                if($latestvideo[1]){
+					$post = (object)$latestvideo[1];
+					get_template_part('includes/entry');
                 }
                 // Restore original Query & Post Data
 		wp_reset_query();

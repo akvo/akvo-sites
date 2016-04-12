@@ -52,7 +52,7 @@ function akvoblocksbootstrap3_custom_init() {
     function akvoblocksbootstrap3_theme_js()
     {
         global $version;
-        wp_enqueue_script('theme-js', get_template_directory_uri() . '/js/bootstrap.js',array( 'jquery' ),$version,true );
+        wp_enqueue_script('theme-js', get_template_directory_uri() . '/js/bootstrap.js',array( 'jquery' ),$version,false );
     }
     add_action('wp_enqueue_scripts', 'akvoblocksbootstrap3_theme_js');
 
@@ -294,7 +294,7 @@ function order_combined_posts($a,$b){
     }
     return ($stampA < $stampB) ? 1 : -1;
 }
-function the_breadcrumb() {
+function the_breadcrumb() {	
     global $post;
     echo '<ol class="breadcrumb">';
     if (!is_home()) {
@@ -315,12 +315,12 @@ function the_breadcrumb() {
             if($post->post_parent){
                 $anc = get_post_ancestors( $post->ID );
                 $title = get_the_title();
-                foreach ( $anc as $ancestor ) {
+                foreach ( $anc as $ancestor ) {					
                     $output = '<li><a href="'.get_permalink($ancestor).'" title="'.get_the_title($ancestor).'">'.get_the_title($ancestor).'</a></li>';
                 }
                 echo $output;
                 echo $title;
-            } else {
+            } else {				
                 echo '<li>'.get_the_title().'</li>';
             }
         }

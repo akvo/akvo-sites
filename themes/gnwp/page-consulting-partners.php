@@ -69,9 +69,13 @@ $et_ptemplate_blog_perpage = isset( $et_ptemplate_settings['et_ptemplate_blog_pe
             $aCategories = wp_get_post_categories($post->ID);
             $args = array(
                 'post_type'=> 'consulting_partner',
-                'order'    => 'DESC'
+				'orderby' => 'menu_order',
+                'order'    => 'ASC',
+				'nopaging'	=> true
             );
             query_posts( $args );
+			
+			
             ?>
             <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 				<div class="post-wrapper <?php if($fullwidth) echo (' no_sidebar"');?>">
