@@ -1,0 +1,607 @@
+/* 
+Theme Name:     washmali
+Description:    Child theme for Akvo Blocks
+Author:         WebGurus
+Template:       akvo-blocks
+*/
+
+/*@import url("../akvo-blocks/style.css");*/
+
+body {
+	background: url("images/siteBG.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+	color: #29588e;
+	font-size: 14px;
+}
+
+h1 a,h2 a,h3 a,h4 a,h5 a{
+    font-family: 'HelveticaRoundedLTStd-Bd';
+    color: #27568C;
+}
+h2{
+    font-size:24px;
+	text-transform: uppercase;
+}
+h3{
+    font-size:22px;
+}
+hr{
+    margin:10px 0px;
+}
+a,a:hover,a:focus{
+    color: #FFFFFF;
+	text-decoration: none;	
+}
+
+.cMarginRight30 {
+	margin-right: 30px;
+}
+
+.cMarginBottom20 {
+	margin-bottom: 20px;
+}
+
+.cBackgroundWhite {
+	background-color: #FFFFFF;
+}
+
+.cGrayBorderAllSide {
+	border: 1px solid #B5B5B5;
+}
+
+.cDivSeparator {
+	border-bottom: 1px dotted #999999;
+	width: 100%;
+	height: 1px;
+	margin: 10px 0;
+}
+
+.cFontBold {
+	font-weight: bold !important;
+}
+
+.btn-default, .btn-default:hover {
+	background-color: #245389;
+	border-color: #245389;
+	color: #FFFFFF;
+}
+
+.cAReadMoreBtn {
+	width: 90px;
+	height: 28px;
+	font-size: 14px;
+	font-weight: bold;	
+	padding: 3px;		
+}
+
+.cDivSeeAllBtn {
+	clear: both;
+	width: 100%;
+	height: 100%;
+	text-align: right;
+}
+
+.cASeeAllBtn, .cASeeAllBtn:hover {
+	width: 90px;
+	height: 28px;
+	font-size: 14px;
+	font-weight: bold;	
+	padding: 3px;
+	background-color: #fc8d0a;
+	border-color: #fc8d0a;
+}
+
+/* header starts */
+
+.cDivHeaderContainer {	
+	background-color: #FFFFFF;
+}
+
+.cDivHeaderLogoText {
+	float: left;
+	margin: 27px 0px 0px 0px;
+	height: 100%;
+}
+
+.cALogo {
+	float: left;
+	margin-right: 13px;
+}
+
+.cDivHeaderTextOne {
+	font-size: 16px;
+	color: #fc8d0a;
+}
+
+.cDivHeaderTextTwo {
+	font-size: 24px;
+	color: #245389;
+}
+
+.dmbs-header {
+	padding:15px 0px;
+}
+
+.navbar-inverse {
+	background-color: #27568C;
+	border-color: #27568C;
+	border-radius:0px;
+	margin-bottom:0px;
+	text-transform: uppercase;
+}
+
+.cDivSearchBoxContainer {
+	margin-top: 45px;
+}
+
+.cInputSumitBtn {
+	background-color: #1758a1 !important;
+	border-color: #1758a1 !important;
+	/*font-weight: bold !important;*/
+}
+
+/* header ends */
+
+/* breadcrumb starts */
+
+.breadcrumb {
+	background-color: transparent;
+	color: #1758a1;	
+}
+
+.breadcrumb a {
+	color: #1758a1;
+}
+
+.breadcrumb > li + li::before {
+	color: #1758a1;
+}
+
+/* breadcrumb ends */
+
+/* slider */
+
+.cDivSliderContainer {
+	max-height: 401px;
+}
+
+.cDivSliderTextContainer {
+	position: absolute;
+	width: 281px;
+	height: 361px;
+	top: 21px;
+	left: 18px;
+	background-color: #5b9bc9;
+	color: #FFFFFF;
+	padding: 28px 28px 20px 28px;
+}
+
+.cDivSliderTitle {
+	font-size: 24px;
+	line-height: 30px;
+	margin-bottom: 30px;
+	overflow: hidden;
+	height: 60px;
+}
+
+.cDivSliderText {
+	/*font-size: 14px;*/
+	margin-bottom: 50px;
+	height: 145px;
+	overflow: hidden;
+}
+
+.cDivSliderReadMoreBtn {
+/*	width: 90px;
+	height: 28px;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 14px;
+	background-color: #245389;
+	padding: 7px 3px;
+	text-align: center;
+	color: #FFFFFF;*/
+}
+
+.bx-wrapper {
+	margin-bottom: 30px !important;
+}
+
+.bx-pager {
+	top: 351px;
+}
+
+.bx-wrapper .bx-pager.bx-default-pager a:hover, .bx-wrapper .bx-pager.bx-default-pager a.active {
+	background: none repeat scroll 0 0 #5b9bc9;
+}
+
+.bx-wrapper .bx-pager.bx-default-pager a {
+	background: none repeat scroll 0 0 #fc8d0a;
+}
+/* slider ends */
+
+/* about box starts */
+
+.cDivAboutBoxContainer {
+	width: 100%;
+	height: auto;
+	max-height: 405px;	
+}
+
+.cDivAboutBoxContainer .col-md-8 {
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-right: 30px;
+	width: 65.5945%;
+}
+
+.cDivAboutBoxContainer .col-md-4 {
+	padding-right: 0px;
+	padding-left: 0px;
+	width: 31.1827%;
+}
+
+.cDivAboutBox {
+	border: 1px solid #B5B5B5;
+	/*margin-right: 30px;*/
+	background-color: #FFFFFF;
+	padding: 0px 20px 20px 20px;
+	max-height: 407px;	
+}
+
+.cDivAboutBoxText {
+	overflow: hidden;
+	height: 265px;
+	margin-bottom: 36px;
+}
+
+.cDivPartnerLogoContainer {
+	border: 1px solid #B5B5B5;	
+	background-color: #FFFFFF;
+	padding: 0px 20px 20px 20px;
+	max-height: 407px;	
+}
+
+.cDivPartnerLogoWrapper {
+	height: 290px;
+}
+
+.cDivPartnerLogo {
+	height: 87px;
+	width: 100%;
+	margin: 3px 0px;
+	
+}
+
+.cDivPartnerLogo img {
+	max-height: 87px;
+	margin: 0px auto;
+	display: block;
+}
+
+/* about box ends */
+
+/* RSR feed starts */
+
+.cDivRSRFeedsContainer {
+	margin: 30px 0 20px 0;
+}
+
+.cDivRSRFeedsContainer .col-md-4 {
+	padding-left: 0px;
+	padding-right: 0px;
+	width: 31.1827%;
+}
+
+.cDivLatestProject {
+	height: 428px;
+	border: 1px solid #B5B5B5;	
+	background-color: #FFFFFF;
+}
+
+.cDivLatestProjectImg {
+	position: relative;
+	border-bottom: 1px solid #B5B5B5;
+}
+
+.cDivLatestProjectRibbon {
+	background: transparent url(images/project_update_ribbon.png) no-repeat 0 0;
+	position: absolute;
+/*	width: 100%;
+	height: 100%;*/
+	width: 80px;
+	height: 80px;
+	border-top: 1px solid #E3E3E3;
+	border-left: 1px solid #E3E3E3;
+	top: -2px;
+	left: -2px;
+}
+
+.cDivLatestProjectTextContainer {
+	padding: 15px;	
+}
+
+.cDivLatestProjectTitle {
+	text-transform: uppercase;
+	font-size: 18px;
+	height: 50px;
+	overflow: hidden;
+}
+
+.cDivLatestProjectLaunchDate {
+	font-size: 14px;
+}
+
+.cDivLatestProjectText {
+	font-size: 14px;
+	height: 89px;
+	overflow: hidden;
+}
+
+.cDivRSRFeedsSeeAllBtn {
+/*	margin: 20px 0 30px 0;
+	width: 90px;
+	height: 28px;
+	background-color: #FC8D0A;
+	width: 100%;
+	height: 100%;
+	text-align: right;*/
+}
+
+/* RSR feed ends */
+
+/* data and map starts */
+
+.cDivMapWrapper {	
+	margin-top: 20px;
+	height: auto;
+}
+
+.cDivMapWrapper .col-md-4 {
+	padding-left: 0px;
+	padding-right: 16px;	
+	width: 31.1827%;
+}
+.cDivMapContainer {
+	border: 1px solid #B5B5B5;
+	padding: 14px;
+	background-color: #FFFFFF;
+	margin-top: 10px;
+}
+
+.cDivMap {
+	height: 191px;
+	border: 1px solid #B5B5B5;
+	overflow: hidden;
+}
+
+.cDivMap p {
+	margin: 0;
+}
+
+.cDivDataandMapRibbon {
+	background: transparent url(images/data_map_ribbon.png) no-repeat 0 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: -14px;
+	left: -14px;
+}
+
+.cDivMapTextContainer {
+	/*margin-left: 45px;*/
+	/*float: left;*/
+}
+
+.cDivMapTitle {
+	font-size: 18px;
+	height: 30px;
+	overflow: hidden;
+}
+
+.cDivMapText {
+	height: 100px;
+	overflow: hidden;
+	margin-bottom: 33px;
+}
+
+.cDivMapSeeAllBtn {
+	clear: both;
+	margin-top: 30px;
+	width: 100%;
+	height: 28px;
+	text-align: right;
+}
+
+/* data and map ends */
+
+/* footer starts */
+
+.cDivFooter {
+    background-color: #27568c;
+    color: #fff;
+    height: 80px;
+    padding-top: 20px;
+}
+
+.cDivFooter a{
+  color:#FFF;
+}
+.cDivFooter #iDivPoweredBy{
+  float:right;
+}
+.cDivFooter #iDivPoweredBy >div{
+  float:left;
+  margin-left:20px;
+}
+
+/* footer ends */
+
+@media (min-width: 961px) {
+	
+    .container{
+        width:960px
+    }
+}
+
+/* about page starts */
+
+.cDivAboutPageContainer .col-md-8 {
+	padding: 0;
+}
+
+.cDivAboutPageContainer .cDivPartnerLogoWrapper {
+	height: auto;
+} 
+
+.cDivAboutPageContainer .cDivPartnerLogo {
+	margin-bottom: 10px;
+	height: auto;
+}
+
+.cDivAboutPage {
+	margin-right: 30px;
+	padding: 0 20px 20px 20px;
+}
+
+.cDivContactForm {
+	margin: 30px 30px 0px 0px;
+	padding: 0 20px 20px 20px;
+}
+
+.cInputContactFormSubmit {
+	background-color: #245389;
+	border-color: #245389;
+	color: #FFFFFF;
+	width: 90px;
+	height: 28px;
+	font-size: 14px;
+	font-weight: bold;	
+	padding: 3px;
+}
+
+/* about page ends */
+
+/* map and data page starts */
+
+.cDivMapandDataPage {
+	padding: 0 20px 20px 20px;
+}
+
+#iDivDMPageMapWrapper .cDivMap {
+	border: 1px solid #b5b5b5;
+    height: 300px;
+    overflow: hidden;
+	margin: 20px 0px;
+}
+
+#iDivDMPageMapWrapper .cDivMapText {
+	height: auto;
+	overflow: auto;
+	margin-bottom: 0px;
+} 
+
+.cDivDataWrapper {
+	clear: both;
+	padding: 0 20px 20px 20px;
+}
+
+.cDivDataContainer {
+	clear: both;
+	border-left: 3px solid #fc8d0a;
+	border-radius: 3px;
+	margin-bottom: 20px;
+	padding-left: 20px;
+}
+
+.cDivDataTitle {
+	font-size: 18px;
+    height: 30px;
+    overflow: hidden;
+}
+
+.cDivDataText {
+	margin: 10px 0;
+}
+
+.cDivDownloadBtn {
+	height: 38px;
+	width: 100%;	
+}
+
+.cDivDownloadXLS {
+	float: left;
+	margin-right: 20px;
+}
+
+.cDivDownloadCSV {
+	float: left;
+}
+
+/* map and data page ends */
+
+/* project update page starts */
+
+.cDivProjectUpdatePage .col-md-4 {
+	padding-left: 0px;
+	padding-right: 0px;
+	width: 31.1827%;
+}
+
+.cDivProjectUpdatePage .cDivProject {
+	margin-bottom: 30px;
+	height: 428px;
+	border: 1px solid #B5B5B5;	
+	background-color: #FFFFFF;
+}
+
+/* project update page ends */
+
+/* pagination start*/
+
+.pagination a, .pagination a:hover {
+	color: #ff7f00;
+}
+
+/* pagination ends */
+
+/* search page starts */
+
+.cDivSearchResultItemContainer {
+	width: 100%;
+	height: auto;
+	margin-bottom: 20px;
+}
+
+.cDivSearchResultItemTitle {
+	margin-bottom: 10px;
+	font-size: 18px;
+	text-transform: uppercase;
+}
+
+.cDivSearchResultItemText {
+	margin-bottom: 10px;
+}
+
+/* search page ends */
+
+@media (min-width: 768px){
+	
+    .navbar-inverse .navbar-nav {
+		width:100%;
+	}
+	
+	.navbar-inverse .navbar-nav > li {
+		margin-right:45px;
+	}
+	
+	.navbar-inverse .navbar-nav > li > a {
+		color: #fff;
+		/*font-family: 'HelveticaRoundedLTStd-Bd';*/
+		font-size: 16px;
+	}
+	.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus,
+	.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+		color: #FAB219;
+		background-color: transparent;
+	}
+}

@@ -11,9 +11,11 @@ $featured_num = (int) get_option('quadro_featured_num');
                 <?php
                    $sURL = get_field('url');
         $sLink = ($sURL) ? $sURL : get_permalink() ; 
-                if (function_exists('showMap')) {
-                    showMap();
-                }
+//                if (function_exists('showMap')) {
+//                    showMap();
+//                }
+		
+		showTempMap();
                 ?>
 
 

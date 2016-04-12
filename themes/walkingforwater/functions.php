@@ -19,8 +19,8 @@ update_option('akvo_project_domain',"http://walkingforwater2015.akvoapp.org/en")
 //
 //add_filter( 'the_content', 'wfw_the_content_filter' );
 
-function set_html_content_type() {
-
-	return 'text/html';
-}
+//function set_html_content_type() {
+//
+//	return 'text/html';
+//}
 ?>

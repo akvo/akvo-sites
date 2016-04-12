@@ -86,13 +86,18 @@ if($post->post_type=='post' || $post->post_type=='news'){
 			}//$sImgSrc = catch_that_image();
 		}
 	}
+	
     if($sImgSrc==''){
         $sCountry = AkvoPartnerCommunication::readProjectUpdateCountry($post->ID);
         $sCountry = explode(' ',$sCountry);
         $sCountry = str_replace(array(',','-','ô'),array('','','o'),$sCountry[0]);
-$sCountry= 'cote';
-        if($sCountry)$sImgSrc = '/wp-content/themes/mars/images/countryplaceholders/'.$sCountry.'.jpg';
-    }
+		//$sCountry= 'cote';
+        if($sCountry && file_exists(home_url(). '/wp-content/themes/srhr/images/countryplaceholders/'. $sCountry .'.jpg')) {
+			$sImgSrc = '/wp-content/themes/srhr/images/countryplaceholders/'.$sCountry.'.jpg';
+		} else {
+			$sImgSrc = get_template_directory_uri().'/images/Akvo_placeholder.png';
+		}
+    }	
     $sPostLabelImgClass='cDivProjUpdateImageTag';
     //get the project Id to read more link (link to akvo.org site)
     $sReadMoreLink = "http://srhr.akvoapp.org/en/project/";

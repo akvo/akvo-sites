@@ -30,9 +30,10 @@ $et_ptemplate_blog_perpage = isset( $et_ptemplate_settings['et_ptemplate_blog_pe
                     $sCountry = get_post_meta($post->ID,'country',true);
                     $sCountry = ($sCountry=='none') ? '' : $sCountry;
                     $aCategories = wp_get_post_categories($post->ID);
-                if (function_exists('showMap')) {
-                    showMap($sCountry);
-                }
+//                if (function_exists('showMap')) {
+//                    showMap($sCountry);
+//                }
+					showTempMap($sCountry);
                 ?>
 
                 <div class="featured-content">
