@@ -37,15 +37,15 @@ if (is_admin()) {
 }
 
 //google map
-function showMap($sCountry='',$iZoom=0) {
-	if (class_exists("AkvoPartnerCommunication")) {
-
-		$oApc = new AkvoPartnerCommunication();
-		$oProjects = $oApc->getAllProjectsData();
-		$sMapScripts = $oApc->displayMap($oProjects,$sCountry,$iZoom);
-		echo $sMapScripts;
-	}
-}
+//function showMap($sCountry='',$iZoom=0) {
+//	if (class_exists("AkvoPartnerCommunication")) {
+//
+//		$oApc = new AkvoPartnerCommunication();
+//		$oProjects = $oApc->getAllProjectsData();
+//		$sMapScripts = $oApc->displayMap($oProjects,$sCountry,$iZoom);
+//		echo $sMapScripts;
+//	}
+//}
 
 function akvo_map_shortcode($atts=null,$content){
     $width=(is_array($atts) && (array_search('width',$atts)!==false || array_key_exists('width', $atts))) ? $atts['width'] : '100%';

@@ -30,8 +30,9 @@
                     
                     get_template_part('includes/entry');
                 endforeach;endif;
-                $latestvideo = AkvoSiteConfig::getLatestVideo('MarsSustainability'); 
-                $video = (object)$latestvideo;
+                
+				$aLatestvideo = AkvoSiteConfig::getLatestYouTubeVideo('forUsername', 'MarsSustainability');				                
+                $video = (object)$aLatestvideo[0];
                 //get_template_part('includes/entry');
                 
                 if($video){

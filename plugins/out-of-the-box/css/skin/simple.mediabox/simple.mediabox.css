@@ -1,0 +1,368 @@
+#OutoftheBox .jp-jplayer {
+  background: url(../../clouds/cloud_system_128.png) center no-repeat;
+}
+
+#OutoftheBox .jp-video {
+  position:relative;
+  margin-bottom: 20px;
+  min-width: 300px
+}
+
+#OutoftheBox .jp-video-100 {
+  max-width: 100%;
+}
+
+#OutoftheBox .jp-video-270p {
+  max-width:480px;
+}
+
+#OutoftheBox .jp-video-360p {
+  max-width:570px;
+}
+
+#OutoftheBox .jp-video-full {
+  /*width:480px;
+  height:270px;*/
+  width:100%!important;
+  position:static !important;
+  position:relative;
+}
+#OutoftheBox.jp-video-full .jp-jplayer {
+  top: 0;
+  left: 0;
+  position: fixed !important; position: relative; /* Rules for IE6 (full-screen) */
+  overflow: hidden;
+  z-index:1000;
+}
+
+#OutoftheBox .jp-video-full .jp-gui {
+  position: fixed !important; position: static; /* Rules for IE6 (full-screen) */
+  top: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+  z-index:1000;
+}
+
+#OutoftheBox .jp-video-full .jp-interface {
+  position: absolute !important; position: relative; /* Rules for IE6 (full-screen) */
+  bottom: 0;
+  left: 0;
+  z-index:1000;
+}
+
+#OutoftheBox .jp-video-full .jp-playlist{
+  display:none;
+}
+
+#OutoftheBox .jp-video img{
+  position:absolute;
+  border-radius: 0 !important;
+}
+#OutoftheBox .jp-video-full img{
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+#OutoftheBox .jp-gui {
+  height:35px;
+}
+#OutoftheBox .jp-interface {
+  position: relative;
+  width:100%;
+  height: 35px;
+
+  background-image: -webkit-linear-gradient(top, rgb(242, 242, 242), rgb(209, 209, 209));
+  background-image: -moz-linear-gradient(top, rgb(242, 242, 242), rgb(209, 209, 209));
+  background-image: -o-linear-gradient(top, rgb(242, 242, 242), rgb(209, 209, 209));
+  background-image: -ms-linear-gradient(top, rgb(242, 242, 242), rgb(209, 209, 209));
+  background-image: linear-gradient(top, rgb(242, 242, 242), rgb(209, 209, 209));
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f2f2f2', EndColorStr='#d1d1d1');
+
+  -webkit-box-shadow:
+    inset 0px 1px 0px #f7f7f7,
+    inset 0px -1px 0px #e2e2e2;
+  -moz-box-shadow:
+    inset 0px 1px 0px #f7f7f7,
+    inset 0px -1px 0px #e2e2e2;
+  box-shadow:
+    inset 0px 1px 0px #f7f7f7,
+    inset 0px -1px 0px #e2e2e2;
+}
+
+#OutoftheBox div.jp-controls-holder {
+  /*overflow: hidden;*/
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#OutoftheBox a.jp-play,
+#OutoftheBox a.jp-pause {
+  width:40px;
+  height:35px;
+  float:left;
+  text-indent:-9999px;
+  outline:none;
+  position: absolute;
+  top:0;
+  left:0;
+}
+
+#OutoftheBox a.jp-play {
+  background: url(sprite.png) 0 0 no-repeat;
+}
+
+#OutoftheBox a.jp-pause {
+  background: url(sprite.png) -40px 0 no-repeat;
+  display: none;
+}
+
+#OutoftheBox .jp-progress {
+  background: #FAFAFA;;
+
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+
+  -webkit-box-shadow:
+    inset 0px 1px 4px rgba(0,0,0,.4),
+    0px 1px 0px rgba(255,255,255,.4);
+  -moz-box-shadow:
+    inset 0px 1px 4px rgba(0,0,0,.4),
+    0px 1px 0px rgba(255,255,255,.4);
+  box-shadow:
+    inset 0px 1px 4px rgba(0,0,0,.4),
+    0px 1px 0px rgba(255,255,255,.4);
+  height:10px;
+  margin-top: 13px !important;
+  position: absolute;
+  left: 90px;
+  right:170px
+}
+
+#OutoftheBox .jp-seek-bar {
+  width:0px;
+  height:100%;
+  cursor: pointer;
+  background-color: #C7D8E4;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+}
+
+#OutoftheBox .jp-play-bar {
+  background: url(play-bar.png) left repeat-x;
+  width:0px;
+  height:10px;
+  position:relative;
+  z-index: 9999;
+
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+}
+
+#OutoftheBox .jp-play-bar span {
+  position:absolute;
+  top: -3px;
+  right: -12px;
+  background:url(handle.png) no-repeat center;
+  width: 16px;
+  height: 17px;
+}
+
+#OutoftheBox .jp-current-time,
+#OutoftheBox .jp-duration {
+  font-size:14px;
+  font-family:Arial;
+  color:#444444;
+  width: 50px;
+  line-height: 36px;
+  position: absolute;
+}
+#OutoftheBox .jp-current-time {
+  display:inline;
+  left: 45px;
+}
+#OutoftheBox .jp-duration {
+  text-align: right;
+  right: 120px;
+}
+
+#OutoftheBox .jp-video a.jp-mute,
+#OutoftheBox .jp-video a.jp-unmute {
+  text-indent:-9999px;
+  position: absolute;
+  right:80px;
+  width:40px;
+  margin-top: 1px;
+  height: 35px;
+  outline:none;
+}
+
+#OutoftheBox .jp-mute {
+  float:right;
+  background: url(sprite.png) -80px 0 no-repeat;
+  width: 35px;
+}
+
+#OutoftheBox a.jp-unmute {
+  background: url(sprite.png) -115px 0 no-repeat;
+  display: none;
+  width: 38px;
+}
+
+#OutoftheBox .jp-volume-bar {
+  position: absolute;
+  right:40px;
+  width:40px;
+  margin-top: 13px !important;
+  overflow:hidden;
+  height:10px;
+  cursor: pointer;
+
+  background: #FAFAFA;
+
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+
+  -webkit-box-shadow:
+    inset 0px 1px 4px rgba(0,0,0,.4),
+    0px 1px 0px rgba(255,255,255,.4);
+  -moz-box-shadow:
+    inset 0px 1px 4px rgba(0,0,0,.4),
+    0px 1px 0px rgba(255,255,255,.4);
+  box-shadow:
+    inset 0px 1px 4px rgba(0,0,0,.4),
+    0px 1px 0px rgba(255,255,255,.4);
+}
+
+#OutoftheBox .jp-volume-bar-value {
+  background: rgba(112,109,109,0.1);
+  width:0px;
+  height:10px;
+  position: relative;
+}
+
+#OutoftheBox .jp-volume-bar-value span {
+  position:absolute;
+  top: 0px;
+  right: 0px;
+
+  background:url(volume.png) no-repeat center;
+  width: 11px;
+  height: 10px;
+}
+
+#OutoftheBox .jp-full-screen {
+  background: url(sprite.png) -150px 0 no-repeat;
+  width: 40px;
+  height: 35px;
+  text-indent:-9999px;
+  outline:none;
+  position: absolute;
+  right:0;
+}
+
+#OutoftheBox .jp-restore-screen {
+  background: url(sprite.png) -150px 0 no-repeat;
+  width: 40px;
+  height: 35px;
+  text-indent:-9999px;
+  outline:none;
+  position: absolute;
+  right:0;
+}
+
+/* @group playlist */
+#OutoftheBox div.jp-playlist-loading{
+  background: url(../../clouds/cloud_loading_32.gif) center no-repeat;
+  height: 25px;
+  width: 100%;
+  margin-top: 7px;
+  background-color: transparent !important;
+}
+
+#OutoftheBox div.jp-title {
+  font-weight:bold;
+  text-align:center;
+}
+
+#OutoftheBox div.jp-title,
+#OutoftheBox div.jp-playlist {
+  width:100%;
+  background-color: #EEE;
+}
+#OutoftheBox div.jp-type-single div.jp-title,
+#OutoftheBox div.jp-title,
+#OutoftheBox div.jp-type-single div.jp-playlist {
+  border-top:none;
+}
+#OutoftheBox div.jp-title ul,
+#OutoftheBox div.jp-playlist ul {
+  list-style-type:none;
+  margin:0;
+  padding:0;
+  font-size:.72em;
+}
+
+#OutoftheBox li:before{
+  content: none !important;
+}
+#OutoftheBox div.jp-title li {
+  padding:5px 0;
+  font-weight:bold;
+}
+#OutoftheBox div.jp-playlist li {
+  padding:5px 0 4px 20px;
+  border-bottom:1px solid #CECECE;
+  word-wrap: break-word;
+  margin:0;
+}
+
+#OutoftheBox div.jp-playlist li div {
+  display:inline;
+}
+
+/* Note that the first-child (IE6) and last-child (IE6/7/8) selectors do not work on IE */
+
+#OutoftheBox div.jp-playlist li:last-child {
+  padding:5px 0 5px 20px;
+  border-bottom:none;
+}
+#OutoftheBox div.jp-playlist li.jp-playlist-current {
+  font-weight: bold;
+}
+
+#OutoftheBox div.jp-playlist a {
+  font-size: 130%;
+}
+
+#OutoftheBox span.jp-artist {
+  font-size:.8em;
+  color:#666;
+}
+
+/* Audio player */
+#OutoftheBox .audio .jp-progress {
+  right:140px;
+}
+#OutoftheBox .audio .jp-duration {
+  right:90px;
+}
+#OutoftheBox .audio .jp-video a.jp-mute,
+#OutoftheBox .audio .jp-video a.jp-unmute {
+  right:50px;
+}
+#OutoftheBox .audio .jp-volume-bar{
+  right:10px;
+}
+#OutoftheBox .audio .jp-full-screen {
+  display: none !important;
+}
+#OutoftheBox .audio .jp-restore-screen {
+  display: none !important;
+}

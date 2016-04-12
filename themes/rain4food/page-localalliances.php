@@ -32,9 +32,10 @@
                         $sCountry = get_post_meta($post->ID,'country',true);
                         $sCountry = ($sCountry=='none') ? '' : $sCountry;
                         $aCategories = wp_get_post_categories($post->ID);
-                    if (function_exists('showMap')) {
-                        showMap($sCountry);
-                    }
+//                    if (function_exists('showMap')) {
+//                        showMap($sCountry);
+//                    }
+						showTempMap($sCountry);
                     ?>
 
                     <div class="featured-content col-md-6">

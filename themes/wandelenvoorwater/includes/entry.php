@@ -85,6 +85,7 @@ if($post->post_type=='post' || $post->post_type=='news'){
         }
     if($sImgSrc==''){
        // $sImgSrc = '/wp-content/themes/f4w/images/noimg.jpg';
+		$sImgSrc = get_template_directory_uri().'/images/Akvo_placeholder.png';
     }
     $sPostLabelImgClass='cDivProjUpdateImageTag';
     //get the project Id to read more link (link to akvo.org site)

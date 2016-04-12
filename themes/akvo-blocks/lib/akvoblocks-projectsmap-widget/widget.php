@@ -37,7 +37,8 @@ class AkvoblocksProjectsmapWidget extends WP_Widget {
             
         </div>
         <?php
-                showMap();
+                //showMap();
+				showTempMap();
         echo $after_widget;
     
         

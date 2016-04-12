@@ -41,61 +41,7 @@ if (!class_exists("AkvoSiteConfig")) {
                                 'thumbnail')
                             ) 
                         );
-        }
-        
-        public static function getLatestVideo($sUserName, $iOffset=0){
-            $xml = simplexml_load_file(sprintf('http://gdata.youtube.com/feeds/api/users/%s/uploads?alt=rss', $sUserName));
-            $avideo = array();
-            if ( ! empty($xml->channel->item[$iOffset]->link) )
-            {
-                
-                parse_str(parse_url($xml->channel->item[$iOffset]->link, PHP_URL_QUERY), $url_query);
-              
-              if ( ! empty($url_query['v']) )
-                $id = $url_query['v'];
-                $img = 'http://img.youtube.com/vi/'.$id.'/0.jpg';
-                $feedURL = 'http://gdata.youtube.com/feeds/api/videos/' . $id;
-                $entry = AkvoYoutube::parseVideoEntry(simplexml_load_file($feedURL));
-                
-                $avideo['id'] = $id;
-                $avideo['image'] = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$img.'&w=271&h=167&zc=1&q=100';
-                $avideo['title'] = (string)$entry->title;
-                $avideo['post_content'] = (string)$entry->description;
-                $avideo['post_type'] = 'video';
-                $avideo['link'] = (string)$xml->channel->item[$iOffset]->link;
-                $avideo['date'] = (string)$xml->channel->item[$iOffset]->pubDate;
-                
-                return $avideo;
-            }
-        }
-        
-        public static function getSecondLatestVideo($sUserName){
-            $xml = simplexml_load_file(sprintf('http://gdata.youtube.com/feeds/api/users/%s/uploads?alt=rss', $sUserName));
-            
-            $avideo = array();
-            if ( ! empty($xml->channel->item[1]->link) )
-            {
-
-                parse_str(parse_url($xml->channel->item[1]->link, PHP_URL_QUERY), $url_query);
-
-              if ( ! empty($url_query['v']) )
-                $id = $url_query['v'];
-                $img = 'http://img.youtube.com/vi/'.$id.'/0.jpg';
-                $feedURL = 'http://gdata.youtube.com/feeds/api/videos/' . $id;
-                $entry = AkvoYoutube::parseVideoEntry(simplexml_load_file($feedURL));
-                //$avideo['id'] = $id;
-				$avideo['image'] = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$img.'&w=271&h=167&zc=1&q=100';
-                $avideo['title'] = (string)$entry->title;
-                $avideo['post_content'] = (string)$entry->description;
-                $avideo['post_type'] = 'video';
-                $avideo['link'] = (string)$xml->channel->item[1]->link;
-                $avideo['date'] = (string)$xml->channel->item[1]->pubDate;
-
-                return $avideo;
-            }else{
-                return false;
-            }
-        }
+        }              
 		
 		/**
          * run this every hour to get the embedded video screenshots from posts
@@ -151,7 +97,58 @@ if (!class_exists("AkvoSiteConfig")) {
             }
             
         }
-        
-    }
+		
+		/**
+		 * This function fetch three latest videos from specified YouTube channel.
+		 * @param type $sType - whether to use Channel ID or Username to fetch data. Values should be 'id' or 'forUsername'.
+		 * @param type $sValue - value for the type. Ex: 'id' => UC9bKtqBXpsl4E449bR1XADA, 'forUsername' => Footballforwater
+		 * @return type array
+		 * @author Rumeshkumar <rumeshin@gmail.com>
+		 */
+		public function getLatestYouTubeVideo($sType, $sValue) {
+			
+			$sKey = 'xxx'; // Use correct key to get videos
+						
+			$sAPIUploadPlaylist = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&' . $sType . '=' . $sValue . '&key=' .$sKey;
+
+			//get ID of "uploads" playlist
+			$aUploadPlaylistResult = wp_remote_get($sAPIUploadPlaylist);
+
+			$aUploadPlaylistResultBody = json_decode($aUploadPlaylistResult['body'], true);
+
+			$aUploadPlaylistItem = $aUploadPlaylistResultBody['items'][0];
+
+			$sUpoadsPlaylist = $aUploadPlaylistItem['contentDetails']['relatedPlaylists']['uploads'];			
+			
+			// get all the videos under uploads playlist								
+			$sAPIVideos = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId='. $sUpoadsPlaylist . '&maxResults=3&key=' . $sKey;
+			
+            $aVideosResult = wp_remote_get($sAPIVideos);
+			
+			$aVideoBody = json_decode($aVideosResult['body'], true);
+						
+			$aVideoItems = $aVideoBody['items'];
+			
+			$aVideo = array();
+			if ($aVideoBody['pageInfo']['totalResults'] > 0) {
+				$i = 0;
+				foreach($aVideoItems as $aVideoItem) {
+					$sImg = $aVideoItem['snippet']['thumbnails']['medium']['url'];
+					
+					$aVideo[$i]['id'] = $aVideoItem['id'];
+					$aVideo[$i]['image'] = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$sImg.'&w=271&h=167&zc=1&q=100';					
+					$aVideo[$i]['title'] = $aVideoItem['snippet']['title'];
+					$aVideo[$i]['post_content'] = $aVideoItem['snippet']['description'];
+					$aVideo[$i]['post_type'] = 'video';
+					$aVideo[$i]['link'] = (string)$aVideoItem['snippet']['resourceId']['videoId'];
+					$aVideo[$i]['date'] = (string)$aVideoItem['snippet']['publishedAt'];
+					
+					$i++;
+				}			
+			}						
+			
+			return $aVideo;
+		}				
+	}
 }
 ?>

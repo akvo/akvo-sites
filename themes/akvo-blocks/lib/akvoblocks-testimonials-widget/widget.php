@@ -151,7 +151,8 @@ class AkvoTestimonialsWidget extends WP_Widget {
         <script type="text/javascript">
             +function ($) {
                 $('#sliderWrapper-<?php echo $widget_id;?> .cDivSlider').bxSlider({
-                 auto:false,
+                 auto:true,
+				 pause: 8000,
                  adaptiveHeight:true,
                  pause: <?php echo $sliderTimeout; ?>
                 });

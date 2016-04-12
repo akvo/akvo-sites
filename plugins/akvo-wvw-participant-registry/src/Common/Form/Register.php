@@ -83,7 +83,11 @@ class Register extends KwgP\Form {
 		$oSupportPoint->setMultiOptions($this->getSupportPointOptions());
 
 		$oWalkDate = new  \Zend_Form_Element_Text('textWalkDate');
-		$oWalkDate->setLabel('Datum wandeling');
+		$oWalkDate->setLabel('Datum wandeling (dd-mm-yyyy)');
+
+		$sToday = date('m/d/Y');
+		$sWalkDate = date('m/d/Y',strtotime($sToday . "+5 days"));
+		$oWalkDate->setValue(date('d-m-Y', strtotime($sWalkDate)));
 
 		$oWalkCity = new  \Zend_Form_Element_Text('textWalkCity');
 		$oWalkCity->setLabel('Plaats wandeling');

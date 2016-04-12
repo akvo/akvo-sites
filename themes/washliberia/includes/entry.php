@@ -30,7 +30,7 @@ if($post->post_type=='post' || $post->post_type=='news'){
 
     if($sImgSrc!='' && strpos($sImgSrc, '.bmp')===false){
         ///blog post from feed
-        $sImgSrc = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$sImgSrc.'&w=271&h=167&zc=1&q=100';   
+        $sImgSrc = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$sImgSrc.'&w=271&h=167&zc=1&q=95';   
 
     }else{
         $thumbnail = get_thumbnail($width, $height, $classtext, $title, $title, true, 'Featured');
@@ -41,7 +41,7 @@ if($post->post_type=='post' || $post->post_type=='news'){
         if($sImgSrc==''){
             $sFirstImg = catch_that_image();
             if($sFirstImg!='' && strpos($sFirstImg, '.bmp')===false){
-                $sImgSrc = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.catch_that_image().'&w=271&h=167&zc=1&q=100';   
+                $sImgSrc = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.catch_that_image().'&w=271&h=167&zc=1&q=95';   
             }//$sImgSrc = catch_that_image();
 
         }
@@ -70,15 +70,22 @@ if($post->post_type=='post' || $post->post_type=='news'){
     if (!is_null($sAttachmentLink)) {
 
         $sImgSrc = str_replace('uploads2012', 'uploads/2012', $sAttachmentLink);
-        if(!@getimagesize($sImgSrc))$sImgSrc='';
-        else $sImgSrc = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$sImgSrc.'&w=271&h=167&zc=1&q=100';   
+		
+        if(!@getimagesize($sImgSrc)) {
+			$sImgSrc='';
+		} else {
+			$sImgSrc = '/wp-content/plugins/akvo-site-config/classes/thumb.php?src='.$sImgSrc.'&w=271&h=167&zc=1&q=95';   
+		}	
                                         
     }
     if($sImgSrc==''){
         $sCountry = AkvoPartnerCommunication::readProjectUpdateCountry($post->ID);
         $sCountry = explode(' ',$sCountry);
         $sCountry = str_replace(array(',','-'),'',$sCountry[0]);
-        if($sCountry)$sImgSrc = '/wp-content/themes/washliberia/images/countryplaceholders/'.$sCountry.'.jpg';
+        if($sCountry && file_exists(home_url(). '/wp-content/themes/washliberia/images/countryplaceholders/'. $sCountry .'.jpg')) {
+			
+			$sImgSrc = '/wp-content/themes/washliberia/images/countryplaceholders/'.$sCountry.'.jpg';
+		}
     }
     $sPostLabelImgClass='cDivProjUpdateImageTag';
     //get the project Id to read more link (link to akvo.org site)

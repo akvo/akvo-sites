@@ -1,0 +1,71 @@
+<?php include AkvoWvwParticipantRegistry_Plugin_Dir . '/src/Admin/View/scripts/partials/header.phtml'; ?>
+
+<div class="container-fluid cAWPRContentWrapper">
+
+		<div class="row-fluid">
+			<div class="span12">
+				<h2><i class="icon-trash"></i>&nbsp;Remove Supportpoint</h2>			
+			</div>
+		</div>
+		<?php if($aContent['error']) { ?>
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="alert alert-error">
+					<p>Something went wrong!!!. Please go back to supportpoints.</p>
+					<p>
+						<a href="<?php echo menu_page_url(\Akvo\WvW\ParticipantRegistry\Admin\Controller\Supportpoint\Detail::MENU_SLUG, false); ?>"><button class="btn">Back to Supportpoints</button></a>
+					</p>
+				</div>
+			</div>
+		</diV>
+			
+		<?php } else { ?>
+		<?php if ($aContent['action'] == 'confirmremove') { 
+
+			$sContextMessage = '';
+
+			if($aContent['has_participant']) {
+
+				$sContextMessage = 'There are participants data which use this support point. Removing this support point will also remove participant data. Removal is permanent and cannot be undone.';
+			} else {
+
+				$sContextMessage = 'Removal is permanent and cannot be undone.';
+			}
+		?>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="alert alert-warning">
+					<h2><i class="icon-warning-sign"></i></h2>
+					<p>
+						You are trying to remove <strong><?php echo $aContent['supportpoint']; ?></strong>
+					</p>
+					<p>
+						<?php echo $sContextMessage; ?>
+					</p>
+					<p>
+						Do you want to continue?
+					</p>
+					<p>
+						<a href="<?php echo menu_page_url(\Akvo\WvW\ParticipantRegistry\Admin\Controller\Supportpoint\Detail::MENU_SLUG, false); ?>"><button class="btn">Cancel</button></a>
+						<a href="<?php echo menu_page_url(\Akvo\WvW\ParticipantRegistry\Admin\Controller\Supportpoint\Remove::MENU_SLUG, false) . '&id=' . $aContent['supportpoint_id'] . '&action=remove'; ?>"><button class="btn btn-danger" id="iButtonRemoveSupportpoint">Remove Supportpoint</button></a>
+					</p>
+				</div>			
+			</div>
+		</div>
+	
+		<?php } else if($aContent['action'] == 'remove') { ?>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="alert alert-success">
+					<h2><i class="icon-ok-sign"></i></h2>
+					<p>The supportpoint has been successfully removed.</p>
+					<p>
+						<a href="<?php echo menu_page_url(\Akvo\WvW\ParticipantRegistry\Admin\Controller\Supportpoint\Detail::MENU_SLUG, false); ?>"><button class="btn">Back to Supportpoints</button></a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<?php } }?>
+</div>

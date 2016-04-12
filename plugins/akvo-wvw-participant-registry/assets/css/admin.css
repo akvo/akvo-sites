@@ -85,3 +85,10 @@ div.blockMsg {
 	margin: 0;
 	margin-right: 8px;
 }
+
+
+/* overwrite bootstrap styles */
+
+ul.wp-submenu {
+	margin-left: 0px;
+}

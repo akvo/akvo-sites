@@ -62,7 +62,11 @@ if($post->post_type=='post' || $post->post_type=='news' || $post->post_type=='pa
         $sCountry = AkvoPartnerCommunication::readProjectUpdateCountry($post->ID);
         $sCountry = explode(' ',$sCountry);
         $sCountry = str_replace(array(',','-'),'',$sCountry[0]);
-        if($sCountry)$sImgSrc = '/wp-content/themes/connectforchange/images/countryplaceholders/'.$sCountry.'.jpg';
+        if($sCountry) {
+			$sImgSrc = '/wp-content/themes/connectforchange/images/countryplaceholders/'.$sCountry.'.jpg';
+		} else {
+			$sImgSrc = get_template_directory_uri().'/images/Akvo_placeholder.png';
+		}
     }
     $sPostLabelImgClass='cDivProjUpdateImageTag';
     //get the project Id to read more link (link to akvo.org site)

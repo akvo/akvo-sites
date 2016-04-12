@@ -14,9 +14,9 @@
 
             <?php endif; ?>
 
-                <?php
-                $latestvideo = AkvoSiteConfig::getLatestVideo('RAINfoundation');
-                $post = (object)$latestvideo;
+                <?php                
+				$aLatestvideo = AkvoSiteConfig::getLatestYouTubeVideo('forUsername', 'RAINfoundation');				
+                $post = (object)$aLatestvideo[0];
                 get_template_part('includes/entry');
                 $args['post_type']='post';
                 $args['posts_per_page']='2';

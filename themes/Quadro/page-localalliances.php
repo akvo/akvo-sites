@@ -21,7 +21,7 @@ $et_ptemplate_blog_perpage = isset( $et_ptemplate_settings['et_ptemplate_blog_pe
 
 <div id="container">
     <div id="iDivBreadcrumb">
-		<?php the_breadcrumbs();?>
+		<?php the_breadcrumbs(); ?>
 		</div>
 	<div id="container2">
         <div id="featured">
@@ -34,7 +34,7 @@ $et_ptemplate_blog_perpage = isset( $et_ptemplate_settings['et_ptemplate_blog_pe
             $thumbnail = get_thumbnail($width, $height, $classtext, $titletext, $titletext, false, 'Featured');
             $thumb = $thumbnail["thumb"];
             
-            $sCountry = get_post_meta($post->ID,'country',true);
+            $sCountry = get_post_meta($post->ID,'country',true);			 
             $sCountry = ($sCountry=='none') ? '' : $sCountry;
             $aCategories = wp_get_post_categories($post->ID);
             ?>
@@ -49,9 +49,11 @@ $et_ptemplate_blog_perpage = isset( $et_ptemplate_settings['et_ptemplate_blog_pe
             <div id="iDivMap"  style="width: 470px; height: 240px; float: left;"></div>
                 <?php
                     
-                if (function_exists('showMap')) {
-                    showMap($sCountry);
-                }
+//                if (function_exists('showMap')) {					
+//                    showMap($sCountry);					
+//                }
+					
+				showTempMap($sCountry);
             }
                 ?>
 

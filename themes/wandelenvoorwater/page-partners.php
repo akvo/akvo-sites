@@ -69,7 +69,9 @@ $et_ptemplate_blog_perpage = isset( $et_ptemplate_settings['et_ptemplate_blog_pe
             $aCategories = wp_get_post_categories($post->ID);
             $args = array(
                 'category__in'=> $aCategories,
-                'order'    => 'DESC'
+                'order'    => 'DESC',
+				'posts_per_page' => -1,
+				'nopaging'=>true
             );
             query_posts( $args );
             ?>

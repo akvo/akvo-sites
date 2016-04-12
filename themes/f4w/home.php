@@ -34,9 +34,10 @@
                 
                 $post = $updates[1];
                 get_template_part('includes/entry');
-                
-                $latestvideo = AkvoSiteConfig::getLatestVideo('Footballforwater');
-                $post = (object)$latestvideo;
+                                
+				$aLatestvideo = AkvoSiteConfig::getLatestYouTubeVideo('forUsername', 'Footballforwater');
+				
+                $post = (object)$aLatestvideo[0];
                 get_template_part('includes/entry');
                 
                 

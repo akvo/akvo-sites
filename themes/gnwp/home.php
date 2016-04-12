@@ -22,9 +22,11 @@
                 if ( $updates ) : foreach ($updates AS $post ) :
                     get_template_part('includes/entry');
                 endforeach;endif;
-                $latestvideo = AkvoSiteConfig::getLatestVideo('UC9bKtqBXpsl4E449bR1XADA');
-                $post = (object)$latestvideo;
+				                
+				$latestvideo = AkvoSiteConfig::getLatestYouTubeVideo('id', 'UC9bKtqBXpsl4E449bR1XADA');				
+                $post = (object)$latestvideo[0];
                 get_template_part('includes/entry');
+				
                 $args['post_type']='post';
                 $args['posts_per_page']='1';
 				$aExclude=get_category_ids(array('partners'));
