@@ -6,7 +6,7 @@
  *
  * @author Uthpala Sandirigama <damsirini.uthpala@gmail.com>
  */
-//echo "yo";
+
 error_reporting(0);
 require_once '../../../wp-config.php';
 //require_once '/wp-content/plugins/dwa-project-detail-reader/ProjectUpdateLogic.php';
@@ -16,7 +16,7 @@ require_once 'AkvoPartnerCommunication.php';
 $iOrganisationID = (isset($_GET['id_organisation'])) ? $_GET['id_organisation'] : null;
 $oAPC = new AkvoPartnerCommunication();
 $iLimit = 100 + (int)date('z') + (int)date('G');
-var_dump($iLimit);
+
 $sUpdateUrl = "http://rsr.akvo.org/api/v1/project_update/?format=json&limit=".$iLimit."&project__";
 
 $aPartnerData = $oAPC->readURLsForCronJob($iOrganisationID);
@@ -27,6 +27,15 @@ error_log($iOrganisationID);
 error_log('runtime:'.  $sRuntime);
 shuffle($aPartnerData);
 foreach ($aPartnerData as $oOrgId) {
+	
+	if($oOrgId->organisation_id == '2121' || $oOrgId->organisation_id == '275' || $oOrgId->rsr_keywords == 'rain4food') {
+		die('rain4food'); continue;
+	}
+	
+	if(true) {
+		continue;
+	}
+	
     $iLimit = 1000 + (int)date('z') + (int)date('G');
     
     if(isset($oOrgId->rsr_keywords) && $oOrgId->rsr_keywords!==''){
@@ -37,18 +46,25 @@ foreach ($aPartnerData as $oOrgId) {
         $sUrlOption = 'partnerships__organisation=' . $oOrgId->organisation_id;
     }
     $sUrl = AkvoPartnerCommunication::API_URL_FOR_PROJECTS . '&' . $sUrlOption. '&limit='.$iLimit;
-   echo $sUrl.'<br />';
+	echo $sUrl.'<br />';
+	// example for $sUrl => http://rsr.akvo.org/api/v1/project/?format=json&partnerships__organisation=275&limit=1119
+	
 	$sPrefix = $oOrgId->prefix;
 	$aProjectData = $oAPC->readProjectDetails($sUrl);
-    
+
     $oAPC->flushProjectDetails($sPrefix);
     $oAPC->saveProjectDetails($aProjectData, $sPrefix, $sUrlOption);
     $oAPC->saveProjectPartners($aProjectData, $sPrefix);
-    //var_dump(count($aProjectData)); 
+
 }
 
 ///iterate through organisations
 foreach ($aPartnerData as $oOrgId) {
+	
+	if($oOrgId->organisation_id == '2121' || $oOrgId->organisation_id == '275') {
+		continue;
+	}
+	
 	$sPrefix = $oOrgId->prefix;
 	$sDuplicates='';
     if(isset($oOrgId->rsr_keywords) && $oOrgId->rsr_keywords!==''){

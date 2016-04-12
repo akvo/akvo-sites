@@ -110,6 +110,19 @@ class ParticipantRegistry {
 		$aResults = $wpdb->get_results($sQuery, ARRAY_A);
 		return $aResults;
     }
+	
+	/**
+	 * 
+	 * @author Rumeshkumar <rumeshin@gmail.com>
+	 */
+	public function fetchSupportpointById($iID){
+        global $wpdb;
+        
+		$sQuery = "SELECT * FROM `" . $this->_sTableSupportpointsName . "` WHERE `id`=" . $iID;
+        
+		$aResults = $wpdb->get_row($sQuery, ARRAY_A);
+		return $aResults;
+    }
 
     public function insertSupportPoint ($sName) {
 
@@ -121,6 +134,19 @@ class ParticipantRegistry {
 		}
 		return $bStatus;
 
+	}
+	
+	/**
+	 * 
+	 * @author Rumeshkumar <rumeshin@gmail.com>
+	 */
+	public function deleteSupportpoint($iID) {
+		
+		global $wpdb;
+		
+		$bStatus = $wpdb->delete($this->_sTableSupportpointsName, array('id' => $iID));
+
+		return $bStatus;
 	}
     
 	public function createTable () {
@@ -208,7 +234,7 @@ class ParticipantRegistry {
 			32=>'RC Ter Aar',
 			33=>'RC Twenterand (Vroomshoop)',
 			34=>'RC Utrecht - Fletiomare',
-			35=>'RC Utrecht Kommerijn',
+			35=>'RC Utrecht Krommerijn',
 			36=>'RC Utrecht West',
 			37=>'RC Veluwezoom',
 			38=>'RC Vinkeveen-Abcoude',
@@ -216,7 +242,7 @@ class ParticipantRegistry {
 			40=>'RC Voorburg-Vliet',
 			41=>'RC Vorden-Zutphen',
 			42=>'RC Wierden',
-			43=>'RC Wierden',
+			//43=>'RC Wierden',
 			44=>'RC Winterswijk',
 			45=>'RC Zeist',
 			46=>'RC Zevenaar',

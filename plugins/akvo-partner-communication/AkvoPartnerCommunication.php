@@ -155,7 +155,7 @@ if (!class_exists("AkvoPartnerCommunication")) {
 			if (!empty($_POST['runurlsubmit'])) {
 				$oAkvo = new AkvoPartnerCommunication();
 				$aProjectListing = $oAkvo->readProjectDetails();
-				//var_dump($aProjectListing);
+
                 
 				$oAkvo->flushProjectDetails($sPrefix);
 				$oAkvo->saveProjectDetails($aProjectListing, $sPrefix);
@@ -413,8 +413,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                 $urlOption =  'keywords__label='.$oOptions->rsr_keywords;
             }else{
                 $urlOption =  'partnerships__organisation='.$oOptions->organisation_id;
-            }
-            var_dump($urlOption);
+            }            
             return $urlOption;
 			
 		}
@@ -436,7 +435,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
             //temp country import while in development
             
             $aCoordinates = $this->readLocations($sUrlParam);
-//        
+			
             $aCountries = array('bangladesh','benin','ethiopia','ghana','kenya','mali','nepal','uganda');
 			// Iterate through the list of Projects and Insert them
 			foreach ($aProjectListing as $aProjectDetail) {
@@ -448,13 +447,13 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                 );
                 
                 if($aProjectDetail['locations']!=null){
-                    $sLocationUrl = $aProjectDetail['locations'][0];
-                    
-                    $aInput['country'] = $aCoordinates[$sLocationUrl]['country'];
+                    $sLocationUrl = $aProjectDetail['locations'][0];					
+                    //example for $sLocationUrl => '/api/v1/project_location/6219/'
+                    $aInput['country'] = $aCoordinates[$sLocationUrl]['country'];					
                     $aInput['longitude'] = $aCoordinates[$sLocationUrl]['longitude'];
-                    $aInput['latitude'] = $aCoordinates[$sLocationUrl]['latitude'];
-//                  
+                    $aInput['latitude'] = $aCoordinates[$sLocationUrl]['latitude'];                  
                 }
+				
 				$wpdb->insert($sTableName, $aInput);
                 if($aProjectDetail['locations']!=null){
                     
@@ -466,11 +465,12 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                             'country' => $aCoordinates[$sLocationUrl]['country']
                         );
                         if($aInputLocation['country']!=''){
-                            $wpdb->insert($sLocationsTableName,$aInputLocation);
+                           $wpdb->insert($sLocationsTableName,$aInputLocation);
                         }
                     }
                 }
 			}
+			
 			$wpdb->update('partner_details',array('funds'=>$iTotalFunds),array('prefix'=>$sPrefix));
 		}
         
@@ -483,11 +483,13 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                 $aPartnerIDs[]=$aProjectDetail['id'];
                 
             }
-            //var_dump($aPartnerIDs);die();
+			
+           
             if(count($aPartnerIDs)>0){
-//                echo self::API_URL_FOR_PARTNERS.join(',',$aPartnerIDs).'<br />';
+
                 $sPartners = file_get_contents(self::API_URL_FOR_PARTNERS.join(',',$aPartnerIDs).'&limit=0');
                 $aPartners = json_decode($sPartners,true);
+
                 $aUnique = array();
                 foreach($aPartners['objects'] AS $aPartner){
                         
@@ -500,35 +502,34 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                 }
                 $iTotalPartners = count($aUnique);
                 $wpdb->update('partner_details',array('partners'=>$iTotalPartners),array('prefix'=>$sPrefix));
-//                echo '<pre>';
-//                var_dump($aUnique);
-//                echo '</pre>';
-				
+
             }
         }
         
         public function readCountries(){
             $sCountries = file_get_contents(self::API_URL_FOR_COUNTRIES);
             $aCountries = json_decode($sCountries,true);
+			 
             $aObjects = array();
             foreach($aCountries['objects'] AS $aCountry){
                 $aObjects[$aCountry['resource_uri']]=strtolower($aCountry['name']);
-            }
+            }			
             return $aObjects;
         }
         public function readLocations($sUrlParam=null){
             $aCountries = $this->readCountries();
             $iLimit = 2000 + (int)date('z') + (int)date('G');
             $sUrlParam = ($sUrlParam) ? $sUrlParam : $this->getProjectDetailReaderURLOption();
-            var_dump(self::API_URL_FOR_LOCATIONS.$iLimit.'&project__'.$sUrlParam);
-            $sLocations = file_get_contents(self::API_URL_FOR_LOCATIONS.$iLimit.'&project__'.$sUrlParam);
-            $aLocations = json_decode($sLocations,true);
+
+            $sLocations = file_get_contents(self::API_URL_FOR_LOCATIONS.$iLimit.'&project__'.$sUrlParam);			
+            $aLocations = json_decode($sLocations,true);			
             $aObjects = array();
             foreach($aLocations['objects'] AS $aLocation){
-                $aObjects[$aLocation['resource_uri']]['country']=$aCountries[$aLocation['country']];
+                $aObjects[$aLocation['resource_uri']]['country']=$aCountries[$aLocation['country']];				
                 $aObjects[$aLocation['resource_uri']]['latitude']=$aLocation['latitude'];
                 $aObjects[$aLocation['resource_uri']]['longitude']=$aLocation['longitude'];
             }
+			
             return $aObjects;
         }
 		/**
@@ -541,7 +542,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 			$table_name_projects = $wpdb->prefix . "projects";
 			$table_name_project_locations = $wpdb->prefix . "project_locations";
 			$oProjects = $wpdb->get_results("SELECT pl.*,p.title FROM " . $table_name_projects . " p JOIN " . $table_name_project_locations . " pl ON pl.project_id = p.project_id WHERE pl.longitude != ''");
-            //var_dump("SELECT pl.*,p.title FROM " . $table_name_projects . " p JOIN " . $table_name_project_locations . " pl ON pl.project_id = p.project_id WHERE pl.longitude != ''");
+
 			return $oProjects;
 		}
 		public static function getAllProjectPartnersData() {
@@ -592,7 +593,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 			
 			$sProjectURL = get_option('akvo_project_domain',"http://".str_replace(' ','-',wp_get_theme()).".akvoapp.org/en");
             $sReadMoreLink = $sProjectURL. "/project/";
-			//var_dump($oProjects);
+
             foreach ($oProjects as $oProject) {
                 $sScript .= "  var infoWindow = new google.maps.InfoWindow;";
                 $sLink= $sReadMoreLink.$oProject->project_id;
@@ -649,7 +650,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
 			$iAffectedPostId = $iPostToUpdate;
 
 			if (is_null($iPostToUpdate)) {
-                var_dump($aPosts);
+
 				$wpdb->insert($sPostTableName, $aPosts);
                 echo 'EEEEEEEEEEEEEEEE';
 				//$iAffectedPostId = $wpdb->query("SELECT LAST_INSERT_ID();");
@@ -682,7 +683,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
         public function readProjectUpdatesFromDbByCountry($sCountry){
             global $wpdb;
             $sQuery = "SELECT wpul.post_id FROM ".$wpdb->prefix.self::TBL_PROJUPDATES." wpul JOIN ".$wpdb->prefix."project_locations wpp ON wpp.project_id = wpul.project_id WHERE wpp.country='".$sCountry."'";
-            //var_dump($sQuery);
+
             $oPostIDs = $wpdb->get_results($sQuery,ARRAY_A);
             $aIDs = array();
             foreach($oPostIDs AS $oPost){
@@ -692,8 +693,9 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
         }
         public function readProjectUpdatesFromDbForTabs(){
             global $wpdb;
-            $sQuery = "SELECT wpul.post_id FROM ".$wpdb->prefix.self::TBL_PROJUPDATES." wpul ORDER BY wpul.post_id DESC";
-            //var_dump($sQuery);
+            //$sQuery = "SELECT wpul.post_id FROM ".$wpdb->prefix.self::TBL_PROJUPDATES." wpul ORDER BY wpul.post_id DESC";
+			$sQuery = "SELECT wpul.post_id FROM ".$wpdb->prefix.self::TBL_PROJUPDATES." wpul ORDER BY wpul.last_updated DESC";
+
             $oPostIDs = $wpdb->get_results($sQuery,ARRAY_A);
             $aIDs = array();
             foreach($oPostIDs AS $oPost){
@@ -735,8 +737,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                 $aVideoUrlParams = array();
                 echo "<pre>";
                 parse_str($aVideoUrl['query'],$aVideoUrlParams);
-                var_dump($aVideoUrl);
-                var_dump($aVideoUrlParams);
+
                 
                 if(strpos($aVideoUrl['host'], 'youtube')!==false){
                     //youtube
@@ -752,7 +753,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                     }
                 }
             }
-            var_dump($return);
+
                 
             echo "</pre>";
             return $return;
@@ -791,7 +792,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
             $sPostMetaTableName = $sPrefix . 'postmeta';
             $wpdb->delete($sPostMetaTableName, array('post_id'=>$iPostId,'meta_key'=>'enclosure'));
             $wpdb->insert($sPostMetaTableName, $aAttachmentData);
-            //var_dump(update_post_meta($iPostId,'enclosure',$sFilename));
+
         }
 		public function saveImageAttachment($sFilename, $sPrefix, $iPostId) {
 
@@ -861,7 +862,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
                         'public' => true, 
                         'show_ui' => true,
                         'show_in_nav_menus' => false,
-                        'menu_position' => 25,
+                        'menu_position' => null,
                             'exclude_from_search' => false,
                         'rewrite' => array(
                             'slug' => 'project-update',
@@ -921,7 +922,7 @@ if (!empty($_POST['optionssubmit']) || !empty($_POST['runurlsubmit'])) {
               echo '<option value="'.$aProject->country.'" '.$sSelected.'>'.$aProject->country.'</option>';
           }
           echo '</select>';
-          //var_dump($aProjectData);
+
           
         }
         

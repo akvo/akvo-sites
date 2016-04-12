@@ -8,8 +8,14 @@ namespace Akvo\WvW\ParticipantRegistry\Common\Model;
  */
 class Registry {
 
-	const CUTOFF_MONTH = 7;
-	const CUTOFF_DATE = 31;
+	/**
+	 * CUTOFF_MONTH and CUTOFF_DATE are the month and date in which the "year" should change. 
+	 * If client wants to change the year before the cutoff month , then change the CUTOFF_MONTH and CUTOFF_DATE values accordingly.
+	 */
+//	const CUTOFF_MONTH = 7;
+	const CUTOFF_MONTH = 5;
+//	const CUTOFF_DATE = 31;
+	const CUTOFF_DATE = 10;
 
 	public static function getPastParticipationYears () {
 
@@ -31,7 +37,7 @@ class Registry {
 
 				if ($iCurrentDay < self::CUTOFF_DATE) {
 
-					$iLastYear = $iCurrentYear;
+					$iLastYear = $iCurrentYear - 1;
 
 				}
 

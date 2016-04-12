@@ -46,11 +46,21 @@ class AboutboxWidget extends WP_Widget {
                         ?>
                 <div id="iDivMap"  style="width: <?php echo $width;?>px; height: <?php echo $height;?>px; float: left;"></div>
                         <?php
+						
+						$sHomeURL = home_url();
+						
+						if($sHomeURL == "http://www.gnwp.nl" || $sHomeURL == 'http://wash-liberia.org') {
+							
+							showTempMap();
+						} else {
                         if (function_exists('showMap')) {
 				
                             showMap('');
 
                         }
+							
+						}
+						
                     break;
                     case "photo":
                         

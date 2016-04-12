@@ -1,0 +1,1432 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OutoftheBox\n"
+"POT-Creation-Date: 2014-02-10 14:25+0100\n"
+"PO-Revision-Date: 2014-02-10 14:26+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.3\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin_page.php:63 ../out-of-the-box.php:123
+msgid "Settings"
+msgstr "Settings"
+
+#: ../admin_page.php:64 ../admin_page.php:513
+msgid "File browser"
+msgstr "File browser"
+
+#: ../admin_page.php:78
+msgid "Own Dropbox App?"
+msgstr "Own Dropbox App?"
+
+#: ../admin_page.php:112
+msgid "Enable auto-updater"
+msgstr "Enable auto-updater"
+
+#: ../admin_page.php:129
+msgid "Advanced settings"
+msgstr "Advanced settings"
+
+#: ../admin_page.php:135
+msgid "Shortlinks"
+msgstr "Shortlinks"
+
+#: ../admin_page.php:142
+msgid "Image gallery thumbnails"
+msgstr "Image gallery thumbnails"
+
+#: ../admin_page.php:149
+msgid "User folders"
+msgstr "User folders"
+
+#: ../admin_page.php:156
+msgid "Custom CSS"
+msgstr "Custom CSS"
+
+#: ../admin_page.php:162
+msgid "Notify email templates"
+msgstr "Notify email templates"
+
+#: ../admin_page.php:276
+msgid "If you created your own Dropbox App, please enter your settings below."
+msgstr "If you created your own Dropbox App, please enter your settings below."
+
+#: ../admin_page.php:277
+msgid "How do I create a Dropbox App?"
+msgstr "How do I create a Dropbox App?"
+
+#: ../admin_page.php:281
+msgid "If you would like to receive updates, please insert your Purchase code"
+msgstr "If you would like to receive updates, please insert your Purchase code"
+
+#: ../admin_page.php:283
+msgid "Where do I find the purchase code?"
+msgstr "Where do I find the purchase code?"
+
+#: ../admin_page.php:379
+msgid "Sign up by Bitly"
+msgstr "Sign up by Bitly"
+
+#: ../admin_page.php:379
+msgid "and"
+msgstr "and"
+
+#: ../admin_page.php:379
+msgid "get your apiKey"
+msgstr "get your apiKey"
+
+#: ../admin_page.php:409
+msgid "You can use"
+msgstr "You can use"
+
+#: ../admin_page.php:430
+msgid "You do not have sufficient permissions to access this page."
+msgstr "You do not have sufficient permissions to access this page."
+
+#: ../admin_page.php:437
+msgid "System information"
+msgstr "System information"
+
+#: ../admin_page.php:462
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: ../admin_page.php:463
+msgid "Out-of-the-Box uses the following shortcode:"
+msgstr "Out-of-the-Box uses the following shortcode:"
+
+#: ../admin_page.php:463
+msgid ""
+"To make things easier for you, we added a <u>Shortcode button</u> in the MCE "
+"editor"
+msgstr ""
+"To make things easier for you, we added a <u>Shortcode button</u> in the MCE "
+"editor"
+
+#: ../admin_page.php:465
+msgid "Documentation"
+msgstr "Documentation"
+
+#: ../admin_page.php:466
+msgid "Visit the Out-of-the-Box website"
+msgstr "Visit the Out-of-the-Box website"
+
+#: ../admin_page.php:466
+msgid "for documentation and installation details"
+msgstr "for documentation and installation details"
+
+#: ../admin_page.php:468
+msgid "Support"
+msgstr "Support"
+
+#: ../admin_page.php:469
+msgid "Discovered a bug or just need some help with the plugin?"
+msgstr "Discovered a bug or just need some help with the plugin?"
+
+#: ../admin_page.php:469
+msgid "Visit the support page"
+msgstr "Visit the support page"
+
+#: ../admin_page.php:474
+msgid "Overview of your system settings"
+msgstr "Overview of your system settings"
+
+#: ../admin_page.php:565
+msgid "(Re) Authorize the Plugin!"
+msgstr "(Re) Authorize the Plugin!"
+
+#: ../admin_page.php:566
+msgid "Revoke authorization"
+msgstr "Revoke authorization"
+
+#: ../admin_page.php:609
+msgid "Plugin isn't linked to your Dropbox anymore... Please Reauthorize!"
+msgstr "Plugin isn't linked to your Dropbox anymore... Please Reauthorize!"
+
+#: ../admin_page.php:619
+msgid ""
+"Out-of-the-Box is succesfully authorized and linked with dropbox account:"
+msgstr ""
+"Out-of-the-Box is succesfully authorized and linked with dropbox account:"
+
+#: ../admin_page.php:650
+msgid "You need at least PHP 5.3 if you want to use Out-of-the-Box"
+msgstr "You need at least PHP 5.3 if you want to use Out-of-the-Box"
+
+#: ../admin_page.php:651
+msgid "You are using:"
+msgstr "You are using:"
+
+#: ../admin_page.php:653 ../admin_page.php:679
+msgid ""
+"You don't have the cURL PHP extension installed (couldn't find function "
+"\"curl_init\"), please enable or install this extension"
+msgstr ""
+"You don't have the cURL PHP extension installed (couldn't find function "
+"\"curl_init\"), please enable or install this extension"
+
+#: ../admin_page.php:667 ../admin_page.php:670 ../admin_page.php:672
+msgid "Using SSL"
+msgstr "Using SSL"
+
+#: ../admin_page.php:667
+msgid "You are using a secure connection"
+msgstr "You are using a secure connection"
+
+#: ../admin_page.php:670
+msgid "You are using running a server on 'localhost'."
+msgstr "You are using running a server on 'localhost'."
+
+#: ../admin_page.php:670
+msgid ""
+"If your using this Plugin somewhere else and would like to have a secure "
+"connection, you probably need a SSL certificate."
+msgstr ""
+"If your using this Plugin somewhere else and would like to have a secure "
+"connection, you probably need a SSL certificate."
+
+#: ../admin_page.php:672
+msgid "SSL is required for authentication with the Dropbox API."
+msgstr "SSL is required for authentication with the Dropbox API."
+
+#: ../admin_page.php:672
+msgid ""
+"See our documentation how to obtain a SSL certificate or use Out-of-the-Box "
+"without one."
+msgstr ""
+"See our documentation how to obtain a SSL certificate or use Out-of-the-Box "
+"without one."
+
+#: ../admin_page.php:677 ../admin_page.php:679
+msgid "cURL PHP extension"
+msgstr "cURL PHP extension"
+
+#: ../admin_page.php:677
+msgid "You have the cURL PHP extension installed"
+msgstr "You have the cURL PHP extension installed"
+
+#: ../admin_page.php:686 ../admin_page.php:688
+msgid "Is TMP directory writable?"
+msgstr "Is TMP directory writable?"
+
+#: ../admin_page.php:686
+msgid "TMP directory"
+msgstr "TMP directory"
+
+#: ../admin_page.php:686
+msgid "isn't writable. You are not able to upload files to Dropbox."
+msgstr "isn't writable. You are not able to upload files to Dropbox."
+
+#: ../admin_page.php:686
+msgid "Make sure TMP directory is writable"
+msgstr "Make sure TMP directory is writable"
+
+#: ../admin_page.php:688
+msgid "TMP directory is writable"
+msgstr "TMP directory is writable"
+
+#: ../admin_page.php:700 ../admin_page.php:702 ../admin_page.php:705
+msgid "Is CACHE directory writable?"
+msgstr "Is CACHE directory writable?"
+
+#: ../admin_page.php:700
+msgid "CACHE directory"
+msgstr "CACHE directory"
+
+#: ../admin_page.php:700 ../admin_page.php:713
+msgid "isn't writable. The gallery will load very slowly."
+msgstr "isn't writable. The gallery will load very slowly."
+
+#: ../admin_page.php:700
+msgid "Make sure CACHE directory is writable"
+msgstr "Make sure CACHE directory is writable"
+
+#: ../admin_page.php:702
+msgid "CACHE directory is now writable"
+msgstr "CACHE directory is now writable"
+
+#: ../admin_page.php:705
+msgid "CACHE directory is writable"
+msgstr "CACHE directory is writable"
+
+#: ../admin_page.php:713 ../admin_page.php:715 ../admin_page.php:718
+msgid "Is CACHE-index file writable?"
+msgstr "Is CACHE-index file writable?"
+
+#: ../admin_page.php:713
+msgid "-index file"
+msgstr "-index file"
+
+#: ../admin_page.php:713
+msgid "Make sure CACHE-index file is writable"
+msgstr "Make sure CACHE-index file is writable"
+
+#: ../admin_page.php:715
+msgid "CACHE-index file is now writable"
+msgstr "CACHE-index file is now writable"
+
+#: ../admin_page.php:718
+msgid "CACHE-index file is writable"
+msgstr "CACHE-index file is writable"
+
+#: ../admin_page.php:723
+msgid ""
+"The Dropbox SDK uses 64-bit integers, but it looks like we're running on a "
+"version of PHP that doesn't support 64-bit integers"
+msgstr ""
+"The Dropbox SDK uses 64-bit integers, but it looks like we're running on a "
+"version of PHP that doesn't support 64-bit integers"
+
+#: ../admin_page.php:724
+msgid ""
+"Because you can still use the Dropbox SDK with 32-bit integers we disabled "
+"the 64-bit check"
+msgstr ""
+"Because you can still use the Dropbox SDK with 32-bit integers we disabled "
+"the 64-bit check"
+
+#: ../admin_page.php:725 ../admin_page.php:728
+msgid "64-bit integers"
+msgstr "64-bit integers"
+
+#: ../admin_page.php:727
+msgid ""
+"It looks like we're running on a version of PHP that does support 64-bit "
+"integers"
+msgstr ""
+"It looks like we're running on a version of PHP that does support 64-bit "
+"integers"
+
+#: ../admin_page.php:752
+msgid "Can resize the following images"
+msgstr "Can resize the following images"
+
+#: ../admin_page.php:752
+msgid ""
+"If your server doesn't support resizing an image type, we try to use Dropbox "
+"own thumbnails"
+msgstr ""
+"If your server doesn't support resizing an image type, we try to use Dropbox "
+"own thumbnails"
+
+#: ../admin_page.php:756
+msgid "You can use the ZIP function"
+msgstr "You can use the ZIP function"
+
+#: ../admin_page.php:757 ../admin_page.php:760
+msgid "Download files as ZIP"
+msgstr "Download files as ZIP"
+
+#: ../admin_page.php:759
+msgid "You cannot download files as ZIP"
+msgstr "You cannot download files as ZIP"
+
+#: ../authorizeApp.php:8
+msgid "Couldn't load Dropbox SDK libary"
+msgstr "Couldn't load Dropbox SDK libary"
+
+#: ../out-of-the-box.php:195 ../templates/tinymce_popup.php:89
+msgid "Success"
+msgstr "Success"
+
+#: ../out-of-the-box.php:196 ../out-of-the-box.php:199
+#: ../templates/tinymce_popup.php:90 ../templates/tinymce_popup.php:93
+msgid "Error"
+msgstr "Error"
+
+#: ../out-of-the-box.php:197 ../templates/tinymce_popup.php:91
+msgid "In queue"
+msgstr "In queue"
+
+#: ../out-of-the-box.php:198 ../templates/tinymce_popup.php:92
+msgid "Uploading"
+msgstr "Uploading"
+
+#: ../out-of-the-box.php:200 ../templates/tinymce_popup.php:94
+msgid "Close"
+msgstr "Close"
+
+#: ../out-of-the-box.php:201 ../includes/OutoftheBox_Processor.php:268
+#: ../templates/tinymce_popup.php:95
+msgid "Start"
+msgstr "Start"
+
+#: ../out-of-the-box.php:202 ../templates/tinymce_popup.php:96
+#: ../templates/tinymce_popup.php:528
+msgid "Cancel"
+msgstr "Cancel"
+
+#: ../out-of-the-box.php:203 ../includes/OutoftheBox_Filebrowser.php:226
+#: ../includes/OutoftheBox_Gallery.php:180 ../templates/tinymce_popup.php:97
+msgid "Delete"
+msgstr "Delete"
+
+#: ../out-of-the-box.php:204 ../templates/tinymce_popup.php:98
+msgid "Create zip file"
+msgstr "Create zip file"
+
+#: ../out-of-the-box.php:205 ../templates/tinymce_popup.php:99
+msgid "Do you really want to delete:"
+msgstr "Do you really want to delete:"
+
+#: ../out-of-the-box.php:206 ../includes/OutoftheBox_Filebrowser.php:222
+#: ../includes/OutoftheBox_Gallery.php:176 ../templates/tinymce_popup.php:100
+msgid "Rename"
+msgstr "Rename"
+
+#: ../out-of-the-box.php:207 ../templates/tinymce_popup.php:101
+msgid "Rename to:"
+msgstr "Rename to:"
+
+#: ../out-of-the-box.php:208 ../templates/tinymce_popup.php:102
+msgid "Can't receive filelist"
+msgstr "Can't receive filelist"
+
+#: ../out-of-the-box.php:209 ../includes/OutoftheBox_Filebrowser.php:241
+#: ../includes/OutoftheBox_Gallery.php:198 ../templates/tinymce_popup.php:103
+msgid "Add folder"
+msgstr "Add folder"
+
+#: ../out-of-the-box.php:210 ../templates/tinymce_popup.php:104
+msgid "New folder"
+msgstr "New folder"
+
+#: ../out-of-the-box.php:211 ../templates/tinymce_popup.php:105
+msgid "No files found or selected"
+msgstr "No files found or selected"
+
+#: ../out-of-the-box.php:212 ../templates/tinymce_popup.php:106
+msgid "Creating zip file"
+msgstr "Creating zip file"
+
+#: ../out-of-the-box.php:213 ../templates/tinymce_popup.php:107
+msgid "Share file"
+msgstr "Share file"
+
+#: ../out-of-the-box.php:214 ../templates/tinymce_popup.php:108
+msgid "Creating shared link..."
+msgstr "Creating shared link..."
+
+#: ../out-of-the-box.php:215 ../templates/tinymce_popup.php:109
+msgid "Previous"
+msgstr "Previous"
+
+#: ../out-of-the-box.php:216 ../templates/tinymce_popup.php:110
+msgid "Next"
+msgstr "Next"
+
+#: ../out-of-the-box.php:217 ../templates/tinymce_popup.php:111
+msgid "This content failed to load"
+msgstr "This content failed to load"
+
+#: ../out-of-the-box.php:218 ../templates/tinymce_popup.php:112
+msgid "This image failed to load"
+msgstr "This image failed to load"
+
+#: ../out-of-the-box.php:219 ../templates/tinymce_popup.php:113
+msgid "Start slideshow"
+msgstr "Start slideshow"
+
+#: ../out-of-the-box.php:220 ../templates/tinymce_popup.php:114
+msgid "Stop slideshow"
+msgstr "Stop slideshow"
+
+#: ../out-of-the-box.php:221 ../includes/OutoftheBox_Dropbox.php:308
+#: ../templates/tinymce_popup.php:115
+msgid "Maximum number of files exceeded"
+msgstr "Maximum number of files exceeded"
+
+#: ../out-of-the-box.php:222 ../templates/tinymce_popup.php:116
+msgid "File type not allowed"
+msgstr "File type not allowed"
+
+#: ../out-of-the-box.php:223 ../templates/tinymce_popup.php:117
+msgid "File is too large"
+msgstr "File is too large"
+
+#: ../out-of-the-box.php:224 ../includes/OutoftheBox_Dropbox.php:306
+#: ../templates/tinymce_popup.php:118
+msgid "File is too small"
+msgstr "File is too small"
+
+#: ../wp-updates-plugin.php:76
+msgid ""
+"An Unexpected HTTP Error occurred during the API request.</p> <p><a href=\"?"
+"\" onclick=\"document.location.reload(); return false;\">Try again</a>"
+msgstr ""
+"An Unexpected HTTP Error occurred during the API request.</p> <p><a href=\"?"
+"\" onclick=\"document.location.reload(); return false;\">Try again</a>"
+
+#: ../wp-updates-plugin.php:80
+msgid "An unknown error occurred"
+msgstr "An unknown error occurred"
+
+#: ../includes/OutoftheBox_Dropbox.php:11
+msgid "Something went wrong... See settings page"
+msgstr "Something went wrong... See settings page"
+
+#: ../includes/OutoftheBox_Dropbox.php:40
+msgid "Out-of-the-Box needs your help!"
+msgstr "Out-of-the-Box needs your help!"
+
+#: ../includes/OutoftheBox_Dropbox.php:40
+msgid ""
+"Authorize the plugin. If you would like to use your own Dropbox App, enter "
+"your App key &amp; secret and re-authorize"
+msgstr ""
+"Authorize the plugin. If you would like to use your own Dropbox App, enter "
+"your App key &amp; secret and re-authorize"
+
+#: ../includes/OutoftheBox_Dropbox.php:76
+msgid "Your Dropbox App key or token seems to be invalid: "
+msgstr "Your Dropbox App key or token seems to be invalid: "
+
+#: ../includes/OutoftheBox_Dropbox.php:100
+msgid "Error in getClient: "
+msgstr "Error in getClient: "
+
+#: ../includes/OutoftheBox_Dropbox.php:138
+msgid "/dropbox-auth-start: could not start authorization: "
+msgstr "/dropbox-auth-start: could not start authorization: "
+
+#: ../includes/OutoftheBox_Dropbox.php:161
+msgid "/dropbox-auth-finish: bad request: "
+msgstr "/dropbox-auth-finish: bad request: "
+
+#: ../includes/OutoftheBox_Dropbox.php:169
+msgid "/dropbox-auth-finish: CSRF mismatch: "
+msgstr "/dropbox-auth-finish: CSRF mismatch: "
+
+#: ../includes/OutoftheBox_Dropbox.php:173
+msgid "/dropbox-auth-finish: not approved: "
+msgstr "/dropbox-auth-finish: not approved: "
+
+#: ../includes/OutoftheBox_Dropbox.php:177
+msgid "/dropbox-auth-finish: error redirect from Dropbox: "
+msgstr "/dropbox-auth-finish: error redirect from Dropbox: "
+
+#: ../includes/OutoftheBox_Dropbox.php:181
+msgid "/dropbox-auth-finish: error communicating with Dropbox API: "
+msgstr "/dropbox-auth-finish: error communicating with Dropbox API: "
+
+#: ../includes/OutoftheBox_Dropbox.php:297
+msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
+msgstr "The uploaded file exceeds the upload_max_filesize directive in php.ini"
+
+#: ../includes/OutoftheBox_Dropbox.php:298
+msgid ""
+"The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in "
+"the HTML form"
+msgstr ""
+"The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in "
+"the HTML form"
+
+#: ../includes/OutoftheBox_Dropbox.php:299
+msgid "The uploaded file was only partially uploaded"
+msgstr "The uploaded file was only partially uploaded"
+
+#: ../includes/OutoftheBox_Dropbox.php:300
+msgid "No file was uploaded"
+msgstr "No file was uploaded"
+
+#: ../includes/OutoftheBox_Dropbox.php:301
+msgid "Missing a temporary folder"
+msgstr "Missing a temporary folder"
+
+#: ../includes/OutoftheBox_Dropbox.php:302
+msgid "Failed to write file to disk"
+msgstr "Failed to write file to disk"
+
+#: ../includes/OutoftheBox_Dropbox.php:303
+msgid "A PHP extension stopped the file upload"
+msgstr "A PHP extension stopped the file upload"
+
+#: ../includes/OutoftheBox_Dropbox.php:304
+msgid "The uploaded file exceeds the post_max_size directive in php.ini"
+msgstr "The uploaded file exceeds the post_max_size directive in php.ini"
+
+#: ../includes/OutoftheBox_Dropbox.php:305
+msgid "File is too big"
+msgstr "File is too big"
+
+#: ../includes/OutoftheBox_Dropbox.php:307
+msgid "Filetype not allowed"
+msgstr "Filetype not allowed"
+
+#: ../includes/OutoftheBox_Dropbox.php:309
+msgid "Image exceeds maximum width"
+msgstr "Image exceeds maximum width"
+
+#: ../includes/OutoftheBox_Dropbox.php:310
+msgid "Image requires a minimum width"
+msgstr "Image requires a minimum width"
+
+#: ../includes/OutoftheBox_Dropbox.php:311
+msgid "Image exceeds maximum height"
+msgstr "Image exceeds maximum height"
+
+#: ../includes/OutoftheBox_Dropbox.php:312
+msgid "Image requires a minimum height"
+msgstr "Image requires a minimum height"
+
+#: ../includes/OutoftheBox_Dropbox.php:325
+#: ../includes/OutoftheBox_Dropbox.php:401
+#: ../includes/OutoftheBox_Dropbox.php:458
+#: ../includes/OutoftheBox_Dropbox.php:523
+#: ../includes/OutoftheBox_Dropbox.php:554
+msgid "Invalid <dropbox-path>"
+msgstr "Invalid Dropbox directory"
+
+#: ../includes/OutoftheBox_Dropbox.php:347
+msgid "Not uploaded to Dropbox "
+msgstr "Not uploaded to Dropbox "
+
+#: ../includes/OutoftheBox_Dropbox.php:359
+msgid "Could not write to tmp dir. Make sure it exists and is writable"
+msgstr "Could not write to tmp dir. Make sure it exists and is writable"
+
+#: ../includes/OutoftheBox_Dropbox.php:361
+msgid "Uploading failed"
+msgstr "Uploading failed"
+
+#: ../includes/OutoftheBox_Dropbox.php:383
+#: ../includes/OutoftheBox_Dropbox.php:389
+#: ../includes/OutoftheBox_Dropbox.php:394
+#: ../includes/OutoftheBox_Dropbox.php:403
+#: ../includes/OutoftheBox_Dropbox.php:411
+#: ../includes/OutoftheBox_Dropbox.php:415
+#: ../includes/OutoftheBox_Dropbox.php:424
+#: ../includes/OutoftheBox_Processor.php:151
+msgid "Failed to delete entry"
+msgstr "Failed to delete entry"
+
+#: ../includes/OutoftheBox_Dropbox.php:439
+msgid "No new name set"
+msgstr "No new name set"
+
+#: ../includes/OutoftheBox_Dropbox.php:445
+#: ../includes/OutoftheBox_Dropbox.php:451
+#: ../includes/OutoftheBox_Dropbox.php:460
+#: ../includes/OutoftheBox_Dropbox.php:468
+#: ../includes/OutoftheBox_Dropbox.php:472
+#: ../includes/OutoftheBox_Dropbox.php:488
+#: ../includes/OutoftheBox_Processor.php:175
+msgid "Failed to rename entry"
+msgstr "Failed to rename entry"
+
+#: ../includes/OutoftheBox_Dropbox.php:503
+#: ../includes/OutoftheBox_Dropbox.php:513
+#: ../includes/OutoftheBox_Dropbox.php:525
+#: ../includes/OutoftheBox_Dropbox.php:534
+#: ../includes/OutoftheBox_Dropbox.php:568
+#: ../includes/OutoftheBox_Processor.php:206
+msgid "Failed to add folder"
+msgstr "Failed to add folder"
+
+#: ../includes/OutoftheBox_Dropbox.php:507
+msgid "No new foldername set"
+msgstr "No new foldername set"
+
+#: ../includes/OutoftheBox_Dropbox.php:540
+#: ../includes/OutoftheBox_Processor.php:220
+msgid "Folder"
+msgstr "Folder"
+
+#: ../includes/OutoftheBox_Dropbox.php:540
+msgid "already exists"
+msgstr "already exists"
+
+#: ../includes/OutoftheBox_Dropbox.php:556
+msgid "Failed to add user folder"
+msgstr "Failed to add user folder"
+
+#: ../includes/OutoftheBox_Dropbox.php:728
+msgid "Requested directory isn't allowed"
+msgstr "Requested directory isn't allowed"
+
+#: ../includes/OutoftheBox_Dropbox.php:881
+msgid "Couldn't create zip file"
+msgstr "Couldn't create zip file"
+
+#: ../includes/OutoftheBox_Dropbox.php:1037
+msgid "Can't create link"
+msgstr "Can't create link"
+
+#: ../includes/OutoftheBox_Dropbox.php:1271
+msgid "Cannot get image"
+msgstr "Cannot get image"
+
+#: ../includes/OutoftheBox_Filebrowser.php:66
+#: ../includes/OutoftheBox_Filebrowser.php:71
+#: ../includes/OutoftheBox_Gallery.php:62
+msgid "No files or folders found"
+msgstr "No files or folders found"
+
+#: ../includes/OutoftheBox_Filebrowser.php:217
+#: ../includes/OutoftheBox_Gallery.php:171
+msgid "Share"
+msgstr "Share"
+
+#: ../includes/OutoftheBox_Filebrowser.php:242
+msgid "Add a new folder in this directory"
+msgstr "Add a new folder in this directory"
+
+#: ../includes/OutoftheBox_Filebrowser.php:258
+msgid "Previous folder"
+msgstr "Previous folder"
+
+#: ../includes/OutoftheBox_Processor.php:160
+msgid "Entry was deleted"
+msgstr "Entry was deleted"
+
+#: ../includes/OutoftheBox_Processor.php:189
+msgid "Entry was renamed"
+msgstr "Entry was renamed"
+
+#: ../includes/OutoftheBox_Processor.php:220
+msgid "was added"
+msgstr "was added"
+
+#: ../includes/OutoftheBox_Processor.php:452
+msgid ""
+"To view the Dropbox folders, you need to have JavaScript enabled in your "
+"browser"
+msgstr ""
+"To view the Dropbox folders, you need to have JavaScript enabled in your "
+"browser"
+
+#: ../includes/OutoftheBox_Processor.php:453
+msgid "To do so, please follow these instructions"
+msgstr "To do so, please follow these instructions"
+
+#: ../includes/OutoftheBox_Processor.php:507
+msgid "Please update your mediaplayer shortcode"
+msgstr "Please update your mediaplayer shortcode"
+
+#: ../includes/OutoftheBox_Processor.php:695
+msgid "Guests"
+msgstr "Guests"
+
+#: ../includes/OutoftheBox_Processor.php:696 ../templates/tinymce_popup.php:40
+msgid "Guest"
+msgstr "Guest"
+
+#: ../includes/OutoftheBox_Processor.php:722
+msgid "A guest"
+msgstr "A guest"
+
+#: ../includes/OutoftheBox_Processor.php:736
+msgid "File downloaded"
+msgstr "File downloaded"
+
+#: ../includes/OutoftheBox_Processor.php:745
+msgid "New file(s) in your Dropbox"
+msgstr "New file(s) in your Dropbox"
+
+#: ../includes/OutoftheBox_Processor.php:832
+msgid "No valid Dropbox token found... Please Authorize!"
+msgstr "No valid Dropbox token found... Please Authorize!"
+
+#: ../templates/frontend.php:16 ../templates/gallery.php:16
+msgid "Download all files"
+msgstr "Download all files"
+
+#: ../templates/frontend.php:17 ../templates/gallery.php:17
+msgid "Download selected files"
+msgstr "Download selected files"
+
+#: ../templates/frontend.php:29 ../templates/gallery.php:27
+msgid "Search..."
+msgstr "Search..."
+
+#: ../templates/frontend.php:33 ../templates/gallery.php:31
+#: ../templates/player.flat.php:19
+msgid "Loading..."
+msgstr "Loading..."
+
+#: ../templates/frontend.php:41 ../templates/tinymce_popup.php:279
+msgid "Name"
+msgstr "Name"
+
+#: ../templates/frontend.php:49 ../templates/tinymce_popup.php:282
+msgid "Size"
+msgstr "Size"
+
+#: ../templates/frontend.php:55 ../templates/tinymce_popup.php:285
+msgid "Date modified"
+msgstr "Date modified"
+
+#: ../templates/player.flat.php:39 ../templates/player.php:56
+msgid "Update Required"
+msgstr "Update Required"
+
+#: ../templates/player.flat.php:40 ../templates/player.php:57
+msgid ""
+"To play the media you will need to either update your browser to a recent "
+"version or update your"
+msgstr ""
+"To play the media you will need to either update your browser to a recent "
+"version or update your"
+
+#: ../templates/tinymce_popup.php:127
+msgid "Create Shortcode"
+msgstr "Create Shortcode"
+
+#: ../templates/tinymce_popup.php:129 ../templates/tinymce_popup.php:170
+msgid "Insert direct links to files or folders"
+msgstr "Insert direct links to files or folders"
+
+#: ../templates/tinymce_popup.php:147
+msgid "Out-of-the-Box should behave as"
+msgstr "Out-of-the-Box should behave as"
+
+#: ../templates/tinymce_popup.php:151
+msgid "Filelist"
+msgstr "Filelist"
+
+#: ../templates/tinymce_popup.php:154
+msgid "Photogallery"
+msgstr "Photogallery"
+
+#: ../templates/tinymce_popup.php:157
+msgid "Audio player"
+msgstr "Audio player"
+
+#: ../templates/tinymce_popup.php:160
+msgid "Video player"
+msgstr "Video player"
+
+#: ../templates/tinymce_popup.php:165
+msgid "Select root folder"
+msgstr "Select root folder"
+
+#: ../templates/tinymce_popup.php:195
+msgid "Selected root folder"
+msgstr "Selected root folder"
+
+#: ../templates/tinymce_popup.php:197
+msgid "Layout"
+msgstr "Layout"
+
+#: ../templates/tinymce_popup.php:201
+msgid "Show folders breadcrumb"
+msgstr "Show folders breadcrumb"
+
+#: ../templates/tinymce_popup.php:206
+msgid "Root breadcrumb title"
+msgstr "Root breadcrumb title"
+
+#: ../templates/tinymce_popup.php:206 ../templates/tinymce_popup.php:238
+#: ../templates/tinymce_popup.php:332
+msgid "Leave empty for default value"
+msgstr "Leave empty for default value"
+
+#: ../templates/tinymce_popup.php:212
+msgid "Show parents of root folder in breadcrumb"
+msgstr "Show parents of root folder in breadcrumb"
+
+#: ../templates/tinymce_popup.php:218
+msgid "Show searchbox"
+msgstr "Show searchbox"
+
+#: ../templates/tinymce_popup.php:223
+msgid "Show columnnames"
+msgstr "Show columnnames"
+
+#: ../templates/tinymce_popup.php:228
+msgid "Show download button (zip-archive)"
+msgstr "Show download button (zip-archive)"
+
+#: ../templates/tinymce_popup.php:233
+msgid "Show share button"
+msgstr "Show share button"
+
+#: ../templates/tinymce_popup.php:237
+msgid "Set max width for the Out-of-the-Box container"
+msgstr "Set max width for the Out-of-the-Box container"
+
+#: ../templates/tinymce_popup.php:238
+msgid "You can use pixels or percentages, eg '360px', '480px', '70%'"
+msgstr "You can use pixels or percentages, eg '360px', '480px', '70%'"
+
+#: ../templates/tinymce_popup.php:246
+msgid "Media files"
+msgstr "Media files"
+
+#: ../templates/tinymce_popup.php:248
+msgid "Select which sort of media files you will provide"
+msgstr "Select which sort of media files you will provide"
+
+#: ../templates/tinymce_popup.php:250
+msgid "Do always supply a mp3 file to support all browsers"
+msgstr "Do always supply a mp3 file to support all browsers"
+
+#: ../templates/tinymce_popup.php:260
+msgid "Do always supply a m4v/mp4 file to support all browsers"
+msgstr "Do always supply a m4v/mp4 file to support all browsers"
+
+#: ../templates/tinymce_popup.php:269
+msgid ""
+"The mediaplayer will decided, based on the provided formats, if the user "
+"will have a HTML5 player or a Flash Player"
+msgstr ""
+"The mediaplayer will decided, based on the provided formats, if the user "
+"will have a HTML5 player or a Flash Player"
+
+#: ../templates/tinymce_popup.php:269
+msgid ""
+"You may provide the same file with different extensions to increase cross-"
+"browser support"
+msgstr ""
+"You may provide the same file with different extensions to increase cross-"
+"browser support"
+
+#: ../templates/tinymce_popup.php:273
+msgid "Sorting"
+msgstr "Sorting"
+
+#: ../templates/tinymce_popup.php:277
+msgid "Sort files and folders by:"
+msgstr "Sort files and folders by:"
+
+#: ../templates/tinymce_popup.php:290
+msgid "Sort order:"
+msgstr "Sort order:"
+
+#: ../templates/tinymce_popup.php:292
+msgid "Ascending"
+msgstr "Ascending"
+
+#: ../templates/tinymce_popup.php:295
+msgid "Descending"
+msgstr "Descending"
+
+#: ../templates/tinymce_popup.php:302
+msgid "Filelist options"
+msgstr "Filelist options"
+
+#: ../templates/tinymce_popup.php:307
+msgid "Show files in folder"
+msgstr "Show files in folder"
+
+#: ../templates/tinymce_popup.php:311
+msgid "Show filesize"
+msgstr "Show filesize"
+
+#: ../templates/tinymce_popup.php:315
+msgid "Show date last modified"
+msgstr "Show date last modified"
+
+#: ../templates/tinymce_popup.php:319
+msgid "Show file extensions"
+msgstr "Show file extensions"
+
+#: ../templates/tinymce_popup.php:323
+msgid "Force a 'Save as' Dialog on downloading file"
+msgstr "Force a 'Save as' Dialog on downloading file"
+
+#: ../templates/tinymce_popup.php:329
+msgid "Gallery options"
+msgstr "Gallery options"
+
+#: ../templates/tinymce_popup.php:332
+msgid "Row height"
+msgstr "Row height"
+
+#: ../templates/tinymce_popup.php:332
+msgid "The ideal height you want your grid rows to be"
+msgstr "The ideal height you want your grid rows to be"
+
+#: ../templates/tinymce_popup.php:332
+msgid ""
+"It won't set it exactly to this as plugin adjusts the row height to get the "
+"correct width"
+msgstr ""
+"It won't set it exactly to this as plugin adjusts the row height to get the "
+"correct width"
+
+#: ../templates/tinymce_popup.php:338
+msgid "Don't stretch last row to fit grid width"
+msgstr "Don't stretch last row to fit grid width"
+
+#: ../templates/tinymce_popup.php:343
+msgid "Crop images for a squared grid"
+msgstr "Crop images for a squared grid"
+
+#: ../templates/tinymce_popup.php:348
+msgid "Shuffle images"
+msgstr "Shuffle images"
+
+#: ../templates/tinymce_popup.php:353
+msgid "Exclusions"
+msgstr "Exclusions"
+
+#: ../templates/tinymce_popup.php:356
+msgid "Limit files by extension"
+msgstr "Limit files by extension"
+
+#: ../templates/tinymce_popup.php:357 ../templates/tinymce_popup.php:390
+msgid "Add extensions separated with | e.g. (jpg|png|gif)"
+msgstr "Add extensions separated with | e.g. (jpg|png|gif)"
+
+#: ../templates/tinymce_popup.php:357
+msgid "Leave empty to show all files"
+msgstr "Leave empty to show all files"
+
+#: ../templates/tinymce_popup.php:362
+msgid "Include files or folders (only show these items)"
+msgstr "Include files or folders (only show these items)"
+
+#: ../templates/tinymce_popup.php:363 ../templates/tinymce_popup.php:369
+msgid "Add files or folders separated with | e.g. (file1.jpg|long folder name)"
+msgstr ""
+"Add files or folders separated with | e.g. (file1.jpg|long folder name)"
+
+#: ../templates/tinymce_popup.php:368
+msgid "Exclude files or folders"
+msgstr "Exclude files or folders"
+
+#: ../templates/tinymce_popup.php:375
+msgid "Upload form options"
+msgstr "Upload form options"
+
+#: ../templates/tinymce_popup.php:379
+msgid "Include upload form"
+msgstr "Include upload form"
+
+#: ../templates/tinymce_popup.php:385
+msgid "Overwrite existing files"
+msgstr "Overwrite existing files"
+
+#: ../templates/tinymce_popup.php:389
+msgid "Limit upload by extension"
+msgstr "Limit upload by extension"
+
+#: ../templates/tinymce_popup.php:390
+msgid "Leave empty for no restricion"
+msgstr "Leave empty for no restricion"
+
+#: ../templates/tinymce_popup.php:397
+msgid "Max filesize for uploading in bytes"
+msgstr "Max filesize for uploading in bytes"
+
+#: ../templates/tinymce_popup.php:398
+msgid "Leave empty for server maximum "
+msgstr "Leave empty for server maximum "
+
+#: ../templates/tinymce_popup.php:398
+msgid "How to calculate?"
+msgstr "How to calculate?"
+
+#: ../templates/tinymce_popup.php:408
+msgid "Email notifications"
+msgstr "Email notifications"
+
+#: ../templates/tinymce_popup.php:412
+msgid ""
+"Would you like to receive a notification email when someone downloads a file?"
+msgstr ""
+"Would you like to receive a notification email when someone downloads a file?"
+
+#: ../templates/tinymce_popup.php:418
+msgid ""
+"Would you like to receive a notification email when someone uploads a file?"
+msgstr ""
+"Would you like to receive a notification email when someone uploads a file?"
+
+#: ../templates/tinymce_popup.php:423
+msgid "On which email address would you like to receive the notification?"
+msgstr "On which email address would you like to receive the notification?"
+
+#: ../templates/tinymce_popup.php:424
+msgid "Default value is:"
+msgstr "Default value is:"
+
+#: ../templates/tinymce_popup.php:433
+msgid "Edit files &amp; folders"
+msgstr "Edit files &amp; folders"
+
+#: ../templates/tinymce_popup.php:437
+msgid "Files &amp; folders can be renamed"
+msgstr "Files &amp; folders can be renamed"
+
+#: ../templates/tinymce_popup.php:442
+msgid "Files &amp; folders can be deleted"
+msgstr "Files &amp; folders can be deleted"
+
+#: ../templates/tinymce_popup.php:447
+msgid "Can add new folders"
+msgstr "Can add new folders"
+
+#: ../templates/tinymce_popup.php:453
+msgid "User management"
+msgstr "User management"
+
+#: ../templates/tinymce_popup.php:455
+msgid ""
+"Out-of-the-Box uses Wordpress Roles to determine how an user can use the "
+"plugin"
+msgstr ""
+"Out-of-the-Box uses Wordpress Roles to determine how an user can use the "
+"plugin"
+
+#: ../templates/tinymce_popup.php:457
+msgid "View Out-of-the-Box"
+msgstr "View Out-of-the-Box"
+
+#: ../templates/tinymce_popup.php:462
+msgid "Download files"
+msgstr "Download files"
+
+#: ../templates/tinymce_popup.php:469
+msgid "Upload files"
+msgstr "Upload files"
+
+#: ../templates/tinymce_popup.php:476
+msgid "Rename files"
+msgstr "Rename files"
+
+#: ../templates/tinymce_popup.php:482
+msgid "Rename folders"
+msgstr "Rename folders"
+
+#: ../templates/tinymce_popup.php:488
+msgid "Delete files"
+msgstr "Delete files"
+
+#: ../templates/tinymce_popup.php:494
+msgid "Delete folders"
+msgstr "Delete folders"
+
+#: ../templates/tinymce_popup.php:500
+msgid "Add folders"
+msgstr "Add folders"
+
+#: ../templates/tinymce_popup.php:510
+msgid "Users can only use their own folder within the selected rootfolder"
+msgstr "Users can only use their own folder within the selected rootfolder"
+
+#: ../templates/tinymce_popup.php:514
+msgid "Note"
+msgstr "Note"
+
+#: ../templates/tinymce_popup.php:514
+msgid "By default guests (not logged in users) will also get their own folder"
+msgstr "By default guests (not logged in users) will also get their own folder"
+
+#: ../templates/tinymce_popup.php:514
+msgid "Remove 'Guest' from View Roles to disable guests to use the plugin"
+msgstr "Remove 'Guest' from View Roles to disable guests to use the plugin"
+
+#: ../templates/tinymce_popup.php:516
+msgid "See and edit all user folders"
+msgstr "See and edit all user folders"
+
+#: ../templates/tinymce_popup.php:532
+msgid "Insert"
+msgstr "Insert"
+
+#: ../templates/tinymce_popup.php:534
+msgid "Insert links"
+msgstr "Insert links"
+
+#: ../templates/uploadform.php:7
+msgid "Add files"
+msgstr "Add files"
+
+#: ../templates/uploadform.php:11
+msgid "Start upload"
+msgstr "Start upload"
+
+#: ../templates/uploadform.php:14
+msgid "Cancel upload"
+msgstr "Cancel upload"
+
+#: ../templates/uploadform.php:16
+msgid "Max. "
+msgstr "Max. "
+
+#~ msgid "Dropbox App settings"
+#~ msgstr "Dropbox App settings"
+
+#~ msgid "After you created a Dropbox App, please enter your settings below."
+#~ msgstr "After you created a Dropbox App, please enter your settings below."
+
+#~ msgid ""
+#~ "This field is set when you authorize your Dropbox App. Only change this "
+#~ "if you know what your doing."
+#~ msgstr ""
+#~ "This field is set when you authorize your Dropbox App. Only change this "
+#~ "if you know what your doing."
+
+#~ msgid "Authorize Dropbox API"
+#~ msgstr "Authorize Dropbox API"
+
+#~ msgid ""
+#~ "See our documentation how to obtain a SSL certificate or how to use Out-"
+#~ "of-the-Box without one."
+#~ msgstr ""
+#~ "See our documentation how to obtain a SSL certificate or how to use Out-"
+#~ "of-the-Box without one."
+
+#~ msgid "(Re) Authorize"
+#~ msgstr "(Re) Authorize"
+
+#~ msgid ""
+#~ "If your using this Plugin somewhere else, you need a SSL certificate to "
+#~ "ensure a secure connection."
+#~ msgstr ""
+#~ "If your using this Plugin somewhere else, you need a SSL certificate to "
+#~ "ensure a secure connection."
+
+#~ msgid ""
+#~ "No Token found! Please enter your App key and secret and re-authorize"
+#~ msgstr ""
+#~ "No Token found! Please enter your App key and secret and re-authorize"
+
+#~ msgid ""
+#~ "Dropbox App settings are not complete. Please insert Key and Secret "
+#~ "values below."
+#~ msgstr ""
+#~ "Dropbox App settings are not complete. Please insert Key and Secret "
+#~ "values below."
+
+#~ msgid "Share Link"
+#~ msgstr "Share Link"
+
+#~ msgid "System settings"
+#~ msgstr "System settings"
+
+#~ msgid "Renaming"
+#~ msgstr "Renaming"
+
+#~ msgid "Deleting"
+#~ msgstr "Deleting"
+
+#~ msgid "Adding folders"
+#~ msgstr "Adding folders"
+
+#~ msgid "Minimum Role to view Out-of-the-Box"
+#~ msgstr "Minimum Role to view Out-of-the-Box"
+
+#~ msgid "Everyone"
+#~ msgstr "Everyone"
+
+#~ msgid "Minimum Role for upload files"
+#~ msgstr "Minimum Role for upload files"
+
+#~ msgid "Subscriber"
+#~ msgstr "Subscriber"
+
+#~ msgid "Minimum Role for renaming"
+#~ msgstr "Minimum Role for renaming"
+
+#~ msgid "Editor"
+#~ msgstr "Editor"
+
+#~ msgid "Minimum Role for deleting"
+#~ msgstr "Minimum Role for deleting"
+
+#~ msgid "Minimum Role for adding folders"
+#~ msgstr "Minimum Role for adding folders"
+
+#~ msgid "Administrator"
+#~ msgstr "Administrator"
+
+#~ msgid "List of capabilities"
+#~ msgstr "List of capabilities"
+
+#~ msgid "Load how many images each time?"
+#~ msgstr "Load how many images each time?"
+
+#~ msgid "Sessions"
+#~ msgstr "Sessions"
+
+#~ msgid ""
+#~ "Out-of-the-Box cannot save information if sessions are disabled. You "
+#~ "cannot use Out-of-the-Box"
+#~ msgstr ""
+#~ "Out-of-the-Box cannot save information if sessions are disabled. You "
+#~ "cannot use Out-of-the-Box"
+
+#~ msgid ""
+#~ "The Dropbox SDK requires the cURL PHP extension, but it looks like you "
+#~ "don't have it (couldn't find function \"curl_init\")"
+#~ msgstr ""
+#~ "The Dropbox SDK requires the cURL PHP extension, but it looks like you "
+#~ "don't have it (couldn't find function \"curl_init\")"
+
+#~ msgid "Enable search function"
+#~ msgstr "Enable search function"
+
+#~ msgid "Show columnnames so you can sort your files and folders"
+#~ msgstr "Show columnnames so you can sort your files and folders"
+
+#~ msgid "Last edited on "
+#~ msgstr "Last edited on "
+
+#~ msgid "Gallery"
+#~ msgstr "Gallery"
+
+#~ msgid "Media player (audio &amp; video)"
+#~ msgstr "Media player (audio &amp; video)"
+
+#~ msgid "Show name of root directory"
+#~ msgstr "Show name of root directory"
+
+#~ msgid "Check documentation for more details"
+#~ msgstr "Check documentation for more details"
+
+#~ msgid "play"
+#~ msgstr "play"
+
+#~ msgid "pause"
+#~ msgstr "pause"
+
+#~ msgid "next"
+#~ msgstr "next"
+
+#~ msgid "stop"
+#~ msgstr "stop"
+
+#~ msgid "mute"
+#~ msgstr "mute"
+
+#~ msgid "unmute"
+#~ msgstr "unmute"
+
+#~ msgid "max volume"
+#~ msgstr "max volume"
+
+#~ msgid "full screen"
+#~ msgstr "full screen"
+
+#~ msgid "restore screen"
+#~ msgstr "restore screen"
+
+#~ msgid "shuffle"
+#~ msgstr "shuffle"
+
+#~ msgid "shuffle off"
+#~ msgstr "shuffle off"
+
+#~ msgid "repeat"
+#~ msgstr "repeat"
+
+#~ msgid "repeat off"
+#~ msgstr "repeat off"
+
+#~ msgid "TMP directory is now writable"
+#~ msgstr "TMP directory is now writable"
+
+#~ msgid ""
+#~ "Because the Dropbox SDK can use 64-bit integers we recommend that you "
+#~ "comment out line 15 in 'includes/dropbox-sdk/Dropbox/RequestUtil.php'"
+#~ msgstr ""
+#~ "Because the Dropbox SDK can use 64-bit integers we recommend that you "
+#~ "comment out line 15 in 'includes/dropbox-sdk/Dropbox/RequestUtil.php'"
+
+#~ msgid "Cache directory isn't writeable. "
+#~ msgstr "Cache directory isn't writeable. "
+
+#~ msgid "Dropbox is not succesfully linked. Please Authorize!"
+#~ msgstr "Dropbox is not succesfully linked. Please Authorize!"
+
+#~ msgid ""
+#~ "The Dropbox SDK requires the JSON PHP extension, but it looks like you "
+#~ "don't have it (couldn't find function \"json_decode\")"
+#~ msgstr ""
+#~ "The Dropbox SDK requires the JSON PHP extension, but it looks like you "
+#~ "don't have it (couldn't find function \"json_decode\")"
+
+#~ msgid "You are <strong>not able</strong> to use OutoftheBox."
+#~ msgstr "You are <strong>not able</strong> to use Out-of-the-Box."
+
+#~ msgid ""
+#~ "To enable SSL on your website, you will need to get an SSL Certificate "
+#~ "that identifies you and install it on the server"
+#~ msgstr ""
+#~ "To enable SSL on your website, you will need to get an SSL Certificate "
+#~ "that identifies you and install it on the server"
+
+#~ msgid ""
+#~ "If you dont have a certificate yet, use or Google skills to get one for "
+#~ "free (for example Startssl.com)"
+#~ msgstr ""
+#~ "If you dont have a certificate yet, use or Google skills to get one for "
+#~ "free (for example Startssl.com)"
+
+#~ msgid "No Dropbox token found... Please Authorize!"
+#~ msgstr "No Dropbox token found... Please Authorize!"
+
+#~ msgid ""
+#~ "No Token file found and could not create one. Please be sure the file ."
+#~ "token exists in the plugin rootdir and is writeable"
+#~ msgstr ""
+#~ "No Token file found and could not create one. Please be sure the file ."
+#~ "token exists in the plugin rootdir and is writeable"
+
+#~ msgid ""
+#~ "/dropbox-auth-finish: Could not store token! Make sure that the file `."
+#~ "token` exists and is writable!"
+#~ msgstr ""
+#~ "/dropbox-auth-finish: Could not store token! Make sure that the file `."
+#~ "token` exists and is writable!"
+
+#~ msgid "Unable to load app-info.json: "
+#~ msgstr "Unable to load app-info.json: "
+
+#~ msgid "Installation"
+#~ msgstr "Installation"
+
+#~ msgid "Be sure you have an valid SSL certificate on your web server"
+#~ msgstr "Be sure you have an valid SSL certificate on your web server"
+
+#~ msgid "Shortcode OutoftheBox"
+#~ msgstr "Shortcode OutoftheBox"
+
+#~ msgid "Display folders &amp; files"
+#~ msgstr "Display folders &amp; files"
+
+#~ msgid "Current root"
+#~ msgstr "Current root"
+
+#~ msgid "Leave empty for default value (max filesize allowed)"
+#~ msgstr "Leave empty for default value (max filesize allowed)"
+
+#~ msgid "shows all folders/files in the root of your Dropbox"
+#~ msgstr "shows all folders/files in the root of your Dropbox"
+
+#~ msgid "shows all folders/files in a specific directory of your Dropbox"
+#~ msgstr "shows all folders/files in a specific directory of your Dropbox"
+
+#~ msgid "NOTE the double quote!!"
+#~ msgstr "NOTE the double quote!!"
+
+#~ msgid "show only files with specific extensions"
+#~ msgstr "show only files with specific extensions"
+
+#~ msgid "hide or show file size and last modified date"
+#~ msgstr "hide or show file size and last modified date"
+
+#~ msgid ""
+#~ "add uploadform and overwrite existing files. If overwrite=0 the files "
+#~ "will be renamed"
+#~ msgstr ""
+#~ "add uploadform and overwrite existing files. If overwrite=0 the files "
+#~ "will be renamed"
+
+#~ msgid "only allow specific extensions for upload"
+#~ msgstr "only allow specific extensions for upload"
+
+#~ msgid "Will give some basic debug information"
+#~ msgstr "Will give some basic debug information"
+
+#~ msgid "User upload"
+#~ msgstr "User upload"
