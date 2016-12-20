@@ -1,0 +1,1435 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OutoftheBox\n"
+"POT-Creation-Date: 2014-02-10 14:26+0100\n"
+"PO-Revision-Date: 2014-02-10 14:26+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.3\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin_page.php:63 ../out-of-the-box.php:123
+msgid "Settings"
+msgstr "Instellingen"
+
+#: ../admin_page.php:64 ../admin_page.php:513
+msgid "File browser"
+msgstr "Bestandslijst"
+
+#: ../admin_page.php:78
+msgid "Own Dropbox App?"
+msgstr "Eigen Dropbox App gebruiken?"
+
+#: ../admin_page.php:112
+msgid "Enable auto-updater"
+msgstr "Auto-updater gebruiken"
+
+#: ../admin_page.php:129
+msgid "Advanced settings"
+msgstr "Geavanceerd"
+
+#: ../admin_page.php:135
+msgid "Shortlinks"
+msgstr "Shortlinks"
+
+#: ../admin_page.php:142
+msgid "Image gallery thumbnails"
+msgstr "Afbeeldingen thumbnails"
+
+#: ../admin_page.php:149
+msgid "User folders"
+msgstr "Gebruikersmappen"
+
+#: ../admin_page.php:156
+msgid "Custom CSS"
+msgstr "Eigen CSS"
+
+#: ../admin_page.php:162
+msgid "Notify email templates"
+msgstr "Templates email meldingen"
+
+#: ../admin_page.php:276
+msgid "If you created your own Dropbox App, please enter your settings below."
+msgstr ""
+"Vul de App key & secret in als je een eigen Dropbox App hebt aangemaakt."
+
+#: ../admin_page.php:277
+msgid "How do I create a Dropbox App?"
+msgstr "Hoe moet ik een Dropbox App aanmaken?"
+
+#: ../admin_page.php:281
+msgid "If you would like to receive updates, please insert your Purchase code"
+msgstr ""
+"Als je gebruik wilt maken van de auto-update functie, geef dan de "
+"'Purchasecode' op"
+
+#: ../admin_page.php:283
+msgid "Where do I find the purchase code?"
+msgstr "Waar kan ik de 'purchase code' vinden?"
+
+#: ../admin_page.php:379
+msgid "Sign up by Bitly"
+msgstr "Meld je aan bij Bitly"
+
+#: ../admin_page.php:379
+msgid "and"
+msgstr "en"
+
+#: ../admin_page.php:379
+msgid "get your apiKey"
+msgstr "gebruik je apiKey"
+
+#: ../admin_page.php:409
+msgid "You can use"
+msgstr "Gebruik"
+
+#: ../admin_page.php:430
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Je hebt onvoldoende rechten om deze pagina te bekijken."
+
+#: ../admin_page.php:437
+msgid "System information"
+msgstr "Systeem informatie"
+
+#: ../admin_page.php:462
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: ../admin_page.php:463
+msgid "Out-of-the-Box uses the following shortcode:"
+msgstr "Out-of-the-Box gebruikt de volgende shortcode:"
+
+#: ../admin_page.php:463
+msgid ""
+"To make things easier for you, we added a <u>Shortcode button</u> in the MCE "
+"editor"
+msgstr ""
+"Om het wat gemakkelijker te makken hebben we een <u>Shortcode button</u> "
+"toegevoegd aan de MCE editor"
+
+#: ../admin_page.php:465
+msgid "Documentation"
+msgstr "Documentatie"
+
+#: ../admin_page.php:466
+msgid "Visit the Out-of-the-Box website"
+msgstr "Bezoek de Out-of-the-Box website"
+
+#: ../admin_page.php:466
+msgid "for documentation and installation details"
+msgstr "voor documentatie en installatie gegevens"
+
+#: ../admin_page.php:468
+msgid "Support"
+msgstr "Support"
+
+#: ../admin_page.php:469
+msgid "Discovered a bug or just need some help with the plugin?"
+msgstr "Heb je een fout ontdekt of heb je vragen over de plugin?"
+
+#: ../admin_page.php:469
+msgid "Visit the support page"
+msgstr "Bezoek de support pagina"
+
+#: ../admin_page.php:474
+msgid "Overview of your system settings"
+msgstr "Overzicht van je systeem"
+
+#: ../admin_page.php:565
+msgid "(Re) Authorize the Plugin!"
+msgstr "Volmachtig de App"
+
+#: ../admin_page.php:566
+msgid "Revoke authorization"
+msgstr "Authorizatie terugtrekken"
+
+#: ../admin_page.php:609
+msgid "Plugin isn't linked to your Dropbox anymore... Please Reauthorize!"
+msgstr ""
+"De plugin is niet langer gelinkt met Dropbox. Doe de App goedkeuring opnieuw!"
+
+#: ../admin_page.php:619
+msgid ""
+"Out-of-the-Box is succesfully authorized and linked with dropbox account:"
+msgstr "Out-of-the-Box is aan het volgende dropbox account gelinkt:"
+
+#: ../admin_page.php:650
+msgid "You need at least PHP 5.3 if you want to use Out-of-the-Box"
+msgstr "Om Out-of-the-Box te kunnen gebruiken moet je minstens PHP 5.3 hebben"
+
+#: ../admin_page.php:651
+msgid "You are using:"
+msgstr "Je gebruikt:"
+
+#: ../admin_page.php:653 ../admin_page.php:679
+msgid ""
+"You don't have the cURL PHP extension installed (couldn't find function "
+"\"curl_init\"), please enable or install this extension"
+msgstr ""
+"Je hebt de cURL PHP extensie niet geinstalleerd (kan de functie \"curl_init"
+"\" niet vinden). Installeer deze extensie"
+
+#: ../admin_page.php:667 ../admin_page.php:670 ../admin_page.php:672
+msgid "Using SSL"
+msgstr "Gebruikt SSL"
+
+#: ../admin_page.php:667
+msgid "You are using a secure connection"
+msgstr "Je gebruikt een beveiligde verbinding!"
+
+#: ../admin_page.php:670
+msgid "You are using running a server on 'localhost'."
+msgstr "Je draait WordPress momenteel op localhost."
+
+#: ../admin_page.php:670
+msgid ""
+"If your using this Plugin somewhere else and would like to have a secure "
+"connection, you probably need a SSL certificate."
+msgstr ""
+"Als je de Plugin ergens anders gaat gebruiken en je een veilige verbinding "
+"wilt gebruiken, zal je hoogstwaarschijnlijk SSL certificaat nodig hebben."
+
+#: ../admin_page.php:672
+msgid "SSL is required for authentication with the Dropbox API."
+msgstr "SSL is nodig voor het creeren van een geldige Token."
+
+#: ../admin_page.php:672
+msgid ""
+"See our documentation how to obtain a SSL certificate or use Out-of-the-Box "
+"without one."
+msgstr ""
+"Bekijk onze documentatie hoe je een SSL certificaat kunt bemachtigen of "
+"gebruik Out-of-the-Box zonder een."
+
+#: ../admin_page.php:677 ../admin_page.php:679
+msgid "cURL PHP extension"
+msgstr "cURL PHP extensie"
+
+#: ../admin_page.php:677
+msgid "You have the cURL PHP extension installed"
+msgstr "Je hebt de cURL PHP extensie geinstalleerd."
+
+#: ../admin_page.php:686 ../admin_page.php:688
+msgid "Is TMP directory writable?"
+msgstr "Is de TMP folder beschrijfbaar?"
+
+#: ../admin_page.php:686
+msgid "TMP directory"
+msgstr "TMP folder"
+
+#: ../admin_page.php:686
+msgid "isn't writable. You are not able to upload files to Dropbox."
+msgstr ""
+"kan niet worden beschreven. Het is niet mogelijk om bestanden naar Dropbox "
+"te uploaden."
+
+#: ../admin_page.php:686
+msgid "Make sure TMP directory is writable"
+msgstr "Zorg ervoor dat de TMP folder beschrijfbaar is"
+
+#: ../admin_page.php:688
+msgid "TMP directory is writable"
+msgstr "TMP folder is beschrijfbaar"
+
+#: ../admin_page.php:700 ../admin_page.php:702 ../admin_page.php:705
+msgid "Is CACHE directory writable?"
+msgstr "Is de CACHE folder beschrijfbaar?"
+
+#: ../admin_page.php:700
+msgid "CACHE directory"
+msgstr "CACHE folder"
+
+#: ../admin_page.php:700 ../admin_page.php:713
+msgid "isn't writable. The gallery will load very slowly."
+msgstr ""
+"kan niet worden beschreven. De fotogalerij en audio/video speler zal traag "
+"laden."
+
+#: ../admin_page.php:700
+msgid "Make sure CACHE directory is writable"
+msgstr "Zorg ervoor dat de CACHE folder beschrijfbaar is"
+
+#: ../admin_page.php:702
+msgid "CACHE directory is now writable"
+msgstr "CACHE folder is nu beschrijfbaar"
+
+#: ../admin_page.php:705
+msgid "CACHE directory is writable"
+msgstr "CACHE folder is beschrijfbaar"
+
+#: ../admin_page.php:713 ../admin_page.php:715 ../admin_page.php:718
+msgid "Is CACHE-index file writable?"
+msgstr "Is het CACHE-index bestand beschrijfbaar?"
+
+#: ../admin_page.php:713
+msgid "-index file"
+msgstr "-index bestand"
+
+#: ../admin_page.php:713
+msgid "Make sure CACHE-index file is writable"
+msgstr ""
+"Zorg er voor dat het CACHE-index bestand bestaat en dat deze schrijfbaar is"
+
+#: ../admin_page.php:715
+msgid "CACHE-index file is now writable"
+msgstr "CACHE-index bestand is nu beschrijfbaar"
+
+#: ../admin_page.php:718
+msgid "CACHE-index file is writable"
+msgstr "CACHE-index bestand is beschrijfbaar"
+
+#: ../admin_page.php:723
+msgid ""
+"The Dropbox SDK uses 64-bit integers, but it looks like we're running on a "
+"version of PHP that doesn't support 64-bit integers"
+msgstr ""
+"The Dropbox SDK uses 64-bit integers, but it looks like we're running on a "
+"version of PHP that doesn't support 64-bit integers"
+
+#: ../admin_page.php:724
+msgid ""
+"Because you can still use the Dropbox SDK with 32-bit integers we disabled "
+"the 64-bit check"
+msgstr ""
+"Because you can still use the Dropbox SDK with 32-bit integers we disabled "
+"the 64-bit check"
+
+#: ../admin_page.php:725 ../admin_page.php:728
+msgid "64-bit integers"
+msgstr "64-bit integers"
+
+#: ../admin_page.php:727
+msgid ""
+"It looks like we're running on a version of PHP that does support 64-bit "
+"integers"
+msgstr ""
+"It looks like we're running on a version of PHP that does support 64-bit "
+"integers"
+
+#: ../admin_page.php:752
+msgid "Can resize the following images"
+msgstr "De volgende afbeeldingen kunnen op de server worden bewerkt"
+
+#: ../admin_page.php:752
+msgid ""
+"If your server doesn't support resizing an image type, we try to use Dropbox "
+"own thumbnails"
+msgstr ""
+"Als de server een bepaalde afbeelding niet kan bewerken dan zal Dropbox's "
+"eigen thumbnail worden gebruikt"
+
+#: ../admin_page.php:756
+msgid "You can use the ZIP function"
+msgstr "Je kunt de ZIP functionaliteit gebruiken"
+
+#: ../admin_page.php:757 ../admin_page.php:760
+msgid "Download files as ZIP"
+msgstr "Bestanden downloaden als ZIP"
+
+#: ../admin_page.php:759
+msgid "You cannot download files as ZIP"
+msgstr "Je kunt geen bestanden downloaden als ZIP"
+
+#: ../authorizeApp.php:8
+msgid "Couldn't load Dropbox SDK libary"
+msgstr "Kan de Dropbox SDK niet laden"
+
+#: ../out-of-the-box.php:195 ../templates/tinymce_popup.php:89
+msgid "Success"
+msgstr "Succes"
+
+#: ../out-of-the-box.php:196 ../out-of-the-box.php:199
+#: ../templates/tinymce_popup.php:90 ../templates/tinymce_popup.php:93
+msgid "Error"
+msgstr "Fout"
+
+#: ../out-of-the-box.php:197 ../templates/tinymce_popup.php:91
+msgid "In queue"
+msgstr "In wachtrij"
+
+#: ../out-of-the-box.php:198 ../templates/tinymce_popup.php:92
+msgid "Uploading"
+msgstr "Uploaden"
+
+#: ../out-of-the-box.php:200 ../templates/tinymce_popup.php:94
+msgid "Close"
+msgstr "Sluiten"
+
+#: ../out-of-the-box.php:201 ../includes/OutoftheBox_Processor.php:268
+#: ../templates/tinymce_popup.php:95
+msgid "Start"
+msgstr "Start"
+
+#: ../out-of-the-box.php:202 ../templates/tinymce_popup.php:96
+#: ../templates/tinymce_popup.php:528
+msgid "Cancel"
+msgstr "Terug"
+
+#: ../out-of-the-box.php:203 ../includes/OutoftheBox_Filebrowser.php:226
+#: ../includes/OutoftheBox_Gallery.php:180 ../templates/tinymce_popup.php:97
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: ../out-of-the-box.php:204 ../templates/tinymce_popup.php:98
+msgid "Create zip file"
+msgstr "Zip file genereren"
+
+#: ../out-of-the-box.php:205 ../templates/tinymce_popup.php:99
+msgid "Do you really want to delete:"
+msgstr "Weet je zeker dat je dit wilt verwijderen:"
+
+#: ../out-of-the-box.php:206 ../includes/OutoftheBox_Filebrowser.php:222
+#: ../includes/OutoftheBox_Gallery.php:176 ../templates/tinymce_popup.php:100
+msgid "Rename"
+msgstr "Hernoemen"
+
+#: ../out-of-the-box.php:207 ../templates/tinymce_popup.php:101
+msgid "Rename to:"
+msgstr "Hernoemen naar:"
+
+#: ../out-of-the-box.php:208 ../templates/tinymce_popup.php:102
+msgid "Can't receive filelist"
+msgstr "Kan geen bestanden weergeven"
+
+#: ../out-of-the-box.php:209 ../includes/OutoftheBox_Filebrowser.php:241
+#: ../includes/OutoftheBox_Gallery.php:198 ../templates/tinymce_popup.php:103
+msgid "Add folder"
+msgstr "Nieuwe map toevoegen"
+
+#: ../out-of-the-box.php:210 ../templates/tinymce_popup.php:104
+msgid "New folder"
+msgstr "Nieuwe map"
+
+#: ../out-of-the-box.php:211 ../templates/tinymce_popup.php:105
+msgid "No files found or selected"
+msgstr "Geen bestanden gevonden of geselecteerd"
+
+#: ../out-of-the-box.php:212 ../templates/tinymce_popup.php:106
+msgid "Creating zip file"
+msgstr "Zip file genereren"
+
+#: ../out-of-the-box.php:213 ../templates/tinymce_popup.php:107
+msgid "Share file"
+msgstr "Bestand delen"
+
+#: ../out-of-the-box.php:214 ../templates/tinymce_popup.php:108
+msgid "Creating shared link..."
+msgstr "Link genereren"
+
+#: ../out-of-the-box.php:215 ../templates/tinymce_popup.php:109
+msgid "Previous"
+msgstr "Vorige"
+
+#: ../out-of-the-box.php:216 ../templates/tinymce_popup.php:110
+msgid "Next"
+msgstr "Volgende"
+
+#: ../out-of-the-box.php:217 ../templates/tinymce_popup.php:111
+msgid "This content failed to load"
+msgstr "Deze inhoud kan niet worden geladen"
+
+#: ../out-of-the-box.php:218 ../templates/tinymce_popup.php:112
+msgid "This image failed to load"
+msgstr "Deze afbeelding kan niet worden geladen"
+
+#: ../out-of-the-box.php:219 ../templates/tinymce_popup.php:113
+msgid "Start slideshow"
+msgstr "Start slideshow"
+
+#: ../out-of-the-box.php:220 ../templates/tinymce_popup.php:114
+msgid "Stop slideshow"
+msgstr "Stop slideshow"
+
+#: ../out-of-the-box.php:221 ../includes/OutoftheBox_Dropbox.php:308
+#: ../templates/tinymce_popup.php:115
+msgid "Maximum number of files exceeded"
+msgstr "Maximale aantal uploads is bereikt"
+
+#: ../out-of-the-box.php:222 ../templates/tinymce_popup.php:116
+msgid "File type not allowed"
+msgstr "Dit bestandtype is niet toegestaan"
+
+#: ../out-of-the-box.php:223 ../templates/tinymce_popup.php:117
+msgid "File is too large"
+msgstr "Het bestand is te groot"
+
+#: ../out-of-the-box.php:224 ../includes/OutoftheBox_Dropbox.php:306
+#: ../templates/tinymce_popup.php:118
+msgid "File is too small"
+msgstr "Het bestand is te klein"
+
+#: ../wp-updates-plugin.php:76
+msgid ""
+"An Unexpected HTTP Error occurred during the API request.</p> <p><a href=\"?"
+"\" onclick=\"document.location.reload(); return false;\">Try again</a>"
+msgstr ""
+
+#: ../wp-updates-plugin.php:80
+msgid "An unknown error occurred"
+msgstr "Er is iets fout gegaan"
+
+#: ../includes/OutoftheBox_Dropbox.php:11
+msgid "Something went wrong... See settings page"
+msgstr ""
+"Oeps... er is wat fout gegaan. Controleer de plugin instellingen pagina."
+
+#: ../includes/OutoftheBox_Dropbox.php:40
+msgid "Out-of-the-Box needs your help!"
+msgstr "Out-of-the-Box heeft je aandacht nodig!"
+
+#: ../includes/OutoftheBox_Dropbox.php:40
+msgid ""
+"Authorize the plugin. If you would like to use your own Dropbox App, enter "
+"your App key &amp; secret and re-authorize"
+msgstr ""
+"Volmacht de Dropbox App. Als je een eigen Dropbox App gebruikt vul dan de "
+"key en secret in en verleen de App opnieuw toestemming"
+
+#: ../includes/OutoftheBox_Dropbox.php:76
+msgid "Your Dropbox App key or token seems to be invalid: "
+msgstr "Je Dropbox App key of secret lijkt ongeldig te zijn"
+
+#: ../includes/OutoftheBox_Dropbox.php:100
+msgid "Error in getClient: "
+msgstr "Error in getClient: "
+
+#: ../includes/OutoftheBox_Dropbox.php:138
+msgid "/dropbox-auth-start: could not start authorization: "
+msgstr "/dropbox-auth-start: could not start authorization: "
+
+#: ../includes/OutoftheBox_Dropbox.php:161
+msgid "/dropbox-auth-finish: bad request: "
+msgstr "/dropbox-auth-finish: bad request: "
+
+#: ../includes/OutoftheBox_Dropbox.php:169
+msgid "/dropbox-auth-finish: CSRF mismatch: "
+msgstr "/dropbox-auth-finish: CSRF mismatch: "
+
+#: ../includes/OutoftheBox_Dropbox.php:173
+msgid "/dropbox-auth-finish: not approved: "
+msgstr "/dropbox-auth-finish: not approved: "
+
+#: ../includes/OutoftheBox_Dropbox.php:177
+msgid "/dropbox-auth-finish: error redirect from Dropbox: "
+msgstr "/dropbox-auth-finish: error redirect from Dropbox: "
+
+#: ../includes/OutoftheBox_Dropbox.php:181
+msgid "/dropbox-auth-finish: error communicating with Dropbox API: "
+msgstr "/dropbox-auth-finish: error communicating with Dropbox API: "
+
+#: ../includes/OutoftheBox_Dropbox.php:297
+msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
+msgstr ""
+"Dit bestand is te groot om te worden verzonden (php upload_max_filesize)"
+
+#: ../includes/OutoftheBox_Dropbox.php:298
+msgid ""
+"The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in "
+"the HTML form"
+msgstr "Dit bestand is te groot om te worden verzonden (html max_file_size)"
+
+#: ../includes/OutoftheBox_Dropbox.php:299
+msgid "The uploaded file was only partially uploaded"
+msgstr "Het bestand is slechts gedeeltelijk geüpload"
+
+#: ../includes/OutoftheBox_Dropbox.php:300
+msgid "No file was uploaded"
+msgstr "Er zijn geen bestanden geüpload"
+
+#: ../includes/OutoftheBox_Dropbox.php:301
+msgid "Missing a temporary folder"
+msgstr "Het bestand kan niet worden weggeschreven (missing temp dir)"
+
+#: ../includes/OutoftheBox_Dropbox.php:302
+msgid "Failed to write file to disk"
+msgstr "Het bestand kan niet worden weggeschreven (no writeable temp dir )"
+
+#: ../includes/OutoftheBox_Dropbox.php:303
+msgid "A PHP extension stopped the file upload"
+msgstr "De bestandsoverdacht is gestopt"
+
+#: ../includes/OutoftheBox_Dropbox.php:304
+msgid "The uploaded file exceeds the post_max_size directive in php.ini"
+msgstr "Dit bestand is te groot om te worden verzonden (php post_max_filesize)"
+
+#: ../includes/OutoftheBox_Dropbox.php:305
+msgid "File is too big"
+msgstr "Het bestand is te groot"
+
+#: ../includes/OutoftheBox_Dropbox.php:307
+msgid "Filetype not allowed"
+msgstr "Dit bestandtype is niet toegestaan"
+
+#: ../includes/OutoftheBox_Dropbox.php:309
+msgid "Image exceeds maximum width"
+msgstr "Afbeelding is te breed"
+
+#: ../includes/OutoftheBox_Dropbox.php:310
+msgid "Image requires a minimum width"
+msgstr "Afbeelding is te smal"
+
+#: ../includes/OutoftheBox_Dropbox.php:311
+msgid "Image exceeds maximum height"
+msgstr "Afbeelding is te hoog"
+
+#: ../includes/OutoftheBox_Dropbox.php:312
+msgid "Image requires a minimum height"
+msgstr "Afbeeldingshoogte is te laag"
+
+#: ../includes/OutoftheBox_Dropbox.php:325
+#: ../includes/OutoftheBox_Dropbox.php:401
+#: ../includes/OutoftheBox_Dropbox.php:458
+#: ../includes/OutoftheBox_Dropbox.php:523
+#: ../includes/OutoftheBox_Dropbox.php:554
+msgid "Invalid <dropbox-path>"
+msgstr "Ongeldige Dropbox map"
+
+#: ../includes/OutoftheBox_Dropbox.php:347
+msgid "Not uploaded to Dropbox "
+msgstr "Niet geüpload naar Dropbox"
+
+#: ../includes/OutoftheBox_Dropbox.php:359
+msgid "Could not write to tmp dir. Make sure it exists and is writable"
+msgstr ""
+"Kan bestand niet wegschrijven naar tmp folder. Zorg er voor dat deze "
+"schrijfbaar is"
+
+#: ../includes/OutoftheBox_Dropbox.php:361
+msgid "Uploading failed"
+msgstr "Uploaden mislukt"
+
+#: ../includes/OutoftheBox_Dropbox.php:383
+#: ../includes/OutoftheBox_Dropbox.php:389
+#: ../includes/OutoftheBox_Dropbox.php:394
+#: ../includes/OutoftheBox_Dropbox.php:403
+#: ../includes/OutoftheBox_Dropbox.php:411
+#: ../includes/OutoftheBox_Dropbox.php:415
+#: ../includes/OutoftheBox_Dropbox.php:424
+#: ../includes/OutoftheBox_Processor.php:151
+msgid "Failed to delete entry"
+msgstr "Het bestand kan niet worden verwijderd"
+
+#: ../includes/OutoftheBox_Dropbox.php:439
+msgid "No new name set"
+msgstr "Geen geldige nieuwe naam"
+
+#: ../includes/OutoftheBox_Dropbox.php:445
+#: ../includes/OutoftheBox_Dropbox.php:451
+#: ../includes/OutoftheBox_Dropbox.php:460
+#: ../includes/OutoftheBox_Dropbox.php:468
+#: ../includes/OutoftheBox_Dropbox.php:472
+#: ../includes/OutoftheBox_Dropbox.php:488
+#: ../includes/OutoftheBox_Processor.php:175
+msgid "Failed to rename entry"
+msgstr "Het bestand kan niet worden hernoemd"
+
+#: ../includes/OutoftheBox_Dropbox.php:503
+#: ../includes/OutoftheBox_Dropbox.php:513
+#: ../includes/OutoftheBox_Dropbox.php:525
+#: ../includes/OutoftheBox_Dropbox.php:534
+#: ../includes/OutoftheBox_Dropbox.php:568
+#: ../includes/OutoftheBox_Processor.php:206
+msgid "Failed to add folder"
+msgstr "De map kan niet worden aangemaakt"
+
+#: ../includes/OutoftheBox_Dropbox.php:507
+msgid "No new foldername set"
+msgstr "Geen geldige naam"
+
+#: ../includes/OutoftheBox_Dropbox.php:540
+#: ../includes/OutoftheBox_Processor.php:220
+msgid "Folder"
+msgstr "Map"
+
+#: ../includes/OutoftheBox_Dropbox.php:540
+msgid "already exists"
+msgstr "bestaat al"
+
+#: ../includes/OutoftheBox_Dropbox.php:556
+msgid "Failed to add user folder"
+msgstr "De gebruikersmap kan niet worden aangemaakt"
+
+#: ../includes/OutoftheBox_Dropbox.php:728
+msgid "Requested directory isn't allowed"
+msgstr "Opgevraagde map is niet toegestaan"
+
+#: ../includes/OutoftheBox_Dropbox.php:881
+msgid "Couldn't create zip file"
+msgstr "Kan geen Zip file creëren"
+
+#: ../includes/OutoftheBox_Dropbox.php:1037
+msgid "Can't create link"
+msgstr "Kan geen link creëren"
+
+#: ../includes/OutoftheBox_Dropbox.php:1271
+msgid "Cannot get image"
+msgstr "Kan afbeelding niet ophalen"
+
+#: ../includes/OutoftheBox_Filebrowser.php:66
+#: ../includes/OutoftheBox_Filebrowser.php:71
+#: ../includes/OutoftheBox_Gallery.php:62
+msgid "No files or folders found"
+msgstr "Geen bestanden of mappen gevonden"
+
+#: ../includes/OutoftheBox_Filebrowser.php:217
+#: ../includes/OutoftheBox_Gallery.php:171
+msgid "Share"
+msgstr "Delen"
+
+#: ../includes/OutoftheBox_Filebrowser.php:242
+msgid "Add a new folder in this directory"
+msgstr "Voeg een nieuwe map toe in deze map"
+
+#: ../includes/OutoftheBox_Filebrowser.php:258
+msgid "Previous folder"
+msgstr "Vorige map"
+
+#: ../includes/OutoftheBox_Processor.php:160
+msgid "Entry was deleted"
+msgstr "Gegevens zijn verwijderd"
+
+#: ../includes/OutoftheBox_Processor.php:189
+msgid "Entry was renamed"
+msgstr "Gegevens zijn hernoemd"
+
+#: ../includes/OutoftheBox_Processor.php:220
+msgid "was added"
+msgstr "is toegevoegd"
+
+#: ../includes/OutoftheBox_Processor.php:452
+msgid ""
+"To view the Dropbox folders, you need to have JavaScript enabled in your "
+"browser"
+msgstr "Om de Dropbox mappen te bekijken moet Javascript zijn ingeschakeld"
+
+#: ../includes/OutoftheBox_Processor.php:453
+msgid "To do so, please follow these instructions"
+msgstr "Volg deze instructies om Javascript in te schakelen"
+
+#: ../includes/OutoftheBox_Processor.php:507
+msgid "Please update your mediaplayer shortcode"
+msgstr ""
+
+#: ../includes/OutoftheBox_Processor.php:695
+msgid "Guests"
+msgstr "Gasten"
+
+#: ../includes/OutoftheBox_Processor.php:696 ../templates/tinymce_popup.php:40
+msgid "Guest"
+msgstr "Gast"
+
+#: ../includes/OutoftheBox_Processor.php:722
+msgid "A guest"
+msgstr "Een gast"
+
+#: ../includes/OutoftheBox_Processor.php:736
+msgid "File downloaded"
+msgstr "Bestand gedownload"
+
+#: ../includes/OutoftheBox_Processor.php:745
+msgid "New file(s) in your Dropbox"
+msgstr "Nieuwe bestanden op je Google Drive"
+
+#: ../includes/OutoftheBox_Processor.php:832
+msgid "No valid Dropbox token found... Please Authorize!"
+msgstr ""
+"Er is geen geldige Dropbox Token gevonden. Doe de App goedkeuring opnieuw!"
+
+#: ../templates/frontend.php:16 ../templates/gallery.php:16
+msgid "Download all files"
+msgstr "Alle bestanden downloaden"
+
+#: ../templates/frontend.php:17 ../templates/gallery.php:17
+msgid "Download selected files"
+msgstr "Download geselecteerde bestanden"
+
+#: ../templates/frontend.php:29 ../templates/gallery.php:27
+msgid "Search..."
+msgstr "Zoeken.."
+
+#: ../templates/frontend.php:33 ../templates/gallery.php:31
+#: ../templates/player.flat.php:19
+msgid "Loading..."
+msgstr "Laden..."
+
+#: ../templates/frontend.php:41 ../templates/tinymce_popup.php:279
+msgid "Name"
+msgstr "Naam"
+
+#: ../templates/frontend.php:49 ../templates/tinymce_popup.php:282
+msgid "Size"
+msgstr "Grootte"
+
+#: ../templates/frontend.php:55 ../templates/tinymce_popup.php:285
+msgid "Date modified"
+msgstr "Laatst gewijzigd"
+
+#: ../templates/player.flat.php:39 ../templates/player.php:56
+msgid "Update Required"
+msgstr "Update nodif"
+
+#: ../templates/player.flat.php:40 ../templates/player.php:57
+msgid ""
+"To play the media you will need to either update your browser to a recent "
+"version or update your"
+msgstr "Om media af te spelen moet je je browser updaten of update"
+
+#: ../templates/tinymce_popup.php:127
+msgid "Create Shortcode"
+msgstr "Shortcode genereren"
+
+#: ../templates/tinymce_popup.php:129 ../templates/tinymce_popup.php:170
+msgid "Insert direct links to files or folders"
+msgstr "Links naar bestanden of folders toevoegen"
+
+#: ../templates/tinymce_popup.php:147
+msgid "Out-of-the-Box should behave as"
+msgstr "Gebruik Out-of-the-Box als"
+
+#: ../templates/tinymce_popup.php:151
+msgid "Filelist"
+msgstr "Bestandenlijst"
+
+#: ../templates/tinymce_popup.php:154
+msgid "Photogallery"
+msgstr "Afbeeldingengalerij"
+
+#: ../templates/tinymce_popup.php:157
+msgid "Audio player"
+msgstr "Audio player"
+
+#: ../templates/tinymce_popup.php:160
+msgid "Video player"
+msgstr "Video player"
+
+#: ../templates/tinymce_popup.php:165
+msgid "Select root folder"
+msgstr "Selecteer startmap"
+
+#: ../templates/tinymce_popup.php:195
+msgid "Selected root folder"
+msgstr "Geselecteerde map"
+
+#: ../templates/tinymce_popup.php:197
+msgid "Layout"
+msgstr "Opmaak"
+
+#: ../templates/tinymce_popup.php:201
+msgid "Show folders breadcrumb"
+msgstr "Breadcrumb weergeven"
+
+#: ../templates/tinymce_popup.php:206
+msgid "Root breadcrumb title"
+msgstr "Titel start breadcrumb folder"
+
+#: ../templates/tinymce_popup.php:206 ../templates/tinymce_popup.php:238
+#: ../templates/tinymce_popup.php:332
+msgid "Leave empty for default value"
+msgstr "Laat leeg om de standaardwaarde te gebruiken"
+
+#: ../templates/tinymce_popup.php:212
+msgid "Show parents of root folder in breadcrumb"
+msgstr "Mappen onder startmap weergeven"
+
+#: ../templates/tinymce_popup.php:218
+msgid "Show searchbox"
+msgstr "Zoekbox weergeven"
+
+#: ../templates/tinymce_popup.php:223
+msgid "Show columnnames"
+msgstr "Kolomnamen weergeven"
+
+#: ../templates/tinymce_popup.php:228
+msgid "Show download button (zip-archive)"
+msgstr "Download knop weergeven (zip-file)"
+
+#: ../templates/tinymce_popup.php:233
+msgid "Show share button"
+msgstr "Bestanden delen weergeven"
+
+#: ../templates/tinymce_popup.php:237
+msgid "Set max width for the Out-of-the-Box container"
+msgstr "Maximale breedte van de Out-of-the-Box container"
+
+#: ../templates/tinymce_popup.php:238
+msgid "You can use pixels or percentages, eg '360px', '480px', '70%'"
+msgstr "Gebuik pixels of percentages: '360px', '480px', '70%'"
+
+#: ../templates/tinymce_popup.php:246
+msgid "Media files"
+msgstr "Media bestanden"
+
+#: ../templates/tinymce_popup.php:248
+msgid "Select which sort of media files you will provide"
+msgstr ""
+
+#: ../templates/tinymce_popup.php:250
+msgid "Do always supply a mp3 file to support all browsers"
+msgstr ""
+
+#: ../templates/tinymce_popup.php:260
+msgid "Do always supply a m4v/mp4 file to support all browsers"
+msgstr ""
+
+#: ../templates/tinymce_popup.php:269
+msgid ""
+"The mediaplayer will decided, based on the provided formats, if the user "
+"will have a HTML5 player or a Flash Player"
+msgstr ""
+
+#: ../templates/tinymce_popup.php:269
+msgid ""
+"You may provide the same file with different extensions to increase cross-"
+"browser support"
+msgstr ""
+
+#: ../templates/tinymce_popup.php:273
+msgid "Sorting"
+msgstr "Sorteren"
+
+#: ../templates/tinymce_popup.php:277
+msgid "Sort files and folders by:"
+msgstr "Sorteer bestanden en mappen bij:"
+
+#: ../templates/tinymce_popup.php:290
+msgid "Sort order:"
+msgstr "Volgorde:"
+
+#: ../templates/tinymce_popup.php:292
+msgid "Ascending"
+msgstr "Oplopend"
+
+#: ../templates/tinymce_popup.php:295
+msgid "Descending"
+msgstr "Aflopend"
+
+#: ../templates/tinymce_popup.php:302
+msgid "Filelist options"
+msgstr "Bestandenlijst opties"
+
+#: ../templates/tinymce_popup.php:307
+msgid "Show files in folder"
+msgstr "Bestanden weergeven in map"
+
+#: ../templates/tinymce_popup.php:311
+msgid "Show filesize"
+msgstr "Bestandsgrootte weergeven"
+
+#: ../templates/tinymce_popup.php:315
+msgid "Show date last modified"
+msgstr "Laatste wijziging bestand weergeven"
+
+#: ../templates/tinymce_popup.php:319
+msgid "Show file extensions"
+msgstr "Bestandsextensies weergeven"
+
+#: ../templates/tinymce_popup.php:323
+msgid "Force a 'Save as' Dialog on downloading file"
+msgstr "'Opslaan als' forceren bij downloaden"
+
+#: ../templates/tinymce_popup.php:329
+msgid "Gallery options"
+msgstr "Galerij opties"
+
+#: ../templates/tinymce_popup.php:332
+msgid "Row height"
+msgstr "Rij hoogte"
+
+#: ../templates/tinymce_popup.php:332
+msgid "The ideal height you want your grid rows to be"
+msgstr "De ideale rij hoogte van het grid"
+
+#: ../templates/tinymce_popup.php:332
+msgid ""
+"It won't set it exactly to this as plugin adjusts the row height to get the "
+"correct width"
+msgstr ""
+"De plugin zal de rijhoogte wat aanpassen als dat nodig is om goede breedte "
+"te krijgen"
+
+#: ../templates/tinymce_popup.php:338
+msgid "Don't stretch last row to fit grid width"
+msgstr "Laatste afbeelding niet uitrekken om rij te vullen"
+
+#: ../templates/tinymce_popup.php:343
+msgid "Crop images for a squared grid"
+msgstr "Afbeeldingen uitsnijden voor een vierkant grid"
+
+#: ../templates/tinymce_popup.php:348
+msgid "Shuffle images"
+msgstr "Shuffle  afbeeldingen"
+
+#: ../templates/tinymce_popup.php:353
+msgid "Exclusions"
+msgstr "Uitsluiten"
+
+#: ../templates/tinymce_popup.php:356
+msgid "Limit files by extension"
+msgstr "Limiteer bestanden met extensie"
+
+#: ../templates/tinymce_popup.php:357 ../templates/tinymce_popup.php:390
+msgid "Add extensions separated with | e.g. (jpg|png|gif)"
+msgstr "Voeg extensies gescheiden met | toe (jpg|png|gif)."
+
+#: ../templates/tinymce_popup.php:357
+msgid "Leave empty to show all files"
+msgstr "Laat leeg om alle bestanden weer te geven"
+
+#: ../templates/tinymce_popup.php:362
+msgid "Include files or folders (only show these items)"
+msgstr "Alleen deze bestanden of folders weergeven"
+
+#: ../templates/tinymce_popup.php:363 ../templates/tinymce_popup.php:369
+msgid "Add files or folders separated with | e.g. (file1.jpg|long folder name)"
+msgstr ""
+"Voeg bestanden of mappen gescheiden met | toe (file1.jpg|Lange folder naam)."
+
+#: ../templates/tinymce_popup.php:368
+msgid "Exclude files or folders"
+msgstr "Mappen of bestanden uitsluiten"
+
+#: ../templates/tinymce_popup.php:375
+msgid "Upload form options"
+msgstr "Upload opties"
+
+#: ../templates/tinymce_popup.php:379
+msgid "Include upload form"
+msgstr "Uploaden toestaan"
+
+#: ../templates/tinymce_popup.php:385
+msgid "Overwrite existing files"
+msgstr "Overschrijf bestaande bestanden"
+
+#: ../templates/tinymce_popup.php:389
+msgid "Limit upload by extension"
+msgstr "Limiteer upload bestanden met extensie"
+
+#: ../templates/tinymce_popup.php:390
+msgid "Leave empty for no restricion"
+msgstr "Laat leeg om alle bestanden weer te geven"
+
+#: ../templates/tinymce_popup.php:397
+msgid "Max filesize for uploading in bytes"
+msgstr "Maximale bestandgrootte voor uploaden"
+
+#: ../templates/tinymce_popup.php:398
+msgid "Leave empty for server maximum "
+msgstr "Laat leeg om de maximale waarde te gebruiken"
+
+#: ../templates/tinymce_popup.php:398
+msgid "How to calculate?"
+msgstr "Hoe reken ik in bytes?"
+
+#: ../templates/tinymce_popup.php:408
+msgid "Email notifications"
+msgstr "Email meldingen"
+
+#: ../templates/tinymce_popup.php:412
+msgid ""
+"Would you like to receive a notification email when someone downloads a file?"
+msgstr "Wil je een melding ontvangen als iemand een bestand download?"
+
+#: ../templates/tinymce_popup.php:418
+msgid ""
+"Would you like to receive a notification email when someone uploads a file?"
+msgstr "Wil je een melding ontvangen als iemand een bestand upload?"
+
+#: ../templates/tinymce_popup.php:423
+msgid "On which email address would you like to receive the notification?"
+msgstr "Op welk emailadres wil je de meldingen ontvangen"
+
+#: ../templates/tinymce_popup.php:424
+msgid "Default value is:"
+msgstr "Standaard waarde:"
+
+#: ../templates/tinymce_popup.php:433
+msgid "Edit files &amp; folders"
+msgstr "Wijzig bestanden &amp; mappen"
+
+#: ../templates/tinymce_popup.php:437
+msgid "Files &amp; folders can be renamed"
+msgstr "Bestanden &amp; mappen kunnen worden hernoemd"
+
+#: ../templates/tinymce_popup.php:442
+msgid "Files &amp; folders can be deleted"
+msgstr "Bestanden &amp; mappen kunnen worden verwijderd"
+
+#: ../templates/tinymce_popup.php:447
+msgid "Can add new folders"
+msgstr "Nieuwe mappen toevoegen"
+
+#: ../templates/tinymce_popup.php:453
+msgid "User management"
+msgstr "Gebruikrechten"
+
+#: ../templates/tinymce_popup.php:455
+msgid ""
+"Out-of-the-Box uses Wordpress Roles to determine how an user can use the "
+"plugin"
+msgstr ""
+"Out-of-the-Box gebruikt Wordpress Rollen om te bepalen hoe een gebruiker de "
+"plugin kan gebruiekn"
+
+#: ../templates/tinymce_popup.php:457
+msgid "View Out-of-the-Box"
+msgstr "Out-of-the-Box gebruiken"
+
+#: ../templates/tinymce_popup.php:462
+msgid "Download files"
+msgstr "Bestanden downloaden"
+
+#: ../templates/tinymce_popup.php:469
+msgid "Upload files"
+msgstr "Bestanden uploaden"
+
+#: ../templates/tinymce_popup.php:476
+msgid "Rename files"
+msgstr "Bestanden hernoemen"
+
+#: ../templates/tinymce_popup.php:482
+msgid "Rename folders"
+msgstr "Mappen hernoemen"
+
+#: ../templates/tinymce_popup.php:488
+msgid "Delete files"
+msgstr "Bestanden verwijderen"
+
+#: ../templates/tinymce_popup.php:494
+msgid "Delete folders"
+msgstr "Mappen verwijderen"
+
+#: ../templates/tinymce_popup.php:500
+msgid "Add folders"
+msgstr "Nieuwe mappen toevoegen"
+
+#: ../templates/tinymce_popup.php:510
+msgid "Users can only use their own folder within the selected rootfolder"
+msgstr ""
+"Gebruikers kunnen alleen een eigen folder binnen de geselecteerde startmap "
+"gebruiken"
+
+#: ../templates/tinymce_popup.php:514
+msgid "Note"
+msgstr "Opmerking"
+
+#: ../templates/tinymce_popup.php:514
+msgid "By default guests (not logged in users) will also get their own folder"
+msgstr "Standaard krijgen niet ingelogde gebruikers krijgen ook een eigen map"
+
+#: ../templates/tinymce_popup.php:514
+msgid "Remove 'Guest' from View Roles to disable guests to use the plugin"
+msgstr ""
+"Vink de 'Gast' rol uit als gasten geen gebruik mogen maken van Out-of-the-Box"
+
+#: ../templates/tinymce_popup.php:516
+msgid "See and edit all user folders"
+msgstr "Alle gebruikers mappen beheren"
+
+#: ../templates/tinymce_popup.php:532
+msgid "Insert"
+msgstr "Toevoegen"
+
+#: ../templates/tinymce_popup.php:534
+msgid "Insert links"
+msgstr "Links toevoegen"
+
+#: ../templates/uploadform.php:7
+msgid "Add files"
+msgstr "Voeg bestanden toe"
+
+#: ../templates/uploadform.php:11
+msgid "Start upload"
+msgstr "Start upload"
+
+#: ../templates/uploadform.php:14
+msgid "Cancel upload"
+msgstr "Upload afbreken"
+
+#: ../templates/uploadform.php:16
+msgid "Max. "
+msgstr "Max."
+
+#~ msgid "Dropbox App settings"
+#~ msgstr "Dropbox App gegevens"
+
+#~ msgid "After you created a Dropbox App, please enter your settings below."
+#~ msgstr ""
+#~ "Vul de App key & secret in nadat je een Dropbox App hebt aangemaakt."
+
+#~ msgid ""
+#~ "This field is set when you authorize your Dropbox App. Only change this "
+#~ "if you know what your doing."
+#~ msgstr ""
+#~ "Dit veld wordt automatisch ingevuld als je je Dropbox App toegang hebt "
+#~ "verleend. Verander dit alleen als je weet wat je aan doet."
+
+#~ msgid "Authorize Dropbox API"
+#~ msgstr "Volmachtig de App"
+
+#~ msgid ""
+#~ "See our documentation how to obtain a SSL certificate or how to use Out-"
+#~ "of-the-Box without one."
+#~ msgstr ""
+#~ "Bekijk onze documentatie hoe je een SSL certificaat kunt bemachtigen of "
+#~ "hoe je Out-of-the-Box kunt gebruiken zonder een certificaat."
+
+#~ msgid "(Re) Authorize"
+#~ msgstr "Machtiging verstrekken"
+
+#~ msgid ""
+#~ "If your using this Plugin somewhere else, you need a SSL certificate to "
+#~ "ensure a secure connection."
+#~ msgstr ""
+#~ "Als je de Plugin ergens anders gaat gebruiken, heb je een SSL certificaat "
+#~ "nodig voor een veilige verbinding."
+
+#~ msgid ""
+#~ "No Token found! Please enter your App key and secret and re-authorize"
+#~ msgstr ""
+#~ "Geen token gevonden! Vul een geldige Dropbox App key en secret in en "
+#~ "verleen de App opnieuw toestemming"
+
+#~ msgid ""
+#~ "Dropbox App settings are not complete. Please insert Key and Secret "
+#~ "values below."
+#~ msgstr "Vul een geldige Dropbox App key en secret in."
+
+#~ msgid "Share Link"
+#~ msgstr "Link delen"
+
+#~ msgid "System settings"
+#~ msgstr "Systeeminstellingen"
+
+#~ msgid "Renaming"
+#~ msgstr "Hernoemen"
+
+#~ msgid "Deleting"
+#~ msgstr "Verwijderen"
+
+#~ msgid "Adding folders"
+#~ msgstr "Mappen toevoegen"
+
+#~ msgid "Minimum Role to view Out-of-the-Box"
+#~ msgstr "Minimale Rol om Out-of-the-Box te kunnen gebruiken"
+
+#~ msgid "Everyone"
+#~ msgstr "Iedereen"
+
+#~ msgid "Minimum Role for upload files"
+#~ msgstr "Minimale Rol om bestanden te kunnen uploaden"
+
+#~ msgid "Minimum Role for renaming"
+#~ msgstr "Minimale Rol om te hernoemen"
+
+#~ msgid "Minimum Role for deleting"
+#~ msgstr "Minimale Rol om te verwijderen"
+
+#~ msgid "Minimum Role for adding folders"
+#~ msgstr "Minimale Rol om mappen te kunnen aanmaken"
+
+#~ msgid "Administrator"
+#~ msgstr "Administrator"
+
+#~ msgid "List of capabilities"
+#~ msgstr "Lijst van Capabilities"
+
+#~ msgid "Load how many images each time?"
+#~ msgstr "Hoeveel afbeeldingen per keer laden?"
+
+#~ msgid "Sessions"
+#~ msgstr "Sessies"
+
+#~ msgid ""
+#~ "Out-of-the-Box cannot save information if sessions are disabled. You "
+#~ "cannot use Out-of-the-Box"
+#~ msgstr ""
+#~ "Out-of-the-Box kan geen informatie opslaan als Sessies zijn "
+#~ "uitgeschakeld. Zorg er voor dat het mogelijk is om Sessies te gebruiken. "
+#~ "Momenteel kan Out-of-the-Box niet worden gebruikt"
+
+#~ msgid ""
+#~ "The Dropbox SDK requires the cURL PHP extension, but it looks like you "
+#~ "don't have it (couldn't find function \"curl_init\")"
+#~ msgstr ""
+#~ "The Dropbox SDK requires the cURL PHP extension, but it looks like you "
+#~ "don't have it (couldn't find function \"curl_init\")"
+
+#~ msgid "Enable search function"
+#~ msgstr "Zoekfunctie gebruiken"
+
+#~ msgid "Show columnnames so you can sort your files and folders"
+#~ msgstr "Kolomnamen weergeven zodat je de bestanden en mappen kan sorteren"
+
+#~ msgid "Last edited on "
+#~ msgstr "Laatst gewijzigd op"
+
+#~ msgid "Gallery"
+#~ msgstr "Galerij"
+
+#~ msgid "Media player (audio &amp; video)"
+#~ msgstr "Media player (audio &amp; video)"
+
+#~ msgid "Show name of root directory"
+#~ msgstr "Naam hoofdmap weergeven"
+
+#~ msgid "Check documentation for more details"
+#~ msgstr "Bekijk de documentatie voor meer details"
+
+#~ msgid "play"
+#~ msgstr "Afspelen"
+
+#~ msgid "pause"
+#~ msgstr "Pauze"
+
+#~ msgid "next"
+#~ msgstr "Volgende"
+
+#~ msgid "stop"
+#~ msgstr "Stop"
+
+#~ msgid "mute"
+#~ msgstr "Dempen"
+
+#~ msgid "unmute"
+#~ msgstr "Geluid"
+
+#~ msgid "max volume"
+#~ msgstr "Max volume"
+
+#~ msgid "full screen"
+#~ msgstr "Volledig scherm"
+
+#~ msgid "restore screen"
+#~ msgstr "Herstel scherm"
+
+#~ msgid "shuffle"
+#~ msgstr "Shuffle"
+
+#~ msgid "shuffle off"
+#~ msgstr "Geen shuffle"
+
+#~ msgid "repeat"
+#~ msgstr "Herhalen"
+
+#~ msgid "repeat off"
+#~ msgstr "Niet herhalen"
+
+#~ msgid "TMP directory is now writable"
+#~ msgstr "TMP folder is nu beschrijfbaar"
+
+#~ msgid ""
+#~ "Because the Dropbox SDK can use 64-bit integers we recommend that you "
+#~ "comment out line 15 in 'includes/dropbox-sdk/Dropbox/RequestUtil.php'"
+#~ msgstr ""
+#~ "Because the Dropbox SDK can use 64-bit integers we recommend that you "
+#~ "comment out line 15 in 'includes/dropbox-sdk/Dropbox/RequestUtil.php'"
+
+#~ msgid "Cache directory isn't writeable. "
+#~ msgstr "Cache directory is niet schrijfbaar"
+
+#~ msgid "Dropbox is not succesfully linked. Please Authorize!"
+#~ msgstr ""
+#~ "Er is geen goede connectie gemaakt met Dropbox. Machtig de App opnieuw!"
+
+#~ msgid ""
+#~ "The Dropbox SDK requires the JSON PHP extension, but it looks like you "
+#~ "don't have it (couldn't find function \"json_decode\")"
+#~ msgstr ""
+#~ "The Dropbox SDK requires the JSON PHP extension, but it looks like you "
+#~ "don't have it (couldn't find function \"json_decode\")"
+
+#~ msgid "You are <strong>not able</strong> to use OutoftheBox."
+#~ msgstr "You are <strong>not able</strong> to use Out-of-the-Box."
+
+#~ msgid ""
+#~ "To enable SSL on your website, you will need to get an SSL Certificate "
+#~ "that identifies you and install it on the server"
+#~ msgstr ""
+#~ "To enable SSL on your website, you will need to get an SSL Certificate "
+#~ "that identifies you and install it on the server"
+
+#~ msgid ""
+#~ "If you dont have a certificate yet, use or Google skills to get one for "
+#~ "free (for example Startssl.com)"
+#~ msgstr ""
+#~ "If you dont have a certificate yet, use or Google skills to get one for "
+#~ "free (for example Startssl.com)"
+
+#~ msgid "No Dropbox token found... Please Authorize!"
+#~ msgstr ""
+#~ "Er is geen Dropbox Token gevonden. Keur de App goed via de plugin "
+#~ "instellingen!"
+
+#~ msgid ""
+#~ "No Token file found and could not create one. Please be sure the file ."
+#~ "token exists in the plugin rootdir and is writeable"
+#~ msgstr ""
+#~ "No Token file found and could not create one. Please be sure the file ."
+#~ "token exists in the plugin rootdir and is writeable"
+
+#~ msgid ""
+#~ "/dropbox-auth-finish: Could not store token! Make sure that the file `."
+#~ "token` exists and is writable!"
+#~ msgstr ""
+#~ "/dropbox-auth-finish: Could not store token! Make sure that the file `."
+#~ "token` exists and is writable!"
+
+#~ msgid "Unable to load app-info.json: "
+#~ msgstr "Unable to load app-info.json: "
+
+#~ msgid "Installation"
+#~ msgstr "Installatie"
+
+#~ msgid "Be sure you have an valid SSL certificate on your web server"
+#~ msgstr "Be sure you have an valid SSL certificate on your web server"
+
+#~ msgid "Shortcode OutoftheBox"
+#~ msgstr "Shortcode OutoftheBox"
+
+#~ msgid "Display folders &amp; files"
+#~ msgstr "Mappen &amp; bestanden weergeven"
+
+#~ msgid "Current root"
+#~ msgstr "Huidige pad"
+
+#~ msgid "Leave empty for default value (max filesize allowed)"
+#~ msgstr ""
+#~ "Laat leeg om de standaardwaarde te gebruiken (maximale toegestane "
+#~ "bestandsgrootte)"
+
+#~ msgid "shows all folders/files in the root of your Dropbox"
+#~ msgstr "Alle mappen/bestanden weergeven van je Dropbox"
+
+#~ msgid "shows all folders/files in a specific directory of your Dropbox"
+#~ msgstr ""
+#~ "Alleen mappen/bestanden weergeven vanaf een specifieke folder in je "
+#~ "Dropbox"
+
+#~ msgid "NOTE the double quote!!"
+#~ msgstr "LET OP de dubbele aanhalingstekens!!"
+
+#~ msgid "show only files with specific extensions"
+#~ msgstr "Alleen bestanden weergeven met een bepaalde extensie"
+
+#~ msgid "hide or show file size and last modified date"
+#~ msgstr ""
+#~ "Weergeven of verbergen van de bestandsgrootte en laatste wijziginsdatum"
+
+#~ msgid ""
+#~ "add uploadform and overwrite existing files. If overwrite=0 the files "
+#~ "will be renamed"
+#~ msgstr ""
+#~ "Voeg een uploadformulier toe en overschrijf bestaande bestanden. Gebruik "
+#~ "overwrite=0 om bestanden te hernoemen"
+
+#~ msgid "only allow specific extensions for upload"
+#~ msgstr ""
+#~ "Alleen toestaan om bestanden met een bepaalde extensie up-te-loaden."
+
+#~ msgid "Will give some basic debug information"
+#~ msgstr "Geeft wat algemene debug informatie"

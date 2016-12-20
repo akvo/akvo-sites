@@ -1,0 +1,816 @@
+@charset "UTF-8";
+
+/* Colors CSS */
+#OutoftheBox a{color: #666;}
+
+#OutoftheBox .list-container {border-color: #DDD;   background-color: #f9f9f9;}
+#OutoftheBox .loading{background-color: #f9f9f9;}
+
+/* ---Header */
+#OutoftheBox .nav-header{  border-bottom-color: #d1d1d1;  background: #DDD;}
+#OutoftheBox .nav-header a:hover,
+#OutoftheBox .nextimages a:hover,
+#OutoftheBox .column_names a:hover{color: #0e92c7;}
+#OutoftheBox .nav-search.inuse{  color: #29ADE2;}
+#OutoftheBox .column_names{  background-color: #EEE;}
+
+/* ---File/Pictures entries */
+#OutoftheBox .entry.hasfocus, #OutoftheBox .entry.hasfocus a,
+#OutoftheBox .entry:hover ,#OutoftheBox .entry:hover a{color: #FFF;}
+#OutoftheBox .entry:hover{  background-color: #29ADE2;}
+#OutoftheBox .entry.hasfocus {  background-color: #0e92c7;}
+
+/* ---Load more button */
+#OutoftheBox .nextimages{border-color: #0e92c7;}
+#OutoftheBox .nextimages a:hover{color: #0e92c7;}
+
+/* ---Menus*/
+#OutoftheBox .oftb-grid .entry_edit_menu{ background-color: #29ADE2; border-color: #FFF;}
+#OutoftheBox .gridgallery .entry_edit_menu {background-color: #FFF;}
+#OutoftheBox .gridgallery a.entry_edit_menu{color: #333;}
+
+.OutoftheBox .download-zip-menu li >a:hover,
+.OutoftheBox .oftb-dropdown-menu li > a:hover {
+  background-color: #0e92c7;
+  color: #FFF;
+}
+/* ---Upload rows */
+#OutoftheBox .template-upload,
+#OutoftheBox .template-download{
+  border: 1px solid #EBEBEB;
+  background-color: #EEE;
+}
+
+/* ---Drag and Drop */
+#OutoftheBox .ajax-filelist.in {background: #DDD;}
+#OutoftheBox .ajax-filelist.hover {background: #CEE0E7;}
+
+/* End Color CSS */
+
+
+/* Basic layout */
+#OutoftheBox{
+  font-size:1.1em;
+  font-family:Verdana, Arial, sans-serif;
+  line-height:1.6;
+  color: #666;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+#OutoftheBox div{
+  margin:0;
+  padding:0;
+}
+#OutoftheBox div, #OutoftheBox input{
+  box-sizing:border-box;
+  -moz-box-sizing: border-box;
+}
+
+#OutoftheBox a{
+  text-decoration: none;
+}
+#OutoftheBox a:hover{
+  text-decoration: none;
+}
+
+#OutoftheBox .jsdisabled{
+  display: none;
+}
+#OutoftheBox-nojsmessage{
+  font-style:italic;
+}
+
+/* Container */
+#OutoftheBox .list-container{
+  min-height: 240px;
+  position: relative;
+  padding: 0;
+  border-radius: 10px;
+}
+#OutoftheBox .list-container{
+  border-width: 3px;
+  border-style: solid;
+}
+#OutoftheBox .ajax-filelist{
+  font-size: 75%;
+  min-height: 32px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+/* Loading Divs*/
+#OutoftheBox .loading{
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  position: absolute;
+  z-index: 1000;
+  text-align: center;
+  padding-top: 5px;
+  background-image: url(clouds/cloud_loading_128.gif);
+  background-position: 50% 30px;
+  background-repeat: no-repeat;
+}
+#OutoftheBox .loading.initialize{  background-image: url(clouds/cloud_system_128.png);}
+#OutoftheBox .loading.upload{    background-image: url(clouds/cloud_upload_128.gif);  }
+#OutoftheBox .loading.search{  background-image: url(clouds/cloud_inspect_128.png);}
+#OutoftheBox .loading.error{  background-image: url(clouds/cloud_sad_128.png);}
+#OutoftheBox .gridgallery img.preloading,
+#OutoftheBox .oftb-grid .entry_thumbnail img.preloading{
+  background: url(clouds/cloud_loading_64.gif) 50% 50% no-repeat;
+}
+
+/* Header */
+#OutoftheBox .nav-header{
+  min-height:38px;
+  padding: 5px 15px;
+  clear: both;
+  overflow: visible;
+  position: relative;
+  border-width:0;
+  border-bottom-width: 1px;
+  border-style: solid;
+
+}
+#OutoftheBox .nav-header a:hover,
+#OutoftheBox .column_names a:hover{
+  font-weight: bold;
+}
+#OutoftheBox .nav-title{
+  margin-left: 26px;
+  margin-right: 180px;
+  margin-top: 3px;
+  font-size: 14px;
+  position: relative;
+}
+
+/* Header buttons */
+#OutoftheBox .nav-home{
+  float:left;
+}
+
+#OutoftheBox .nav-home i{
+  font-size: 1.5em;
+  cursor: pointer;
+}
+#OutoftheBox .download-zip i,
+#OutoftheBox .nav-refresh i,
+#OutoftheBox .nav-layout i,
+#OutoftheBox .nav-search i {
+  margin-top: 3px;
+  font-size: 1.2em;
+  margin-left: .5em;
+  cursor: pointer;
+}
+
+#OutoftheBox .search-div{
+  display: none;
+}
+
+#OutoftheBox .download-zip{
+  position: relative;
+  right:0px;
+  float: right;
+}
+
+#OutoftheBox .zip-status{
+  font-size: 80%;
+}
+
+#OutoftheBox .zip-status .zip-bytes{
+  margin-left:10px;
+  font-style: italic;
+}
+
+/* Files and folders*/
+#OutoftheBox .files .entry,
+#OutoftheBox .files .column_names{
+  padding: 5px 10px 5px 10px;
+  margin: 0px;
+  clear: both;
+  min-height: 30px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+#OutoftheBox .oftb-grid .entry{
+  padding: 5px 0px;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: top;
+  zoom: 1;
+  *display: inline;
+  position: relative;
+  border-radius: 5px;
+  margin: 5px;
+  box-shadow: 0px 0px 4px #bbb;
+}
+#OutoftheBox .oftb-grid .entry .entry_block{
+  opacity:0;
+  padding: 5px;
+  width:200px;
+}
+#OutoftheBox .oftb-grid .entry_thumbnail{
+  width: 100%;
+  height:179px;
+  margin: 0 auto;
+  position: relative;
+  border: 1px solid transparent;
+}
+#OutoftheBox .oftb-grid .entry_thumbnail-view-bottom{
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+#OutoftheBox .oftb-grid .entry_thumbnail-view-center{
+  text-align: center;
+  position: relative;
+}
+#OutoftheBox .oftb-grid .entry_thumbnail img{
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 100px;
+  min-height: 100px;
+  padding: 1px;
+  vertical-align: top;
+  transition: opacity .3s ease-in;
+  -ms-interpolation-mode: bicubic;
+  box-shadow: none;
+}
+
+#OutoftheBox .oftb-grid .entry.hasfocus .entry_link,
+#OutoftheBox .oftb-grid .entry:hover .entry_link{
+  font-weight: bold;
+}
+
+#OutoftheBox .oftb-list .entry_name{
+  margin-left: 6px;
+  margin-right: 5px;
+  text-align: left;
+  float: left;
+  word-wrap: break-word;
+  width: 40%;
+}
+
+#OutoftheBox .oftb-grid .entry_name{
+  line-height: 21px;
+  text-align: center;
+}
+
+#OutoftheBox .oftb-grid .entry_name .entry-name-view{
+  display: inline-block;
+  max-width: 80%;
+  padding-top: 1px;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+  overflow: hidden;
+}
+#OutoftheBox .oftb-grid .entry_name .entry-name-view span,
+#OutoftheBox .oftb-grid .entry_name .entry-name-view span strong{
+  white-space: nowrap;
+}
+
+#OutoftheBox .entry_link{
+  display: block;
+  width:100%;
+}
+
+#OutoftheBox .entry_size{
+  float: right;
+  font-size: 95%;
+  width: 75px;
+  text-align: right;
+}
+
+#OutoftheBox .entry_checkbox input[type="checkbox"]{
+  display: none;
+}
+#OutoftheBox .oftb-list .entry_checkbox,
+#OutoftheBox .oftb-list .entry_checkallbox{
+  float:right;
+  height: 16px;
+  width: 16px;
+  margin-left: 10px;
+  z-index: 10;
+  margin-top: 2px;
+}
+#OutoftheBox .gridgallery .entry_checkbox,
+#OutoftheBox .oftb-grid .entry_checkbox{
+  position: absolute;
+  right: 15px;
+  top: 3px;
+}
+#OutoftheBox .entry_lastedit{
+  font-size: 95%;
+  min-width: 10%;
+  width: 180px;
+  text-align: left;
+  float:right;
+}
+
+#OutoftheBox .entry_foundpath{
+  font-size: 95%;
+}
+
+#OutoftheBox .no_results{
+  background:url(clouds/cloud_status_128.png) center top no-repeat;
+  padding-top: 120px;
+  text-align: center;
+  font-style: italic;
+  height: 140px;
+}
+
+/* Column Sorting */
+#OutoftheBox .column_names {
+  font-size: 80% !important;
+}
+#OutoftheBox .files.oftb-grid .column_names {
+  display:none;
+}
+
+#OutoftheBox .column_names .sortable{
+  cursor: pointer;
+}
+
+#OutoftheBox .column_names .entry_name,
+#OutoftheBox .column_names .entry_size,
+#OutoftheBox .column_names .entry_lastedit{
+  font-size: 100%;
+}
+
+#OutoftheBox .sort_icon{
+  width: 21px;
+  height: 4px;
+  top: 8px;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: top;
+  zoom: 1;
+  *display: inline;
+  position: relative;
+}
+#OutoftheBox .column_names .desc .sort_icon{
+  background-image:  url(images/desc.gif);
+}
+#OutoftheBox .column_names .asc .sort_icon{
+  background-image:  url(images/asc.gif);
+}
+
+/* Search Form */
+.OutoftheBox .search-remove{
+  position: absolute;
+  cursor: pointer;
+  right: 15px;
+  top: 20px;
+  font-size: 150%;
+}
+
+.OutoftheBox .search-input{
+  width: 200px;
+  margin: 0 !important;
+  background:white url(images/search.png) 5px center no-repeat;
+  color:#666;
+  border: 1px solid #d1d1d1;
+  padding: 6px 25px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+  font-size: 150%;
+}
+.OutoftheBox .search-div{
+  margin: 10px;
+}
+
+/* Menus*/
+#OutoftheBox .oftb-list .entry_edit {
+  float:right;
+  margin-left: 10px;
+  width: 10px;
+  height: 13px;
+}
+#OutoftheBox .oftb-grid .entry_edit,
+#OutoftheBox .gridgallery .entry_edit {
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+}
+#OutoftheBox .entry_edit_menu {
+  display: none;
+}
+#OutoftheBox .oftb-grid .entry_edit_menu{
+  left: 4px;
+  top: 0px;
+  position: absolute;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 3px;
+  padding: 3px 5px;
+}
+#OutoftheBox .gridgallery .entry_edit_menu {
+  left: 4px;
+  top: 1px;
+  position: absolute;
+  left:0px;
+  top:0px;
+  padding: 0px 3px;
+}
+
+.OutoftheBox .download-zip-menu,
+.OutoftheBox .oftb-dropdown-menu{
+  display: none;
+  font-size: 150%;
+}
+.OutoftheBox .download-zip-menu ul,
+.OutoftheBox .oftb-dropdown-menu ul{
+  list-style: none;
+  background: #FFF;
+  overflow: hidden;
+  padding: 4px 0;
+  margin: 0;
+}
+.OutoftheBox .download-zip-menu li,
+.OutoftheBox .oftb-dropdown-menu li {
+  list-style: none;
+  padding: 0 0;
+  margin: 0;
+  line-height: 18px;
+}
+.OutoftheBox .download-zip-menu li >a,
+.OutoftheBox .oftb-dropdown-menu li > a{
+  display: block;
+  color: #555;
+  text-decoration: none;
+  line-height: 18px;
+  padding: 6px 15px;
+  white-space: nowrap;
+  width: 100%;
+}
+.OutoftheBox .download-zip-menu li >a:hover,
+.OutoftheBox .oftb-dropdown-menu li > a:hover {
+  cursor: pointer;
+}
+.OutoftheBox .download-zip-menu li i,
+.OutoftheBox .oftb-dropdown-menu li i{
+  width:35px;
+}
+
+
+/* FileUpload Form */
+#OutoftheBox .fileupload-container{
+  font-size: 90%;
+  margin-top: 10px;
+}
+
+#OutoftheBox .fileupload-browse-button{
+  width: 100%;
+  height: 100%;
+  transform:none;
+}
+
+#OutoftheBox .fileupload-buttonbar{
+  margin-bottom: 10px;
+}
+
+#OutoftheBox .fileupload-buttonbar .ui-button{
+  float: none !important; /* overrule jQuery UI CSS */
+}
+#OutoftheBox .ui-button-text, #OutoftheBox .fileupload-browse-button{
+  cursor: pointer;
+}
+#OutoftheBox .template-upload,
+#OutoftheBox .template-download{
+  overflow: auto;
+  padding:5px;
+  margin-bottom: 5px;
+}
+
+#OutoftheBox .upload-name{
+  float: left;
+  word-wrap: break-word;
+  width: 70%;
+}
+
+#OutoftheBox .file-size{
+  font-size: 90%;
+  margin-left: 20px;
+}
+
+#OutoftheBox .upload-status{
+  float:right;
+  text-transform: uppercase;
+  font-size: 90%;
+  font-weight: bold;
+}
+
+#OutoftheBox .upload-status .queue{}
+#OutoftheBox .upload-status .error{}
+#OutoftheBox .upload-status .succes{}
+
+#OutoftheBox .upload-error{
+  clear: both;
+  text-decoration: underline;
+  float: right;
+}
+
+#OutoftheBox .upload-buttons{
+  display: none;
+}
+
+#OutoftheBox .upload-progress{
+  clear:both;
+}
+
+#OutoftheBox .upload-progress .progress{
+  height: 10px;
+}
+
+/* OutoftheBox Gallery */
+#OutoftheBox .image-collage{
+  /*This is where you set the padding you want between the images*/
+  padding:5px !important;
+  margin:0 !important;
+  border:0 !important;
+  font-size: 100% !important;
+  position: static;
+  overflow: hidden;
+  opacity: 0;
+}
+
+#OutoftheBox .image-collage img{
+  margin:0;
+  padding:0;
+  /*display:inline-block;*/
+  vertical-align:bottom;
+  opacity:1;
+  max-width: none !important;
+  border-radius: 0 !important;
+  /*This is where you set the border you want for the image*/
+  border:0px solid #FFF;
+  transition: opacity .3s ease-in-out;
+  -webkit-transition: opacity .3s ease-in-out;
+}
+
+#OutoftheBox .image-container{
+  /* to get the fade in effect, set opacity to 0 on the first element within the gallery area */
+  opacity:1;
+  position: relative;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  float:left;
+}
+
+#OutoftheBox .image-container.hidden,
+#OutoftheBox .image-container img.hidden{
+  display:none;
+  opacity:0;
+}
+
+#OutoftheBox .image-container .entry_checkbox{
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  margin: 2px;
+}
+
+#OutoftheBox .image-container.entry{
+  padding:0 !important;
+}
+
+#OutoftheBox .folder-thumb{
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  top: 0px;
+  left: 0px;
+}
+
+#OutoftheBox .image-folder{
+  background-color: #808080;
+}
+
+#OutoftheBox .image-folder:hover{
+  background-color: #808080 !important;
+  cursor: pointer;
+}
+
+#OutoftheBox .image-folder img{
+  background: none !important;
+  z-index: 1;
+  position: absolute;
+}
+
+#OutoftheBox .image-rollover{
+  background:url(images/mag.png) center center no-repeat;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  -webkit-box-shadow: 0px 0px 4px #000;
+  -moz-box-shadow: 0px 0px 4px  #000;
+  box-shadow: 0px 0px 4px  #000;
+}
+
+#OutoftheBox .image-folder .folder {
+  position: absolute;
+  padding: 5px 0px 10px!important;
+  bottom: 0;
+  color: #FFF;
+  background:url(images/folder-title-bg.png) repeat;
+  font-size: 130%;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+}
+
+#OutoftheBox .nextimages{
+  position:relative;
+  text-align: center;
+  vertical-align: middle;
+  padding: 2px;
+  background: #FFF;
+  z-index: 100;
+  margin: 0 auto;
+  border: 1px solid #EFEFEF;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#OutoftheBox .nextimages a:hover{
+  font-weight: bold;
+}
+/*jQuery UI CSS overrule*/
+.OutoftheBox .ui-widget-content,
+.OutoftheBox .ui-dialog-titlebar{
+  padding:5px !important;
+}
+
+.OutoftheBox .ui-dialog-titlebar-close{
+  width: 20px !important;
+  height: 20px !important;
+}
+
+#OutoftheBox .fileupload-list .ui-icon{
+  float: right;
+  margin-left: 5px;
+  margin-top: 1px;
+}
+
+.ui-dialog.OutoftheBox button{
+  float: right !important; /* overrule jQuery UI CSS */
+}
+
+.ui-front {
+  z-index:1000000 !important; /* The default is 100. !important overrides the default. */
+}
+
+/* qTip custom CSS */
+.OutoftheBox .qtip-content {
+  padding: 0 !important;
+}
+.qtip-default.OutoftheBox.thumbnail .qtip-content{
+  padding:5px !important;
+}
+.qtip-default.OutoftheBox.thumbnail,
+.qtip-default.OutoftheBox{
+  -webkit-box-shadow: 0px 0px 4px #bbb;
+  -moz-box-shadow: 0px 0px 4px  #bbb;
+  box-shadow: 0px 0px 4px  #bbb;
+  border-radius: 3px;
+}
+
+
+/* Small screens */
+@media only screen and (max-width: 480px){
+
+  #OutoftheBox .nav-title {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 28px;
+  }
+  #OutoftheBox .oftb-list .entry_name {
+    margin-right: 0px;
+    width: 60%;
+  }
+  #OutoftheBox .entry_lastedit {
+    clear:both;
+    float:left;
+    margin-left: 23px;
+
+  }
+  #OutoftheBox .entry_size {
+    display: none;
+  }
+
+  #OutoftheBox .column_names .entry_lastedit{
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 480px) and (max-width : 768px) {
+  #OutoftheBox .column_names .entry_lastedit{
+    display: none;
+  }
+
+  #OutoftheBox .entry_lastedit {
+    clear:both;
+    float:left;
+    margin-left: 23px;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
+  #OutoftheBox .loading,
+  #OutoftheBox .jp-jplayer {
+    background-image: url(clouds/cloud_loading_256.gif);
+    background-size: 128px 128px;
+  }
+  #OutoftheBox .loading.initialize{
+    background-image: url(clouds/cloud_system_256.png);
+  }
+  #OutoftheBox .loading.upload{
+    background-image: url(clouds/cloud_upload_256.gif);
+  }
+  #OutoftheBox .loading.search{
+    background-image: url(clouds/cloud_inspect_256.png);
+  }
+  #OutoftheBox .loading.error{
+    background-image: url(clouds/cloud_sad_256.png);
+  }
+  #OutoftheBox .no_results{
+    background-image:url(clouds/cloud_status_256.png);
+    background-size: 128px 128px;
+  }
+  #OutoftheBox .gridgallery img.preloading,
+  #OutoftheBox .oftb-grid .entry_thumbnail img.preloading{
+    background-image: url(clouds/cloud_loading_128.gif);
+    background-size: 64px 64px;
+  }
+  #colorbox.OutoftheBox #cboxLoadingGraphic,
+  #OutoftheBox div.jp-playlist-loading{
+    background-image:  url(clouds/cloud_loading_64.gif);
+    background-size: 32px 32px;
+  }
+
+}
+
+/* Icons 16x16*/
+#OutoftheBox .entry_icon{
+  float: left;
+  margin-top: -1px;
+  height: 16px;
+  width: 16px;
+  margin-right: 5px;
+}
+
+#OutoftheBox .entry_icon.folder{ background-image: url(icons/16x16/folder.gif);}
+#OutoftheBox .entry_icon.folder_app{ background-image: url(icons/16x16/folder_app.gif);}
+#OutoftheBox .entry_icon.folder_gray{ background-image: url(icons/16x16/folder_gray.gif);}
+#OutoftheBox .entry_icon.folder_photos{ background-image: url(icons/16x16/folder_photos.gif);}
+#OutoftheBox .entry_icon.folder_public{ background-image: url(icons/16x16/folder_public.gif);}
+#OutoftheBox .entry_icon.folder_star{ background-image: url(icons/16x16/folder_star.gif);}
+#OutoftheBox .entry_icon.folder_user{ background-image: url(icons/16x16/folder_user.gif);}
+#OutoftheBox .entry_icon.package{ background-image: url(icons/16x16/package.gif);}
+#OutoftheBox .entry_icon.page_white{ background-image: url(icons/16x16/page_white.gif);}
+#OutoftheBox .entry_icon.page_white_acrobat{ background-image: url(icons/16x16/page_white_acrobat.gif);}
+#OutoftheBox .entry_icon.page_white_actionscript{ background-image: url(icons/16x16/page_white_actionscript.gif);}
+#OutoftheBox .entry_icon.page_white_c{ background-image: url(icons/16x16/page_white_c.gif);}
+#OutoftheBox .entry_icon.page_white_code{ background-image: url(icons/16x16/page_white_code.gif);}
+#OutoftheBox .entry_icon.page_white_compressed{ background-image: url(icons/16x16/page_white_compressed.gif);}
+#OutoftheBox .entry_icon.page_white_cplusplus{ background-image: url(icons/16x16/page_white_cplusplus.gif);}
+#OutoftheBox .entry_icon.page_white_csharp{ background-image: url(icons/16x16/page_white_csharp.gif);}
+#OutoftheBox .entry_icon.page_white_cup{ background-image: url(icons/16x16/page_white_cup.gif);}
+#OutoftheBox .entry_icon.page_white_dvd{ background-image: url(icons/16x16/page_white_dvd.gif);}
+#OutoftheBox .entry_icon.page_white_excel{ background-image: url(icons/16x16/page_white_excel.gif);}
+#OutoftheBox .entry_icon.page_white_film{ background-image: url(icons/16x16/page_white_film.gif);}
+#OutoftheBox .entry_icon.page_white_flash{ background-image: url(icons/16x16/page_white_flash.gif);}
+#OutoftheBox .entry_icon.page_white_gear{ background-image: url(icons/16x16/page_white_gear.gif);}
+#OutoftheBox .entry_icon.page_white_paint{ background-image: url(icons/16x16/page_white_paint.gif);}
+#OutoftheBox .entry_icon.page_white_php{ background-image: url(icons/16x16/page_white_php.gif);}
+#OutoftheBox .entry_icon.page_white_picture{ background-image: url(icons/16x16/page_white_picture.gif);}
+#OutoftheBox .entry_icon.page_white_powerpoint{ background-image: url(icons/16x16/page_white_powerpoint.gif);}
+#OutoftheBox .entry_icon.page_white_ruby{ background-image: url(icons/16x16/page_white_ruby.gif);}
+#OutoftheBox .entry_icon.page_white_sound{ background-image: url(icons/16x16/page_white_sound.gif);}
+#OutoftheBox .entry_icon.page_white_text{ background-image: url(icons/16x16/page_white_text.gif);}
+#OutoftheBox .entry_icon.page_white_tux{ background-image: url(icons/16x16/page_white_tux.gif);}
+#OutoftheBox .entry_icon.page_white_vector{ background-image: url(icons/16x16/page_white_vector.gif);}
+#OutoftheBox .entry_icon.page_white_visualstudio{ background-image: url(icons/16x16/page_white_visualstudio.gif);}
+#OutoftheBox .entry_icon.page_white_word{ background-image: url(icons/16x16/page_white_word.gif);}
+
+/* Admin screen*/
+#icon-OutoftheBox {
+  background: transparent url( 'images/google_drive_logo.png' ) no-repeat;
+}
+.adminfilebrowser #OutoftheBox .ajax-filelist {
+  font-size: 100%;
+}
